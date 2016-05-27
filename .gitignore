@@ -1,3 +1,6 @@
+# rsync -zvhre ssh --progress --delete _book/ rodney@popgen.bio.vcu.edu:/var/www/
+
+# RStudio related stuff
 .Rproj.user
 .Rhistory
 .RData
