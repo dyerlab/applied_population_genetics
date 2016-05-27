@@ -1,0 +1,210 @@
+# Hardy-Weinberg Equilbrium {.imageChapter}
+
+<iframe class="chapter_image" width="640" height="360" src="https://www.youtube.com/embed/s5Z0nItrdSo?list=PLjvIGgJ_mgVokdI-r7q_erREHi-DGnGSq" frameborder="0" allowfullscreen></iframe>
+
+At the heart of population genetics is the expectation that genotypes will occur at predictable frequencies given a set of assumptions about the underlying population.  This is formulated in the enigmatic Hardy-Weinberg Equation, $p^2 + 2pq + q^2 = 1$.  
+
+In this chapter, we delve in to what that means, where it comes from, and how we can gain biological inferences from data that do not follow. 
+
+The underlying idea of Hardy-Weinberg Equilibrium (HWE for brevity) is that genotypes should occur at frequencies as predicted by probability theory alone IF (and this is the big part), the population we are looking at is mating in particular ways.  Lets spend a little time talking about what that means and what these assumptions actually are. 
+
+## Genetic Assumptions
+
+Implicit in the description $AB$ove is a characterization of what constitutes a genotype.  For simplicity, as this is the way it was originally defined, we will assume that the species we are looking at is diploid, carrying homologous chromosomes from both parents.  Diploidy means that in the adult life stage, each individual has two copies of each allele, one from each parental individual. If diploidy is true, we can denote the genotype as $AA$ for the diploid homozygote, $AB$ for the heterozygote, and $BB$ for the other diploid homozygote.  If it is not true and the species (at least at that life stage) is haploid, then will will represent the genotype as $A$ or $B$. Higher levels of ploidy (triploid, tetraploid, hexaploid, etc.) are also possible in many taxa.  While the math that follows is essentially the same for these ploidy levels, the actual algebra is a bit more messy.  If you are working on taxa with higher ploidy levels, you can do many of the same operations we will focus on in gstudio, consult the documentation for more information.
+
+In addition to ploidy, genetic constraints on the formulation of the classic HWE assume that the species has two separate sexes, both of which contribute to the next generation.  In general, this rules out uniparentally inherited markers such as mtDNA or cpDNA, which are transmitted in most cases by only one of the sexes during reproduction.  Examining mating events between diploid individuals is something we should all remember from basic biology and genetics through the use of the Punnet Square.  That was a tool designed to teach us about sexual mating, however, it is also a great example of the probabilities of mating we see in sexual reproduction.  These probabilities play direct roles in the derivation of HWE.
+
+Two additional constraints arise directly from diploid sexual reproduction.  First, we assume that the likelihood of a particular allele is independent of the sex of the individual that contains it.  For example, male individuals should have as many alleles (e.g., no sex chromosomes that mix ploidy of genotypes) and alleles at that can occur with equal frequency as the other sex (no sex biased alleles probabilities as may arise from say sex-biased lethals).  
+
+Finally, we will invoke both of Mendel’s Laws of Inheritance.  His first law states that the alleles at a particular locus are statistically independent from each other.  If there is an A allele provided by one parent, the probability of the second allele is either $A$ or $B$ is entirely independent of that first alleles state.  The second law, though not necessarily relevant for many HWE applications, deals with the probability of genotypes at two loci.  Here we assume that the alleles present at one locus are statistically independent of those at the other locus.  We will return to this when we get to linkage but for now lets assume it is a valid assumption.
+
+
+### Punnet Squares
+
+Punnet squares are a basic tool to understand the probability of offspring genotypes for individual diploid mating events.  
+
+A Punnet square is a simple tool used to teach transition probabilities in basic genetics and biology courses.  Here is an example using the 2-allele example provided in the text to iterate through all the potential mating combinations.
+
+Mating among the same homozygotes uniform offspring genotypes
+
+&nbsp;   | $A$  | $A$ 
+:-------:|:----:|:---:
+$A$      | $AA$ | $AA$
+$A$      | $AA$ | $AA$
+
+
+Mating among different homozygotes produces all heterozygotes.
+
+&nbsp;   | $A$  | $A$ 
+:-------:|:----:|:---:
+$B$      | $AB$ | $AB$
+$B$      | $AB$ | $AB$
+
+
+Mating among one homozygote and one heterozygote produces 50% homozygotes and 50% heterozygotes
+
+&nbsp;   | $A$  | $A$ 
+:-------:|:----:|:---:
+$A$      | $AA$ | $AA$
+$B$      | $AB$ | $AB$
+
+
+Mating among two heterozygote genotypes produces the full array of offspring genotypes in a 1:2:1 ratio.
+
+&nbsp;   | $A$  | $B$ 
+:-------:|:----:|:---:
+$A$      | $AA$ | $AB$
+$B$      | $AB$ | $BB$
+
+
+
+
+The population we are examining need to have some specific demographic parameters for HWE to be valid.  The most basal assumption that is invoked is that the population size must be very large.  In a fact, most of the work of R.A. Fisher and J.B.S. Haldane in developing the modern synthesis relied upon this assumption as well.  If population size, $N$, is too small, then the stochastic change (what we call genetic drift) can have serious influences on allele frequencies.  
+
+Next, and perhaps this is more for our laziness than any other reason, we assume that the generations do not overlap.  This means that the during a single generation, all individuals participate in the mating events, each of which is equally likely to be selected as one participating in a mating event (e.g., random mating).  For simplicity, lets denote the frequencies of these genotypes as $f(AA) = P$, $f(AB) = Q$, and $f(BB) = R$. If these individuals are really mating randomly with respect to their genotypes, then the probability of union between any pair is simply the product of their population frequencies.  
+
+
+
+
+&nbsp; | **AA** | **AB** | **BB**
+:-----:|:------:|:------:|:-------:
+**AA** | $P^2$  | $PQ$   | $PR$
+**AB** | $PQ$   | $Q^2$  | $QR$
+**BB** | $PR$   | $QR$   | $R^2$
+
+
+More importantly for our simplicity in terminology, at the end of the mating episode, all of the next generations offspring are produced and all adults die.  If there were overlapping generations or multiple mating events, we would have to integrate these processes along a continuous timescale rather than treating a single mating generation as a discrete unit.  Totally possible, and even fun, but not part of the original formulation of HWE.
+
+## Evolutionary Assumptions
+
+Finally, we need to invoke two evolutionary assumptions to meet the requirements of HWE.  First, we must assume that there is $AB$solutely no mutation.  A non-zero mutation rate, $\mu > 0$, means that the state of a particular allele, say the $A$ allele, has a likelihood of spontaneously becoming something other than the $A$ allele (e.g., the $B$ in this formulation).  If HWE is to help us determine the genotype frequencies having one allele spontaneously mutate to another would require that we integrate the mutation rate into HWE directly.  Perhaps not that surprisingly, that wasn’t integrated back in the day.
+
+The next assumption has a very similar consequence.  Namely, we must assume that the set of individuals that are participating in the mating event in this population is static. Individuals from other populations are not immigrating into this population and individuals within the population are not emigrating out of this population.  Just like mutation, and when we get to migration we will see directly how similar these processes are, we will take the easy way out and assume that they do not occur.  
+
+The final assumption is based upon selection and is a very easy one to deal with.  We simply assume it doesn’t happen.  If selection were operating, say an extreme form such as increased lethality of the $AA$ genotype prior to reproduction, then we would have to both specify the way in which selection is operating as well as the its magnitude.  We will come back to this topic later but for the simplicity of HWE, we make the assumption that it has no effect.
+
+## The Mechanics
+
+In a sampled population, we estimate the frequencies of the genotypes as:
+
+$P = \frac{N_{AA}}{N}$,
+
+$Q = \frac{N_{AB}}{N}$, 
+
+and
+
+$R = \frac{N_{BB}}{N}$
+
+where $N_{XX}$ is the number of $XX$ genotypes and $N$ is the total number of individuals in the sample.  From these genotype frequencies, we can directly estimate the frequency of each allele ($A$ and $B$) denoted as p and q as:
+
+$f(A) = P + \frac{Q}{2} = p$
+
+and 
+
+$f(B) = R + \frac{Q}{2} = q$
+
+using the lower case versions of $p$ and $q$.  Be careful about switching these up.  The population geneticist [John Nason](http://jnason.eeob.iastate.edu), makes the connection that this is what it means to “mind our p’s and q’s” though I suspect the etiology of this statement has more to do with liquid volume measurements than population genetics...  
+
+Intuitively the formulation denoted above for $p$ and $q$ makes sense as the heterozygote genotype ($AB$) frequency, $Q$, is split evenly between the homozygote genotype frequencies, $P$ (for $AA$) and $R$ (for $BB$).   If these are the only two alleles in the population then there is the additional restriction that $p + q = 1$.  It is easy to expand these methods to more than two alleles, but again the original approximation was specifically set for 2-allele systems.
+
+In R, we can approximate these formulas using the gstudio library.  After loading in the library, we can create data objects representing diploid loci as follows:
+
+```{r message=FALSE, warning=FALSE}
+require(gstudio)
+hom.AA <- locus( c("A","A") )
+hom.BB <- locus( c("B","B") )
+het.AB <- locus( c("A","B") )
+```
+
+These objects have have properties associated with them appropriate for representing genetic loci.
+
+```{r}
+ploidy(het.AB)
+is_heterozygote( het.AB )
+```
+
+And can be used in a vector or data.frame or other R container just like any other data type facilitating easy integration into existing analytical workflows.  
+
+```{r}
+genotypes <- c( hom.AA, het.AB, hom.BB)
+genotypes
+```
+
+To examine genotype and allele frequencies for a set of loci, I’ll make a random collection and then use those loci as an example.
+
+```{r}
+loci <- sample(genotypes, 20, replace=TRUE)
+loci
+```
+
+Here the function sample() makes a random draw of the arguments given in the first position (the genotypes), and selects 20 (the second argument), and since there are fewer potential values than observed ones, you need to tell it that you can sample the same genotypes more than once (the `replace=TRUE` part).  In analytical population genetics, the use of randomization and permutation is critical and we will see this repeatedly throughout this text.  Technically, this is a Monte Carlo simulation that was done.  Fancy, no?
+
+Next, we can take these data and estimate genotype frequencies.  Here the expectation is also given by the code using the methodologies described in the next section.
+
+```{r}
+genotype_frequencies(loci)
+```
+
+and allele frequencies from these loci are:
+
+```{r}
+frequencies( loci )
+```
+
+It should be noted that for these function, and for almost all the functions that return data in gstudio, the return object is a native data.frame.  Using these tools, it is easy to take our data and extract from it the components necessary for estimating the degree to which they conform to the expectations of HWE.
+
+## Trans-Generational Transition Probabilities
+
+If the assumptions in the next generation hold, then it is possible to iterate through all possible combinations of matings, noting the probability of observing each type, and estimate the frequency of offspring genotypes.  This is a bit messy and is probably better displayed in tabular format.
+
+  Parents   | $\mathbf{P(Parents)}$ | $\mathbf{P(AA)}$ | $\mathbf{P(AB)}$ | $\mathbf{P(BB)}$
+------------|:----------:|:-------:|:-------:|:-------:
+$AA\;x\;AA$	| $P^2$      | $P^2$	 | &nbsp;  | &nbsp;
+$AA\;x\;AB$	| $PQ$       | $PQ/2$  | $PQ/2$  | &nbsp;	
+$AA\;x\;BB$	| $PR$       | &nbsp;  | $PR$	   | &nbsp;
+$AB\;x\;AB$	| $Q^2$      | $Q^2/4$ | $Q^2/2$ | $Q^2/4$
+$AB\;x\;BB$	| $QR$       | &nbsp;  | $QR/2$	 | $QR/2$
+$BB\;x\;BB$	| $R^2$      | &nbsp;  | &nbsp;  | $R^2$
+
+During the parents generation, the frequencies of $AA$, $AB$, and $BB$ were P, Q, and R, defining allele frequencies as p and q.  If we invoke all those assumptions about genetic, demographic, and evolutionary processes being $AB$sent from mating and production of offspring genotypes (e.g., notice how we do not have any terms in there for mutation, being sex biased, etc.) then the frequency of genotypes at the next generation are defined in the table.  For example, at the next generation, say $t+1$, the frequency of the $AA$ offspring in the population is the sum of probabilities of all matins that produced $AA$ genotypes.
+
+$$
+\begin{aligned}
+P_{t+1} &= P_{t}^2 + \frac{P_tQ_t}{2} + \frac{Q^2_t}{4} \\\\ 
+&= \left( P_t + \frac{Q_t}{2} \right)^2 \\\\
+&= p^2
+\end{aligned}
+$$
+
+The other homozygote is the same producing an expectation of the frequency of the $BB$ genotype at $t+1$ of $q^2$.  Similarly for the heterozygote
+
+$$
+\begin{aligned}
+Q_{t+1} &= \frac{P_tQ_t}{2} + 2P_tR_t + \frac{Q^2_t}{2} + Q_tR_t\\
+&= 2\left(P_t + \frac{Q_t}{2} \right)\left(R_t + \frac{Q_t}{2}\right)\\
+&= 2pq
+\end{aligned}
+$$
+
+Putting these together, we have an expectation that the genotypes $AA$, $AB$, and $BB$ will occur at frequencies of $p^2$, $2pq$, and $q^2$, which is exactly what HWE is.  It takes only one generation of mating under the assumptions of HWE to return all genotype frequencies to HWE.
+
+## Consequences of HWE
+
+The consequences of this are important for our understanding of what processes influence population genetic structure.  If none of these forces are operating in the population, then the expectation is that the allele frequencies should predict genotype frequencies.  However, if there are some forces that are at work, genetic, demographic, or evolutionary, then the frequencies at which we see these genotypes will deviate from those expectations.  Now, biologically speaking, is there any population that conforms exactly to these expectations—definitely not!  However, in many cases populations are large enough to not be influenced by small N, mutation is rare enough to not cause problems, etc.  
+
+Using HWE, we can gain some insights into the which sets of forces may be influencing the observed  genotype frequencies.  In large part, we examine these changes as deviations from expectations with respect to loss or gain of heterozygotes.  These expectations, as depicted above, define an idealized situation against which we measure our data.  This metric was specifically designed to ignore almost every process and feature that population geneticists would be interested in looking at.  If our data are consistent with these expectations then we have no support for the operation of any of these processes.  Boring result, no?  In a larger sense, the entire field of Population Genetics is devoted to understanding how violations of these assumptions influence population genetic structure.  If everything was in HWE and none of these processes were operating, there would be very little for us to do besides DNA fingerprinting and we would all be forensic examiners...
+
+If some of these features are operating, they do have specific expectations on how they would influence the frequency of genotypes (specifically the homozygotes).  Specific examples include:
+
+Decrease Heterozygosity	Increase Heterozygosity
+Inbreeding	Coding Errors
+Null Alleles	Gametic Gene Flow
+Positive Assortative Mating	Negative Assortative Mating
+Selection against Heterozygotes	Outbreeding
+Wahlund Effects	Selection for Heterozygotes
+
+##Zygotic Gene Flow	
+
+In closing, it should be noted that HWE presented here is easily expandable to loci with more than two alleles as well as for loci with different ploidy levels.  The same approaches apply, though it is not as clean to estimate the expectations.  In the next section, we look at how we specifically test for HWE in our data.
+
+At a more meta level, one could see the entirety of this topic and population genetics as a discipline as understanding how deviations from HWE manifest and testing for the strength of these deviations.  It is becoming less common for people to actually test for HWE as there are many ways that you can have a deficiency (or excess) of heterozygotes and it is probably much better to focus on the specific processes that may causing these deviations rather than the magnitude of the deviation alone.  That said, it is a nice organizing principle to use HWE as a straw man argument on which to frame the rest of this topic.

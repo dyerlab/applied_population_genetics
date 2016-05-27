@@ -1,0 +1,514 @@
+# Raster Data 
+
+Rasters are a form of data that is georeferenced and (somewhat) continuous.  Raster data is perhaps best envisioned as a matrix of values, whose entried represent spatially referenced data points.  The raster itself can be visualized as you could for normal matrix output (as we did in \@ref(r-matrices) ).  What makes a raster different, however, is that it is (or should be) georeferenced. This means that each element of the matrix represents some measurement on the ground having a specific location and spread.  This is analogous to an image, where if you zoom in on it enough, you will be able to differentiate between individual pixels, it is just that for rasters, each pixel has a spatial location and size associated with it that we can map onto the earth.
+
+You can either create raster objects *de novo* or you can acquire them from some external source.  To create one from scratch, you start with a matrix of values and then construct the raster object using the `raster()` function as:
+
+```{r chunk-raster, message=FALSE,warning=FALSE}
+require(raster)
+r <- matrix(runif(10000),nrow=100)
+rnd <- raster( r )
+```
+
+which can be visualized using the normal plot command. The raster library has overrid several of the plotting functions and you can plot raster objects and decorate the images in the same way you do for normal plotting materials (\@ref(stock-graphics)).
+
+```{r}
+plot(rnd)
+```
+
+There are also many available repositories for raster data including Open Source, Governmental, and Municipal locations.  One common source for these data is that of http://worldclim.org.  This repository contains temperature and precipitation data generalized for the entire globe.  
+
+```{r echo=FALSE}
+knitr::include_graphics("./media/WorldClimTiles.png")
+```
+
+These data are available free of charge and have been used in numerous biological studies.  Moreover, they provide a set of 'biologically relevant' layers, called `BioClim`, that summarize both temperature and precipitation. They motivate these by saying:
+
+> Bioclimatic variables are derived from the monthly temperature and rainfall values in order to generate more biologically meaningful variables. These are often used in ecological niche modeling (e.g., BIOCLIM, GARP). The bioclimatic variables represent annual trends (e.g., mean annual temperature, annual precipitation) seasonality (e.g., annual range in temperature and precipitation) and extreme or limiting environmental factors (e.g., temperature of the coldest and warmest month, and precipitation of the wet and dry quarters).
+
+These layers are encoded into 19 Bio-layers as defined in Table \@ref(tab:bioclim).  These layers are available for download from their site directly (I recommend using the tiles approach so you do not have to download the entire world map) as well as from the R package [dismo](https://cran.r-project.org/web/packages/dismo/index.html).  
+
+```{r bioclim, echo=FALSE}
+df <- data.frame( Layer=paste( rep("BIO",19), 1:19, sep=""))
+df$Description = c("Annual Mean Temperature", "Mean Diurnal Range (Mean of monthly (max temp - min temp))", "Isothermality (BIO2/BIO7 * 100)", "Temperature Seasonality (standard deviation * 100)", "Max Temperature of Warmest Month","Min Temperature of Coldest Month", "Temperature Annual Range (BIO5-BIO6)","Mean Temperature of Wettest Quarter","Mean Temperature of Driest Quarter","Mean Temperature of Warmest Quarter","Mean Temperature of Coldest Quarter","Annual Precipitation","Precipitation of Wettest Month","Precipitation of Driest Month","Precipitation Seasonality (Coefficient of Variation)","Precipitation of Wettest Quarter","Precipitation of Driest Quarter","Precipitation of Warmest Quarter","Precipitation of Coldest Quarter")
+knitr::kable( df, booktabs=TRUE, caption="Key to the categories of bioclim variables derived from temperature and precipitation models for current (past and future) conditions.  Rasters for these values (in GeoTiff and BIL formats) are available from http://worldclim.org.", longtable=TRUE )
+```
+
+For the purposes of this chapter, I'll use bioclim and altitude layers from tile 22, which encompasses the spatial distribution of sampling locations in Baja California for the *Araptus attenuatus* dataset
+
+Common raster formats include GeoTiff, essentially an image file with some metadata associated with it, and BIL (Binary interleaved) file formats.  Both of these types are available from WorldClim.  In general, the  GeoTiff format is slightly easier to work with as all the data is contained within a single file, whereas the BIL format has two files for each raster (the second file is a header file that has the spatial meta data associated with it).  If you do use the BIL format, the file path you pass to `raster()` would be of the BIL file, not the header one.
+
+From Worldclim, I downloaded the elevation raster for Tile 22 and can load it into R using the `raster()` function as:
+
+```{r warning=FALSE, message=FALSE}
+alt <- raster("./spatial_data/alt_22.tif")
+alt
+```
+
+The `alt` object is summarized here.   A couple of things should be pointed out here:
+- In total, this is an object with 12,960,000 entries in it!  
+- The resolution of each 'pixel' in this representation is 0.008, which is about 30-arc seconds or ~1km. That means that each loation in the study area is represented by the same exact value as the surrounding square kilometer. Obviously, if you are working on processes whose spatial scale is relevant less than 1000 m^^2^^, this kind of data is going to be of little value to you. 
+- The values within the matrix range from -202 upwards to 5469.  This is in meters.
+
+In addition, the raster has a spatial extent and a projection associated with it.  For more information on projections see \@ref(map-projections).
+
+```{r}
+bbox( alt )
+proj4string( alt )
+```
+
+This elevation raster looks like:
+
+```{r}
+plot( alt, xlab="Longitude", ylab="Latitude" )
+```
+
+
+## Cropping Rasters
+
+Just because we have a large raster does not mean that it is in your best interest to use the entire object.  Much of the spatial analyses routines used in population genetics require measurments of intervening distance, either Euclidean or ecological.  Many of the routines for estiamtion of these distances require the estimation of pairwise distance between *all* pixels.  For our purposes, the `arapat` dataset does not occurr throughout most of this map, so it is in our best interests to use only the portion of the raster relevant to our data rather than the entire thing.  
+
+Here is one way of going this.  I first define an extent, which consists of a vector representing the coordiantes for `xmin`, `xmax`, `ymin`, and `ymax` (in decimal degrees longitude and latitude).  You then `crop()` the raster to that extent.
+
+```{r}
+e <- extent( c(-115,-109,22,30) )
+baja_california <- crop( alt, e )
+plot(baja_california, xlab="Longitude",ylab="Latitude")
+```
+
+Lets make this base map a bit more pretty by taking the altitude and estimating the slope of each pixel and the direction it is facing (aspect).  From this, we can 'shade' the hills in the map giving it more of a relief view we commonly see in maps. 
+
+```{r}
+slope <- terrain( baja_california, opt="slope" )
+aspect <- terrain( baja_california, opt="aspect")
+baja <- hillShade( slope, aspect, 40, 270 )
+plot(baja, xlab="Longitude",ylab="Latitude", legend=FALSE)
+```
+
+Onto this map, we can plot our populations.  For this, we convert the raw coordiantes into a `SpatialPoints` object (see \@ref(vector-data)) and then overlay onto the map.  I use two `points()` commands to make the symbol for each population.
+
+```{r echo=-1}
+require(gstudio)
+data(arapat)
+coords <- strata_coordinates(arapat)
+pts <- SpatialPoints( coords[,2:3], proj4string = CRS(proj4string(baja)))
+plot(baja, xlab="Longitude",ylab="Latitude", legend=FALSE)
+points( pts, col="darkred", pch=3)
+points( pts, col="red", pch=16)
+```
+
+### Cropping Rasters Via Polygons
+
+It is also possible to crop a raster with a more fine grained approach using a polygon.  Here is an example using five points picked around the region of Loreto, BCS (I just grabbed these by looking at Google Earth).  You define a polygon by a series of points, the last of which has to be identical to the first one so that the polygon is a closed object and not just a series of points on a crooked line...
+
+```{r}
+pts <- rbind( c(-111.5,27.0),
+              c(-112.4,26.7),
+              c(-111.7,25.7),
+              c(-111.1,25.4),
+              c(-110.8,26.0),
+              c(-111.5,27.0) )
+pts
+```
+
+From these points, we construct a `SpatialPolygons` object (see \@ref{polygons} for more info on this convoluted construction) and then can overlay onto the map to make sure it in the correct vacinity (here we are eyeballing it a bit).  For more on why this next line of code looks so crazy, see \@ref(polygons).
+
+```{r echo=-1}
+polys <- SpatialPolygons(list(Polygons(list(Polygon(pts)),"Polygon")))
+plot(baja, legend=FALSE)
+plot(polys, add=TRUE)
+```
+
+To use the polygon to crop the raster, we have to both remove the part of the raster that is not contained within the polygon (`mask`) and then cut down the remaining raster to change the bounding box to that representing the portion of the data that remains (`trim`).  If you do not trim the raster, it will have the same amount of data associated with it as the previous raster (e.g., the underlying data matrix will have 960 rows and 720 columns) but the part that is masked will be represented by `NA` values.  For many rasters, the data is held in-memory (see the entry for 'data source` in the summary above) and as such removing as much of a raster that is `NA` improves your ability to manipulate it better.
+
+```{r}
+loredo <- trim( mask( baja, polys ) )
+plot(loredo)
+```
+
+
+### Croping Rasters Via Convex Hull
+
+
+An analysis common to modern population genetics is that of finding ecological distances between objects on a landscape.  The estimation of pairwise distance derived from spatial data is a computationally intensive thing, one that if you are not careful will bring your laptop to its knees!  One way to mitigate this data problem is to use a minimal amount raster area so that the estimation of the underlying distance graph can be done on a smaller set of points.  
+
+Cropping by a polygon like demonstrated in the previous example is a 'by hand' approch to estimating a box that roughly encompasses your data points. A more efficient one is one where you simply provide your coordinates and we can estimate a polygon that surrounds those coordinates with the minimal amount of wasted space.  This is called a *Convex Hull*, which is kind of like a polygon that is created as if there was a rubbrerband fit around all your points.  It is a minimal area that includes all of your points.  
+
+For this example, I'm going to use the populations found along the peninsual and find the minimal area encompassing those points. 
+
+```{r message=FALSE, warning=FALSE, echo=-1}
+require(gstudio)
+data(arapat)
+coords <- strata_coordinates(arapat)
+baja_coords <- coords[ !(coords$Stratum %in% c("101","102","32")), ]
+baja_pts <- SpatialPoints( baja_coords[,2:3])
+plot(baja, legend=FALSE)
+plot(baja_pts,add=T,col="darkred")
+plot(baja_pts,add=T,col="darkred",pch=16)
+```
+
+The methods for finding the hull and adding a buffer around it are found in the `rgeos` package.  These are pretty easy functions to use and are very helpful.  If you are having trouble installing the `rgeos` package from source, see \@ref(rgdal-rgeos-packages).
+
+```{r message=FALSE,warning=FALSE, echo=-1}
+require(rgeos) # loads in gConvexHull & gBuffer functions
+hull <- gConvexHull(baja_pts)
+plot(baja, legend=FALSE)
+plot(baja_pts,add=T,col="darkred")
+plot(baja_pts,add=T,col="darkred",pch=16)
+plot(hull,add=T,border="red")
+```
+
+The function `gConvexHull()` returns an object of type *SpatialPolygons*, just like we created before.  However, we now have a polygon that has each of our most 'outward' populations on the very edge of the polygon.  It may be beneficial for us to add a buffer around this polygon.
+
+```{r echo=-1}
+hull_plus_buffer <- gBuffer(hull,width=.2)
+plot(baja, legend=FALSE)
+plot(baja_pts,add=T,col="darkred")
+plot(baja_pts,add=T,col="darkred",pch=16)
+plot(hull_plus_buffer, add=T, border="red")
+```
+
+Now, we can mask and trim it to include only the area of interest.
+
+```{r echo=-1}
+pop_hull <- trim( mask(baja,hull_plus_buffer) )
+plot(pop_hull, legend=FALSE, xlab="Longitude", ylab="Latitude")
+plot(baja_pts,add=T,col="darkred",pch=16)
+```
+
+This would be a great raster to start looking at ecological separation in since we have removed the extraneous data that would unintentionally cause problems with the distance estimators.
+
+## Modifying Rasters
+
+We can modify rasters just as easily as we can crop them.  They are matrices, after all.  The square bracket indexing you use for matrices are just as effective as before.  
+
+In the next example, I mask the landscape based upon elevation.  I create a copy of the original raster and then make everything whose elevation is less than 500m as missing data.  Plotting this over the top of the original raster shows only locations where elevation exceeds this cutoff.  
+
+```{r echo=-1}
+bc <- baja_california
+bc[ bc < 500 ] <- NA
+plot( baja_california, legend=FALSE, col="darkgrey" )
+plot( bc, add=TRUE, legend=FALSE)
+```
+
+## Extracting Point Data From Rasters
+
+
+So far, rastes have been confined to representing a single static object.  However, it is not uncommon to need to query a raster and find out the values at particular points.  These points may be pre-defined or they may be dynamic (e.g., you need to point at a location on the map and determine the value there).
+
+For queries of the first kind, we can use the `extract()` function.  For this I downloaded the average temperature and precipitation rasters from Worldclim.
+
+```{r}
+baja_temp <- raster("./spatial_data/bio1_22.tif")
+baja_prec <- raster("./spatial_data/bio12_22.tif")
+```
+
+And then extract the values from each of these layers into the `coords` data we already have set up.
+
+
+```{r}
+summary(coords)
+coords$elevation <- extract( baja_california, coords[,c(2,3)])
+coords$mean_temp <- extract( baja_temp, coords[,c(2,3)])
+coords$mean_precip <- extract( baja_prec, coords[,c(2,3)])
+coords[1:10,]
+```
+
+A note should be made on the temperature and precipitation values.  Temperature is denoted in tenths of a degree Celcius.  Though it does get quite hot at times, it does not average 188&deg;C at population 88!  Similarily the units for precipitaiton are mm (or thenths of centimeters if you will...).
+
+
+```{r warning=FALSE, message=FALSE}
+require(ggrepel)
+coords <- coords[ order(coords$Latitude),]
+p <- ggplot( coords, aes(x=Latitude,y=elevation)) + geom_line(color="lightgrey") 
+p <- p + geom_point() + ylab("Elevation (m)")
+p + geom_text_repel(aes(label=Stratum), color="red") 
+```
+
+The package `ggrepel` provides a pseudo-smart labelling geometry for ggplot allowing you to have labels that are shifted around the points so as to maximize visibility.
+
+For inquires of the second type, we can use the function `click()` to retrieve one of several outputs. Here is the help file that describes the various components. 
+
+<div class="scrollingbox"><pre>
+<pre>click {raster}	R Documentation
+Query by clicking on a map
+
+Description
+
+Click on a map (plot) to get values of a Raster* or Spatial* object at that location; and optionally the coordinates and cell number of the location. For SpatialLines and SpatialPoints you need to click twice (draw a box).
+
+Usage
+
+## S4 method for signature 'Raster'
+click(x, n=Inf, id=FALSE, xy=FALSE, cell=FALSE, type="n", show=TRUE, ...)
+
+## S4 method for signature 'SpatialGrid'
+click(x, n=1, id=FALSE, xy=FALSE, cell=FALSE, type="n", ...)
+
+## S4 method for signature 'SpatialPolygons'
+click(x, n=1, id=FALSE, xy=FALSE, type="n", ...)
+
+## S4 method for signature 'SpatialLines'
+click(x, ...)
+
+## S4 method for signature 'SpatialPoints'
+click(x, ...)
+Arguments
+
+x	- Raster*, or Spatial* object (or missing)
+n	- number of clicks on the map
+id - Logical. If TRUE, a numeric ID is shown on the map that corresponds to the row number of the output
+xy - Logical. If TRUE, xy coordinates are included in the output
+cell - Logical. If TRUE, cell numbers are included in the output
+type - One of "n", "p", "l" or "o". If "p" or "o" the points are plotted; if "l" or "o" they are joined by lines. See ?locator
+show - logical. Print the values after each click?
+...	- additional graphics parameters used if type != "n" for plotting the locations. See ?locator
+
+Value
+
+The value(s) of x at the point(s) clicked on (or touched by the box drawn).
+
+Note
+
+The plot only provides the coordinates for a spatial query, the values are read from the Raster* or Spatial* object that is passed as an argument. Thus you can extract values from an object that has not been plotted, as long as it spatialy overlaps with with the extent of the plot.
+
+Unless the process is terminated prematurely values at at most n positions are determined. The identification process can be terminated by clicking the second mouse button and selecting 'Stop' from the menu, or from the 'Stop' menu on the graphics window.
+
+See Also
+
+select, drawExtent
+
+Examples
+
+r <- raster(system.file("external/test.grd", package="raster"))
+#plot(r)
+#click(r)
+#now click on the plot (map)</pre></div>
+
+Here is the output from a single inquire on the `baja_california` raster map.
+
+```{r eval=FALSE}
+plot( baja_california, legend=FALSE)
+click(baja_california, xy=TRUE)
+##           x        y value
+## 1 -113.3875 27.82083   116
+```
+
+
+
+## Extracting Data Along Vectors
+
+It is also possible to extract data along vectors or other *SpatialLines* objects.  This is a particlarly helpful approach if you are trying to quantify the value of characteristics of the environment between your sampling locations.  In the following example, I estimate the popualtion graph from the `arapat` data set 
+
+```{r popgraphInBaja, warning=FALSE,message=FALSE, echo=-1}
+require(popgraph)
+graph <- popgraph( to_mv( arapat ), arapat$Population )
+graph <- decorate_graph( graph, coords )
+edges <- to_SpatialLines(graph)
+proj4string(edges) <- CRS( proj4string(baja_california))
+plot( baja_california, legend=FALSE)
+plot(edges,add=TRUE)
+```
+
+and determine which of the edges has the longest length.  
+
+```{r}
+edge_lengths <- SpatialLinesLengths( edges )
+longest <- sort( edge_lengths,decreasing = TRUE )[1]
+longest
+```
+
+This edge is found at:
+
+```{r echo=-1}
+idx <- which( edge_lengths == longest )
+idx
+edge <- edges[ 37 ]
+edge
+plot( baja_california, legend=FALSE)
+plot(edge,add=TRUE)
+```
+
+From this edge object (or a collection of edge objects) we can again extract values from a raster.  Here I pull out the elevation profile of this edge.  To plot it, I need to make a sequence of latitude values equal in length to that of the observed elevation values I extracted.  
+
+```{r warning=FALSE,message=FALSE}
+require(igraph)
+elev <- extract( baja_california, edge )[[1]]
+from_lat <- V(graph)$Latitude[V(graph)$name == "SFr"]
+to_lat <- V(graph)$Latitude[V(graph)$name == "164"]
+lat <- seq( from=from_lat, to=to_lat, length.out = length(elev) )
+df <- data.frame( Latitude=lat, Elevation=elev)
+p <- ggplot( df, aes(Latitude,Elevation)) + geom_line(color="lightgrey") 
+p + geom_point() + ylab("Elevation (m)")
+```
+
+
+## Extracting Data Along Popgraph Edges
+
+Population Graphs have been used to determine if there is an preference (or avoidance) of a specific raster value for the location of indiviudal edges on the landscape. For example, Dyer *et al.* (2012) were interested in determining if there the edge in the pollination graph (e.g., a population graph constructed from male pollen haplotypes) preferentially traverse (or avoid) specific intervening habitat features.  To do this, they permuted the edge set among nodes in the graph and recorded the prevalence (mean and variance) of specific features extracted from specific categorical rasters representing both canopy and understory features.  The permutation of a network should be done such that you preserve aspects of the spatial heterogeneity and spatial arrangement of the nodes on the landscape.  You probably do not want to permute all edges randomly in the graph (though this option is availalbe in the code), but would probably be better served by permuting the network while maintaining both the node coordinates (e.g., where they exist on the landscape) as well as the degree distribution of the overall network.  This second criteria holds constant higher network structure.  The general idea is to:  
+
+1. Create a saturated graph and extract ecological features for all potential connections.  This gives us a `data.frame` within which we can pull out ecological values for each permutation.  This is the most computationally intensive process and doing it once and then extracting values from the `data.frame` for each permutation is a more efficient approach.
+2. Once you have all the potential values of your features, you can permute the observed matrix, while holding both the connection probability (e.g., the number of edges) and the degree distribution (e.g., the amount of edges connected to nodes) constant using the `randomize_graph` function included in the `popgraph` library.  For each permutation, you then compile the permuted environmental factor as a null disribution and then compare those to the observed.  
+
+This may sound a bit convoluted, but this example may help.  Consider the hypothetical case where we think that the edges in the population graph from Figure \@ref(fig:popgraphInBaja), are restricted in elevation because we believe that dispersing insects fly around high elevation mountains rather than over them.^[This is a truely hypothetical and contrived example to show how you would do this in the code and is not motivated by any biologically motivated reasons.  Ya' gotta make up examples sometimes...]  If this is true, then we should expect that the average (or max) elevation along any of the observed edges in the Population Graph would be less than what would be expected if we permuted the edges among nodes and measured elevation along edges from permuted graphs.
+
+First, we need to set up the network and extract values of elevation along all potential edges.  I make a saturated graph from all potential 
+
+```{r}
+data(baja)
+graph <- popgraph( to_mv( arapat ), arapat$Population )
+graph <- decorate_graph( graph, coords )
+allpops <- V(graph)$name
+```
+
+I then can make an adjacency matrix connecting all pairs of populations
+
+```{r}
+A <- matrix(1,nrow=length(allpops),ncol=length(allpops))
+diag(A) <- 0
+rownames(A) <- colnames(A) <- allpops
+saturated_graph <- graph.adjacency(A, mode = "undirected")
+saturated_graph <- as.popgraph( saturated_graph )
+```
+
+From which I can pull all the edges (all `r 0.5*nrow(A)*(nrow(A)-1)` of them) as `SpatialLines` objects
+
+```{r}
+saturated_graph <- decorate_graph( saturated_graph, coords )
+all_edges <- to_SpatialLines( saturated_graph )
+```
+
+From these `r length(all_edges)` `SpatialLines` objects, we can extract data from the elevation raster.  
+
+```{r echo=TRUE, eval=FALSE}
+edge_values <- extract( baja_california, all_edges, fun=max, na.rm=TRUE, df=TRUE)
+```
+
+This will take a bit of time to complete.  The options that I provided were:  
+- `fun=max` - The function used is the max function.
+- `na.rm=TRUE` - Ignore all missing data (e.g., when an edge crosses water on the `baja_california` raster, the extracted values are `NA`)
+- `df=TRUE` - Return the answer as a `data.frame` object instead of just a vector.
+
+```{r eval=TRUE, echo=FALSE}
+load("./spatial_data/edge_values.rmd")
+```
+
+This `data.frame` has two columns, one for edge number and the other for value.  I'm going to put an additional pair of columns with the names of the nodes the edges are connected to into this `data.frame`
+
+```{r}
+edge_names <- as_edgelist( saturated_graph )
+edge_values$Nodes <- paste( edge_names[,1], edge_names[,2], sep="-")
+head(edge_values)
+```
+
+This constitutes *all potential* connections across the landscape.  From this we can extract the edges that we observed in the original Population Graph
+
+```{r}
+e <- as_edgelist( graph )
+obs <- edge_values$alt_22[ edge_values$Nodes %in% paste( e[,1], e[,2], sep="-") ]
+mean(obs)
+```
+
+We can now permute the network a moderate number of times and take the values of permuted elevation to see if our observed are smaller than all potential elevations for this specific network.
+
+```{r}
+perm_elev <- rep(NA,999)
+for( i in 1:length(perm_elev) ) {
+  perm_graph <- randomize_graph( graph )
+  e <- as_edgelist( perm_graph )
+  perm_val <- edge_values$alt_22[ edge_values$Nodes %in% paste( e[,1], e[,2], sep="-") ]
+  perm_elev[i] <- mean(perm_val)
+}
+```
+
+Now, we can see where the observed value occurs in the distribution of elevations created under the null hypothesis of no difference in elevation across edges.
+
+```{r}
+df <- data.frame( Elevation=c(mean(obs),perm_elev), Category=c("Observed",rep("Permuted",999)))
+ggplot( df, aes(x=Elevation,fill=Category)) + geom_histogram(stat="bin") + xlab("Elevation (m)") + ylab("Distribution of Permuted Elevations")
+```
+
+In fact, we can estimate the probablity as:
+
+```{r}
+sum( mean(obs) >= perm_elev )
+```
+
+As it turns out, the observed edges do in fact appear to be traversing lower elevations than the potential set of edges that could be present (while controlling for spatial location of populations and graph structure).  
+
+
+
+
+
+## Rasters & ggplot
+
+As is the case with a lot of data types in R, there is a way to use the `ggplot` library to visualize rasters.  Essentially, what 
+
+```{r}
+require(ggplot2)
+df <- data.frame( rasterToPoints( baja_california )) 
+names(df) <- c("Longitude","Latitude","Elevation")
+p <- ggplot( df ) + geom_tile( aes(x=Longitude,y=Latitude,fill=Elevation)) 
+p <- p + scale_fill_gradientn( colors=c('#a6611a','#dfc27d','#f5f5f5','#80cdc1','#018571'))
+p <- p + coord_equal() + xlab("Longitude") + ylab("Latitude") 
+p
+```
+
+
+As usual, we can add additional information to the plot and as we would for any other `ggplot` object.  Here I'll add the populations and indicate if they have samples in them that are of one species (Pure) or have a mix of the two (Mixed).
+
+```{r}
+num.clades <- colSums( table(arapat$Species, arapat$Population) > 0 )
+Stratum=names(num.clades)
+Species= factor( c("Pure","Mixed")[num.clades] )
+tmp.df <- data.frame( Stratum, Species )
+sites <- merge( coords, tmp.df )
+p + geom_point( aes(x=Longitude,y=Latitude, shape=Species), size=3, data=sites )
+```
+
+
+
+## 3D Visualization
+
+It is also possible to visualize rasters in 3-space.  The library `rasterVis` provides an interface to the `rgl` library to plot a surface.  Once installed, these are easy to use for viewing surfaces. Here is an example using the elevation data we have been playing with.
+
+```{r eval=FALSE}
+require(rasterVis)
+plot3D( baja_california , zfac=0.1)
+```
+```{r echo=FALSE}
+knitr::include_graphics("./media/Baja_Plot3D.png")
+```
+
+The `zfac` option in the plot is the amount to scale the z-axis (elevation) in relation to the x-axis and y-axis dimensions.  It is a bit exagerated at `zfac=0.1` but you get the idea.
+
+
+## Categorical Rasters 
+
+**ADD HERE**
+
+
+
+## Rescaling Raster Data
+
+
+**ADD HERE**
+
+
+
+## Saving & Exporting Rasters
+
+There are many situations where you need to save a raster you've manipulated.  As these raster objects are R objects, you can save them directly to the file system using the `write()` as:
+
+```{r eval=FALSE}
+write( baja_california, filename="baja_california.rda")
+```
+
+This will save the raster object to file exactly like it is in your R session.  To load it back in you just use `load()` and it is returned just like it was.  The benefit to saving these as R objects is that you do not need to change it at all to pick up where you left off.
+
+You may also need to export the raster in a non-R format for external analyses.  To do this, you use the `writeRaster()` function.  The file extension is used to determine the file format used and R saves it automatically.
+
+```{r eval=FALSE}
+writeRaster( baja_california, filename="baja_california.tif")
+```
+

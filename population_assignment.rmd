@@ -1,0 +1,71 @@
+# Population Assignment
+
+With population subdivision, individual population allele spectra may diverge if there is not panmictic connectivity.  Along with this differentiation, it is possible to begin estimating the origin of individual samples.  We can also use models of admixture to understand how both individuals and populations are connected
+
+The easiest way to assign individuals to particular populations is to estimate the probability of each multi locus genotype coming from each population and then compare the relative likelihoods of each, assigning the individual to either the most likely population or at least assigning it, with probability equal to its likelihood, to two or more populations.  The probability of a particular genotype coming from a specific population is dependent upon the allele frequencies at that population as well as any deviations that population may have from Hardy-Weinberg Equilibrium.  Specifically, these expectations from the chapter on inbreeding are:
+
+$$E[AA] = p2(1-F)+pF$$
+
+$$E[AB] = 2pq(1-F)$$
+
+and
+
+$$E[BB] = q2(1-F)+qF$$
+
+Across loci, the probability of a multi-locus genotype ($X$) is multiplicative across all $L$ loci.
+
+\[
+P(X|F) = \prod_{i=1}^L P_{x_i}
+\]
+
+As a simple example, consider the following code, where we make three populations differing in allele frequencies at a single locus.  
+
+```{r}
+freqs <- data.frame( Stratum=rep(c("Population A","Population B","Population C"),each=2), Locus="Locus1")
+freqs$Allele <- rep( c("A","B"), times=3)
+freqs$Frequency <- c( 0.1, 0.9, 0.4,0.6, 0.7, 0.3)
+freqs
+```
+
+The structure of this data.frame is exactly like what you would get if you were passing a real dataset to the `frequencies()` function.  Next, the three possible genotypes are created on which we will estimate the assignment probabilities.
+
+```{r message=FALSE, warning=FALSE}
+require(gstudio)
+loci <- c( locus(c("A","A")), locus(c("A","B")), locus(c("B","B")) )
+individuals <- data.frame( ID=1:3, Locus1=loci)
+individuals
+```
+
+Before we jump in, it should be noted that we are going to estimate the posterior log likelihood of assignment for each genotype.  What this means is that we are going to estimate the probability the genotype came from each population.  These probabilities may be large or small depending upon the allele frequency spectra of each population.  Some can even be zero, for example, if the population does not have a copy of a particular allele.  However, we are interested in understanding the relative likelihood of assignment for each genotype, not the raw probability itself.  In forensic genetics, the multi locus probability of anyone genotype is exceedingly small (by design, that is how they 'get the perp'), but it is the relative likelihood of each multi locus probability that is most important.  
+
+As an example, consider the case where we have 99 populations that have alleles $A$ and $B$ and 1 population with alleles $A$, $B$, and $C$.  In this last population, the frequency of the $C$ allele is $p_C = 0.001$.  A $CC$ homozygote individual would have zero probability of occurring in the 99 populations (they just don’t have that allele) and probability of $(0.001)^2 = 1e-6$ in the last population.  Even thought his is a small probability, it is infinitely more probable than 0!  So our likelihood estimate is based upon the probability of assignment to a particular population, $P_i$, scaled by the sum of all potential populations it could be assigned to.  This is estimated as:
+
+\[
+\lambda_i = \frac{P_i}{\sum_{j=1}^K P_j}
+\]
+
+where $P_x$ is the multi locus probability of assigning to each population.  As such, our $CC$ genotype would have a $\lambda_i = 0\; (i \in 1, 2, \ldots, 99)$ but a $\lambda_{100} = 1.0$ for the last population.  This is the best-case scenario---the assignment process has eliminated all populations except for one.
+
+In R, multi locus probabilities and posterior assignments are made using the `multilocus_assignment()` function from gstudio.  It needs to have an individual that has at least one locus objects in it, typically as a row from a `data.frame` holding all your data, and a frequency matrix as outline above.  Here are examples for the three potential genotypes and the three example populations.
+
+
+```{r}
+multilocus_assignment(individuals[1,],freqs)
+```
+
+The $AA$ genotype has a probability of $p^2 = 0.7^2 = 0.49$ of being from stratum $C$ (as expected under Hardy-Equilibrium).  However, in comparison to all populations, the posterior likelihood of the assignment is $\lambda_C = 0.74$.  Biologically, this helps to provide confidence in the assignment by comparing this result to the likelihood of being assigned to $A$ or $B$.  The heterozygote genotype is more likely to be from the stratum with intermediate allele frequencies, $B$, but is not too terribly more likely than being in the $C$ population as well.
+
+
+```{r}
+multilocus_assignment(individuals[2,],freqs)
+```
+
+Here is the other homozygote for completeness, having the greatest (by over double) likelihood of being from $A$ than $B$.
+
+```{r}
+multilocus_assignment(individuals[3,],freqs)
+```
+
+Increasing the likelihood of assignment can be achieved by adding more loci to the analysis, using loci with more alleles, and/or using loci whose allele frequencies are closer to each other (e.g., for a locus with $\ell$ alleles, the most power is achieved if the frequency of each is roughly $\ell^{-1}$).
+
+If you have information on the inbreeding status, $F$, of the dataset, you can include that as an optional parameter in the `mutlilocus_assignment()` function.

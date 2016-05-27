@@ -1,0 +1,27 @@
+bookdown::gitbook:
+  css: media/style.css
+  highlight: tango
+  fig_caption: yes
+  config:
+    toc:
+      collapse: section
+      scroll_highlight: true
+      before: ""
+      after: |
+        <li><a href="http://dyerlab.bio.vcu.edu" target="blank">the Dyer Laboratory</a></li>
+    sharing:
+      facebook: no
+      twitter: no
+      google: no
+      weibo: no
+      instapaper: no
+      vk: no
+    search: yes
+bookdown::epub_book:
+  stylesheet: media/style.css
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  keep_tex: yes
+  latex_engine: pdflatex
+  citation_package: natbib
