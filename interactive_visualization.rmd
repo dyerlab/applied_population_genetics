@@ -1,0 +1,144 @@
+# Interactive Visualization
+
+Interpreting complicated networks can be difficult if the number of nodes and/or edges are large, due in large part due to the way we project network structure onto 2-dimensional spaces.  While publication-quality graphics are needed in the end, interpretation can be aided by plotting networks in a dynamic context.  Here we look at a Population Graph constructed using the *Araptus attenuatus* genetic data set.
+
+## Proceedure
+
+First, we need to load in the proper libraries. Each of the libraries are needed for:
+
+ - **gstudio** - Contains the *A. attenuatus* data set.  
+ - **popgraph** - Performs the `popgraph()` analysis.  
+ - **networkD3** - Loads in the javascript D3 library and allows the interactive plot.  
+
+```{r,message=FALSE}
+require(gstudio)
+require(popgraph)
+require(networkD3)
+```
+
+### Force-Directed Networks
+
+To create a popgraph, you need to pass the `popgraph()` function genotypes as multivariate variables—the function `to_mv()` does this behind the scene—and a vector of variables that allocate each row of data to a node.  Here we use the 'Population' vector from the arapat `data.frame`.
+
+```{r}
+data(arapat)
+graph <- popgraph(to_mv(arapat),groups = arapat$Population)
+print(graph)
+```
+
+The `forceNetwork()` function is what does the plotting and it needs some data that are in a specific format.  Essentially, there needs to be two `data.frame` objects with the following attributes:  
+
+ - **nodes** - A `data.frame` with each row representing the name of the node to be displayed, the group the node belongs to (if there are groupings of nodes to be displayed by alternative colors), and a vector of node sizes.  
+ - **edges** - A `data.frame` representing the edge connecting the nodes, labeled as 'from' and 'to' and a vector of weights.  
+ 
+The 'from' and 'to' vectors need to be numeric values of the nodes in the other data frame **and** need to be 0-indexed (e.g., the first node name it is going to look up is indexed as '0' in the javascript instead of '1' as is common in R).  
+
+
+
+```{r message=FALSE, warning=FALSE}
+nodes <- to_data.frame( graph, mode="nodes", as.named=FALSE )
+edges <- to_data.frame( graph, mode="edges", as.named=FALSE )
+edges$source <- edges$source - 1
+edges$target <- edges$target - 1 
+```
+
+The only last thing to do is to define a grouping of populations.  This will be represented in the network as a coloring.  For this one, I'm going to use the hypothesized STRUCTURE clustering (see \@ref(admixture) for how this was done).  In the `arapat` data set, there is a designation for each individual on which cluster they belong.  Some populations are 'pure' in their groupings but others (in spatial regions of sympatry) they are mixed.  Below I determine the estimated STRUCTURE groups for each population and collapse those who have more than one into a single string.
+
+
+```{r}
+grps <- by( arapat$Cluster, arapat$Population, unique )
+l <- lapply( grps, function(x) { g <- paste(sort(x),collapse="/") })
+df <- data.frame( name=names(l), group=as.character(l))
+nodes <- merge( nodes, df )
+```
+
+
+
+Once defined, we can then call the function to make the `data.frame` objects and then do the plot.  These graphics are *interactive*, grab a node and drag it around!
+
+```{r}
+require(networkD3)
+forceNetwork(Links = edges, Nodes = nodes,
+            Source = "source", Target = "target",
+            Value = "value", NodeID = "name",
+            Group = "group", opacity=1.0,
+            legend=TRUE, fontSize = 16,
+            zoom=TRUE )
+```
+
+
+### Bifurcating Networks
+
+Another network approach that could be used is defining bifurcating networks.  Here we will examine the *A. attenuatus* data set using Nei's genetic distance metric.
+
+\[
+D_{nei} = -\ln( L )
+\]
+
+where
+
+\[
+L = \frac{\sum_l\sum_u x_uy_u}{\sqrt{(\sum_l\sum_u x_u^2)(\sum_l\sum_u y_u^2)}}
+\]
+
+I make the among stratum distance matrix and then turn it into a `dist` object to do a heirarchial clustering on the populations. I then plot it and make the node colors equal to the grouping of the dendrogram *if* there were 4 groups in the dataset.  This is also zoomable, for large trees, so if you want to figure out the relationships at the leaves, where the internal edges are smaller, zoom in with the mouse.
+
+```{r}
+d <- genetic_distance(arapat,stratum = "Population", mode="Nei")
+d <- as.dist( d )
+hc <- hclust(d)
+dendroNetwork(hc, height=600, 
+              zoom=TRUE, 
+              textColour = c("red","green","orange","blue")[ cutree(hc,4)])
+```
+
+
+### Sankey Networks
+
+A Sankey Diagram is a kind of flow diagram used to indicate allocation of one set of object into another set.  For this example, I'll use the populations, clustes (from STRUCTURE) and putative species for individuals of *A. attenuata* as the parts.
+
+As before, this needs a `data.frame` for nodes and one for edges.
+
+```{r,warning=FALSE, message=FALSE}
+pops <- as.character(unique(arapat$Population))
+species <- as.character(unique(arapat$Species))
+cluster <- as.character(unique(arapat$Cluster))
+
+sankey.nodes <- data.frame( name = c( pops, species, cluster), 
+                            stringsAsFactors = FALSE)
+
+
+# takes vector of values and finds out the number of times
+# each combination is found in the pair.
+get_sets <- function( source, target ) {
+  t <- table(source, target)
+  m <- which( t > 0, arr.ind = TRUE)
+  suppressWarnings( df <- data.frame( ind=m ) )
+  df$source <- rownames(t)[df$ind.source]
+  df$target <- colnames(t)[df$ind.target]
+  df$value <- sapply(seq(1,dim(df)[1]), 
+                     function(x) {
+                         return(t[df$ind.source[x],df$ind.target[x]])
+                         })
+  return( df[,3:5] )
+}
+
+# For finding the number of the name instead of the name
+nameIndex <- function(vals,names){
+  ret <- sapply( vals, function(x) {which(x==names)-1}, USE.NAMES = FALSE)
+  return(ret)
+}
+
+
+
+sankey.edges <- rbind( get_sets(arapat$Species,arapat$Population),
+                       get_sets(arapat$Population, arapat$Cluster) )
+sankey.edges$targetNum <- nameIndex(sankey.edges$target, sankey.nodes$name)
+sankey.edges$sourceNum <- nameIndex(sankey.edges$source, sankey.nodes$name)
+
+sankeyNetwork( Links=sankey.edges, Nodes=sankey.nodes,
+               Source = "sourceNum", Target = "targetNum",
+               Value = "value", NodeID = "name",
+               width = 700, fontSize = 12, nodeWidth = 30)
+```
+

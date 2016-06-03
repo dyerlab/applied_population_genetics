@@ -11,8 +11,6 @@ A spatial projection is a mathematical representation of a coordinate space used
 Onto this ellipsoid, we must define a set of reference locations (in 3-space) called datum that help describe the precise shape of the surface.
 
 
-
-
 ## Projections
 
 A projection onto an ellipsoid is a way of converting the spherical coordinates, such as longitude and latitude, into 2-dimensional coordinates we can use.  There are three main types of approaches that have been used to develop various projections. (see wikipedia for some example imagery of different projections). 

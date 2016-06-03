@@ -1,4 +1,4 @@
-# Population Subdivision
+# Population Models
 
 Subdivision occurs when individuals are spatially, ecologically, or temporally separated causing the relative probability of mating among individuals to be non-uniformly spread across all individuals.  This is the natural state for most species—they are not completely randomly mating—and as such this causes changes in how genetic variation is partitioned.  In this Chapter we examine subdivision and how we quantify its strength.
 
