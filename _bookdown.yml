@@ -9,8 +9,8 @@ rmd_files: [
   "part_single_population.rmd", "hardy_weinberg_equilibrium.rmd", "genetic_drift.rmd", "effective_population_size.rmd", "mutation.rmd",
   "part_nonrandom_mating.rmd", "selfing.rmd", "mixed_mating.rmd", "wahlund_effects.rmd",
   "part_parent_offspring.rmd", "pedigrees.rmd", "parentage.rmd", 
-  "part_subdivided_populations.rmd", "population_models.rmd", "genetic_diversity.rmd", "rarefaction.rmd", "population_assignment.rmd", "interactive_visualization.rmd",
-     "admixture.rmd", "ordination.rmd",
+  "part_subdivided_populations.rmd", "population_models.rmd", "genetic_diversity.rmd", "rarefaction.rmd", "population_assignment.rmd", 
+     "admixture.rmd", "ordination.rmd", "interactive_visualization.rmd", "mapping_populations.rmd",
   "part_spatial_data.rmd","vector_data.rmd", "raster_data.rmd", 
   "projections.rmd", "ecological_distance.rmd", "niche_modeling.rmd",  
   "part_backmatter.rmd","references.rmd"
