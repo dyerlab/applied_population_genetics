@@ -107,6 +107,12 @@ using the lower case versions of $p$ and $q$.  Be careful about switching these 
 
 Intuitively the formulation denoted above for $p$ and $q$ makes sense as the heterozygote genotype ($AB$) frequency, $Q$, is split evenly between the homozygote genotype frequencies, $P$ (for $AA$) and $R$ (for $BB$).   If these are the only two alleles in the population then there is the additional restriction that $p + q = 1$.  It is easy to expand these methods to more than two alleles, but again the original approximation was specifically set for 2-allele systems.
 
+Here is an interactive widget that shows how the expected frequencies of the genotypes change, even under Hardy Weinberg Equilibrium, due to changes in the allele frequencies.
+
+```{r echo=FALSE}
+knitr::include_app("https://rodney.shinyapps.io/hardy_weinberg/", height="700")
+```
+
 In R, we can approximate these formulas using the gstudio library.  After loading in the library, we can create data objects representing diploid loci as follows:
 
 ```{r message=FALSE, warning=FALSE}
@@ -157,7 +163,7 @@ It should be noted that for these function, and for almost all the functions tha
 
 If the assumptions in the next generation hold, then it is possible to iterate through all possible combinations of matings, noting the probability of observing each type, and estimate the frequency of offspring genotypes.  This is a bit messy and is probably better displayed in tabular format.
 
-  Parents   | $\mathbf{P(Parents)}$ | $\mathbf{P(AA)}$ | $\mathbf{P(AB)}$ | $\mathbf{P(BB)}$
+Parents   | $\mathbf{P(Parents)}$ | $\mathbf{P(AA)}$ | $\mathbf{P(AB)}$ | $\mathbf{P(BB)}$
 ------------|:----------:|:-------:|:-------:|:-------:
 $AA\;x\;AA$	| $P^2$      | $P^2$	 | &nbsp;  | &nbsp;
 $AA\;x\;AB$	| $PQ$       | $PQ/2$  | $PQ/2$  | &nbsp;	

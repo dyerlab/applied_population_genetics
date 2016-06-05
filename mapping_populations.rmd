@@ -24,6 +24,7 @@ data(arapat)
 
 # pull out the coordinates - Population is the default stratums
 coords <- strata_coordinates(arapat)
+coords$Stratum <- as.character( coords$Stratum )
 coords[1:5,]
 
 # make a map (grabs from google) and plot it
@@ -80,7 +81,9 @@ We can also produce dynamic maps for viewing in html output (like ebooks or webp
 
 ```{r,message=FALSE,warning=FALSE}
 require(leaflet)
-leaflet( data=coords ) %>% addTiles() %>% addMarkers( ~Longitude, ~Latitude, popup=~as.character(Stratum))
+leaflet( data=coords ) %>% 
+  addTiles() %>% 
+  addMarkers( ~Longitude, ~Latitude, popup=~Stratum )
 ```
 
 You can change the underlying base map by passing on other Tiles to the construction.  A list of available tile providers can be found [here](http://leaflet-extras.github.io/leaflet-providers/preview/index.html).
@@ -88,17 +91,18 @@ You can change the underlying base map by passing on other Tiles to the construc
 ```{r}
 leaflet( data=coords ) %>% 
   addProviderTiles("MapQuestOpen.Aerial") %>% 
-  addMarkers( ~Longitude, ~Latitude, popup=~as.character(Stratum))
+  addMarkers( ~Longitude, ~Latitude, popup=~Stratum)
 ```
 
 Or you can add custom images for the map relative to some meaningful information.
 
 ```{r}
+coords$Size <- log(coords$Ae) * 10 + 1
 leaflet( data=coords ) %>%  
   addTiles() %>% 
   addCircleMarkers( ~Longitude, ~Latitude, 
-                    popup=~as.character(Stratum), 
-                    radius=~log(coords$Ae)*10 + 1, color="red", 
+                    popup=~Stratum, 
+                    radius=~Size, color="red", 
                     fillOpacity=0.75) 
 ```
 
@@ -124,7 +128,7 @@ leaflet( data=coords ) %>%
   addTiles() %>% 
   addCircleMarkers( ~Longitude, ~Latitude, 
                     popup=~label, 
-                    radius=~log(coords$Ae)*10 + 1, 
+                    radius=~Size, 
                     color="red", fillOpacity=0.75) 
 ```
 

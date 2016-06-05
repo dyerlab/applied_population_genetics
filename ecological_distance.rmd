@@ -14,7 +14,7 @@ As a demonstration, we will start with the venerable `arapat` dataset.  Only a s
 2. Population `ESan` is located on an island and as such has no direct connection on the rasters we will be using to the remaining populations.
 3. The population `165` is located in a place that the WorldClim rasters do not record land.  The rasters used have a resolution of 30-arc seconds (~1km) and this population is located at a place where that granularity of that grid does not recognize land.
 
-```{r message=FALSE, warning=FALSE}
+```{r mapArapatCoords, message=FALSE, warning=FALSE}
 require(gstudio)
 require(ggrepel)
 require(ggmap)
