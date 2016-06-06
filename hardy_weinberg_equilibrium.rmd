@@ -24,7 +24,7 @@ Finally, we will invoke both of Mendel's Laws of Inheritance.  His first law sta
 A Punnet square is a simple tool used to teach transition probabilities in basic genetics and biology courses.  Here is an interactive example using the 2-allele locus (though the tool can handle other ploidy levels) that you can play with to see the kinds of offspring genotypes produced by individual matings.  
 
 ```{r echo=FALSE}
-knitr::include_app("https://rodney.shinyapps.io/punnet_square/", height="450")
+knitr::include_app("http://popgen.bio.vcu.edu/shiny/apg/punnet_square/", height="500")
 ```
 
 The population we are examining need to have some specific demographic parameters for HWE to be valid.  The most basal assumption that is invoked is that the population size must be very large.  In a fact, most of the work of R.A. Fisher and J.B.S. Haldane in developing the modern synthesis relied upon this assumption as well.  If population size, $N$, is too small, then the stochastic change (what we call genetic drift) can have serious influences on allele frequencies.  
@@ -78,7 +78,7 @@ Intuitively the formulation denoted above for $p$ and $q$ makes sense as the het
 Here is an interactive widget that shows how the expected frequencies of the genotypes change, even under Hardy Weinberg Equilibrium, due to changes in the allele frequencies.
 
 ```{r echo=FALSE}
-knitr::include_app("https://rodney.shinyapps.io/hardy_weinberg/", height="700")
+knitr::include_app("http://popgen.bio.vcu.edu/shiny/apg/hardy_weinberg/", height="700")
 ```
 
 In R, we can approximate these formulas using the gstudio library.  After loading in the library, we can create data objects representing diploid loci as follows:

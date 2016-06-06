@@ -47,26 +47,32 @@ server <- function(input, output) {
     
     mom <- as.character(strsplit(as.character(input$mom), split="")[[1]])
     dad <- as.character(strsplit(as.character(input$dad), split="")[[1]])
-
-    x <- matrix(NA,nrow=length(dad),ncol=length(mom))
-    for( i in 1:length(mom)){
-      for( j in 1:length(dad)){
-        x[j,i] <- paste(mom[i],dad[j],sep="")
+    if( length(mom)>0 & length(dad)>0 ) {
+      x <- matrix(NA,nrow=length(dad),ncol=length(mom))
+      for( i in 1:length(mom)){
+        for( j in 1:length(dad)){
+          x[j,i] <- paste(mom[i],dad[j],sep="")
+        }
       }
+      
+      df <- as.data.frame( x )
+      names(df) <- mom
+      rownames(df) <- dad
+      tab <- xtable(df) 
+      align(tab) <- paste(c("c|",rep("c",length(mom))),collapse="")
+      
+      caption <- paste("Offspring genotypes for ",input$mom," x ", input$dad," mating.",sep="")
+      
+      
+      
+      p <- print( xtable(df,caption=caption), type="html",
+                  sanitize.rownames.function=bold,
+                  sanitize.colnames.function=bold,
+                  print.results = FALSE,
+                  caption.placement="top")
+      HTML( p )
+      
     }
-    
-    df <- as.data.frame( x )
-    names(df) <- mom
-    rownames(df) <- dad
-    tab <- xtable(df) 
-    align(tab) <- paste(c("c|",rep("c",length(mom))),collapse="")
-    
-    p <- print( xtable(df), type="html",
-                sanitize.rownames.function=bold,
-                sanitize.colnames.function=bold,
-                print.results = FALSE)
-    print(p)
-    HTML( p )
     
   } )
 }
