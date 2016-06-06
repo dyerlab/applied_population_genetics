@@ -4,7 +4,7 @@ There are several ways that we can look for natural groupings in our data.  Barr
 
 A popular way to examine how individuals and populations are configured is to use an ordination approach or apply a multivariate rotation on the data.  In what follows, I'll describe a principal components analysis (though it is not really an analysis, it is more of a projection).  These approaches are common in multivariate statistics and have very little to do with population genetic processes or assumptions.  Fortunately, there are several approaches amenable to transforming population genetic data into a form that is usable in normal multivariate statistics, the one used most often is discretizing the data.  To demonstrate, consider the case where we have four individuals genotyped for a single locus as depicted below.
 
-```{r message=FALSE, warning=FALSE}
+```{r ordination1, message=FALSE, warning=FALSE}
 library(gstudio)
 x <- c( locus(c(1,2)), locus( c(1,1) ), locus(c(1,3)), locus(c(3,3)))
 x
@@ -64,7 +64,8 @@ This output has two important components to it.  First, it shows the axes, in de
 
 Where this becomes meaningful for us is in how we can project our original data onto these new coordinate locations and look at the distribution to see if there are any obvious trends, partitions, gradients, etc.  
 
-```{r}
+```{r warning=FALSE, message=FALSE}
+require(ggplot2)
 pred <- predict(fit.pca)
 df <- data.frame(PC1 = pred[, 1], PC2 = pred[, 2])
 df$Species <- arapat$Species

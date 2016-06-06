@@ -10,17 +10,13 @@ First, we need to load in the proper libraries. Each of the libraries are needed
  - **popgraph** - Performs the `popgraph()` analysis.  
  - **networkD3** - Loads in the javascript D3 library and allows the interactive plot.  
 
-```{r,message=FALSE}
-library(gstudio)
-library(popgraph)
-library(networkD3)
-```
-
 ### Force-Directed Networks
 
 To create a popgraph, you need to pass the `popgraph()` function genotypes as multivariate variables—the function `to_mv()` does this behind the scene—and a vector of variables that allocate each row of data to a node.  Here we use the 'Population' vector from the arapat `data.frame`.
 
-```{r}
+```{r interactive1, message=FALSE, warning=FALSE}
+library(gstudio)
+library(popgraph)
 data(arapat)
 graph <- popgraph(to_mv(arapat),groups = arapat$Population)
 print(graph)
@@ -141,4 +137,5 @@ sankeyNetwork( Links=sankey.edges, Nodes=sankey.nodes,
                Value = "value", NodeID = "name",
                width = 700, fontSize = 12, nodeWidth = 30)
 ```
+
 

@@ -1,7 +1,7 @@
 book_filename: "amg"
 chapter_name: ""
-before_chapter_script: ""
-after_chapter_script: ""
+before_chapter_script: "scripts/before_chapter.R"
+after_chapter_script: "scripts/after_chapter.R"
 rmd_files: [ 
   "index.rmd",
   "part_r_ecosystem.rmd", "r_ecosystem.rmd","r_datatypes.rmd","r_containers.rmd",
@@ -11,9 +11,10 @@ rmd_files: [
   "part_nonrandom_mating.rmd", "selfing.rmd", "mixed_mating.rmd", "wahlund_effects.rmd",
   "part_parent_offspring.rmd", "pedigrees.rmd", "parentage.rmd", 
   "part_subdivided_populations.rmd", "population_models.rmd", "genetic_diversity.rmd", 
-    "rarefaction.rmd", "population_assignment.rmd", "admixture.rmd", "ordination.rmd", 
-    "interactive_visualization.rmd", "mapping_populations.rmd",
-  "part_spatial_data.rmd","vector_data.rmd", "raster_data.rmd", 
+    "rarefaction.rmd", "population_assignment.rmd", "admixture.rmd", 
+    "network_models.rmd",
+    "ordination.rmd", "interactive_visualization.rmd",
+  "part_spatial_data.rmd","vector_data.rmd", "raster_data.rmd",  "mapping_populations.rmd",
   "projections.rmd", "ecological_distance.rmd", "niche_modeling.rmd",  
   "part_backmatter.rmd","references.rmd"
 ]

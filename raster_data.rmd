@@ -330,9 +330,10 @@ plot(edge,add=TRUE)
 From this edge object (or a collection of edge objects) we can again extract values from a raster.  Here I pull out the elevation profile of this edge.  To plot it, I need to make a sequence of latitude values equal in length to that of the observed elevation values I extracted.  
 
 ```{r warning=FALSE,message=FALSE}
+require(igraph)
 elev <- extract( baja_california, edge )[[1]]
-from_lat <- igraph::V(graph)$Latitude[igraph::V(graph)$name == "SFr"]
-to_lat <- igraph::V(graph)$Latitude[igraph::V(graph)$name == "164"]
+from_lat <- V(graph)$Latitude[igraph::V(graph)$name == "SFr"]
+to_lat <- V(graph)$Latitude[igraph::V(graph)$name == "164"]
 lat <- seq( from=from_lat, to=to_lat, length.out = length(elev) )
 df <- data.frame( Latitude=lat, Elevation=elev)
 p <- ggplot( df, aes(Latitude,Elevation)) + geom_line(color="lightgrey") 
@@ -508,4 +509,5 @@ You may also need to export the raster in a non-R format for external analyses. 
 ```{r eval=FALSE}
 writeRaster( baja_california, filename="baja_california.tif")
 ```
+
 

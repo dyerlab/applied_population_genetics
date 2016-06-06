@@ -3,6 +3,8 @@
 
 ```{r eval=FALSE}
 install.packages(c("rJava","dismo"))
+library("rJava")
+library("dismo")
 ```
 
 

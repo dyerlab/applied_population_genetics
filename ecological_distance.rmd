@@ -42,7 +42,7 @@ plot(alt, xlab="Longitude", ylab="Latitude")
 
 To start with, we should probably examine the distribution of the variable we are working with in the locations at which the samples are taken.
 
-```{r}
+```{r elevation}
 coords$elevation <- extract( alt, coords[,2:3])
 ggplot( coords, aes(x=elevation)) + geom_histogram( binwidth = 25 ) + 
   xlab("Elevation (m)") + ylab("Frequency")

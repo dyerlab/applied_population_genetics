@@ -27,7 +27,7 @@ All projections produce bias in area, distance, or shape (some do so in more tha
 These are projections centered on the Prime Meridian (`Longitude=0`) 
 
 *Mercator Projection*
-```{r warning=FALSE, message=FALSE}
+```{r projections1, warning=FALSE, message=FALSE}
 library(maps)
 map("state",proj="mercator")
 ```

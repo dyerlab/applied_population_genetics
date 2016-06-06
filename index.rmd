@@ -26,11 +26,6 @@ The content of this text is modified, added to, and changed continually.  You ar
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(ggplot2)
-library(gstudio)
-library(rgdal)
-library(rgeos)
-library(raster)
-library(ggmap)
 theme_set( theme_bw() )
 ```
 

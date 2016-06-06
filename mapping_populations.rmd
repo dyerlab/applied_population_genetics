@@ -138,10 +138,9 @@ leaflet( data=coords ) %>%
                     color="red", fillOpacity=0.75) 
 ```
 
-There is a small problem that I've run into when using the `%>%` operator and raster data, namely that the `magrittr` package has a function named `extract()` and it overrides the `raster::extract()` function in a messy and uncool way.  As a consequence, I find that when I use it, it is beneficial if I then detach the library to clean up the namespace. 
+
 
 ```{r echo=FALSE}
-detach(magrittr)
+suppressWarnings( detach(name="package:magrittr",character.only = TRUE,unload=TRUE) )
 ```
-
 

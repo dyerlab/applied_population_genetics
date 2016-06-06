@@ -1,0 +1,22 @@
+# Network-Based Models
+
+## Populations as Networks
+
+
+
+## Model Free Networks
+
+```{r}
+require(gstudio)
+```
+
+
+
+
+## Networks Based on Models - PopGraphs
+
+
+```{r}
+require(popgraph)
+```
+
