@@ -31,6 +31,7 @@ require(rgdal)
 require(rgeos)
 require(raster)
 require(ggmap)
+require(magrittr)
 theme_set( theme_bw() )
 ```
 

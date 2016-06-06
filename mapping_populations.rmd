@@ -81,6 +81,7 @@ We can also produce dynamic maps for viewing in html output (like ebooks or webp
 
 ```{r,message=FALSE,warning=FALSE}
 require(leaflet)
+require(magrittr)
 leaflet( data=coords ) %>% 
   addTiles() %>% 
   addMarkers( ~Longitude, ~Latitude, popup=~Stratum )
@@ -111,6 +112,9 @@ In the information that pops out of the marker, you can put a bit more informati
 
 ```{r}
 x <- genetic_diversity(arapat,stratum = "Population",mode="Ho")
+x <- x[ x$Locus == "LTRS",]
+coords <- merge( coords, x[,c(1,3)])
+x <- genetic_diversity(arapat,stratum = "Population",mode="He")
 x <- x[ x$Locus == "LTRS",]
 coords <- merge( coords, x[,c(1,3)])
 x <- genetic_diversity(arapat,stratum = "Population",mode="Ae")

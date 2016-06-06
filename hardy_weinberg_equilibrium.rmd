@@ -21,43 +21,11 @@ Finally, we will invoke both of Mendel’s Laws of Inheritance.  His first law s
 
 ### Punnet Squares
 
-Punnet squares are a basic tool to understand the probability of offspring genotypes for individual diploid mating events.  
+A Punnet square is a simple tool used to teach transition probabilities in basic genetics and biology courses.  Here is an interactive example using the 2-allele locus (though the tool can handle other ploidy levels) that you can play with to see the kinds of offspring genotypes produced by individual matings.  
 
-A Punnet square is a simple tool used to teach transition probabilities in basic genetics and biology courses.  Here is an example using the 2-allele example provided in the text to iterate through all the potential mating combinations.
-
-Mating among the same homozygotes uniform offspring genotypes
-
-&nbsp;   | $A$  | $A$ 
-:-------:|:----:|:---:
-$A$      | $AA$ | $AA$
-$A$      | $AA$ | $AA$
-
-
-Mating among different homozygotes produces all heterozygotes.
-
-&nbsp;   | $A$  | $A$ 
-:-------:|:----:|:---:
-$B$      | $AB$ | $AB$
-$B$      | $AB$ | $AB$
-
-
-Mating among one homozygote and one heterozygote produces 50% homozygotes and 50% heterozygotes
-
-&nbsp;   | $A$  | $A$ 
-:-------:|:----:|:---:
-$A$      | $AA$ | $AA$
-$B$      | $AB$ | $AB$
-
-
-Mating among two heterozygote genotypes produces the full array of offspring genotypes in a 1:2:1 ratio.
-
-&nbsp;   | $A$  | $B$ 
-:-------:|:----:|:---:
-$A$      | $AA$ | $AB$
-$B$      | $AB$ | $BB$
-
-
-
+```{r echo=FALSE}
+knitr::include_app("https://rodney.shinyapps.io/punnet_square/", height="450")
+```
 
 The population we are examining need to have some specific demographic parameters for HWE to be valid.  The most basal assumption that is invoked is that the population size must be very large.  In a fact, most of the work of R.A. Fisher and J.B.S. Haldane in developing the modern synthesis relied upon this assumption as well.  If population size, $N$, is too small, then the stochastic change (what we call genetic drift) can have serious influences on allele frequencies.  
 

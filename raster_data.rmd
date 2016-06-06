@@ -10,7 +10,7 @@ r <- matrix(runif(10000),nrow=100)
 rnd <- raster( r )
 ```
 
-which can be visualized using the normal plot command. The raster library has overrid several of the plotting functions and you can plot raster objects and decorate the images in the same way you do for normal plotting materials (\@ref(stock-graphics)).
+which can be visualized using the normal plot command. The raster library has overrid several of the plotting functions and you can plot raster objects and decorate the images in the same way you do for normal plotting materials (\@ref(graphics)).
 
 ```{r}
 plot(rnd)
@@ -205,9 +205,7 @@ baja_prec <- raster("./spatial_data/bio12_22.tif")
 
 And then extract the values from each of these layers into the `coords` data we already have set up.
 
-
 ```{r}
-summary(coords)
 coords$elevation <- extract( baja_california, coords[,c(2,3)])
 coords$mean_temp <- extract( baja_temp, coords[,c(2,3)])
 coords$mean_precip <- extract( baja_prec, coords[,c(2,3)])
@@ -332,10 +330,9 @@ plot(edge,add=TRUE)
 From this edge object (or a collection of edge objects) we can again extract values from a raster.  Here I pull out the elevation profile of this edge.  To plot it, I need to make a sequence of latitude values equal in length to that of the observed elevation values I extracted.  
 
 ```{r warning=FALSE,message=FALSE}
-require(igraph)
 elev <- extract( baja_california, edge )[[1]]
-from_lat <- V(graph)$Latitude[V(graph)$name == "SFr"]
-to_lat <- V(graph)$Latitude[V(graph)$name == "164"]
+from_lat <- igraph::V(graph)$Latitude[igraph::V(graph)$name == "SFr"]
+to_lat <- igraph::V(graph)$Latitude[igraph::V(graph)$name == "164"]
 lat <- seq( from=from_lat, to=to_lat, length.out = length(elev) )
 df <- data.frame( Latitude=lat, Elevation=elev)
 p <- ggplot( df, aes(Latitude,Elevation)) + geom_line(color="lightgrey") 
@@ -425,7 +422,7 @@ Now, we can see where the observed value occurs in the distribution of elevation
 
 ```{r}
 df <- data.frame( Elevation=c(mean(obs),perm_elev), Category=c("Observed",rep("Permuted",999)))
-ggplot( df, aes(x=Elevation,fill=Category)) + geom_histogram(stat="bin") + xlab("Elevation (m)") + ylab("Distribution of Permuted Elevations")
+ggplot( df, aes(x=Elevation,fill=Category)) + geom_histogram(stat="bin", bins=40) + xlab("Elevation (m)") + ylab("Distribution of Permuted Elevations")
 ```
 
 In fact, we can estimate the probablity as:

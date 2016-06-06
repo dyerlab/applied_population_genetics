@@ -1,4 +1,4 @@
-# R Data Types {.imageChapter}
+# Data Types {.imageChapter}
 
 <iframe width="640" height="360" class="chapter_image" src="https://www.youtube.com/embed/HLX397T5yqw?list=PLjvIGgJ_mgVokdI-r7q_erREHi-DGnGSq" frameborder="0" allowfullscreen></iframe>
 
