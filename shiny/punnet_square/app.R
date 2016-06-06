@@ -10,6 +10,8 @@ ui <- fluidPage(
         padding: 15px;
       }
 
+      td:hover {background-color: #f5f5f5}
+
       body {
         background-color: #fff;
       }
@@ -17,7 +19,7 @@ ui <- fluidPage(
   ),
   
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel("Pullet Square"),
   
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
@@ -38,7 +40,7 @@ server <- function(input, output) {
   require(xtable)
   
   bold <- function(x){
-    paste0('<b>', x, '</b>') }
+    paste0('<font color="#3182bd"><b>', x, '</b></font>') }
   
   
   output$offspring <- renderUI({
@@ -61,6 +63,7 @@ server <- function(input, output) {
     
     p <- print( xtable(df), type="html",
                 sanitize.rownames.function=bold,
+                sanitize.colnames.function=bold,
                 print.results = FALSE)
     print(p)
     HTML( p )
