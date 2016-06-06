@@ -1,5 +1,10 @@
 library(shiny)
 
+####
+#### TODO: fix duplicate row names
+####
+
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
   
@@ -51,7 +56,7 @@ server <- function(input, output) {
       x <- matrix(NA,nrow=length(dad),ncol=length(mom))
       for( i in 1:length(mom)){
         for( j in 1:length(dad)){
-          x[j,i] <- paste(mom[i],dad[j],sep="")
+          x[j,i] <- paste(sort(mom[i],dad[j]),collapse="")
         }
       }
       
