@@ -2,16 +2,16 @@
 
 For the purposes of this chapter, I will consider vector data as consisting of a finite set of points that may or may not be connected.  In `R`, these points can be used directly, as a numeric data type, or as a Spatial* class object.  The `sp` library contains a lot of functions that help deal with points, lines, and polygons and this is going to be a short overview of how they can be derived and manipulated in the pursuit of population genetic studies.
 
-The construction of Spatial* objects is a bit convoluted.  I don't apprecaite why that is, it is just the way it was constructed.  Here is a set series of examples to get you going.  I will wait until subsequent chapters for us to use these structures in analyses and data extraction, this is mostly a quick tutorial on how to create these objects.
+The construction of Spatial* objects is a bit convoluted.  I don't appreciate why that is, it is just the way it was constructed.  Here is a set series of examples to get you going.  I will wait until subsequent chapters for us to use these structures in analyses and data extraction, this is mostly a quick tutorial on how to create these objects.
 
 ## Points
 
-Points are defined by *SpatialPoints* objects.  A collection of points may have additional data associated with each location and would make a *SpatialPointsDataFrame*.  This is a bit different than the normal `data.frame` objects we've been using with coordiantes in them already---in fact it is the opposite of that.  It is a set of points within which is located a `data.frame` rather than `data.frame` that has within it a set of points.  
+Points are defined by *SpatialPoints* objects.  A collection of points may have additional data associated with each location and would make a *SpatialPointsDataFrame*.  This is a bit different than the normal `data.frame` objects we've been using with coordinates in them already---in fact it is the opposite of that.  It is a set of points within which is located a `data.frame` rather than `data.frame` that has within it a set of points.  
 
-Confused yet?  Lets get to the point and make some coordiantes.  Here is the way we've extracted points from the *Arapatus attenuatus* data set thus far.
+Confused yet?  Lets get to the point and make some coordinates.  Here is the way we've extracted points from the *Arapatus attenuatus* data set thus far.
 
 ```{r chunk-vector}
-require(gstudio)
+library(gstudio)
 data(arapat)
 coords <- strata_coordinates(arapat)
 summary(coords)
@@ -20,8 +20,8 @@ summary(coords)
 However, we can also derive these points directly as a *SpatialPoints* object defined in the *sp* library by setting the optional flag `as.SpatialPoints=TRUE`.
 
 ```{r}
-require(sp)
-require(raster)
+library(sp)
+library(raster)
 pts <- strata_coordinates( arapat, as.SpatialPoints = TRUE )
 pts
 ```
@@ -33,7 +33,7 @@ proj4string(pts) <- CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs
 pts
 ```
 
-Any set of x- and y- coordiantes can be turned into a *SpatialPoints* object. If we are to associate data with those points, the data has to have the same number of observations as there are coordinates.  In our case here, we have 39 populations and as an example I'll determine the number of indiviudals genotyped in each population as a 
+Any set of x- and y- coordinates can be turned into a *SpatialPoints* object. If we are to associate data with those points, the data has to have the same number of observations as there are coordinates.  In our case here, we have 39 populations and as an example I'll determine the number of individuals genotyped in each population as a 
 
 ```{r}
 df <- data.frame( table(arapat$Population) )
@@ -112,7 +112,7 @@ SpatialLinesLengths(SLs, longlat = TRUE)
 
 A polygon is simply a collection of line segments that closes in on itself.  We can use polygons to identify habitat, define boundaries, etc.  In the short description to follow, we will create a set Polygon* objects, culminating in a *SpatialPolygonsDataFrame* object.
 
-We will start with the first 5 coordinates in the `arapat` data set. To make the polygon, we **must** close the coordinates, which means take the first one we put in and append it to the end of the list of coordiantes, such that in this case `c[1,] == c[6,]`.
+We will start with the first 5 coordinates in the `arapat` data set. To make the polygon, we **must** close the coordinates, which means take the first one we put in and append it to the end of the list of coordinates, such that in this case `c[1,] == c[6,]`.
 
 ```{r}
 c <- cbind( coords$Longitude[1:5], coords$Latitude[1:5])

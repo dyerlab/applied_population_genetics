@@ -1,16 +1,16 @@
 # Raster Data 
 
-Rasters are a form of data that is georeferenced and (somewhat) continuous.  Raster data is perhaps best envisioned as a matrix of values, whose entried represent spatially referenced data points.  The raster itself can be visualized as you could for normal matrix output (as we did in \@ref(r-matrices) ).  What makes a raster different, however, is that it is (or should be) georeferenced. This means that each element of the matrix represents some measurement on the ground having a specific location and spread.  This is analogous to an image, where if you zoom in on it enough, you will be able to differentiate between individual pixels, it is just that for rasters, each pixel has a spatial location and size associated with it that we can map onto the earth.
+Rasters are a form of data that is georeferenced and (somewhat) continuous.  Raster data is perhaps best envisioned as a matrix of values, whose entries represent spatially referenced data points.  The raster itself can be visualized as you could for normal matrix output (as we did in \@ref(r-matrices) ).  What makes a raster different, however, is that it is (or should be) georeferenced. This means that each element of the matrix represents some measurement on the ground having a specific location and spread.  This is analogous to an image, where if you zoom in on it enough, you will be able to differentiate between individual pixels, it is just that for rasters, each pixel has a spatial location and size associated with it that we can map onto the earth.
 
 You can either create raster objects *de novo* or you can acquire them from some external source.  To create one from scratch, you start with a matrix of values and then construct the raster object using the `raster()` function as:
 
 ```{r chunk-raster, message=FALSE,warning=FALSE}
-require(raster)
+library(raster)
 r <- matrix(runif(10000),nrow=100)
 rnd <- raster( r )
 ```
 
-which can be visualized using the normal plot command. The raster library has overrid several of the plotting functions and you can plot raster objects and decorate the images in the same way you do for normal plotting materials (\@ref(graphics)).
+which can be visualized using the normal plot command. The raster library has overridden several of the plotting functions and you can plot raster objects and decorate the images in the same way you do for normal plotting materials (\@ref(graphics)).
 
 ```{r}
 plot(rnd)
@@ -66,9 +66,9 @@ plot( alt, xlab="Longitude", ylab="Latitude" )
 
 ## Cropping Rasters
 
-Just because we have a large raster does not mean that it is in your best interest to use the entire object.  Much of the spatial analyses routines used in population genetics require measurments of intervening distance, either Euclidean or ecological.  Many of the routines for estiamtion of these distances require the estimation of pairwise distance between *all* pixels.  For our purposes, the `arapat` dataset does not occurr throughout most of this map, so it is in our best interests to use only the portion of the raster relevant to our data rather than the entire thing.  
+Just because we have a large raster does not mean that it is in your best interest to use the entire object.  Much of the spatial analyses routines used in population genetics require measurements of intervening distance, either Euclidean or ecological.  Many of the routines for estimation of these distances require the estimation of pairwise distance between *all* pixels.  For our purposes, the `arapat` dataset does not occur throughout most of this map, so it is in our best interests to use only the portion of the raster relevant to our data rather than the entire thing.  
 
-Here is one way of going this.  I first define an extent, which consists of a vector representing the coordiantes for `xmin`, `xmax`, `ymin`, and `ymax` (in decimal degrees longitude and latitude).  You then `crop()` the raster to that extent.
+Here is one way of going this.  I first define an extent, which consists of a vector representing the coordinates for `xmin`, `xmax`, `ymin`, and `ymax` (in decimal degrees longitude and latitude).  You then `crop()` the raster to that extent.
 
 ```{r}
 e <- extent( c(-115,-109,22,30) )
@@ -85,10 +85,10 @@ baja <- hillShade( slope, aspect, 40, 270 )
 plot(baja, xlab="Longitude",ylab="Latitude", legend=FALSE)
 ```
 
-Onto this map, we can plot our populations.  For this, we convert the raw coordiantes into a `SpatialPoints` object (see \@ref(vector-data)) and then overlay onto the map.  I use two `points()` commands to make the symbol for each population.
+Onto this map, we can plot our populations.  For this, we convert the raw coordinates into a `SpatialPoints` object (see \@ref(vector-data)) and then overlay onto the map.  I use two `points()` commands to make the symbol for each population.
 
 ```{r echo=-1}
-require(gstudio)
+library(gstudio)
 data(arapat)
 coords <- strata_coordinates(arapat)
 pts <- SpatialPoints( coords[,2:3], proj4string = CRS(proj4string(baja)))
@@ -111,7 +111,7 @@ pts <- rbind( c(-111.5,27.0),
 pts
 ```
 
-From these points, we construct a `SpatialPolygons` object (see \@ref{polygons} for more info on this convoluted construction) and then can overlay onto the map to make sure it in the correct vacinity (here we are eyeballing it a bit).  For more on why this next line of code looks so crazy, see \@ref(polygons).
+From these points, we construct a `SpatialPolygons` object (see \@ref{polygons} for more info on this convoluted construction) and then can overlay onto the map to make sure it in the correct vicinity (here we are eyeballing it a bit).  For more on why this next line of code looks so crazy, see \@ref(polygons).
 
 ```{r echo=-1}
 polys <- SpatialPolygons(list(Polygons(list(Polygon(pts)),"Polygon")))
@@ -127,17 +127,17 @@ plot(loredo)
 ```
 
 
-### Croping Rasters Via Convex Hull
+### Cropping Rasters Via Convex Hull
 
 
 An analysis common to modern population genetics is that of finding ecological distances between objects on a landscape.  The estimation of pairwise distance derived from spatial data is a computationally intensive thing, one that if you are not careful will bring your laptop to its knees!  One way to mitigate this data problem is to use a minimal amount raster area so that the estimation of the underlying distance graph can be done on a smaller set of points.  
 
-Cropping by a polygon like demonstrated in the previous example is a 'by hand' approch to estimating a box that roughly encompasses your data points. A more efficient one is one where you simply provide your coordinates and we can estimate a polygon that surrounds those coordinates with the minimal amount of wasted space.  This is called a *Convex Hull*, which is kind of like a polygon that is created as if there was a rubbrerband fit around all your points.  It is a minimal area that includes all of your points.  
+Cropping by a polygon like demonstrated in the previous example is a 'by hand' approach to estimating a box that roughly encompasses your data points. A more efficient one is one where you simply provide your coordinates and we can estimate a polygon that surrounds those coordinates with the minimal amount of wasted space.  This is called a *Convex Hull*, which is kind of like a polygon that is created as if there was a rubbrerband fit around all your points.  It is a minimal area that includes all of your points.  
 
-For this example, I'm going to use the populations found along the peninsual and find the minimal area encompassing those points. 
+For this example, I'm going to use the populations found along the peninsula and find the minimal area encompassing those points. 
 
 ```{r message=FALSE, warning=FALSE, echo=-1}
-require(gstudio)
+library(gstudio)
 data(arapat)
 coords <- strata_coordinates(arapat)
 baja_coords <- coords[ !(coords$Stratum %in% c("101","102","32")), ]
@@ -150,7 +150,7 @@ plot(baja_pts,add=T,col="darkred",pch=16)
 The methods for finding the hull and adding a buffer around it are found in the `rgeos` package.  These are pretty easy functions to use and are very helpful.  If you are having trouble installing the `rgeos` package from source, see \@ref(rgdal-rgeos-packages).
 
 ```{r message=FALSE,warning=FALSE, echo=-1}
-require(rgeos) # loads in gConvexHull & gBuffer functions
+library(rgeos) # loads in gConvexHull & gBuffer functions
 hull <- gConvexHull(baja_pts)
 plot(baja, legend=FALSE)
 plot(baja_pts,add=T,col="darkred")
@@ -212,11 +212,11 @@ coords$mean_precip <- extract( baja_prec, coords[,c(2,3)])
 coords[1:10,]
 ```
 
-A note should be made on the temperature and precipitation values.  Temperature is denoted in tenths of a degree Celcius.  Though it does get quite hot at times, it does not average 188&deg;C at population 88!  Similarily the units for precipitaiton are mm (or thenths of centimeters if you will...).
+A note should be made on the temperature and precipitation values.  Temperature is denoted in tenths of a degree Celcius.  Though it does get quite hot at times, it does not average 188&deg;C at population 88!  Similarly, the units for precipitation are mm (or tenths of centimeters if you will...).
 
 
 ```{r warning=FALSE, message=FALSE}
-require(ggrepel)
+library(ggrepel)
 coords <- coords[ order(coords$Latitude),]
 p <- ggplot( coords, aes(x=Latitude,y=elevation)) + geom_line(color="lightgrey") 
 p <- p + geom_point() + ylab("Elevation (m)")
@@ -268,7 +268,7 @@ The value(s) of x at the point(s) clicked on (or touched by the box drawn).
 
 Note
 
-The plot only provides the coordinates for a spatial query, the values are read from the Raster* or Spatial* object that is passed as an argument. Thus you can extract values from an object that has not been plotted, as long as it spatialy overlaps with with the extent of the plot.
+The plot only provides the coordinates for a spatial query, the values are read from the Raster* or Spatial* object that is passed as an argument. Thus you can extract values from an object that has not been plotted, as long as it spatially overlaps with with the extent of the plot.
 
 Unless the process is terminated prematurely values at at most n positions are determined. The identification process can be terminated by clicking the second mouse button and selecting 'Stop' from the menu, or from the 'Stop' menu on the graphics window.
 
@@ -296,10 +296,10 @@ click(baja_california, xy=TRUE)
 
 ## Extracting Data Along Vectors
 
-It is also possible to extract data along vectors or other *SpatialLines* objects.  This is a particlarly helpful approach if you are trying to quantify the value of characteristics of the environment between your sampling locations.  In the following example, I estimate the popualtion graph from the `arapat` data set 
+It is also possible to extract data along vectors or other *SpatialLines* objects.  This is a particularly helpful approach if you are trying to quantify the value of characteristics of the environment between your sampling locations.  In the following example, I estimate the popualtion graph from the `arapat` data set 
 
 ```{r popgraphInBaja, warning=FALSE,message=FALSE, echo=-1}
-require(popgraph)
+library(popgraph)
 graph <- popgraph( to_mv( arapat ), arapat$Population )
 graph <- decorate_graph( graph, coords )
 edges <- to_SpatialLines(graph)
@@ -342,12 +342,12 @@ p + geom_point() + ylab("Elevation (m)")
 
 ## Extracting Data Along Popgraph Edges
 
-Population Graphs have been used to determine if there is an preference (or avoidance) of a specific raster value for the location of indiviudal edges on the landscape. For example, Dyer *et al.* (2012) were interested in determining if there the edge in the pollination graph (e.g., a population graph constructed from male pollen haplotypes) preferentially traverse (or avoid) specific intervening habitat features.  To do this, they permuted the edge set among nodes in the graph and recorded the prevalence (mean and variance) of specific features extracted from specific categorical rasters representing both canopy and understory features.  The permutation of a network should be done such that you preserve aspects of the spatial heterogeneity and spatial arrangement of the nodes on the landscape.  You probably do not want to permute all edges randomly in the graph (though this option is availalbe in the code), but would probably be better served by permuting the network while maintaining both the node coordinates (e.g., where they exist on the landscape) as well as the degree distribution of the overall network.  This second criteria holds constant higher network structure.  The general idea is to:  
+Population Graphs have been used to determine if there is an preference (or avoidance) of a specific raster value for the location of individual edges on the landscape. For example, Dyer *et al.* (2012) were interested in determining if there the edge in the pollination graph (e.g., a population graph constructed from male pollen haplotypes) preferentially traverse (or avoid) specific intervening habitat features.  To do this, they permuted the edge set among nodes in the graph and recorded the prevalence (mean and variance) of specific features extracted from specific categorical rasters representing both canopy and understory features.  The permutation of a network should be done such that you preserve aspects of the spatial heterogeneity and spatial arrangement of the nodes on the landscape.  You probably do not want to permute all edges randomly in the graph (though this option is available in the code), but would probably be better served by permuting the network while maintaining both the node coordinates (e.g., where they exist on the landscape) as well as the degree distribution of the overall network.  This second criteria holds constant higher network structure.  The general idea is to:  
 
 1. Create a saturated graph and extract ecological features for all potential connections.  This gives us a `data.frame` within which we can pull out ecological values for each permutation.  This is the most computationally intensive process and doing it once and then extracting values from the `data.frame` for each permutation is a more efficient approach.
-2. Once you have all the potential values of your features, you can permute the observed matrix, while holding both the connection probability (e.g., the number of edges) and the degree distribution (e.g., the amount of edges connected to nodes) constant using the `randomize_graph` function included in the `popgraph` library.  For each permutation, you then compile the permuted environmental factor as a null disribution and then compare those to the observed.  
+2. Once you have all the potential values of your features, you can permute the observed matrix, while holding both the connection probability (e.g., the number of edges) and the degree distribution (e.g., the amount of edges connected to nodes) constant using the `randomize_graph` function included in the `popgraph` library.  For each permutation, you then compile the permuted environmental factor as a null distribution and then compare those to the observed.  
 
-This may sound a bit convoluted, but this example may help.  Consider the hypothetical case where we think that the edges in the population graph from Figure \@ref(fig:popgraphInBaja), are restricted in elevation because we believe that dispersing insects fly around high elevation mountains rather than over them.^[This is a truely hypothetical and contrived example to show how you would do this in the code and is not motivated by any biologically motivated reasons.  Ya' gotta make up examples sometimes...]  If this is true, then we should expect that the average (or max) elevation along any of the observed edges in the Population Graph would be less than what would be expected if we permuted the edges among nodes and measured elevation along edges from permuted graphs.
+This may sound a bit convoluted, but this example may help.  Consider the hypothetical case where we think that the edges in the population graph from Figure \@ref(fig:popgraphInBaja), are restricted in elevation because we believe that dispersing insects fly around high elevation mountains rather than over them.^[This is a truly hypothetical and contrived example to show how you would do this in the code and is not motivated by any biologically motivated reasons.  Ya' gotta make up examples sometimes...]  If this is true, then we should expect that the average (or max) elevation along any of the observed edges in the Population Graph would be less than what would be expected if we permuted the edges among nodes and measured elevation along edges from permuted graphs.
 
 First, we need to set up the network and extract values of elevation along all potential edges.  I make a saturated graph from all potential 
 
@@ -442,7 +442,7 @@ As it turns out, the observed edges do in fact appear to be traversing lower ele
 As is the case with a lot of data types in R, there is a way to use the `ggplot` library to visualize rasters.  Essentially, what 
 
 ```{r}
-require(ggplot2)
+library(ggplot2)
 df <- data.frame( rasterToPoints( baja_california )) 
 names(df) <- c("Longitude","Latitude","Elevation")
 p <- ggplot( df ) + geom_tile( aes(x=Longitude,y=Latitude,fill=Elevation)) 
@@ -470,7 +470,7 @@ p + geom_point( aes(x=Longitude,y=Latitude, shape=Species), size=3, data=sites )
 It is also possible to visualize rasters in 3-space.  The library `rasterVis` provides an interface to the `rgl` library to plot a surface.  Once installed, these are easy to use for viewing surfaces. Here is an example using the elevation data we have been playing with.
 
 ```{r eval=FALSE}
-require(rasterVis)
+library(rasterVis)
 plot3D( baja_california , zfac=0.1)
 ```
 ```{r echo=FALSE}

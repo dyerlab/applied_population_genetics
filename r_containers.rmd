@@ -26,7 +26,7 @@ w
 class(w)
 ```
 
-Accessing elements within a vector are done using the square bracket ‘[]’ notation.  All indices (for vectors and matrices) start at 1 (not zero as is the case for some languages).  Getting and setting the components within a vector are accomplished using numeric indices.
+Accessing elements within a vector are done using the square bracket ‘[]' notation.  All indices (for vectors and matrices) start at 1 (not zero as is the case for some languages).  Getting and setting the components within a vector are accomplished using numeric indices.
 
 ```{r}
 x
@@ -107,7 +107,7 @@ matrix(1:4, nrow=2 )
 ```
 
 
-By default the ‘filling-in’ of the matrix will proceed down column (by-column).  In this example, we have the first column with the first two entries and the last two entries down the second column.  If you want it by row, you can pass the optional argument
+By default the ‘filling-in' of the matrix will proceed down column (by-column).  In this example, we have the first column with the first two entries and the last two entries down the second column.  If you want it by row, you can pass the optional argument
 
 ```{r}
 matrix(1:4, nrow=2, byrow=TRUE)
@@ -149,7 +149,7 @@ X[1,3]
 
 is the entry in the 1st row and 3rd column.
 
-You can also use ‘slices’ through a matrix to get the rows
+You can also use ‘slices' through a matrix to get the rows
 
 ```{r}
 X[1,]
@@ -187,7 +187,7 @@ X[1,8]
 
 There are a few cool extensions of the rep() function that can be used to create matrices as well.  They are optional values that can be passed to the function. 
 
-* `times=x`: This is the default option that was occupied by the ‘3’ in the example above and represents the number of times that first argument will be repeated.  
+* `times=x`: This is the default option that was occupied by the ‘3' in the example above and represents the number of times that first argument will be repeated.  
 * `each=x` This will take each element in the first argument are repeat them `each` times.   
 * `length.out=x`: This make the result equal in length to `x`.  
 
@@ -199,7 +199,7 @@ indices
 ```
 
 ## Lists
-A list is a type of vector but is indexed by ‘keys’ rather than by numeric indices.  Moreover, it can contain heterogeneous types of data, which is not possible in a vector type.  For example, consider the list
+A list is a type of vector but is indexed by ‘keys' rather than by numeric indices.  Moreover, it can contain heterogeneous types of data, which is not possible in a vector type.  For example, consider the list
 
 ```{r}
 theList <- list( x=seq(2,40, by=2), dog=LETTERS[1:5], hasStyle=logical(5) )

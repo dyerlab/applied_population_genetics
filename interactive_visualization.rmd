@@ -2,7 +2,7 @@
 
 Interpreting complicated networks can be difficult if the number of nodes and/or edges are large, due in large part due to the way we project network structure onto 2-dimensional spaces.  While publication-quality graphics are needed in the end, interpretation can be aided by plotting networks in a dynamic context.  Here we look at a Population Graph constructed using the *Araptus attenuatus* genetic data set.
 
-## Proceedure
+## Procedure
 
 First, we need to load in the proper libraries. Each of the libraries are needed for:
 
@@ -11,9 +11,9 @@ First, we need to load in the proper libraries. Each of the libraries are needed
  - **networkD3** - Loads in the javascript D3 library and allows the interactive plot.  
 
 ```{r,message=FALSE}
-require(gstudio)
-require(popgraph)
-require(networkD3)
+library(gstudio)
+library(popgraph)
+library(networkD3)
 ```
 
 ### Force-Directed Networks
@@ -57,7 +57,7 @@ nodes <- merge( nodes, df )
 Once defined, we can then call the function to make the `data.frame` objects and then do the plot.  These graphics are *interactive*, grab a node and drag it around!
 
 ```{r}
-require(networkD3)
+library(networkD3)
 forceNetwork(Links = edges, Nodes = nodes,
             Source = "source", Target = "target",
             Value = "value", NodeID = "name",
@@ -81,7 +81,7 @@ where
 L = \frac{\sum_l\sum_u x_uy_u}{\sqrt{(\sum_l\sum_u x_u^2)(\sum_l\sum_u y_u^2)}}
 \]
 
-I make the among stratum distance matrix and then turn it into a `dist` object to do a heirarchial clustering on the populations. I then plot it and make the node colors equal to the grouping of the dendrogram *if* there were 4 groups in the dataset.  This is also zoomable, for large trees, so if you want to figure out the relationships at the leaves, where the internal edges are smaller, zoom in with the mouse.
+I make the among stratum distance matrix and then turn it into a `dist` object to do a hierarchal clustering on the populations. I then plot it and make the node colors equal to the grouping of the dendrogram *if* there were 4 groups in the dataset.  This is also zoomable, for large trees, so if you want to figure out the relationships at the leaves, where the internal edges are smaller, zoom in with the mouse.
 
 ```{r}
 d <- genetic_distance(arapat,stratum = "Population", mode="Nei")
@@ -95,7 +95,7 @@ dendroNetwork(hc, height=600,
 
 ### Sankey Networks
 
-A Sankey Diagram is a kind of flow diagram used to indicate allocation of one set of object into another set.  For this example, I'll use the populations, clustes (from STRUCTURE) and putative species for individuals of *A. attenuata* as the parts.
+A Sankey Diagram is a kind of flow diagram used to indicate allocation of one set of object into another set.  For this example, I'll use the populations, clusters (from STRUCTURE) and putative species for individuals of *A. attenuata* as the parts.
 
 As before, this needs a `data.frame` for nodes and one for edges.
 

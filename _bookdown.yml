@@ -1,7 +1,7 @@
 book_filename: "amg"
 chapter_name: ""
 before_chapter_script: ""
-after_chapter_script: "scripts/before_chapter.R"
+after_chapter_script: ""
 rmd_files: [ 
   "index.rmd",
   "part_r_ecosystem.rmd", "r_ecosystem.rmd","r_datatypes.rmd","r_containers.rmd",

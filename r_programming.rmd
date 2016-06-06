@@ -16,17 +16,17 @@ You define a function name for whatever you like and assign it the stuff to the 
 
 The key to understanding functions is that they are encapsulations of code—a shortcut for a sequence of instructions if you will not have to type over and over again.  The less typing you do, the lower the probability that you will have errors (and all code has errors).  
 
-Here is an example of some code that I’m going to develop into a function.  This function will allow me to determine if one genotype could possibly be the offspring of the other genotype.  
+Here is an example of some code that I'm going to develop into a function.  This function will allow me to determine if one genotype could possibly be the offspring of the other genotype.  
 
 ```{r message=FALSE, warning=FALSE}
-require(gstudio)
+library(gstudio)
 loc1 <- locus( c(128,130) )
 loc2 <- locus( c(128,128) )
 cat( loc1, loc2 )
 ```
 
 
-We start out with two loci, a `128:130` heterozygote and a `128:128` homozygote.  These may represent repeat motifs at a microsatellite locus or some other co-dominant genotype.  First, I’ll break the locus into a vector of genotypes.
+We start out with two loci, a `128:130` heterozygote and a `128:128` homozygote.  These may represent repeat motifs at a microsatellite locus or some other co-dominant genotype.  First, I'll break the locus into a vector of genotypes.
 
 ```{r}
 off.alleles <- alleles( loc1 )
@@ -150,7 +150,7 @@ if( is_heterozygote(loc2) ) {
 }
 ```
 
-There is a slightly shorter version of this that is available for the lazy programmer and lets be honest, all programmers are lazy and the more you can accomplish with fewer strokes on the keyboard the better (this is how we got emacs and vim).  I generally don’t teach the shortcuts up front, but this one is short and readily apparent so it may be more helpful than confusing.  The `ifelse()` function has three parts, the condition, the result if `TRUE`, and the result if `FALSE`.
+There is a slightly shorter version of this that is available for the lazy programmer and lets be honest, all programmers are lazy and the more you can accomplish with fewer strokes on the keyboard the better (this is how we got emacs and vim).  I generally don't teach the shortcuts up front, but this one is short and readily apparent so it may be more helpful than confusing.  The `ifelse()` function has three parts, the condition, the result if `TRUE`, and the result if `FALSE`.
 
 ```{r}
 ans <- ifelse( is_heterozygote( c(loc1, loc2)) , "heterozygote", "Not")
@@ -162,8 +162,8 @@ So iterating through the x vector, the condition `x>0` is evaluated and if TRUE 
 ## The `if-else` Pattern
 
 It is possible to test many conditions in a single sequence by stringing together else-if conditions.  The point that is important here is that the first condition that evaluates to TRUE will be executed and all remaining ones will be skipped, even if they also are logically TRUE.  This means that it is important to figure out the proper order of asking your conditions.  Here is an example function that determines if none, one, or both of the genotypes passed to it are heterozygotes.  By default, I step through every one of the potential options of available on this comparison.    
-1. The first is a heterozygote and the second one isn’t
-2. The first one isn’t and the second one is
+1. The first is a heterozygote and the second one isn't
+2. The first one isn't and the second one is
 3. Both are heterozygotes
 4. The last state (both are not) 
 
@@ -205,7 +205,7 @@ for( SOME_SEQUENCE ){
 ```
 
 
-Where the `SOME_SEQUENCE` component is a sequence of values either specified OR calculated and the `DO_SOMETHING` is the thing you want to do with each of the values in the sequence.  Usually, there is a variable defined in the `SOME_SEQUENCE` component and the value of that variable is used.  Here are a few examples. The first goes through the existing vector directly and assigns (in sequential order) the entries of ‘x’ to the variable val. We can then do whatever we want with the value in val (though if we change it, nothing happens to the original x vector).
+Where the `SOME_SEQUENCE` component is a sequence of values either specified OR calculated and the `DO_SOMETHING` is the thing you want to do with each of the values in the sequence.  Usually, there is a variable defined in the `SOME_SEQUENCE` component and the value of that variable is used.  Here are a few examples. The first goes through the existing vector directly and assigns (in sequential order) the entries of ‘x' to the variable val. We can then do whatever we want with the value in val (though if we change it, nothing happens to the original x vector).
 
 ```{r}
 for( val in x ){

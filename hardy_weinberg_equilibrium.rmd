@@ -1,4 +1,4 @@
-# Hardy-Weinberg Equilbrium {.imageChapter}
+# Hardy-Weinberg Equilibrium {.imageChapter}
 
 <iframe class="chapter_image" width="640" height="360" src="https://www.youtube.com/embed/s5Z0nItrdSo?list=PLjvIGgJ_mgVokdI-r7q_erREHi-DGnGSq" frameborder="0" allowfullscreen></iframe>
 
@@ -16,7 +16,7 @@ In addition to ploidy, genetic constraints on the formulation of the classic HWE
 
 Two additional constraints arise directly from diploid sexual reproduction.  First, we assume that the likelihood of a particular allele is independent of the sex of the individual that contains it.  For example, male individuals should have as many alleles (e.g., no sex chromosomes that mix ploidy of genotypes) and alleles at that can occur with equal frequency as the other sex (no sex biased alleles probabilities as may arise from say sex-biased lethals).  
 
-Finally, we will invoke both of Mendel’s Laws of Inheritance.  His first law states that the alleles at a particular locus are statistically independent from each other.  If there is an A allele provided by one parent, the probability of the second allele is either $A$ or $B$ is entirely independent of that first alleles state.  The second law, though not necessarily relevant for many HWE applications, deals with the probability of genotypes at two loci.  Here we assume that the alleles present at one locus are statistically independent of those at the other locus.  We will return to this when we get to linkage but for now lets assume it is a valid assumption.
+Finally, we will invoke both of Mendel's Laws of Inheritance.  His first law states that the alleles at a particular locus are statistically independent from each other.  If there is an A allele provided by one parent, the probability of the second allele is either $A$ or $B$ is entirely independent of that first alleles state.  The second law, though not necessarily relevant for many HWE applications, deals with the probability of genotypes at two loci.  Here we assume that the alleles present at one locus are statistically independent of those at the other locus.  We will return to this when we get to linkage but for now lets assume it is a valid assumption.
 
 
 ### Punnet Squares
@@ -45,11 +45,11 @@ More importantly for our simplicity in terminology, at the end of the mating epi
 
 ## Evolutionary Assumptions
 
-Finally, we need to invoke two evolutionary assumptions to meet the requirements of HWE.  First, we must assume that there is $AB$solutely no mutation.  A non-zero mutation rate, $\mu > 0$, means that the state of a particular allele, say the $A$ allele, has a likelihood of spontaneously becoming something other than the $A$ allele (e.g., the $B$ in this formulation).  If HWE is to help us determine the genotype frequencies having one allele spontaneously mutate to another would require that we integrate the mutation rate into HWE directly.  Perhaps not that surprisingly, that wasn’t integrated back in the day.
+Finally, we need to invoke two evolutionary assumptions to meet the requirements of HWE.  First, we must assume that there is $AB$solutely no mutation.  A non-zero mutation rate, $\mu > 0$, means that the state of a particular allele, say the $A$ allele, has a likelihood of spontaneously becoming something other than the $A$ allele (e.g., the $B$ in this formulation).  If HWE is to help us determine the genotype frequencies having one allele spontaneously mutate to another would require that we integrate the mutation rate into HWE directly.  Perhaps not that surprisingly, that wasn't integrated back in the day.
 
 The next assumption has a very similar consequence.  Namely, we must assume that the set of individuals that are participating in the mating event in this population is static. Individuals from other populations are not immigrating into this population and individuals within the population are not emigrating out of this population.  Just like mutation, and when we get to migration we will see directly how similar these processes are, we will take the easy way out and assume that they do not occur.  
 
-The final assumption is based upon selection and is a very easy one to deal with.  We simply assume it doesn’t happen.  If selection were operating, say an extreme form such as increased lethality of the $AA$ genotype prior to reproduction, then we would have to both specify the way in which selection is operating as well as the its magnitude.  We will come back to this topic later but for the simplicity of HWE, we make the assumption that it has no effect.
+The final assumption is based upon selection and is a very easy one to deal with.  We simply assume it doesn't happen.  If selection were operating, say an extreme form such as increased lethality of the $AA$ genotype prior to reproduction, then we would have to both specify the way in which selection is operating as well as the its magnitude.  We will come back to this topic later but for the simplicity of HWE, we make the assumption that it has no effect.
 
 ## The Mechanics
 
@@ -71,7 +71,7 @@ and
 
 $f(B) = R + \frac{Q}{2} = q$
 
-using the lower case versions of $p$ and $q$.  Be careful about switching these up.  The population geneticist [John Nason](http://jnason.eeob.iastate.edu), makes the connection that this is what it means to “mind our p’s and q’s” though I suspect the etiology of this statement has more to do with liquid volume measurements than population genetics...  
+using the lower case versions of $p$ and $q$.  Be careful about switching these up.  The population geneticist [John Nason](http://jnason.eeob.iastate.edu), makes the connection that this is what it means to “mind our p's and q's” though I suspect the etiology of this statement has more to do with liquid volume measurements than population genetics...  
 
 Intuitively the formulation denoted above for $p$ and $q$ makes sense as the heterozygote genotype ($AB$) frequency, $Q$, is split evenly between the homozygote genotype frequencies, $P$ (for $AA$) and $R$ (for $BB$).   If these are the only two alleles in the population then there is the additional restriction that $p + q = 1$.  It is easy to expand these methods to more than two alleles, but again the original approximation was specifically set for 2-allele systems.
 
@@ -84,7 +84,7 @@ knitr::include_app("https://rodney.shinyapps.io/hardy_weinberg/", height="700")
 In R, we can approximate these formulas using the gstudio library.  After loading in the library, we can create data objects representing diploid loci as follows:
 
 ```{r message=FALSE, warning=FALSE}
-require(gstudio)
+library(gstudio)
 hom.AA <- locus( c("A","A") )
 hom.BB <- locus( c("B","B") )
 het.AB <- locus( c("A","B") )
@@ -104,7 +104,7 @@ genotypes <- c( hom.AA, het.AB, hom.BB)
 genotypes
 ```
 
-To examine genotype and allele frequencies for a set of loci, I’ll make a random collection and then use those loci as an example.
+To examine genotype and allele frequencies for a set of loci, I'll make a random collection and then use those loci as an example.
 
 ```{r}
 loci <- sample(genotypes, 20, replace=TRUE)

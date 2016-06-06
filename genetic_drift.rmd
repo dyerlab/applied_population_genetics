@@ -16,7 +16,7 @@ Collections are drawn at random using different sample sizes
 sample_size <- c(5,10,20,50,100)
 ```
 
-We are implicitly assuming that the frequencies of these two alleles are identical (e.g., $p_A = p_B = 0.5$).  We can see the effects of genetic drift by running this ‘simulation’ in which populations are randomly created selected and used to estimate the frequency of an allele and how sample size influences the stability of the allele frequency.  If `N` does not influence the estimation of allele frequencies then all examples should yield an estimated allele frequency equal to $0.5$ (as they truly are).  
+We are implicitly assuming that the frequencies of these two alleles are identical (e.g., $p_A = p_B = 0.5$).  We can see the effects of genetic drift by running this ‘simulation' in which populations are randomly created selected and used to estimate the frequency of an allele and how sample size influences the stability of the allele frequency.  If `N` does not influence the estimation of allele frequencies then all examples should yield an estimated allele frequency equal to $0.5$ (as they truly are).  
 
 To do this, we set up the parameters in a data.frame
 
@@ -24,9 +24,9 @@ To do this, we set up the parameters in a data.frame
 df <- data.frame( N = rep( sample_size, each=50 ),FreqA = NA)
 ```
 
-and then go through data frame, each row in order, and pull out random collections from Alleles in sizes equal to sample_size.  To do this, I’m going to use a `for()` loop.  This is simply a function that repeats a set of code a specified number of times.  In this case, I will need to take the first row, make a random sample of alleles given the value of `df\$N[1]`, find the frequency of an allele in that random sample, and then store the frequency back into the data.frame at `df$FreqA[1]`.  I then need to go to the second row and do the same thing again.  And then the third row.  Then the fourth.  etc.  
+and then go through data frame, each row in order, and pull out random collections from Alleles in sizes equal to sample_size.  To do this, I'm going to use a `for()` loop.  This is simply a function that repeats a set of code a specified number of times.  In this case, I will need to take the first row, make a random sample of alleles given the value of `df\$N[1]`, find the frequency of an allele in that random sample, and then store the frequency back into the data.frame at `df$FreqA[1]`.  I then need to go to the second row and do the same thing again.  And then the third row.  Then the fourth.  etc.  
 
-The format of a `for()` loop is pretty easy.  You define a sequence of values to use (in this case I will use the variable named row to contain the sequence of integers from `1:nrow(df)`).  Each time row is assigned a value, the code within the curly brackets ‘{}’ after the `for()` statement is executed and the value of row is constant during that iteration.  
+The format of a `for()` loop is pretty easy.  You define a sequence of values to use (in this case I will use the variable named row to contain the sequence of integers from `1:nrow(df)`).  Each time row is assigned a value, the code within the curly brackets ‘{}' after the `for()` statement is executed and the value of row is constant during that iteration.  
 
 ```{r}
 for( row in 1:nrow(df) ) {
@@ -39,7 +39,7 @@ for( row in 1:nrow(df) ) {
 }
 ```
 
-Here, row starts out at 1, then the code inside the brackets is run with `row=1`.  After it reaches the end of the loop, row is incremented by one and the code is then run with `row=2`.  This is repeated until `row = nrow(df)` and then the looping is finished.  If you type this in and do it, you have done your first stochastic (some would call it Monte Carlo) simulation!  Congratulations.  That wasn’t so hard.
+Here, row starts out at 1, then the code inside the brackets is run with `row=1`.  After it reaches the end of the loop, row is incremented by one and the code is then run with `row=2`.  This is repeated until `row = nrow(df)` and then the looping is finished.  If you type this in and do it, you have done your first stochastic (some would call it Monte Carlo) simulation!  Congratulations.  That wasn't so hard.
 
 Lets now look at the data.
 
@@ -50,7 +50,7 @@ summary(df)
 The frequencies observed in each run are all over the place, basically covering the entire allowable range for an allele frequency.  More importantly though lets look graphically at the allele frequencies using a boxplot where frequencies are grouped by sample size, `df$N`.
 
 ```{r drift_simulation, fig.cap="Allele frequencies estimated from random selections of alleles under varying sample sizes."}
-require(ggplot2)
+library(ggplot2)
 p <- ggplot(df, aes(x=factor(N), y=FreqA)) + geom_boxplot() 
 p + xlab("Population Size") + ylab("Estimated Allele Frequency")
 ```
@@ -148,7 +148,7 @@ t_{fix} = \frac{-4N_e(1-p)\log{(1-p})}{p}
 which for values of $N$ for $p=c(0.01, 0.1, 0.25, 0.5)$ are
 
 ```{r echo=FALSE, fig.cap=""}
-require(ggplot2)
+library(ggplot2)
 df <- data.frame()
 N <- 10^(1:5)
 for( p in c(0.01, 0.1, 0.25, 0.5)){
@@ -219,6 +219,6 @@ if and only if $N_e\mu$ is very small (e.g., << 1).  However, if it is larger th
 t_{loss} = \frac{\ln(N_e\mu) + \gamma}{\mu}
 \]
 
-where the $\gamma$ term is Euler’s constant (Masel et al. 2007).
+where the $\gamma$ term is Euler's constant (Masel et al. 2007).
 
 

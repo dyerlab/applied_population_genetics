@@ -1,12 +1,12 @@
 # Mapping Populations
 
-Almost every data set we will work on has a spatial context.  Until relatively recently, this was larely ignored and at most given as a 2-dimensional projection of sampling locations on a black and white map in our manuscirpts.  Here we explore methodologies to provide more intuitive approaches for plotting the spatial location of our sampling sites.
+Almost every data set we will work on has a spatial context.  Until relatively recently, this was largely ignored and at most given as a 2-dimensional projection of sampling locations on a black and white map in our manuscripts.  Here we explore methodologies to provide more intuitive approaches for plotting the spatial location of our sampling sites.
 
-## Proceedure
+## Procedure
 
 First, we need to load in the proper libraries. Each of the libraries are needed for:
 
- - **gstudio** - Contains the *A. attenuatus* data set and there are built-in routines that allow you to plot populations in various formats or export the data in a format for ploting in other systems (e.g., GoogleEarth, ArcGIS, etc).
+ - **gstudio** - Contains the *A. attenuatus* data set and there are built-in routines that allow you to plot populations in various formats or export the data in a format for plotting in other systems (e.g., GoogleEarth, ArcGIS, etc).
  - **ggmap** - Allows the plotting of tiles from a googleMap.
  - **leaflet** - Loads in the javascript leaflet library and allows the interactive visualization.
 
@@ -14,12 +14,12 @@ First, we need to load in the proper libraries. Each of the libraries are needed
 
 ## Plotting Population Locations
 
-We will start by loading in the default dataset for `gstudio` and using methods in that package for producting spatial plots.
+We will start by loading in the default data set for `gstudio` and using methods in that package for producing spatial plots.
 
 ```{r,message=FALSE,warning=FALSE}
 # load in the libraries and grab the data
-require(gstudio)
-require(ggmap)
+library(gstudio)
+library(ggmap)
 data(arapat)
 
 # pull out the coordinates - Population is the default stratums
@@ -80,12 +80,14 @@ ggmap( map ) + geom_point( aes(x=Longitude,y=Latitude,size=Ae),data=coords)
 We can also produce dynamic maps for viewing in html output (like ebooks or webpages).  Here I produce a leaflet map and then add markers on to the file using coordinates and put the clicked popup as the population name.  This is an *interactive* map, you can zoom in, etc.
 
 ```{r,message=FALSE,warning=FALSE}
-require(leaflet)
-require(magrittr)
+library(leaflet)
+library(magrittr)
 leaflet( data=coords ) %>% 
   addTiles() %>% 
   addMarkers( ~Longitude, ~Latitude, popup=~Stratum )
 ```
+
+You notice the interesting `%>%` operator?  This is short-hand that may be very helpful for you.  It is part of the `magrittr` library, and is often imported through `dplyr` and not directly.  However, what it does is allow us to be a bit more succinct  that does essentially the same thing as 
 
 You can change the underlying base map by passing on other Tiles to the construction.  A list of available tile providers can be found [here](http://leaflet-extras.github.io/leaflet-providers/preview/index.html).
 
@@ -122,7 +124,7 @@ x <- x[ x$Locus == "LTRS",]
 coords <- merge( coords, x[,c(1,3)])
 ```
 
-Make these data into a table format in html (ok it is a bit ugly but it is reasonable.)
+Make these data into a table format in html (OK it is a bit ugly but it is reasonable.)
 
 ```{r}
 coords$label <- paste("<h2>",coords$Stratum,"</h2><table><tr><th>Parameter</th><th>Value</th></tr><tr><td>H<sub>O</sub></td><td>", format(coords$Ho,digits = 3),"</td></tr><tr><td>H<sub>E</sub></td><td>",format(coords$He, digits=3), "</td></tr><tr><td>A<sub>E</sub></td><td>",format(coords$Ae,digits=3),"</td></tr></table>",sep="")
@@ -135,4 +137,11 @@ leaflet( data=coords ) %>%
                     radius=~Size, 
                     color="red", fillOpacity=0.75) 
 ```
+
+There is a small problem that I've run into when using the `%>%` operator and raster data, namely that the `magrittr` package has a function named `extract()` and it overrides the `raster::extract()` function in a messy and uncool way.  As a consequence, I find that when I use it, it is beneficial if I then detach the library to clean up the namespace. 
+
+```{r echo=FALSE}
+detach(magrittr)
+```
+
 

@@ -59,8 +59,8 @@ for(i in 2:10){
 }
 ```
 
-```{r echo=FALSE, fig.cap="Figure 4.3 Expectation for genotype frequencies for a 2-allele locus where $p=0.25$ and the selfing rate $s=0.5$.", message=FALSE, warking=FALSE}
-require(ggplot2)
+```{r echo=FALSE, fig.cap="Figure 4.3 Expectation for genotype frequencies for a 2-allele locus where $p=0.25$ and the selfing rate $s=0.5$.", message=FALSE, warning=FALSE}
+library(ggplot2)
 df <- data.frame( F=c(fAA,fAB,fBB), T=rep( 1:10, times=3), Genotype=rep(c("AA","AB","BB"), each=length(fAA)))
 ggplot(df,aes(x=T,y=F,color=Genotype)) + geom_line() + geom_point() + xlab("Generation (t)") + ylab("Genotype Frequency") + ylim(0,1)
 ```
@@ -68,7 +68,7 @@ ggplot(df,aes(x=T,y=F,color=Genotype)) + geom_line() + geom_point() + xlab("Gene
 
 The resulting frequencies look to come to equilibrium at a reasonable speed.  The frequency of heterozygotes decreases from what would be expected under HWE yet does not go to zero.  The fraction of offspring that are the result of outcross matings ($1-s$) replenish heterozygotes preventing their entire loss.  After a few generations in this simple model, we see that the genotype frequencies can come into equilibrium.
 
-It would be possible to ‘cheat’ a little on those estimations as $fBB[i] = 1-(fAA[i]+fAB[i])$ in the code above but I think that is one way to cover up potentially problematic bugs in your code.  All code has bugs—do not delude yourself into thinking otherwise.  One way we can have some confidence in the code we write that we know the frequencies of the three genotypes should sum to unity.
+It would be possible to ‘cheat' a little on those estimations as $fBB[i] = 1-(fAA[i]+fAB[i])$ in the code above but I think that is one way to cover up potentially problematic bugs in your code.  All code has bugs—do not delude yourself into thinking otherwise.  One way we can have some confidence in the code we write that we know the frequencies of the three genotypes should sum to unity.
 
 ```{r}
 fAA + fAB + fBB
@@ -76,7 +76,7 @@ fAA + fAB + fBB
 
 Another way is to give the code parameters where we know what the outcome should be.  For example, if $s=0$, we should see any distribution of genotype frequencies tend towards Hardy-Weinberg Equilibrium.  In fact, it should tend very quickly towards HWE, right? 
 
-In a fashion similar to selfing, we can use real data as well to examine genotype frequency change.  The gstudio library has a function `mixed_mating()` that allows you to specify the selfing rate s. I’ll let you play with that one on your own time.
+In a fashion similar to selfing, we can use real data as well to examine genotype frequency change.  The gstudio library has a function `mixed_mating()` that allows you to specify the selfing rate s. I'll let you play with that one on your own time.
 
 ## Mixed Mating Genotype Frequency Equilibriums
 

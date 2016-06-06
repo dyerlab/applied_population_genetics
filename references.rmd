@@ -14,7 +14,7 @@ Dyer RJ, Nason JD, Garrick RC. 2010. Landscape modeling of gene flow: improved p
 
 Excoffier, L., Smouse, P.E., and Quattro, J.M. 1992. Analysis of molecular variance inferred from metric distances among DNA haplotypes: application to human mitochondrial DNA restriction data. *Genetics*, **131**, 479-491.
 
-Garrick RC, Nason JD, Fernandez-Manjaress JFF, Dyer RJ. In Press. Ecological co-associations influence species’ responses to past climatic change: an example from a Sonoran Desert bark beetle. *Molecular Ecology*
+Garrick RC, Nason JD, Fernandez-Manjaress JFF, Dyer RJ. In Press. Ecological co-associations influence species' responses to past climatic change: an example from a Sonoran Desert bark beetle. *Molecular Ecology*
 
 McRae, B.H. 2006. Isolation by resistance. *Evolution*, **60**, 1551-1561.
 

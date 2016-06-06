@@ -30,7 +30,7 @@ freqs
 The structure of this data.frame is exactly like what you would get if you were passing a real dataset to the `frequencies()` function.  Next, the three possible genotypes are created on which we will estimate the assignment probabilities.
 
 ```{r message=FALSE, warning=FALSE}
-require(gstudio)
+library(gstudio)
 loci <- c( locus(c("A","A")), locus(c("A","B")), locus(c("B","B")) )
 individuals <- data.frame( ID=1:3, Locus1=loci)
 individuals
@@ -38,7 +38,7 @@ individuals
 
 Before we jump in, it should be noted that we are going to estimate the posterior log likelihood of assignment for each genotype.  What this means is that we are going to estimate the probability the genotype came from each population.  These probabilities may be large or small depending upon the allele frequency spectra of each population.  Some can even be zero, for example, if the population does not have a copy of a particular allele.  However, we are interested in understanding the relative likelihood of assignment for each genotype, not the raw probability itself.  In forensic genetics, the multi locus probability of anyone genotype is exceedingly small (by design, that is how they 'get the perp'), but it is the relative likelihood of each multi locus probability that is most important.  
 
-As an example, consider the case where we have 99 populations that have alleles $A$ and $B$ and 1 population with alleles $A$, $B$, and $C$.  In this last population, the frequency of the $C$ allele is $p_C = 0.001$.  A $CC$ homozygote individual would have zero probability of occurring in the 99 populations (they just don’t have that allele) and probability of $(0.001)^2 = 1e-6$ in the last population.  Even thought his is a small probability, it is infinitely more probable than 0!  So our likelihood estimate is based upon the probability of assignment to a particular population, $P_i$, scaled by the sum of all potential populations it could be assigned to.  This is estimated as:
+As an example, consider the case where we have 99 populations that have alleles $A$ and $B$ and 1 population with alleles $A$, $B$, and $C$.  In this last population, the frequency of the $C$ allele is $p_C = 0.001$.  A $CC$ homozygote individual would have zero probability of occurring in the 99 populations (they just don't have that allele) and probability of $(0.001)^2 = 1e-6$ in the last population.  Even thought his is a small probability, it is infinitely more probable than 0!  So our likelihood estimate is based upon the probability of assignment to a particular population, $P_i$, scaled by the sum of all potential populations it could be assigned to.  This is estimated as:
 
 \[
 \lambda_i = \frac{P_i}{\sum_{j=1}^K P_j}

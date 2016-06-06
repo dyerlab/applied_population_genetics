@@ -2,9 +2,9 @@
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-require(knitr)
-require(ggplot2)
-require(gstudio)
+library(knitr)
+library(ggplot2)
+library(gstudio)
 ```
 
 
@@ -131,7 +131,7 @@ $A_iA_j\;(2p_ip_j)$ | $A_jA_j\;(\frac{p_j}{2})$     | $x,y \ne j\;\; (1-p_j)^2$ 
 ## Paternity Exclusion
 
 
-Liklihood Ratios
+Likelihood Ratios
 
 A likelihood ratio is given by:
 
@@ -310,7 +310,7 @@ Dad 4       | $A_1A_1$ | $B_1B_1$ | $C_2C_2$
     
     
 ```{r}
-require(gstudio)
+library(gstudio)
 loci <- c("Locus-A","Locus-B","Locus-C","Locus-D")
 freqs <- data.frame(Locus = rep(loci, each = 4), 
                     Allele = rep(LETTERS[1:4], times = 4), 
@@ -482,7 +482,7 @@ Once a collection of paternity estimates have been determined, you can use them 
 
 ```{r message=FALSE,echo=FALSE,fig.align='center'}
 dist <- data.frame( Distance=rchisq(10000,df = 3))
-ggplot(dist, aes(x=Distance)) + geom_density(fill="#99d8c9") + xlab("Physical Distance") + ylab("Probabilty of Paternity") 
+ggplot(dist, aes(x=Distance)) + geom_density(fill="#99d8c9") + xlab("Physical Distance") + ylab("Probability of Paternity") 
 ```
 
 
@@ -521,7 +521,7 @@ p(a,b|x,y) = \frac{b}{2\pi a^2 \Gamma(2/b)}exp\left[ -\left( \frac{r}{a} \right)
 where $\Gamma(a,b)$ is the gamma function and $b$ is a 'shape' parameter.  
 
 1. When $b=1$ This is the exponential distribution.  
-2. When $b=2$ this is the normal funciton.  
+2. When $b=2$ this is the normal function.  
 3. When $b<1$ this is a fat-tailed distribution.
 
 
@@ -540,7 +540,7 @@ Other distributions you may run across include:
 r1 <- abs(rnorm(10000))
 r2 <- rexp(10000)
 df <- data.frame( Distribution=c(rep(c("Normal","Exponential"),each=10000)), Value=c(r1,r2))
-require(ggplot2)
+library(ggplot2)
 ggplot(df,aes(x=Value,fill=Distribution)) + geom_density(alpha=0.75) + theme_bw() + ylab("Frequency")
 ```
 
@@ -548,10 +548,10 @@ ggplot(df,aes(x=Value,fill=Distribution)) + geom_density(alpha=0.75) + theme_bw(
 
 Concerns with kernel estimation
 
-The following are some assumptions that are inherient in the use of dispersal kernels for estimating connectivity.
+The following are some assumptions that are inherent in the use of dispersal kernels for estimating connectivity.
 
 1. All functions are continuous, 
-2. All functions assume isotropy in disperal,   
+2. All functions assume isotropy in dispersal,   
 3. All functions explicitly assume homogeneity of the dispersal matrix.
 
 

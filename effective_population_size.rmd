@@ -6,7 +6,7 @@ In the previous section on genetic drift, we showed how the number of individual
 
 ## Demographic Effective Population Sizes
 
-The census population size is a measure of the raw number of individuals present in a population, $N$.  From a genetic perspective, the counting number of individuals in a population is not quite what we are after as there are many different factors (sex rations, life history traits, age stratification, behavioral processes) that may influence the size of the ‘breeding’ population that is contributing to the set of alleles in the next generation.   
+The census population size is a measure of the raw number of individuals present in a population, $N$.  From a genetic perspective, the counting number of individuals in a population is not quite what we are after as there are many different factors (sex rations, life history traits, age stratification, behavioral processes) that may influence the size of the ‘breeding' population that is contributing to the set of alleles in the next generation.   
 
 Here are several situations we need to consider.  
 
@@ -30,7 +30,7 @@ N_e = \frac{4N_mN_f}{N_m + N_f}
 Depending upon the skew in sex ratio here, the differences in $N_e$ may be striking.  Consider the following code.
 
 ```{r warning=FALSE, message=FALSE}
-require(ggplot2)
+library(ggplot2)
 N <- 100
 Nm <- 1:99
 Nf <- N - Nm
@@ -40,7 +40,7 @@ ggplot( df, aes(x=Nm,y=Ne)) + geom_line() + geom_point() + theme_bw(base_size=16
 ```
 Here the maximal size the population can be occurs when there are even sex ratios (e.g., $N_m = N_f$) and it decreases precipitously as you deviate from equality.  In extreme situations, there may be only one (or a diminishing small number) of male or female individuals that participates in mating events (e.g., harem mating in elephant seals).
 
-Some genes are located on sex-specific chromosomes (e.g., X-Linked genes in humans).  This is an identical situation to mixed ploidy taxa such as the hymenoptera where the female is diploid and the male is haploid.  Given the unequal distribution of alleles in the population based upon who has one chromosome and who has two, the effective population size here is given as:
+Some genes are located on sex-specific chromosomes (e.g., X-Linked genes in humans).  This is an identical situation to mixed ploidy taxa such as the Hymenoptera where the female is diploid and the male is haploid.  Given the unequal distribution of alleles in the population based upon who has one chromosome and who has two, the effective population size here is given as:
 
 \[
 N_e = \frac{9N_mN_f}{4N_m + 2N_f}
@@ -58,7 +58,7 @@ which in the limit of large $N$ approaches $\lim_{N_m \to \infty} = 2.25N$.
 
 ## Genetic Effective Population Size
 
-There are several ways to estimate a ‘genetic effective’ population size, two of which we will be covered here.  In essence, a genetic effective population size is an idealized population, one in which all the factors in HWE are true AND produces a set of data like the one you see.  Most measurements of effective population size are based upon two generations of data.  In each generation, a statistic is derived, and the change in that statistic is used to estimate the idealized population size that could produce a change in that parameter as large as the one observed.    
+There are several ways to estimate a ‘genetic effective' population size, two of which we will be covered here.  In essence, a genetic effective population size is an idealized population, one in which all the factors in HWE are true AND produces a set of data like the one you see.  Most measurements of effective population size are based upon two generations of data.  In each generation, a statistic is derived, and the change in that statistic is used to estimate the idealized population size that could produce a change in that parameter as large as the one observed.    
 
 ### Inbreeding Effective Population Size
 
@@ -71,7 +71,7 @@ knitr::include_graphics("media/allele_lineages.png")
 
 Each allele in a genotype has a history that can be traced backwards.  If it is a homozygote genotype, the two alleles can be the same because of two possible scenarios.
 
-*Identity by Descent (IBD)* or *Autozygosity*: Both alleles are the same because they can be traced, in a pedigree, back to a single common ancestor that gave the same allele to two different offspring. This is the definition of ‘inbreeding’ that we will come back to.  
+*Identity by Descent (IBD)* or *Autozygosity*: Both alleles are the same because they can be traced, in a pedigree, back to a single common ancestor that gave the same allele to two different offspring. This is the definition of ‘inbreeding' that we will come back to.  
 
 *Identity by State (IBS)* or *Allozygosity*: Both alleles are the same but only because of a mutation event that caused them to become identical at some time in the past.
 

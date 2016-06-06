@@ -18,7 +18,7 @@ The current version of this book uses version 3.2.  To get the correct version, 
 
 ### Packages
 
-The base R system comes with enough functionality to get you going.  By default, there is only a limited amount of functionality in R, which is a great thing.  You only load and use the packages that you intend to use.  There are just too many packages to have them all loaded into memory at all times and there is such a broad range of packages, it is not likely you’d need more than a small fraction of the packages during the course of all your analyses.
+The base R system comes with enough functionality to get you going.  By default, there is only a limited amount of functionality in R, which is a great thing.  You only load and use the packages that you intend to use.  There are just too many packages to have them all loaded into memory at all times and there is such a broad range of packages, it is not likely you'd need more than a small fraction of the packages during the course of all your analyses.
 Once you have a package, you can tell R that you intend to use it by either
 
 ```{r eval=FALSE}
@@ -28,16 +28,16 @@ library(package_name)
 or
 
 ```{r eval=FALSE}
-require(package_name)
+library(package_name)
 ```
 
 They are approximately equivalent, differing in only that the second one actually returns a TRUE or FALSE indicating the presence of that library on you machine.  I prefer the later and use it throughout.  
 
-There are, at present, a few different places you can get packages. The packages can either be downloaded from these online repositories and installed into R or you can install them from within R itself.  Again, I’ll prefer the latter as it is a bit more straightforward.   
+There are, at present, a few different places you can get packages. The packages can either be downloaded from these online repositories and installed into R or you can install them from within R itself.  Again, I'll prefer the latter as it is a bit more straightforward.   
 
 ### CRAN
 
-The main repository for packages is hosted by the r-project page itself.  There are packages with solutions to analyses ranging from Approximate Bayesian Computation to Zhang & Pilon’s approaches to characterizing climatic trends.  The list of these packages is large and ever growing.  It can be found on CRAN under the packages menu. To install a package from this repository, you use the function 
+The main repository for packages is hosted by the r-project page itself.  There are packages with solutions to analyses ranging from Approximate Bayesian Computation to Zhang & Pilon's approaches to characterizing climatic trends.  The list of these packages is large and ever growing.  It can be found on CRAN under the packages menu. To install a package from this repository, you use the function 
 
 ```{r eval=FALSE}
 install.packages("thePackageName") 
@@ -60,7 +60,7 @@ To install packages from Github you need to install the devtools library from CR
 
 ```{r eval=FALSE}
 install.packages("devtools")
-require(devtools)
+library(devtools)
 ```
 
 Then you need to use the devtools function `install_github()` to go grab it.  To do so you need two separate pieces of information, the name of the developer who is creating the repository and the name of the repository it is contained within.  For the gstudio package, the develop is dyerlab and the repository name is gstudio. If you are comfortable with git, you can also check out certain branches of development if you like with optional arguments to the `install_github()` function.  
@@ -91,16 +91,16 @@ Some packages provide a unique set of problems for getting them onto your comput
 
 #### RGDAL & RGEOS {#rgdal-rgeos-packages}
 
-Every time I upgrade in any significant way, two R libraries seem to raise their ugly heads and scream like a spoiled child—rgdal and rgeos.  Why do these two have to be SOOOO much of a pain? Why can’t we have a auto build of a binary with all the options in it for OSX? Who knows? I always feel like I get the fuzzy end of the lollipop with these two. Here is my latest approach for getting them going.
+Every time I upgrade in any significant way, two R libraries seem to raise their ugly heads and scream like a spoiled child—rgdal and rgeos.  Why do these two have to be SOOOO much of a pain? Why can't we have a auto build of a binary with all the options in it for OSX? Who knows? I always feel like I get the fuzzy end of the lollipop with these two. Here is my latest approach for getting them going.
 
-First you have to make sure you have the latest GDAL libraries. I used to get mine from [Kyngchaos](http://www.kyngchaos.com/software/frameworks), just download the framework, install it, and then do some kind of long R CMD INSTALL dance, which seems to no longer work for me. I also tried installing from Ripley’s repository and found that (a) It was a version older than the one I already had on my machine, and (b) you can’t install from that repository, there is a malformed header and the install.packages() function just barfs.
+First you have to make sure you have the latest GDAL libraries. I used to get mine from [Kyngchaos](http://www.kyngchaos.com/software/frameworks), just download the framework, install it, and then do some kind of long R CMD INSTALL dance, which seems to no longer work for me. I also tried installing from Ripley's repository and found that (a) It was a version older than the one I already had on my machine, and (b) you can't install from that repository, there is a malformed header and the install.packages() function just barfs.
 
 Time to try something new. I typically stay away from the various installer frameworks out there on OSX to keep everything in Frameworks. But this time, I used MacPorts. You can find the latest version here. Here is how I got it to help me out.  
 
-- Download XCode from Apple, it is both free and has a lot of tools that make your life as a programmer easier.  It is a big package and you’ll have to install the command line developer tools as well.  You will be prompted on how to do this.
-- Downloaded the version of macports for your OS, I’m currently on 10.11 and installed it with little problems.  It takes a bit of time at the end of the installation because it is downloading a lot of information.  Be patient. 
+- Download XCode from Apple, it is both free and has a lot of tools that make your life as a programmer easier.  It is a big package and you'll have to install the command line developer tools as well.  You will be prompted on how to do this.
+- Downloaded the version of macports for your OS, I'm currently on 10.11 and installed it with little problems.  It takes a bit of time at the end of the installation because it is downloading a lot of information.  Be patient. 
 - In the terminal, I updated it `sudo ports -v selfupdate` and again be patient, it is going to grab a lot of stuff from the internet.
-- I then used it to install gdal as a unix library (rather than as a framework so it won’t be located in /Library/Frameworks) by sudo ports install gdal. There were a lot of dependencies for this one so it took a while.
+- I then used it to install `gdal` as a unix library (rather than as a framework so it won't be located in /Library/Frameworks) by sudo ports install `gdal`. There were a lot of dependencies for this one so it took a while.
 - I then had R install rgdal as `install.packages( rgdal, type="source")`
 
 Worked like a charm.
@@ -147,7 +147,7 @@ knitr::kable(pkgs_df,caption = "R packages used in the examples shown in this bo
 
 ## The RStudio Environment
 
-By itself, R can be used in the terminal or as the basic interface the installer provides.  While both of these methods are sufficient for working in R, they are less than optimal (IMHO).  I believe one of the most important tools you can use is a good IDE as it helps you organize and work with your data in ways that focus more on the outcome and less on the implementation.  I’ve spent a lot of time in both Emacs and Vim and while they may be tools for the geek elite, RStudio has made me much more productive in terms of output per unit time.
+By itself, R can be used in the terminal or as the basic interface the installer provides.  While both of these methods are sufficient for working in R, they are less than optimal (IMHO).  I believe one of the most important tools you can use is a good IDE as it helps you organize and work with your data in ways that focus more on the outcome and less on the implementation.  I've spent a lot of time in both Emacs and Vim and while they may be tools for the geek elite, RStudio has made me much more productive in terms of output per unit time.
 
 ```{r echo=FALSE}
 knitr::include_graphics("./media/RStudioIDE.png")

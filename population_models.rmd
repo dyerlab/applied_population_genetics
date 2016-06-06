@@ -51,7 +51,7 @@ results$m <- factor(results$m)
 ```
 
 ```{r echo=FALSE, fig.cap="Allele frequencies for and island population fixed for the an allele who is getting migrants from a mainland population at various rates ($m$) that does not have the allele present in the island.", warning=FALSE, message=FALSE}
-require(ggplot2)
+library(ggplot2)
 ggplot(results, aes(x=Generation, y=p, color=m)) + geom_line() + xlab("Generation") + ylab("Island allele frequency (p)")
 ```
 
@@ -116,7 +116,7 @@ This approach may not be the most realistic one, but it does outline a general w
 
 ## Stepping Stone Models
 
-A slightly more realistic model was introduced by Kimura & Weiss (1964) who coined the term ‘stepping-stone’ model to indicate one that takes into consideration the spatial arrangement of populations as it describes connectivity.  
+A slightly more realistic model was introduced by Kimura & Weiss (1964) who coined the term ‘stepping-stone' model to indicate one that takes into consideration the spatial arrangement of populations as it describes connectivity.  
 
 ```{r echo=FALSE, fig.cap="A 1-dimensional stepping stone model.  Each population is connected to only two others and exchange migrants at a rate of $\\frac{m}{2}$ in each direction each generation."}
 knitr::include_graphics("media/Stepping_Stone_Model.png")
@@ -128,8 +128,8 @@ Their model consisted of an infinite length of populations, all connected with a
 - The frequency at the current generation for that population, $p_i$.
 - The rate at which migrants were arriving at the population from each side.  The assumed that the total migration rate was $m$ and as such they were receiving migrants at a rate of $\frac{m}{2}$ each generation, from each neighbor.
 - Each neighbor may have its own initial allele frequency and would change through time with continued exchange of migrants.
-- There is some ‘background’ level of migration that is going on, consisting of some rate of migrants, $m_{\infty}$, whose allele frequencies are denoted as $p_{\infty}$.  This part of the equation may be a bit difficult to parameterize (or said another way, it may be a nice ‘buffer’ to have in your model to help explain things you can’t directly explain).
-- Each population has some stochastic change in allele frequencies each generation, denoted as $\eta_i$, which may be due to genetic drift and other local processes.  The expectation for this ‘error’ term is $E[\eta_i] = 0$ and its variance is $E[\eta_i^2] = \frac{p_i(1-p_i)}{2N_e}$, which is consistent with what we’ve seen for drift already.
+- There is some ‘background' level of migration that is going on, consisting of some rate of migrants, $m_{\infty}$, whose allele frequencies are denoted as $p_{\infty}$.  This part of the equation may be a bit difficult to parameterize (or said another way, it may be a nice ‘buffer' to have in your model to help explain things you can't directly explain).
+- Each population has some stochastic change in allele frequencies each generation, denoted as $\eta_i$, which may be due to genetic drift and other local processes.  The expectation for this ‘error' term is $E[\eta_i] = 0$ and its variance is $E[\eta_i^2] = \frac{p_i(1-p_i)}{2N_e}$, which is consistent with what we've seen for drift already.
 
 Taken as a whole, their formulation is:
 
@@ -139,7 +139,7 @@ p_{i,t+1} = (1-m_1-m_\infty)*p_i + \frac{m}{2}(p_{i-1,t} + p_{i+1,t}) + m_\infty
 
 Extending on this basic model, they also derived the expectations for a 2-dimensional connectivity model where populations were arrayed on a grid with rows and columns.  They also briefly entertained a 3-dimensional model as well.
 
-For each of these models, the estimated the expectation of the decrease in genetic correlation between pairs of populations with increases in distance between populations.   Perhaps not surprisingly, the correlation is higher in 1-dimensional than in 2-dimensional arrangements.  It is also higher in 2-dimensional than in 3-dimensional ones.  Their paper is an excellent introduction to the mathematics underlying connectivity in discrete space and should be examined in detail by those who are interested in modeling this in a more complete fashion.  However, for completeness here, we will look to a more general approach to understanding connectivity and changes in allele frequencies based upon a specified ‘network’ of connectivity.
+For each of these models, the estimated the expectation of the decrease in genetic correlation between pairs of populations with increases in distance between populations.   Perhaps not surprisingly, the correlation is higher in 1-dimensional than in 2-dimensional arrangements.  It is also higher in 2-dimensional than in 3-dimensional ones.  Their paper is an excellent introduction to the mathematics underlying connectivity in discrete space and should be examined in detail by those who are interested in modeling this in a more complete fashion.  However, for completeness here, we will look to a more general approach to understanding connectivity and changes in allele frequencies based upon a specified ‘network' of connectivity.
 
 ## The General Model
 
@@ -213,9 +213,9 @@ ggplot(df, aes(x=Generation, y=Frequency, color=Population)) + geom_line() + yla
 There are a couple of points here to be made.  
 
 - The rate at which allele frequencies change depends upon the $\delta p = p_i - \bar{p}$ and the migration rate.  The approach to $\bar{p}$ was faster for population $Z$ than population $X$ as the migration rates to and from $X$ are overall lower than from $Z$.  
-- Some situations, depending upon the configuration of the connectivity ‘network,’ can result in reversals of direction in allele frequency change. Look at the population $Y$. Its allele frequencies started out at $\bar{p}$ and initially increased towards those of population $Z$.  This is because the relative rate of migration between $Y$ & $Z$ is greater than between $Y$ & $X$.
+- Some situations, depending upon the configuration of the connectivity ‘network,' can result in reversals of direction in allele frequency change. Look at the population $Y$. Its allele frequencies started out at $\bar{p}$ and initially increased towards those of population $Z$.  This is because the relative rate of migration between $Y$ & $Z$ is greater than between $Y$ & $X$.
 
-These observations suggest that when you are doing simulations, you need to wait a bit to allow the dynamics of the system to ‘burn in’ a bit.  The equilibrium point we are interested in seeing is only attainable after the entire system has gone through many generations and the idiosyncrasies have been thoroughly iterated through.    
+These observations suggest that when you are doing simulations, you need to wait a bit to allow the dynamics of the system to ‘burn in' a bit.  The equilibrium point we are interested in seeing is only attainable after the entire system has gone through many generations and the idiosyncrasies have been thoroughly iterated through.    
 
 ## General Strategies
 
@@ -223,6 +223,6 @@ In dealing with these kinds of dynamical systems, there are some important thing
 
 1. Draw out the network if you can.  If it is too complicated, then at least try to capture the main flows through the network, graphically.  Visualization of network structure is very helpful for understanding where you think things should be going.
 2. In most systems, allele frequencies will tend towards $\bar{p}$ for all populations given enough time.  In cases where populations are isolated (e.g., $m=0$), or migration is unidirectional (as in the mainland/island model), you may have components of the overall topology that will never stabilize on $\bar{p}$.  
-3. Once specified, iterate through each generation slowly, checking to see if you are parameterizing the system correctly.  There are an infinite number of ways for you to not get it correct via a typo or other programatic error.  Always ‘sanity check’ your results.
+3. Once specified, iterate through each generation slowly, checking to see if you are parameterizing the system correctly.  There are an infinite number of ways for you to not get it correct via a typo or other programatic error.  Always ‘sanity check' your results.
 
 With these strategies in mind, you should be able to attack any population arrangement.

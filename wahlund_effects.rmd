@@ -95,7 +95,7 @@ unless $p_A = p_B$.
 In Edwards (2000) text, Foundations in Mathematical Genetics, he uses a ternary plot framework to describe this effect. A ternary plot is a way to visualize data corresponding to three different axes but displayed in two space, under the constraint that the frequencies in the three groups sum to unity.  In our case, we can use the genotype frequencies as the axes, one each for $E[AA]$, $E[Aa]$, and $E[aa]$.  Populations in Hardy-Weinberg equilibrium will fall on the line representing $p^2$, $2pq$, and $q^2$.  Here is how to visualize this in R.
 
 ```{r message=FALSE, warning=FALSE, fig.cap="A ternary plot, or de Finetti diagram after Edwards (2000), representing expected genotype frequencies under Hardy Weinberg equilibrium (line) along with the points for the two example populations (in red)."}
-require(ggtern)
+library(ggtern)
 p <- seq(0,1,by=0.01)
 q <- 1-p
 df <- data.frame( AA=p^2,

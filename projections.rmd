@@ -17,18 +17,18 @@ A projection onto an ellipsoid is a way of converting the spherical coordinates,
 
 These include:  
 
-- Azimuthal:  An approach in which each region of the earth is projected onto a plane tangential to the surface, typically at the pole or equator. Cylindrical: This approach projects the surface of the earth onto a cylinder, which is ‘unrolled’ like a large map.  This approach ‘stretches’ distances in a east-west fashion, which is why Greenland looks so large...
-- Conic: Another ‘unrolling’ approach, though this time instead of a cylinder, it is projected onto a cone.  
+- Azimuthal:  An approach in which each region of the earth is projected onto a plane tangential to the surface, typically at the pole or equator. Cylindrical: This approach projects the surface of the earth onto a cylinder, which is ‘unrolled' like a large map.  This approach ‘stretches' distances in a east-west fashion, which is why Greenland looks so large...
+- Conic: Another ‘unrolling' approach, though this time instead of a cylinder, it is projected onto a cone.  
 
 All projections produce bias in area, distance, or shape (some do so in more than one), so there is no 'optimal' projection.  To give you an idea of the consequences of these projections, I'll use the United States map as an example and we can visualize how it is projected onto a 2-dimensional space using different projections.
 
 ### Equatorial Projections
 
-Thse are projections centered on the Prime Meridian (`Longitude=0`) 
+These are projections centered on the Prime Meridian (`Longitude=0`) 
 
 *Mercator Projection*
 ```{r warning=FALSE, message=FALSE}
-require(maps)
+library(maps)
 map("state",proj="mercator")
 ```
 
@@ -45,7 +45,7 @@ map("state",proj="gilbert")
 
 *Cylequalarea Projection*
 
-Some projections require additional parameters, this one is based upon equally spaced and straight meridians, eaual area, and true centered on a particular Latitude.  I used the centroid of the US.
+Some projections require additional parameters, this one is based upon equally spaced and straight meridians, equal area, and true centered on a particular Latitude.  I used the centroid of the US.
 
 ```{r}
 map("state",proj="cylequalarea",par=39.83)
@@ -122,7 +122,7 @@ There are a lot of ways to project a 3-dimensional surface onto a 2-dimensional 
 When working with rasters, we can reproject these onto other projections rather easily.  Here is an example from the worldclim elevation tile we used previously (see \@ref(cropping-rasters)).
 
 ```{r message=FALSE, warning=FALSE}
-require(raster)
+library(raster)
 alt <- raster("./spatial_data/alt_22.tif")
 e <- extent( c(-115,-109,22,30) )
 baja_california <- crop( alt, e )
@@ -132,7 +132,7 @@ baja_california
 We can now project it to another projection, lets say Lambert Conic Conformal.
 
 ```{r warning=FALSE,message=FALSE}
-require(rgdal)
+library(rgdal)
 projection(baja_california)
 baja_lcc <- projectRaster( baja_california, crs="+proj=lcc +lat_1=48 +lat_2=33 +lon_0=-100 +ellps=WGS84")
 baja_lcc
@@ -150,10 +150,10 @@ par(mfrow=c(1,1))
 
 ### Projecting In GGPlot
 
-As usual, there is probably a way to plot these values in `ggplot` to make the output just a little bit more awesome. Projections of data in `ggplot` displays can be manipluated by appending a `coord_*` object to the plot.  Here are two examples using a mercator and azimuth equal area projection of the state maps.
+As usual, there is probably a way to plot these values in `ggplot` to make the output just a little bit more awesome. Projections of data in `ggplot` displays can be manipulated by appending a `coord_*` object to the plot.  Here are two examples using a mercator and azimuth equal area projection of the state maps.
 
 ```{r message=FALSE, warning=FALSE}
-require(ggplot2)
+library(ggplot2)
 states <- map_data("state")
 map <- ggplot( states, aes(x=long,y=lat,group=group))
 map <- map + geom_polygon( fill="white",color="black")
@@ -178,7 +178,7 @@ or any other projection available listed in the `mapproject()` function.
 
 
 ## Coordinate Systems
-In R, we typically are dealing with a combination of data that we’ve collected and that we’ve attained from some other provider.  In most GIS applications, the coordinate systems we encounter are either:  
+In R, we typically are dealing with a combination of data that we've collected and that we've attained from some other provider.  In most GIS applications, the coordinate systems we encounter are either:  
 
 - UTM (Universal Transverse Mercator) measuring the distance from the prime meridian for the x-coordinate and the distance from the equator (often called northing in the northern hemisphere) for the y-coordinate. These distances are in meters and the globe is divided into 60 zones, each of which is 6 degrees in width.
 Geographic coordinate systems use longitude and latitude.  For historical purposes these are unfortunately reported in degrees, minutes, seconds, a temporal abstraction that is both annoying and a waste of time (IMHO).  
@@ -190,8 +190,8 @@ It is best to use a system that is designed for your kind of work.  Do not, for 
 In R, we use rgdal to project points.  Here I load in the coordinates of the populations in the *Arapatus attenuatus* data set and make a *SpatialPoints* object out of it.  Setting the `proj4string()` here **does not** project the data, I am just specifying that the data are already in the lat/long WGS84 format.
 
 ```{r message=FALSE, warning=FALSE}
-require(sp)
-require(gstudio)
+library(sp)
+library(gstudio)
 data(arapat)
 coords <- strata_coordinates( arapat )
 pts <- SpatialPoints( coords[,2:3] )

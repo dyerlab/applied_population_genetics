@@ -19,7 +19,7 @@ This puts the java executables into a directory within `dismo`.  This allows the
 
 ```{r message=FALSE, warning=FALSE}
 options(java.parameters = "-Xmx1g" )
-require(dismo)
+library(dismo)
 ```
 
 Now we can get to work.  In this example, I'll use biolayers found to be informative for the distribution of *Euphorbia lomelii* (Euphrobiaceae), the host plant for *Arapatus attenuatus* that we collected from both observations and all available herbarium specimen records that had sufficient spatial specificity.
@@ -27,7 +27,7 @@ Now we can get to work.  In this example, I'll use biolayers found to be informa
 I load these in using the `raster()` function.  These rasters have already been cropped to the extent enclosing all the arapat populations (as in \@ref(cropping-rasters)).  I have these stored in a subdirectory called 'spatial_data' and load them in as a *RasterStack* object (a set of rasters).
 
 ```{r message=FALSE, warning=FALSE}
-require(raster)
+library(raster)
 files <- c( "bio2.tif", "bio7.tif", "bio8.tif", "bio13.tif", 
             "bio15.tif", "bio17.tif")
 files <- paste("./spatial_data",files,sep="/")
@@ -103,7 +103,7 @@ fit.eval_rnd
 ```
 
 ```{r}
-require(ggplot2)
+library(ggplot2)
 
 df <- data.frame( Val=NA, BioLayer=NA, Category=NA )
 

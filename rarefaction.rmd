@@ -5,7 +5,7 @@ The primary reason for looking at diversity is to perform some comparison, which
 Here is an example of the problem sampling may interject into your analyses.   Consider a single locus with four alleles.
 
 ```{r message=FALSE, warning=FALSE}
-require(gstudio)
+library(gstudio)
 data(arapat)
 f <- data.frame( Allele=LETTERS[1:4], Frequency=0.25)
 f
@@ -40,7 +40,7 @@ for( i in 1:length(Ae)){
 }
 ```
 
-The ‘curvy’ nature of this relationship shows a few things.  
+The ‘curvy' nature of this relationship shows a few things.  
 
 It takes a moderate sample size to capture the main set of alleles in the data set.  If we are looking at allocating sampling using only 5 individuals per locale, then we are not going to get the majority of the alleles present.
 
@@ -104,7 +104,7 @@ Or graphically, it can be depicted as below.
 Estimating diversity is great and being able to compare two or more groups for their levels of diversity is even better.  But often we are looking for spatial patterns in our data.  Both R and gstudio provide easy interfaces for plotting data and later in the text we will see how to integrate raster and vector data into our workflows for more sublime approaches to characterizing population genetic processes.  In the mean time, it is amazingly easy to use basic plotting commands to get pretty informative output.  In this example, I extract the mean coordinate of each stratum in the arapat dataset and then estimate diversity at the level of these partitions and merge the diversity estimates for the AML locus into the coordinate data.frame.  
 
 ```{r}
-require(gstudio)
+library(gstudio)
 data(arapat)
 diversity <- genetic_diversity(arapat, stratum="Population", mode="Ae")
 coords <- strata_coordinates(arapat)
@@ -114,7 +114,7 @@ coords <- merge( coords, diversity[ diversity$Locus == "AML", ] )
 Then, I grab a map from the Google server and map my populations with diversity depicted as differences in the size of the points.  Note that the `ggmap()` function provides the base map that is retrieved but when we use `geom_point()` we need to specify the `aes()` and the `data=` part as these data are from the `data.frame` we made, not from the map we grabbed from Google.
 
 ```{r}
-require(ggmap)
+library(ggmap)
 map <- population_map(coords)
 ggmap(map) + geom_point( aes(x=Longitude,y=Latitude,size=Ae), data=coords)
 ```

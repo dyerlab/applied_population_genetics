@@ -84,7 +84,7 @@ fg       | fg=”blue”        | Sets the foreground color for the image.
 lty      | lty=1            | Sets the type of line as 0-none, 1-solid, 2-dashed, 3-dotted, etc.
 lwd      | lwd=3            | Specifies the width of the line.
 main     | main=”title”     | Sets the title to be displayed over the top of the graph.
-mfrow    | mfrow=c(2,2)     | Creates a ‘matrix’ of plots in a single figure.
+mfrow    | mfrow=c(2,2)     | Creates a ‘matrix' of plots in a single figure.
 pch      | pch=16	          | Sets the type of symbol to be used in a scatter plot.
 sub      | sub=”subtitle”   | Sets the subtitle under the main title on the graph.
 type     | type=”l”         | Specifies the type of the graph to be shown using a generic plot() command.  Types are “p” for points (default), “l” for lines, and “b” for both.
@@ -139,7 +139,7 @@ d.vi <- density( d.virginica )
 
 I can now plot the densities independently.  After the first `plot()` function is called, you can add to it by using `lines()` or `points()` function calls.  They will overlay the subsequent plots over the first one.  One of the things you need to be careful of is that you need to make sure the x- and y-axes are properly scaled so that subsequent calls to `points()` or `lines()` does not plot stuff outside the boundaries of your initial plot.
 
-Here I plot the setosa data firls, specify the `xlim` (limits of the x-axis), set the color, and labels.  On subsequent plotting calls, I do not specify labels but set alternative colors.  Then a nice legend is placed on the graph, the coordinates of which are specified on the values of the x- and y-axis (I also dislike the boxes around graphic so I remove them as well with `bty=”n”`).
+Here I plot the setosa data first, specify the `xlim` (limits of the x-axis), set the color, and labels.  On subsequent plotting calls, I do not specify labels but set alternative colors.  Then a nice legend is placed on the graph, the coordinates of which are specified on the values of the x- and y-axis (I also dislike the boxes around graphic so I remove them as well with `bty=”n”`).
 
 ```{r}
 plot(d.se,xlim=c(4,8),col="red", lwd=2, bty="n", xlab="Sepal Length (cm)", main="Sepal Lengths")
@@ -163,7 +163,7 @@ colnames(vals) <- breaks[1:20]
 vals
 ```
 
-The matirx of data 
+The matrix of data 
 
 ```{r}
 barplot(vals,xlab="Sepal Length", ylab="Frequency")
@@ -195,7 +195,7 @@ Here is how the sepal length can be plot as a function of the Iris species.
 boxplot(Sepal.Length ~ Species, data=iris, notch=TRUE, xlab="Species", ylab="Sepal Length (cm)", frame.plot=FALSE)
 ```
 
-A couple of things should be noted on this plot call.  First, I used a ‘functional’ form for the relationship between the continuous variable (Sepal.Length) and the factor (Species) with the response variable indicated on the left side of the tilde and the predictor variables on the right side.  It is just as reasonable to use boxplot(Species,Sepal.Length, ...) in the call as x- and y- variables in the first two positions.  However, it reads a bit better to do it as a function, like a regression.  Also, it should be noted that I added the optional term, `data=iris`, to the call.  This allowed me to reference the columns in the iris data.frame without the dollar sign notation.  Without that I would have had to write `boxplot( data$Sepal.Length ~ data$Species, ...)`, a much more verbose way of doing it but most programmers are relatively lazy and anything they can do to get more functionality out of less typing...  Finally, I set `frame.plot=FALSE` to remove the box around the plot since the `bty=”n”` does not work on boxplots.  I don’t know why these are different, I just hate the box.
+A couple of things should be noted on this plot call.  First, I used a ‘functional' form for the relationship between the continuous variable (Sepal.Length) and the factor (Species) with the response variable indicated on the left side of the tilde and the predictor variables on the right side.  It is just as reasonable to use boxplot(Species,Sepal.Length, ...) in the call as x- and y- variables in the first two positions.  However, it reads a bit better to do it as a function, like a regression.  Also, it should be noted that I added the optional term, `data=iris`, to the call.  This allowed me to reference the columns in the iris data.frame without the dollar sign notation.  Without that I would have had to write `boxplot( data$Sepal.Length ~ data$Species, ...)`, a much more verbose way of doing it but most programmers are relatively lazy and anything they can do to get more functionality out of less typing...  Finally, I set `frame.plot=FALSE` to remove the box around the plot since the `bty=”n”` does not work on boxplots.  I don't know why these are different, I just hate the box.
 
 ## Scatter Plots
 
@@ -215,7 +215,7 @@ plot(1:25,1:25,pch=1:25, bty="n", xlab="pch", ylab="pch")
 which produces the following figure where you can choose the appropriate symbols for your plotting needs.
 
 ## Multiple Plots
-In addition to single plots, it is sometimes necessary to create a matrix of plots in a single figure.  While it is possible to construct single plots in R and then put them ‘together’ post-production in whatever word processing platform you use, it is also possible to create them directly.  To do this, we need to mess around a bit with the plotting attributes.  These are default parameters (hence the name par) for plotting that are used each time we make a new graphic.  Here are all of them (consult with the previous Table for some of the meanings).
+In addition to single plots, it is sometimes necessary to create a matrix of plots in a single figure.  While it is possible to construct single plots in R and then put them ‘together' post-production in whatever word processing platform you use, it is also possible to create them directly.  To do this, we need to mess around a bit with the plotting attributes.  These are default parameters (hence the name par) for plotting that are used each time we make a new graphic.  Here are all of them (consult with the previous Table for some of the meanings).
 
 ```{r}
 names( par() )
@@ -227,7 +227,7 @@ To create multiple plots on one graphic, we need to modify either the mfrow or m
 par()$mfrow
 ```
 
-because there is only 1 row and 1 column in the plot.  To change this, we simply pass a new value to the `par()` command and then do the plotting.  In the following example, I plot the results of a linear model (`lm()`) function call. This returns four plots looking at the normality of the data, residuals, etc.  This time, instead of seeing them one at a time, I’m going to plot all four into one figure.
+because there is only 1 row and 1 column in the plot.  To change this, we simply pass a new value to the `par()` command and then do the plotting.  In the following example, I plot the results of a linear model (`lm()`) function call. This returns four plots looking at the normality of the data, residuals, etc.  This time, instead of seeing them one at a time, I'm going to plot all four into one figure.
 
 ```{r}
 par(mfrow=c(2,2))

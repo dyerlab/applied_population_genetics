@@ -23,7 +23,7 @@ If you want the most recent version of this package, I make the development buil
 
 ```{r,eval=FALSE}
 install.packages(devtools)
-require(devtools)
+library(devtools)
 install_github("dyerlab/gstudio")
 ```
 
@@ -36,7 +36,7 @@ I recommend using the latest version, it has a lot of the newer features and I d
 And any time you need to use the package, you would just pull it into your session.
 
 ```{r,message=FALSE}
-require(gstudio)
+library(gstudio)
 ```
 
 This should get you everything you need. The **gstudio**  package does contain a lot of build-in documentation including a lot of examples.  All the functions and examples associated with them can be found in the build-in documents available from any of the following (n.b., the vignette is a simple placeholder with links to the website.)
@@ -317,9 +317,9 @@ Here the `dim()` function returns the dimension of the data.frame in each clade,
 One of the key benefits to using an analysis environment such as R is that you can mash together functionality that you just can't get from a monolithic program.  An example of this is plotting populations.  If your data has spatial coordinates in them then you can use this to plot the location of your sites on a GoogleMap tile.  By default, you *must* have your coordinates in decimal degree format, with west and south as **negative** decimals.  This is the default for the GoogleMaps API.  Moreover, if you name the columns of data "Longitude" and "Latitude" much of the spatial functionality in **gstudio** will be more transparent (if not, you have to specify the Longitude and Latitude names each time you use a function that needs them).
 
 ```{r, warning=FALSE,message=FALSE}
-require(ggplot2)
-require(ggrepel)
-require(ggmap)
+library(ggplot2)
+library(ggrepel)
+library(ggmap)
 coords <- strata_coordinates( arapat )
 map <- population_map(coords)
 ggmap(map) + geom_point(aes(x=Longitude,y=Latitude), data=coords, size=2) + geom_label_repel(aes(x=Longitude,y=Latitude,label=Stratum),data=coords) + xlab("Longitude") + ylab("Latitude")
@@ -903,7 +903,7 @@ and then we can plot them against each other and look at their correlations.
 ```{r message=FALSE, warning=FALSE}
 df <- df[ is.finite(df$Nei), ]
 df <- df[ is.finite(df$cGD), ]
-require(GGally)
+library(GGally)
 ggpairs( df )
 ```
 
@@ -993,7 +993,7 @@ gst <- Gst( arapat )$Gst
 gstp <- Gst_prime( arapat )$Gst 
 dest <- Dest( arapat )$Dest
 df <- data.frame( Gst=gst, Gst_prime=gstp, Dest=dest )
-require(GGally)
+library(GGally)
 ggpairs( df )
 ```
 
@@ -1010,7 +1010,7 @@ Here is an example with the larger Clade using the function `adonis()` from the 
 data <- arapat[ arapat$Species == "Cape",]
 D <- dist( dist_amova( data ) )
 Pop <- factor( as.character( data$Population ) )
-require(vegan)
+library(vegan)
 adonis(D ~ Pop )
 ```
 
@@ -1119,7 +1119,7 @@ This is only a starting point and it is intended to provide some quick familiari
 A *Population Graph* is a model-free network created using conditional genetic covariance.  Connectivity within a population graph is based solely upon the multilocus genetic covariance, which is dominated by neutral processes such as gene flow and historical demography.  The routines to create population graphs were previously nestled within this package but due to the expansion of the approach outside genetic analyses, I opted to pull those routines out and put them in their own packages.  I will show briefly the use of population graphs here, just enough to show how it is done.  There is a complete write-up on it (like this one) on my website at !(http://dyerlab.bio.vcu.edu/docs/popgraph.html that goes into it in much greater detail and shows you how to do various analyses on the data.
 
 ```{r error=FALSE, message=FALSE}
-require(popgraph)
+library(popgraph)
 ```
 
 By default, the input to `popgraph()` is a multivariate data set and a factor to be used to identify the nodes.  For this example, we'll use the larger clade in the beetle, Peninsula, as an example.
@@ -1140,7 +1140,7 @@ t
 And from there create the node colors from there.  I'll color the mainland populations in dark grey, the clade only populations in light gray, the large clade in red and the populations mixed with both peninsular species in salmon colors.
 
 ```{r message=FALSE, warning=FALSE}
-require(igraph)
+library(igraph)
 nodes <- V(graph)$name
 color <- rep( "#f4a582", length(nodes) )
 # the A clade

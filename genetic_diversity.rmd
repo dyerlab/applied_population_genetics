@@ -4,10 +4,10 @@ At a base level, genetic diversity is the fundamental components upon which evol
 
 Estimates of within genetic diversity depend solely upon what you consider 'within a group.'  Often we use terms like Population, Deme, etc., but these have specific evolutionary and/or demographic meanings.  We are, however, largely ignorant if the samples we have collected are technically a part of a 'Population' in an evolutionary or at least practical random mating context.  As such, I will use the term population loosely, indicating that it is a collection of individuals sample from a geographic locale.  I am implicitly assuming a functional definition here (as I do in my research) that individuals sampled from the same 'Population' have a much higher probability of mating together than individuals sampled from different 'Populations.  This is 'Population Genetics' after all...
 
-Here we will use the Araptus attenuatus co-dominant locus dataset that is included with the gstudio library.
+Here we will use the *Araptus attenuatus* co-dominant locus dataset that is included with the gstudio library.
 
 ```{r message=FALSE, warning=FALSE}
-require(gstudio)
+library(gstudio)
 data(arapat)
 ```
 
@@ -27,7 +27,7 @@ Estimate genetic diversity
 
 Description
 
-This function is the main one used for estimating genetic diversity among stratua. Given the large number of genetic diversity metrics, not all potential types are included.
+This function is the main one used for estimating genetic diversity among strata. Given the large number of genetic diversity metrics, not all potential types are included.
 
 Usage
 genetic_diversity(x, stratum = NULL, mode = c("A", "Ae", "A95", "He", "Ho",
@@ -36,7 +36,7 @@ genetic_diversity(x, stratum = NULL, mode = c("A", "Ae", "A95", "He", "Ho",
 Arguments
 
 x - A data.frame object with locus columns.
-stratum - The strata by which the genetic distances are estimated. This can be an optional parameter when estimating distance measures calculated among indiviudals (default='Population').
+stratum - The strata by which the genetic distances are estimated. This can be an optional parameter when estimating distance measures calculated among individuals (default='Population').
 mode - The particular genetic diversity metric that you are going to use. The gstudio package currently includes the following individual distance measures:
 	A   	Number of alleles
 	Ae	Effective number of alleles (default)
@@ -181,7 +181,7 @@ If you are estimating $H_e$ across more than one location, there is a secondary 
 H_S = \frac{\tilde{N}}{\tilde{N}-1}\left[ 1 - \sum_{i=1}^\ell \frac{p_i^2}{K} - \frac{H_O}{2\tilde{N}} \right]
 \]
 
-where $\tilde{N}$ is the harmonic mean number of genotypes sampled across each of the $K$ strata.  Notice here I use the term $H_S$ instead of $H_E$ so that there isn’t any doubt about the differences when we write and talk about these parameters.  This formulation (after Nei 1987) corrects for the sampling across separate sampling locations.  To indicate that your estimate is being made using subdivided groups of samples, pass the `stratum=` parameter to `genetic_diversity()`.  We can see the magnitude of the correction by looking at a single population and comparing the estimates of $H_S$ for corrected and non-corrected parameters.
+where $\tilde{N}$ is the harmonic mean number of genotypes sampled across each of the $K$ strata.  Notice here I use the term $H_S$ instead of $H_E$ so that there isn't any doubt about the differences when we write and talk about these parameters.  This formulation (after Nei 1987) corrects for the sampling across separate sampling locations.  To indicate that your estimate is being made using subdivided groups of samples, pass the `stratum=` parameter to `genetic_diversity()`.  We can see the magnitude of the correction by looking at a single population and comparing the estimates of $H_S$ for corrected and non-corrected parameters.
 
 ```{r}
 pop <- arapat[ arapat$Population=="32",]

@@ -2,9 +2,9 @@
 
 As a scientist, the integrity of your data is your #1 priority. In fact, I argue that your ability to write advertisements of your research, which is what manuscripts really are, is secondary to the data that you collect and provide the community. As a practitioner, you get more credit and are providing more to your research community if your data are not only collected with integrity but able to be used by others. In the near future, the DOI for your data sets will be as important as the ones for your manuscripts.
 
-For your data to have the most impact, it needs to be both available and valid. One way to help keep your data intact is to put it in one place and only pull from there to do analyses when you need to do them. You should ALWAYS keep your data and your analyses as close to each other as possible. Once they get separated, things go crazy. For example, consider the case where you send your colleague a copy of your data in a spreadsheet. Now you have two potentially different (and divergent) representations of your data. Any change that either you or your colleague make to the data is not mirrored. Which one is correct? What happens when you put a copy on the laboratory computer and do some analyses with it, then copy it to your ‘backup drive’ (or even worse a thumb drive) and then put a copy of it on your laptop. Then when you get home, a copy goes on your home computer. How many different copies of your data are there in the world? Which one is correct? Somewhere down the road, you will need to recreate a figure for a manuscript, give someone a copy of your data, reanalyze your raw data with a new approach that you run across, etc. Which copy of the data that you haven’t worked on for the last 6+ months is the right one? Which one is valid? Even if you use an awesome naming scheme like “Data.last.version.xls”, “Data.really.last.version.xls”, “I.totally.mean.last.version.xls” etc.. Not going to serve you well in the long run. All of this is terrifying from the perspective of reproducibility.
+For your data to have the most impact, it needs to be both available and valid. One way to help keep your data intact is to put it in one place and only pull from there to do analyses when you need to do them. You should ALWAYS keep your data and your analyses as close to each other as possible. Once they get separated, things go crazy. For example, consider the case where you send your colleague a copy of your data in a spreadsheet. Now you have two potentially different (and divergent) representations of your data. Any change that either you or your colleague make to the data is not mirrored. Which one is correct? What happens when you put a copy on the laboratory computer and do some analyses with it, then copy it to your ‘backup drive' (or even worse a thumb drive) and then put a copy of it on your laptop. Then when you get home, a copy goes on your home computer. How many different copies of your data are there in the world? Which one is correct? Somewhere down the road, you will need to recreate a figure for a manuscript, give someone a copy of your data, reanalyze your raw data with a new approach that you run across, etc. Which copy of the data that you haven't worked on for the last 6+ months is the right one? Which one is valid? Even if you use an awesome naming scheme like “Data.last.version.xls”, “Data.really.last.version.xls”, “I.totally.mean.last.version.xls” etc.. Not going to serve you well in the long run. All of this is terrifying from the perspective of reproducibility.
 
-One way to keep data available with integrity is to have it located in one, and only one, location. If you use Google Drive, this is a pretty easy thing to do. You can keep your spreadsheet online, and then just access the data for your anlayses when you need to.
+One way to keep data available with integrity is to have it located in one, and only one, location. If you use Google Drive, this is a pretty easy thing to do. You can keep your spreadsheet online, and then just access the data for your analysis when you need to.
 
 ## Keeping Data on Google Drive
 
@@ -31,7 +31,7 @@ In R, we can access this spreadsheet directly through that URL, which allows us 
 Load in the RCurl library that allows us to grab the contents at a site programatically.
 
 ```{r}
-require(RCurl)
+library(RCurl)
 link <- "https://docs.google.com/spreadsheets/d/1QL9fYeKkDKphba12WLVTBJrv_d1WHTc9SrZoBeIFgj8/pub?gid=0&single=true&output=csv"
 url <- getURL( link )
 ```
@@ -45,7 +45,7 @@ con <- textConnection( url )
 Load in the gstudio library and read the data in as a normal data file.  This last part is identical to what we would do for a normal file on our computer, it is the first two steps that extend this approach to use remote files via a url.
 
 ```{r message=FALSE}
-require(gstudio)
+library(gstudio)
 cornus <- read_population( con, type="column", locus.columns = 5:14, sep=",")
 summary(cornus)
 ```

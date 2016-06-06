@@ -25,13 +25,12 @@ The content of this text is modified, added to, and changed continually.  You ar
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-require(ggplot2)
-require(gstudio)
-require(rgdal)
-require(rgeos)
-require(raster)
-require(ggmap)
-require(magrittr)
+library(ggplot2)
+library(gstudio)
+library(rgdal)
+library(rgeos)
+library(raster)
+library(ggmap)
 theme_set( theme_bw() )
 ```
 
@@ -58,13 +57,13 @@ Dr. Rodney Dyer is an Associate Professor in the Department of Biology and the A
 
 This is, most of all, not a book about R.  This is also not a "Population Genetics in R" textbook.  It is a book about how we do population genetic analyses, for which R is a tool that allows us to reach beyond the limitations of point-and-click interfaces. As a field, Population Genetics has a broad set of textbooks describing the underlying theory.  As a student, I cut my teeth on the texts of Hartl (1981), Hartl & Clark (1997) and have used other great texts such as Hamilton (2011) and Hedrick (2009) in the classroom to teach the subject for the last decade.  In late 2015, there are a host of texts available to the student of population genetics—amazon lists 150 different books under the search term “Population Genetics textbook”—why do another one?  What I have found is that while the theory behind this discipline has been well developed, its application has been largely neglected.  
 
-As a new graduate student, fresh out of my first population genetics course, I felt armed with the understanding of how microevolutionary processes influence the distribution of alleles within and among populations.  What I wasn’t prepared for was sitting in front of the computer, looking at a few thousand individuals assayed for several different loci and actually ‘doing’ population genetics.  All of those textbooks provide me with what is expected and the theory behind it, though often fall short on teaching me how I could apply those inferences to data I actually collect.  If you are a theoretical population geneticist, those texts and your ability to integrate mathematical equations will provide you a research lifetime of work.  However, if you are practitioner who uses population genetic tools to answer conservation, management, or ecologically inspired questions, the evolutionary expectations of population genetic processes will most likely not be as important as directly estimating inbreeding, exploring ongoing connectivity, or determining genetic granularity of existing populations.  This is where this textbook is focusing, a seemingly uninhabited niche in the knowledge ecosystem of graduate level population genetics.
+As a new graduate student, fresh out of my first population genetics course, I felt armed with the understanding of how microevolutionary processes influence the distribution of alleles within and among populations.  What I wasn't prepared for was sitting in front of the computer, looking at a few thousand individuals assayed for several different loci and actually ‘doing' population genetics.  All of those textbooks provide me with what is expected and the theory behind it, though often fall short on teaching me how I could apply those inferences to data I actually collect.  If you are a theoretical population geneticist, those texts and your ability to integrate mathematical equations will provide you a research lifetime of work.  However, if you are practitioner who uses population genetic tools to answer conservation, management, or ecologically inspired questions, the evolutionary expectations of population genetic processes will most likely not be as important as directly estimating inbreeding, exploring ongoing connectivity, or determining genetic granularity of existing populations.  This is where this textbook is focusing, a seemingly uninhabited niche in the knowledge ecosystem of graduate level population genetics.
 
-This text was developed out of a graduate course in Population Genetics that I’ve been teaching at Virginia Commonwealth University since 2005.  This texts uses R and many additional libraries available within the R ecosystem to illustrate how to perform specific types of analyses and what kind of biological inferences we can gain from them.  In the process, we cover materials that are commonly needed in the application of population genetic analysis such as spatial autocorrelation, paternity analysis, and the use of permutation while at the same time highlighting logistical challenges commonly encountered in analyzing real data such as incomplete sampling, missing data, and rarefaction.
+This text was developed out of a graduate course in Population Genetics that I've been teaching at Virginia Commonwealth University since 2005.  This texts uses R and many additional libraries available within the R ecosystem to illustrate how to perform specific types of analyses and what kind of biological inferences we can gain from them.  In the process, we cover materials that are commonly needed in the application of population genetic analysis such as spatial autocorrelation, paternity analysis, and the use of permutation while at the same time highlighting logistical challenges commonly encountered in analyzing real data such as incomplete sampling, missing data, and rarefaction.
 
 ## Typography {-}
 
-This text is designed primarily as an electronic publication (ePub) and has dynamical content included within.  If you are reading a static copy (as PDF or printed text), you are not getting the full experience of what this book has been designed to deliver.  Much of the text is devoted to quantitative analysis of data in R, and as such I’ve typeset the R components differently from the flowing text.  Text intended to be input into R is typeset as a fixed width font and colored using the default color scheme found in RStudio (http://rstudio.org).  Here are two input examples.
+This text is designed primarily as an electronic publication (ePub) and has dynamical content included within.  If you are reading a static copy (as PDF or printed text), you are not getting the full experience of what this book has been designed to deliver.  Much of the text is devoted to quantitative analysis of data in R, and as such I've typeset the R components differently from the flowing text.  Text intended to be input into R is typeset as a fixed width font and colored using the default color scheme found in RStudio (http://rstudio.org).  Here are two input examples.
 
 ```{r}
 value <- 20
@@ -101,13 +100,13 @@ Arguments
 update - logical: should this attempt to update the package index to reflect the currently available packages. (Not attempted if remote is non-NULL.)
 gui - just for compatibility with S-PLUS.
 browser - the name of the program to be used as hypertext browser. It should be in the PATH, or a full path specified. Alternatively, it can be an R function which will be called with a URL as its only argument. This option is normally unset on Windows, when the file-association mechanism will be used.
-remote - A character string giving a valid URL for the ‘R_HOME’ directory on a remote location.
+remote - A character string giving a valid URL for the ‘R_HOME' directory on a remote location.
 
 Details
 
 Unless remote is specified this requires the HTTP server to be available (it will be started if possible: see startDynamicHelp).
 
-One of the links on the index page is the HTML package index, ‘R.home("docs")/html/packages.html’, which can be remade by make.packages.html(). For local operation, the HTTP server will remake a temporary version of this list when the link is first clicked, and each time thereafter check if updating is needed (if .libPaths has changed or any of the directories has been changed). This can be slow, and using update = TRUE will ensure that the packages list is updated before launching the index page.
+One of the links on the index page is the HTML package index, ‘R.home("docs")/html/packages.html', which can be remade by make.packages.html(). For local operation, the HTTP server will remake a temporary version of this list when the link is first clicked, and each time thereafter check if updating is needed (if .libPaths has changed or any of the directories has been changed). This can be slow, and using update = TRUE will ensure that the packages list is updated before launching the index page.
 
 Argument remote can be used to point to HTML help published by another R installation: it will typically only show packages from the main library of that installation.
 

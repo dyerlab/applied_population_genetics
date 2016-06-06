@@ -23,8 +23,8 @@ There are two ways to create a population graph:
 
 
 ```{r,message=FALSE, warning=FALSE}
-require(popgraph)
-require(igraph)
+library(popgraph)
+library(igraph)
 ```
 
 
@@ -156,7 +156,7 @@ To specifiy how things look in a plot, you need to specify an aesthetic using th
 Here is an example using the *Lopohcereus* graph.  We begin by making a `ggplot()` object and then adding to it a `geom_` object.  The 5**popgraph** package comes with two funcitons, one for edges and one for nodes.  
 
 ```{r}
-require(ggplot2)
+library(ggplot2)
 p <- ggplot() 
 p <- p + geom_edgeset( aes(x=Longitude,y=Latitude), lopho ) 
 p
@@ -262,7 +262,7 @@ V(g)$Longitude <- c(-122.89,-122.49,-89.98, -93.47, -77.16 )
 Then overlay this onto a map using the `overlay_popgraph()` function.    Here is an example where I plot it over the map of the US states.
 
 ```{r,message=FALSE,fig.cap="Map of graph stetched onto continential US map."}
-require(maps)
+library(maps)
 map( "state" )
 overlay_popgraph(g)
 ```
@@ -282,7 +282,7 @@ Using the **ggmap** package, you can request map tiles and use as backgrounds on
 Some fiddling is required with either way you go.  The map you get from `get_map()` is essentially a huge matrix of hex colors as shown above.
 
 ```{r, message=FALSE}
-require(ggmap)
+library(ggmap)
 location <- c( mean(V(lopho)$Longitude), mean(V(lopho)$Latitude))
 location
 map <- get_map(location,maptype="satellite", zoom=6)
@@ -309,7 +309,7 @@ p + xlab("Longitude") + ylab("Latitude")
 At times we have raster data upon we can plot a population graph. Here is an example from Baja California. The underlying raster image is croped from a WorldClim tile and represents elevation.  
 
 ```{r,message=FALSE}
-require(raster)
+library(raster)
 data(alt)
 plot(alt)
 ```
@@ -353,7 +353,7 @@ df.nodes <- data.frame(Pop=V(lopho)$name, Latitude=V(lopho)$Latitude, Longitude=
 Then we can extract the elevation from the `alt` raster as:
 
 ```{r}
-require(raster)
+library(raster)
 df.nodes$Elevation <- extract( alt, lopho.nodes )
 summary(df.nodes)
 ```
@@ -380,7 +380,7 @@ plot(lopho.edges[3],add=TRUE,col="red",lwd=3)
 Along this transect, you can pull out the elevation values as follows (n.b., the return object is a list so I'm only taking the first, and only, element in it).
 
 ```{r,message=FALSE}
-require(ggplot2)
+library(ggplot2)
 Elevation <- extract( alt, lopho.edges[3] )[[1]]
 e <- extent( lopho.edges[3] )
 e
@@ -418,7 +418,7 @@ Now, we need the physical distance between the nodes.  If the physical size of t
 
 
 ```{r,warning=FALSE,message=FALSE}
-require(fields)
+library(fields)
 pDist <- rdist.earth( cbind( V(lopho)$Longitude, V(lopho)$Latitude ) )
 ```
 
@@ -455,7 +455,7 @@ summary(df.nodes,color="Region")
 The relationship betwwen the node variables can be evaluated in a pair plot.
 
 ```{r,message=FALSE,warning=FALSE,fig.width=8}
-require(GGally)
+library(GGally)
 ggpairs(df.nodes,columns=2:9, color='Region')
 ```
 

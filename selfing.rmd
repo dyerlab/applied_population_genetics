@@ -30,7 +30,7 @@ F &= \frac{H_e - H_o}{H_e} \\
 \end{aligned}
 \]
 
-The key point here is that inbreeding (autozygosity) is estimated ‘relative’ to the expected frequencies of non-inbred heterozygotes (allozygosity).
+The key point here is that inbreeding (autozygosity) is estimated ‘relative' to the expected frequencies of non-inbred heterozygotes (allozygosity).
 
 Selfing is the most extreme form of inbreeding is that of selfing—one parent donates both gametes to the offspring.  In selfing systems, the frequency of genotypes $P = freq(AA)$, $Q = freq(AB)$, and $R = freq(BB)$, change in through time in a predictable fashion providing us a quantitative approach to characterizing the duration of inbreeding from allele and genotype frequencies.  
 
@@ -120,7 +120,7 @@ F_t = 1 - \left(\frac{1}{2}\right)^t(1-F_O)
 for any arbitrary time, $t$, in the future given some starting level of inbreeding.  This expectation looks like:
 
 ```{r warning=FALSE, message=FALSE}
-require(ggplot2)
+library(ggplot2)
 T <- 0:15
 F <- 1 - 0.5^T
 df <- data.frame( T, F)
@@ -131,10 +131,10 @@ ggplot(df,aes(T,F)) + geom_line() + xlab("Generation (t)") + ylab("Inbreeding (F
 
 These smooth expectations are nice but real data is a bit more complex.  Real data is not so clean but it is pretty easy to simulate this process and measure the change in inbreeding through time.  Here is how that can be done.
 
-First, I’m going to start with a population in HWE with allele frequencies of $p=q$.  To do this, we start by importing the gstudio library and making raw genotypes.  We can replicate them to make a starting population with $N=100$ individuals.
+First, I'm going to start with a population in HWE with allele frequencies of $p=q$.  To do this, we start by importing the gstudio library and making raw genotypes.  We can replicate them to make a starting population with $N=100$ individuals.
 
 ```{r message=FALSE, warning=FALSE}
-require(gstudio)
+library(gstudio)
 AA <- locus( c("A","A") )
 AB <- locus( c("A","B") )
 BB <- locus( c("B","B") )
@@ -172,7 +172,7 @@ for( rep in 0:9 ) {
 }
 ```
 
-The variance around expectation is moderate shows that even if all expectations are met, real data is a bit messy—perhaps expectations are more of what you’d call ‘guidelines’ than strict rules.
+The variance around expectation is moderate shows that even if all expectations are met, real data is a bit messy—perhaps expectations are more of what you'd call ‘guidelines' than strict rules.
 
 ```{r echo=FALSE, fig.cap="Replicate simulations of inbreeding in purely selfing populations (colored lines) with theoretical expectation (black line)."}
 ggplot() + geom_line(aes(T,F,color=Category),data=df[df$Category!="Expectations",]) + geom_point(aes(T,F,color=Category),data=df[df$Category!="Expectations",]) + geom_line(aes(T,F),data=df[df$Category=="Expectations",]) + geom_point(aes(T,F),data=df[df$Category=="Expectations",]) + xlab("Generation (t)") + ylab("Inbreeding (F)")

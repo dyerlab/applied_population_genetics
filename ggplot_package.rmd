@@ -1,6 +1,6 @@
 # The ggplot2 Library
 
-In addition to the built-in plotting routines, there are several additional graphics libraries available for creating output.  The one I prefer is ggplot2 written by Hadley Wickham.  His approach in designing this library a philosophy of graphics depicted in Leland Wilkson’s (2005) book The Grammar of Graphics. As I understand it, the idea is that a graphical display consists of several layers of information. These layers may include:
+In addition to the built-in plotting routines, there are several additional graphics libraries available for creating output.  The one I prefer is ggplot2 written by Hadley Wickham.  His approach in designing this library a philosophy of graphics depicted in Leland Wilkson's (2005) book The Grammar of Graphics. As I understand it, the idea is that a graphical display consists of several layers of information. These layers may include:
 
 * The underlying data.  
 * Mapping of the data onto one or more axes.  
@@ -21,12 +21,12 @@ install.packages("ggplot2")
 and then load it into memory as usual
 
 ```{r message=FALSE}
-require(ggplot2)
+library(ggplot2)
 ```
 
 To construct a plot, we need to first establish the data layer.  This is done by making a call to `ggplot()` and passing it two components:
 
-* A data.frame object that is holding the data.  All data to be plot must be in a data.frame, which isn’t that big of a deal as this is the main container within which we keep our data.
+* A data.frame object that is holding the data.  All data to be plot must be in a data.frame, which isn't that big of a deal as this is the main container within which we keep our data.
 * An aesthetic for the data (passed as aes()), depicting which variable is going to be plot on which axis as well as any visual parameters on that plot that may be controlled by variables in the data.frame (e.g., color, symbol, etc.).
 
 The general form for this is:
@@ -69,7 +69,7 @@ p <- p + geom_histogram( binwidth=0.1, fill="orange", color="black", aes(y=..den
 p + xlab("Sepal Width") + ylab("Frequency")
 ```
 
-by sequentially adding the layers.  The plot itself does not show until the last command is given, where you are displaying the value of p and its axes labels.  Of particular note here is that I had to specify a different `aes()` for the `geom_histogram()` function.  What I passed to it was “..density..” which is a shorthand notation for `ggplot()` to return the data not as raw counts but as a density frequency.  This is because the `geom_density()` function plots the y-axis data as a frequency, not a count and if you don’t tell them to be on the same scale, the histograms will have a range of 0-26 whereas the density plot will be on 0-1.  Also, the order in which you add the layers creates the stacking of the data—the histogram is over the top of the density plot because it was added to the data layer after the density layer.
+by sequentially adding the layers.  The plot itself does not show until the last command is given, where you are displaying the value of p and its axes labels.  Of particular note here is that I had to specify a different `aes()` for the `geom_histogram()` function.  What I passed to it was “..density..” which is a shorthand notation for `ggplot()` to return the data not as raw counts but as a density frequency.  This is because the `geom_density()` function plots the y-axis data as a frequency, not a count and if you don't tell them to be on the same scale, the histograms will have a range of 0-26 whereas the density plot will be on 0-1.  Also, the order in which you add the layers creates the stacking of the data—the histogram is over the top of the density plot because it was added to the data layer after the density layer.
 
 Aesthetics can also be augmented by subsequent geometry layers.  In the iris example, we can plot the density of the sepal width, partitioned by species, but this time we can put that information into the call on the `geom_density()` function rather than having it all in the `aes()` call in the `ggplot()` data layer. This may be a bit confusing, but there are many times when you are plotting two ore more kinds of data that just cannot be depicted in a single data.frame object.  The calls 
 ```{r}
@@ -103,7 +103,7 @@ By default, ggplot uses those colors for categories but you can easily specify a
 ## Bivariate Data
 
 For bivariate data, the same kinds of plots can be created, depending upon the kind of predictor and response variables you have.  For simplicity, I will keep the designation of aesthetics within the `ggplot()` function for the following examples.
-Boxplots for sepal width across species can be created just as before.  The error bars are slightly different (they don’t have the horizontal bar on them), but most of the rest is identical.  The only difference I can see directly is that the width of the notch is not based upon the confidence around the median but is depicted as a fraction of the box size.  I may be in err, but this seems to be what the help file says for the description for the parameter notchwidth which can be changed.  If this is the case, it seems there may be some room for additional code here.
+Boxplots for sepal width across species can be created just as before.  The error bars are slightly different (they don't have the horizontal bar on them), but most of the rest is identical.  The only difference I can see directly is that the width of the notch is not based upon the confidence around the median but is depicted as a fraction of the box size.  I may be in err, but this seems to be what the help file says for the description for the parameter notchwidth which can be changed.  If this is the case, it seems there may be some room for additional code here.
 
 ```{r}
 ggplot(iris, aes(x=Species, y=Sepal.Length)) + geom_boxplot(notch = TRUE) + xlab("Iris Species") + ylab("Sepal Width (cm)")
@@ -117,7 +117,7 @@ ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width, shape=Species)) + geom_point()
 
 This figure may be a bit confusing.  You can see a few points where the three species have the same measurements for both sepal length and width—both I. versicolor and *I. virginica* have examples with sepal widths of 3.0cm and lengths of 6.7cm.  For some of these it would be difficult to determine using a graphical output like this if there were more overlap.  In this case, it may be a more informative approach to make plots for each species rather than using different symbols.  In ggplot, there is a facet geometry that can be added to a plot that can pull apart the individual species plots (in this case) and plot them either next to each other (if you are looking at y-axis differences), on top of each other (for x-axis comparisons), or as a grid (for both x- and y- axis comparisons).
 
-This layer is added to the plot using `facet_grid()` and take a ‘functional’ argument on which factors will define rows and columns of plots.  Here is an example where I stack plots by species.
+This layer is added to the plot using `facet_grid()` and take a ‘functional' argument on which factors will define rows and columns of plots.  Here is an example where I stack plots by species.
 
 ```{r}
 ggplot( iris, aes(x=Sepal.Width, y=Sepal.Length ) ) + geom_point() + facet_grid(Species~.) + xlab("Sepal Width (cm)") + ylab("Sepal Length")
@@ -174,7 +174,7 @@ The ggplot2 library has a slightly more interesting color palette, but it too is
 To start, the RColorBrewer library provides several palettes for plotting either quantitative, qualitative, or divergent data.  These three groups and the names of individual color palettes can be viewed as:
 
 ```{r}
-require(RColorBrewer)
+library(RColorBrewer)
 display.brewer.all()
 ```
 
