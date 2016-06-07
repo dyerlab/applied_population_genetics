@@ -1,81 +1,21 @@
 # Population Graphs
 
-Population Graphs are a statistical representation of among population genetic variance, $\sigma^2_A$, as viewed through a network (Dyer & Nason 2004).  A population graph is a graph-theoretic interpretation of genetic covariance and serves as a tool for understanding underlying evolutionary history for a set of populations.  These structures are estimated in R using the **popgraphs** library.  
+Population Graphs are a statistical representation of among population genetic variance, $\sigma^2_A$, as viewed through a network (Dyer & Nason 2004).  A population graph is a graph-theoretic interpretation of genetic covariance and serves as a tool for understanding underlying evolutionary history for a set of populations.  
 
-There are two ways to create a population graph:
-
-1. In this package using the function *popgraph()* and,
-2.  Via the servers at http://dyerlab.bio.vcu.edu (which use this packages to do the translation) or via GeneticStudio (an older software package)
-
+These structures are estimated in R using the **popgraphs** library.  
 
 ```{r,message=FALSE, warning=FALSE}
 library(popgraph)
-library(igraph)
 ```
 
-
-
-### Creating *De Novo* Graphs
-
-Here we will focus on the former approach as it is native to this package.  If you use the latter one, it will produce a *.pgraph file and you can read it in using 
-
-```{r}
-A <- matrix(0, nrow=5, ncol=5)
-A[1,2] <- A[2,3] <- A[1,3] <- A[3,4] <- A[4,5] <- 1
-A <- A + t(A)
-A
-```
-
-
-There is a quick function, `as.popgraph()` that takes either an existing **igraph**object or a matrix and turns them into *popgraph* objects.
-
-
-```{r}
-g <- as.popgraph( A )
-```
-
-There are several options available under the `mode` parameter.  We typically use the undirected graph option but the following are also available:
-
-1. `undirected` The connections between nodes are symmetric.  This is the default for population graphs as covariance, the quantity the edge is representing is symmetrical.
-+ `directed` The edges are asymetric.
-+ `max` or `min` Will take the largest (or smallest) value of the matrix (e.g., $max(A[i,j], A[j,i])$ or $min( A[i,j], A[j,i])$ ).
-+ `upper` or `lower` Uses either the upper or lower element of the matrix.
-+ `plus` Adds upper and lower values (e.g., $A[i,j] + A[j,i]$).
-
-There are many other ways to create **igraph**objects *de novo* but this is the easiest method.
-
-
-#### Node &amp; Edge Attributes
-
-The underlying structure of an **igraph**object allows you to assoicate attributes (e.g., other data) with nodes and edges. Node attributes are accessed using the $V(graph)$ operator (for vertex) and edge attributes are done via $E(graph)$.  Attributes can be set as well as retrieved using the same mechanisms.
-
-```{r}
-V(g)$name <- c("Olympia","Bellingham","St. Louis","Ames","Richmond")
-V(g)$group <- c("West","West", "Central","Central","East")
-V(g)$color <- "#cca160"
-list.vertex.attributes( g )
-V(g)$name
-```
-
-
-```{r}
-E(g)
-E(g)$color <- c("red","red", "red", "blue","dark green")
-list.edge.attributes( g )
-```
-
-
-
-
-
-
+As other networks, a population graph is a graph-theoretic structure that can be represetendHere we will focus on the former approach as it is native to this package.  If you use the latter one, it will produce a *.pgraph file and you can read it in using the `read_popgraph()` function.
 
 
 ### Adding data to a graph
 
 A population graph is made more informative if you can associate some data with topology.  External data may be spatial or ecolgoical data associated with each node.  Edge data may be a bit more complicated as it is traversing both spatial and ecolgoical gradients and below we'll see how to extract particular from rasters using edge crossings. 
 
-Included in the **popgraph** package are some build-in data sets.  You can load these into R using the `data()` function as:
+Included in the *popgraph* package are some build-in data sets to illustrate some of the utility. Included is the cactus topology that was originally used to develop this approach (from Dyer & Nason 2004).
 
 ```{r}
 data(lopho)
@@ -83,8 +23,7 @@ class(lopho)
 lopho
 ```
 
-
-The function `decorate_graph()` allows you to add more information to the graph object by combining data from an external source, in this case a `data.frame` object.  Here is an example with some built-in data.  The option `stratum` indicates the name of the column that has the node labels in it (which are stored as `V(graph)$name`).
+We can associate data with the nodes using the `decorate_graph()` function.  This takes a `data.frame` object and tries to match up the columns of data in the data.frame to the nodes.  Here is an example with some addition built-in data.  The option `stratum` indicates the name of the column that has the node labels in it (which are stored as `V(graph)$name`).
 
 ```{r}
 data(baja)
@@ -93,17 +32,12 @@ lopho <- decorate_graph( lopho, baja, stratum="Population")
 lopho
 ```
 
-Each vertex has seveal different types of data associated with it now.  We will use this below.
-
-
-
-
+Each vertex now has seveal different types of data associated with it now.  We will use this below.
 
 
 ### Plotting a graph using normal plotting methods
 
-One of the main benefits to using R is that you can leverage the mutlitude of other packages to visualize and manipulate your data in interesting and informative ways.  Since a `popgraph` is an instance of an **igraph**element, we can use the **igraph**routines for plotting.  Here is an example.
-
+One of the main benefits to using R is that you can leverage the mutlitude of other packages to visualize and manipulate your data in interesting and informative ways.  Since a `popgraph` is an instance of an *igraph* element, we can use the *igraph* routines for plotting.  Here is an example.
 
 ```{r}
 plot(g)
