@@ -11,7 +11,7 @@ library(popgraph)
 As other networks, a population graph is a graph-theoretic structure that can be represetendHere we will focus on the former approach as it is native to this package.  If you use the latter one, it will produce a *.pgraph file and you can read it in using the `read_popgraph()` function.
 
 
-### Adding data to a graph
+## Adding data to a graph
 
 A population graph is made more informative if you can associate some data with topology.  External data may be spatial or ecolgoical data associated with each node.  Edge data may be a bit more complicated as it is traversing both spatial and ecolgoical gradients and below we'll see how to extract particular from rasters using edge crossings. 
 
@@ -33,29 +33,6 @@ lopho
 ```
 
 Each vertex now has seveal different types of data associated with it now.  We will use this below.
-
-
-### Plotting a graph using normal plotting methods
-
-One of the main benefits to using R is that you can leverage the mutlitude of other packages to visualize and manipulate your data in interesting and informative ways.  Since a `popgraph` is an instance of an *igraph* element, we can use the *igraph* routines for plotting.  Here is an example.
-
-```{r}
-plot(g)
-```
-
-There are several different options you can use to manipulate the graphical forms.  By default, the plotting routines look for node and edge attributes such as `name` and `color` to plot the output appropriately.  There are several additional plotting functions for plotting **igraph** objects.  Here are some examples.
-
-```{r}
-plot(g, edge.color="black", vertex.label.color="darkred", vertex.color="#cccccc", vertex.label.dist=1)
-```
-
-
-```{r}
-layout <- layout.circle( g )
-plot( g, layout=layout)
-layout <- layout.fruchterman.reingold( g )
-plot( g, layout=layout)
-```
 
 
 
