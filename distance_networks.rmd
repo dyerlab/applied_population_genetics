@@ -1,6 +1,6 @@
 # Distance Networks
 
-## Graphs
+## Graph Structure
 
 ```{r}
 A <- matrix(0, nrow=5, ncol=5)
@@ -395,4 +395,32 @@ edgelist <- as_edgelist(g)
 df <- data.frame( src=edgelist[,1], target=edgelist[,2])
 simpleNetwork(df,fontSize = 14,opacity = 0.95)
 ```
+
+## Genetic Distance Graphs
+
+Several graph-theoretic approaches have been suggested in the literature, some of which are based upon statistical models (e.g., popgraphs in the next chapter) and some of which are less structured.  
+
+A common approach has been to use a measure of pair-wise genetic distance, measured between individuals or strata.  In the following example, Nei's genetic distance (see Chapter \@ref(genetic-distance)) is used.
+
+```{r}
+require(gstudio)
+data(arapat)
+d <- genetic_distance(arapat,mode="Nei")
+```
+
+yielding a $KxK$ distance matrix.  Nei's distance produces values that are non-negative 
+
+```{r}
+d[1:6,1:6]
+```
+
+and in the case of the `arapat` data, produces a bivariate distribution of distances.
+
+```{r warning=FALSE, message=FALSE}
+require(ggplot2)
+qplot(d[lower.tri(d)],geom = "histogram", bins=40)
+```
+
+Since Nei's distance is 
+
 

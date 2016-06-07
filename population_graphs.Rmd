@@ -99,16 +99,6 @@ graph <- read.popgraph( "thegraph.pgraph" )
 ```
 
 
-
-
-
-
-
-
-
-
-
-
 ### Saving Population Graph Objects
 
 
