@@ -396,6 +396,33 @@ df <- data.frame( src=edgelist[,1], target=edgelist[,2])
 simpleNetwork(df,fontSize = 14,opacity = 0.95)
 ```
 
+
+
+## Mapping Networks
+
+For quick maps I typically use the **maps** library. It is pretty straightforward to use and does not take too much thought to quickly plot something or find the approporiate raster files.  Below, I add some coordinates to the data set.
+
+```{r}
+V(g)$Latitude <- c( 47.15, 48.75,38.81, 42.26, 37.74 )
+V(g)$Longitude <- c(-122.89,-122.49,-89.98, -93.47, -77.16 )
+```
+
+Then overlay this onto a map using the `overlay_popgraph()` function.    Here is an example where I plot it over the map of the US states.
+
+```{r,message=FALSE,fig.cap="Map of graph stetched onto continential US map."}
+library(maps)
+require(popgraph)
+pg <- as.popgraph( g )
+
+map( "state" )
+overlay_popgraph( pg )
+```
+
+This function **requires** that you already have a plot available (it uses the `lines()` and `points()` routines).  If you try to just overlay this with no existing plot, it will not work (and should throw an error).
+
+
+
+
 ## Genetic Distance Graphs
 
 Several graph-theoretic approaches have been suggested in the literature, some of which are based upon statistical models (e.g., popgraphs in the next chapter) and some of which are less structured.  
@@ -422,5 +449,7 @@ qplot(d[lower.tri(d)],geom = "histogram", bins=40)
 ```
 
 Since Nei's distance is 
+
+
 
 

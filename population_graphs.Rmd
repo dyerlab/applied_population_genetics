@@ -76,9 +76,10 @@ p <- p + xlab("Longitude") + ylab("Latitude")
 p + theme_empty()
 ```
 
-You can also use the default layout routines in **igraph** for visualization.  Here is an example using Fruchterman-Reingold algorithm.
+You can also use the default layout routines in *igraph* for visualization.  Here is an example using Fruchterman-Reingold algorithm.
 
 ```{r}
+require(igraph)
 c <- layout.fruchterman.reingold( lopho )
 V(lopho)$x <- c[,1]
 V(lopho)$y <- c[,2]
@@ -137,24 +138,6 @@ There are several other options available for outputing your graph.  Currently t
 
 Mapping the nodes and edges onto real space is a key task in the understanding of how covariance is partitioned on the landscape.  There are several approaches that can be used in R since it is such a flexible platform.  In what follows I will use a series of techniques that I find useful ordered from the simplest to the more complicated.  
 
-### General Maps
-
-For quick maps I typically use the **maps** library. It is pretty straightforward to use and does not take too much thought to quickly plot something or find the approporiate raster files.  Below, I add some coordinates to the data set.
-
-```{r}
-V(g)$Latitude <- c( 47.15, 48.75,38.81, 42.26, 37.74 )
-V(g)$Longitude <- c(-122.89,-122.49,-89.98, -93.47, -77.16 )
-```
-
-Then overlay this onto a map using the `overlay_popgraph()` function.    Here is an example where I plot it over the map of the US states.
-
-```{r,message=FALSE,fig.cap="Map of graph stetched onto continential US map."}
-library(maps)
-map( "state" )
-overlay_popgraph(g)
-```
-
-This function **requires** that you already have a plot available (it uses the `lines()` and `points()` routines).  If you try to just overlay this with no existing plot, it will not work (and should throw an error).
 
 
 ### Integrating Google and **ggplot2** for Plotting
@@ -288,8 +271,8 @@ The underlying structure of a **popgraph** object is based upon the **igraph** p
 A graph topology is a graphical representation of a matrix and there are several reasons why you may want to use these matrices.  The function `to_matrix()` is an easy front-end to several kinds of matrices.  Matrix structure itself can be defined by adjacency matrics, either binary (the default) or weighed by the edge weight.  Several graph-theoretic parameters are derived from the adjacency matrix.  Here is an example from our little graph that started this document.
 
 ```{r}
-to_matrix( g, mode="adjacency")
-to_matrix( g, mode="edge weight")
+to_matrix( lopho, mode="adjacency")[1:5,1:5]
+to_matrix( lopho, mode="edge weight")[1:5,1:5]
 ```
 
 In addition to who each node is connected to, it is often of interest to know the length of the shortest path through the matrix connecting nodes.  Here is a slightly larger example, using the cactus data so we can look at isolation by graph distance.
@@ -305,8 +288,10 @@ Now, we need the physical distance between the nodes.  If the physical size of t
 
 
 ```{r,warning=FALSE,message=FALSE}
-library(fields)
-pDist <- rdist.earth( cbind( V(lopho)$Longitude, V(lopho)$Latitude ) )
+df <- data.frame( Stratum = V(lopho)$name, 
+                  Longitude  =V(lopho)$Longitude, 
+                  Latitude = V(lopho)$Latitude ) 
+pDist <- strata_distance( df )
 ```
 
 Now, we can plot these values against each other to see if there is a pattern of 'isolation by distance' captured in the graph topology.  To do this, I extract only the upper triangle (e.g., the values above the diagonal of each matrix) because they are symmetric matrices and we do not want to look at each datum twice.

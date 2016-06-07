@@ -144,7 +144,8 @@ knitr::kable(pkgs_df,caption = "R packages used in the examples shown in this bo
 # make sure these libraries are already installed on this machine
 inst_pkgs <- installed.packages()
 to_install <- setdiff( pkgs, inst_pkgs )
-install.packages(to_install, repos="https://cran.rstudio.org")
+if( length(to_install))
+  install.packages(to_install, repos="https://cran.rstudio.org")
 
 ```
 
@@ -159,7 +160,7 @@ By itself, R can be used in the terminal or as the basic interface the installer
 knitr::include_graphics("./media/RStudioIDE.png")
 ```
 
-The RStudio IDE can be can be downloaded directly from http://rstudio.org and comes in varieties for desktops and servers.  The packages are easy to install and contain all the instructions you need.  If you run your own server, you can install it and do your analyses via a web interface that looks identical to the desktop client (in fact it is more similar than you perhaps know).  
+The RStudio IDE can be can be downloaded directly from (http://rstudio.org) and comes in varieties for desktops and servers.  The packages are easy to install and contain all the instructions you need.  If you run your own server, you can install it and do your analyses via a web interface that looks identical to the desktop client (in fact it is more similar than you perhaps know).  
 
 The interface has four panes, two of which (the source code editor and the terminal output) you will work with the most often.  The other panes have information on the history of your project, plot output, packages, help, and a file browser.  You can type in R commands in the terminal window and receive responses directly, just as normal.  However, you can also type in your code into a script file (files ending in *.R) and run them directly.  You can also create Markdown and LaTeX documents embedding your code in with the verbiage, which is evaluated any time you make a html, rtf, docx, or pdf output.  All the code from R for this book was written in RMarkdown and parsed as an html document.  If you are a serious user of R, you can use LaTeX or RMarkdown to make documents, slides, presentations, posters, etc.  It is a versatile tool and one worth looking into, especially as it pertains to reproducible research (something we all need to strive for).
 
