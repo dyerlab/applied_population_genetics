@@ -142,11 +142,10 @@ for(i in seq_along(pkgs)){
 knitr::kable(pkgs_df,caption = "R packages used in the examples shown in this book.")
 
 # make sure these libraries are already installed on this machine
-#for( lib in pkgs){
-#  if( !require(lib) ){
-#    install.packages(lib,repos="https://cran.rstudio.org")
-#  }
-#}
+inst_pkgs <- installed.packages()
+to_install <- setdiff( pkgs, inst_pkgs )
+install.packages(to_install, repos="https://cran.rstudio.org")
+
 ```
 
 

@@ -1,27 +1,11 @@
 # Population Graphs
 
-Population Graphs are a statistical representation of among population genetic variance, $\sigma^2_A$, as viewed through a network (Dyer & Nason 2004).  
-
-
-
-The **popgraph** package is designed to take multivariate data and construct a Population Graph (Dyer & Nason 2004).  This is a graph-theoretic interpretation of genetic covariance and serves as a tool for understanding underlying evolutionary history for a set of populations.  
-
-These routines were originally in the **gstudio** package but were excised out for simplicity. This analysis is *not* limited solely to genetic data and can be used generally for many types of analyses.  As such, I pulled this out of the genetic package and allow it to remain on its own.  To get your data using **gstudio** with genotypes and such into a format for this package, translate the genotypes into their multivariate format as:
-
-```{r,echo=TRUE,eval=FALSE}
-data <- as.matrix( my_genetic_data )
-```
-
-For more information on this, see the documentation on the **gstudio** package (a copy is mirrored at http://dyerlab.bio.vcu.edu/ and a clone of the package can be checked out at https://github.com/dyerlab/gstudio)
-
-
-## Creating Population Graphs
-
+Population Graphs are a statistical representation of among population genetic variance, $\sigma^2_A$, as viewed through a network (Dyer & Nason 2004).  A population graph is a graph-theoretic interpretation of genetic covariance and serves as a tool for understanding underlying evolutionary history for a set of populations.  These structures are estimated in R using the **popgraphs** library.  
 
 There are two ways to create a population graph:
 
 1. In this package using the function *popgraph()* and,
-+  Via the servers at http://dyerlab.bio.vcu.edu (which use this packages to do the translation) or via GeneticStudio (an older software package)
+2.  Via the servers at http://dyerlab.bio.vcu.edu (which use this packages to do the translation) or via GeneticStudio (an older software package)
 
 
 ```{r,message=FALSE, warning=FALSE}
