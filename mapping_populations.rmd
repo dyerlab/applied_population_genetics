@@ -39,7 +39,10 @@ p <- ggmap( map ) + geom_point( aes(x=Longitude,y=Latitude),data=coords)
 p + geom_text( aes(x=Longitude+0.1,y=Latitude+0.12,label=Stratum), data=coords)
 ```
 
-We can also plot some genetically-relevant materials such as allele frequencies
+
+## Population Allele Frequencies
+
+It is also possible to plot the data in a spatial context.  Here is an example of how to mix `ggplot()` and `ggmap()` data and I'll plot the locations as proportional in size to the allele frequency.
 
 ```{r}
 # Break out allele frequencies for LTRS by population 
@@ -72,7 +75,18 @@ coords <- merge( coords, ae[,c(1,3)])
 ggmap( map ) + geom_point( aes(x=Longitude,y=Latitude,size=Ae),data=coords)
 ```
 
+There is also the option to make use of some pie charts.  I know, pie charts suck and any statistician will tell you that they should probably not be used because they can be misleading, but here they are.  For exploratory data analysis, they can be very insightful at times.  Here is the frequency of alleles at the *enolase* locus in *Araptus*.  Any spatial structuring catch your eye?
 
+
+```{r,warning=FALSE,message=FALSE,fig.width=7,fig.height=7, eval=FALSE}
+pies_on_map( arapat, stratum="Population", locus="EN")
+```
+
+Which will open a new browser window and produce a graph like the one below.
+
+<iframe width="640" height="480" src="media/pies_on_map.html" frameborder="0" allowfullscreen></iframe>
+
+Note the messages about the approximation.  This is because the google maps API has an integer for zoom factor and at times it is not able to get all the points into the field of view using an integer zoom.  If this happens to you, you can manually specify the *zoom* as an optional argument to either function `pies_on_map()` or `population_map()`.  You also need to be careful with the `pies_on_map()` function because the way it works is that the background tile is plotted and then I plot the pies ontop of it.  If you reshape your plot window outside equal x- and y- coordinates (e.g., make it a non-square figure), the spatial location of the pie charts will move!  This is a very frustrating thing but it has to do with the way viewports are overlain onto graphical objects in R and I have absolutely **no** control over it.  So, the best option is to make the plot square, export it as PNG or TIFF or whaterver, then crop as necessary.
 
 
 ## Dynamic maps
@@ -81,10 +95,9 @@ We can also produce dynamic maps for viewing in html output (like ebooks or webp
 
 ```{r,message=FALSE,warning=FALSE}
 library(leaflet)
-library(magrittr)
-leaflet( data=coords ) %>% 
-  addTiles() %>% 
-  addMarkers( ~Longitude, ~Latitude, popup=~Stratum )
+map <- addTiles( leaflet( data=coords) )
+map <- addMarkers( ~Longitude, ~Latitude, popup=~Stratum , map=map)
+map
 ```
 
 You notice the interesting `%>%` operator?  This is short-hand that may be very helpful for you.  It is part of the `magrittr` library, and is often imported through `dplyr` and not directly.  However, what it does is allow us to be a bit more succinct  that does essentially the same thing as 
@@ -92,21 +105,16 @@ You notice the interesting `%>%` operator?  This is short-hand that may be very 
 You can change the underlying base map by passing on other Tiles to the construction.  A list of available tile providers can be found [here](http://leaflet-extras.github.io/leaflet-providers/preview/index.html).
 
 ```{r}
-leaflet( data=coords ) %>% 
-  addProviderTiles("MapQuestOpen.Aerial") %>% 
-  addMarkers( ~Longitude, ~Latitude, popup=~Stratum)
+map <- leaflet( data=coords )
+map <- addProviderTiles("MapQuestOpen.Aerial", map=map)
+addMarkers( ~Longitude, ~Latitude, popup=~Stratum, map=map)
 ```
 
 Or you can add custom images for the map relative to some meaningful information.
 
 ```{r}
 coords$Size <- log(coords$Ae) * 10 + 1
-leaflet( data=coords ) %>%  
-  addTiles() %>% 
-  addCircleMarkers( ~Longitude, ~Latitude, 
-                    popup=~Stratum, 
-                    radius=~Size, color="red", 
-                    fillOpacity=0.75) 
+addCircleMarkers( ~Longitude, ~Latitude, popup=~Stratum, radius=~Size, color="red", fillOpacity=0.75, data = coords, map = map) 
 ```
 
 
@@ -124,23 +132,13 @@ x <- x[ x$Locus == "LTRS",]
 coords <- merge( coords, x[,c(1,3)])
 ```
 
-Make these data into a table format in html (OK it is a bit ugly but it is reasonable.)
+Make these data into a table format in html (OK it is a bit ugly but it is reasonable.) 
 
 ```{r}
 coords$label <- paste("<h2>",coords$Stratum,"</h2><table><tr><th>Parameter</th><th>Value</th></tr><tr><td>H<sub>O</sub></td><td>", format(coords$Ho,digits = 3),"</td></tr><tr><td>H<sub>E</sub></td><td>",format(coords$He, digits=3), "</td></tr><tr><td>A<sub>E</sub></td><td>",format(coords$Ae,digits=3),"</td></tr></table>",sep="")
 
 # plot it
-leaflet( data=coords ) %>%  
-  addTiles() %>% 
-  addCircleMarkers( ~Longitude, ~Latitude, 
-                    popup=~label, 
-                    radius=~Size, 
-                    color="red", fillOpacity=0.75) 
-```
-
-
-
-```{r echo=FALSE}
-suppressWarnings( detach(name="package:magrittr",character.only = TRUE,unload=TRUE) )
+map <- addTiles( leaflet( data=coords) )
+addCircleMarkers( ~Longitude, ~Latitude, popup=~label, radius=~Size, color="red", fillOpacity=0.75, map = map, data = coords) 
 ```
 
