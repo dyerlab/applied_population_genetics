@@ -11,7 +11,7 @@ All rights reserved.  No portion of this book may be reproduced in any form with
 
 ISBN-13: `XXX-X-XXXXXX-XX-X`  -->
 
-Dyer RJ.  2016.  Applied Marker Genetics. Perdedor Publishing.  <!-- `XXX`pgs. -->
+Dyer RJ.  2016.  Applied Population Genetics. Perdedor Publishing.  <!-- `XXX`pgs. -->
 
 Dr. Rodney Dyer is an Associate Professor in the Department of Biology and the Assistant Director for the Center for Environmental Studies at Virginia Commonwealth University in Richmond, Virginia, USA.  His research focuses on genetic connectivity and structure and how the environment influences both.  More information on his research can be found at [http://dyerlab.bio.vcu.edu](http://dyerlab.bio.vcu.edu).
 

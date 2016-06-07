@@ -1,5 +1,5 @@
 --- 
-title: "Applied Marker Genetics"
+title: "Applied Population Genetics"
 author: "Rodney J. Dyer"
 cover-image: media/TitlePage_small.png
 site: bookdown::bookdown_site
@@ -12,10 +12,10 @@ github-repo: "dyerlab/AMG"
 description: "This is intended to be used as a textbook in population genetics for the graduate level."
 ---
 
-# Applied Marker Genetics {- .white_letters}
+# Applied Population Genetics {- .white_letters}
 
-```{r echo=FALSE, out.width="33%"}
-knitr::include_graphics("./media/TitlePage_small.png")
+```{r echo=FALSE, out.width="250px"}
+knitr::include_graphics("./media/APG-Title-Small.png")
 ```
 
 Build Date: **`r date()`**
@@ -41,7 +41,7 @@ All rights reserved.  No portion of this book may be reproduced in any form with
 
 ISBN-13: `XXX-X-XXXXXX-XX-X`  -->
 
-Dyer RJ.  2016.  Applied Marker Genetics. Perdedor Publishing.  <!-- `XXX`pgs. -->
+Dyer RJ.  2016.  Applied Population Genetics. Perdedor Publishing.  <!-- `XXX`pgs. -->
 
 Dr. Rodney Dyer is an Associate Professor in the Department of Biology and the Assistant Director for the Center for Environmental Studies at Virginia Commonwealth University in Richmond, Virginia, USA.  His research focuses on genetic connectivity and structure and how the environment influences both.  More information on his research can be found at [http://dyerlab.bio.vcu.edu](http://dyerlab.bio.vcu.edu).
 
