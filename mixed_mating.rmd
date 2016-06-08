@@ -74,7 +74,7 @@ The resulting frequencies look to come to equilibrium at a reasonable speed.  Th
 Here is an interactive widget you can play with to see how initial allele frequency and selfing rate interact in shaping genotype frequencies.
 
 ```{r echo=FALSE}
-knitr::include_app("http://popgen.bio.vcu.edu/shiny/apg/mixed_mating/", height="500")
+knitr::include_app("http://popgen.bio.vcu.edu/shiny/apg/mixed_mating/", height="750")
 ```
 
 It would be possible to ‘cheat' a little on those estimations as $fBB[i] = 1-(fAA[i]+fAB[i])$ in the code above but I think that is one way to cover up potentially problematic bugs in your code.  All code has bugs—do not delude yourself into thinking otherwise.  One way we can have some confidence in the code we write that we know the frequencies of the three genotypes should sum to unity.
