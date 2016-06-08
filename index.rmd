@@ -127,6 +127,10 @@ help.start(remote = paste0("file://", R.home()))
 In addition to shoving static content into scrolling windows, longer R scripts will also be inserted into these widgets so that space can be saved while preserving syntax highlighting and code format.
 
 
+## Interactive Content
+
+Where possible, I have included interactive content in the text.  Examples include dynamical plots such as embedding google map objects in the page, network structure that can be manipulated in the browser, and widgets that show how a process influences popualtion genetic features by allowing you to direclty manipulate the parameters in the model.  
+
 
 ## Dedication {-}
 

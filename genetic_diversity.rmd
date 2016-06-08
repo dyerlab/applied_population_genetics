@@ -158,15 +158,15 @@ genetic_diversity( arapat$LTRS , mode="he")
 genetic_diversity( arapat$MP20, mode="he" ) 
 ```
 
-In an ideal world, we would be able to have enough resources to sample for these parameters with so many individuals, they would be well behaved.  Unfortunately, we do not live in the real world and in many cases our ability to sample lots of individuals is limited.  As such, if we are estimating these parameters in a single locale (for more than one location, we have further corrections to make), we should probably apply a small sample size correction.  In general, this correction is:
+In an ideal world, we would be able to have enough resources to sample for these parameters with so many individuals, they would be well behaved.  Unfortunately, we do not live in the real world and in many cases our ability to sample lots of individuals is limited.  This problem is not a new thing, we estimate the sums of square and divide by $N-1$ instead of $N$ because if we we use the later, we are producing a biased estimate.  Unless you are working with *all* the samples, every time we make population genetic inferences we will be doing so on a subsample of the total data available.  The `arapat` data set is no where near a major component of the species, it is only a sample.  From this sample, we *estimate* allele frequencies on which we derive our *estimates* of parameters such as $H_E$.  As such, if we used the formulas above to estimate everything in every study, we would have biased estimators of... pretty much everything.  However, the fix is not one that is too difficult to put in, and it has a pretty well established set of behaviors.  As such, if we are estimating these parameters in a single locale (for more than one location, we have further corrections to make), we should probably apply a small sample size correction.  In general, this correction is:
 
 \[
 \hat{H}_e = \frac{2N}{2N-1}\left[ 1-\sum_{i=1}^\ell p_i^2 \right]
 \]
 
-The front part is a small sample size correction factor.  Its importance in your estimation diminishes as $N \to \infty$ as shown in the figure below (Figure \@ref()).  Once you get above $N=9$ individuals, there is an inflation of the estimated heterozygosity at a magnitude of less than 5%. 
+The front part is a small sample size correction factor.  Its importance in your estimation diminishes as $N \to \infty$ as shown in Figure \@ref(fig:biasCorrection).  Once you get above $N=9$ individuals, there is an inflation of the estimated heterozygosity at a magnitude of less than 5%. 
 
-```{r echo=FALSE, fig.cap="Magnitude of the correction factor for small sample size estimations as a function of N."}
+```{r biasCorrection, echo=FALSE, fig.cap="Magnitude of the correction factor for small sample size estimations as a function of N.", message=FALSE}
 require(ggplot2)
 N <- 1:100
 CF <- (2*N) / ( 2*N-1)
@@ -176,24 +176,31 @@ ggplot( df, aes(N,CF) ) + geom_line()
 
 
 
-## Samples from Several Locales
+## Samples from Several Locales 
 
-If you are estimating $H_e$ across more than one location, there is a secondary correction that needs to be made.  This formulation attempts to correct for the fact that you are gaining inferences from data collected across several samples, each of which may be slightly biased.
+In addition to problems associated with estimating allele freqeuncies incorrectly (and requiring a sample size correction), when we estimate data from several locations, we also have a problem assocaited with the subset of locales relative to the total popualtion size, resulting in a furhter correction to account of the several biased samples you are taking.
 
 \[
 H_S = \frac{\tilde{N}}{\tilde{N}-1}\left[ 1 - \sum_{i=1}^\ell \frac{p_i^2}{K} - \frac{H_O}{2\tilde{N}} \right]
 \]
 
-where $\tilde{N}$ is the harmonic mean number of genotypes sampled across each of the $K$ strata.  Notice here I use the term $H_S$ instead of $H_E$ so that there isn't any doubt about the differences when we write and talk about these parameters.  This formulation (after Nei 1987) corrects for the sampling across separate sampling locations.  To indicate that your estimate is being made using subdivided groups of samples, pass the `stratum=` parameter to `genetic_diversity()`.  We can see the magnitude of the correction by looking at a single population and comparing the estimates of $H_S$ for corrected and non-corrected parameters.
+where $\tilde{N}$ is the harmonic mean number of genotypes sampled across each of the $K$ strata.  Notice here I use the term $H_S$ instead of $H_E$ so that there isn't any doubt about the differences when we write and talk about these parameters.  This formulation (after Nei 1987) corrects for the sampling across separate  locations.  To indicate that your estimate is being made using subdivided groups of samples, pass the `stratum=` parameter to `genetic_diversity()` and set `mode="Hes".  We can see the magnitude of the correction by looking at a single population and comparing the estimates of $H_S$ for corrected and non-corrected parameters.
 
 ```{r}
-pop <- arapat[ arapat$Population=="32",]
-he.ssc <- genetic_diversity(pop, small.N=TRUE, mode="He")
-he.reg <- genetic_diversity(pop, small.N=FALSE, mode="He")
-cbind(he.ssc[,2], he.reg[,2])
+pops <- arapat[ arapat$Population %in% c("32","101","102"),]
+he <- genetic_diversity( pops, mode="He")
+hes <- genetic_diversity(pops, stratum="Population", mode="Hes")[1:8,]
+df <- data.frame(Locus=he[,1], He=he[,2], Hes=hes[,2])
+df
 ```
 
-They are pretty close, even when there are only 19 individuals in the sample (see nrow(pop)).
+```{r echo=FALSE}
+df <- df[ !is.na(df$Hes),]
+p <- format(round(cor(df$He,df$Hes),2),nsmall=3)
+```
+
+
+They are pretty close (Pearson's $\rho =$ `r p`), even when there are only `r nrow(pops)` individuals in the sample.^[The `NA` in the $H_{ES}$ parameter is because there are no smaples in one of the populations and a harmonic mean with a zero in it results in a divide-by-zero error.]  But they are off and this is a vitally important distinction because if you do not account for these differences you will percolate these errors up through your subsequent analyses (and this is a bad thing).
 
 ## Multilocus Diversity
 

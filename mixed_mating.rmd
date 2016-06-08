@@ -172,6 +172,13 @@ F_t = \frac{s}{2-s}\left[ 1-\frac{s^t}{2} \right] + \left[\frac{s}{2}\right]^tF_
 
 depending upon only the selfing rate, the starting inbreeding level, and the current generation.
 
+Here is a little gadget to play with that allows you to manipulate $F_0$, $s$ and the number of generations ($T$).
+
+```{r echo=FALSE}
+knitr::include_app("http://popgen.bio.vcu.edu/shiny/apg/selfing_F/", height="850")
+```
+
+
 ## Estimating Selfing Rates
 
 As with most things in population genetics, these expectations provide nice descriptions of what we expect to see in the wild, but at the end of the day we are stuck with a bunch of raw genotypes and the need to find an estimation of $s$. In fact, it is usually the value of $s$ that we are most interested in seeking, not the value of $F$.   It is possible though, to rearrange the equilibrium expectation of $\hat{F}$, solving for s and thereby providing a first approximation for population-level selfing rates (or at least the equivalent selfing rate given a bunch of other expectations). 

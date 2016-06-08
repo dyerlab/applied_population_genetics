@@ -2,13 +2,13 @@
 
 <div class="chapter_image"><img src="chapter_images/ch_xian_kan.jpg"></div>
 
-The term 'structure' is used in many different ways in population genetics.  Essentially, data has genetic structure if there is a non-random association of genotypes across your samples.  The interaction of population genetic processes create the genetic structure we see, though it is not easy to infer historical process from the presence of structure alone.  For this we need to rely upon more cleaver experimental design.  In this chapter we examine parameters designed to describe the amount of structure present in a dataset and how we can derive some level of inference from their magnitudes.
+The term 'structure' is used in many different ways in population genetics.  Essentially, data has genetic structure if there is a non-random association of genotypes across your sampling locations.  The interaction of population genetic processes create the genetic structure we see, though it is not easy to infer historical process from the presence of structure alone.  For this we need to rely upon more cleaver experimental design.  In this chapter we examine parameters designed to describe the amount of structure present in a dataset and how we can derive some level of inference from their magnitudes.
 
 Structure in populations influences the distribution (spatial, ecological, and temporal) distribution of of alleles.  Until this point, we have focused on how alleles coalesce into genotypes at the individual level, local allele frequencies and the Hardy Weinberg expansion provide an expectation for the probability of seeing a heterozygote, for example.  As we scale up from the individual itself to the deme (or sub-population) in which it resides, we can also estimate heterozygosity.  As we coalesce these demes into populations, regions, continents, etc. we can also estimate expectations for heterozygosity at these levels as well. The deviance from these expectations at all levels can be captured in a statistic—the $F$-statistic we've seen already is on of them—useful for comparisons among studies, sites, etc. The $F$-statistics are perhaps the most misused parameters in population genetics but they have both a long history of use and pretty robust expectations with respect to how they will respond to various evolutionary processes.
 
 In this section, we will explore genetic structure, sensu lato, providing examples of single and multilocus statistics and how we currently think they should be used.  
 
-## The F-Statistic Family
+## F-Statistics and Thier Ilk
 
 The most commonly used parameter for in population genetics are derived from Wright's $F$-Statistics.  We have already encountered one of them, the inbreeding parameter F, which we calculated using the `genetic_diversity()` function using `mode="Fis"`.  This parameter compares the level of observed heterozygosity to that expected under HWE as:
 
@@ -31,7 +31,7 @@ F_{IS} &= \frac{H_S - H_I}{H_S} \\
 & = 1 - \frac{H_I}{H_S}
 \end{aligned}
 
-where the subscripts on the parameters reveal the sampling level being used.  In this case, the subscripts on $F_{IS}$ stand for “inbreeding of Individuals relative to the Subpopulation they are sampled."  The values of this parameter are positive when we see less heterozygotes than expected, and can be negative when we see more heterozygotes than expected under HWE.  This parameter makes particular sense in light of unknown subdivision in populations, the Wahlund Effect discussed earlier.  
+where the subscripts on the parameters reveal the sampling level being used.  In this case, the subscripts on $F_{IS}$ stand for “inbreeding of _I_ndividuals relative to the _S_ubpopulation they are sampled."  The values of this parameter are positive when we see less heterozygotes than expected, and can be negative when we see more heterozygotes than expected under HWE.  This parameter makes particular sense in light of unknown subdivision in populations, the Wahlund Effect discussed earlier.  
 
 At the next level, we can examine inbreeding of the Subpopulation relative to the Total data set, $F_{ST}$.  This is defined as:
 
@@ -40,7 +40,7 @@ F_{ST} &= \frac{H_T - H_S}{H_T} \\
 &= 1 - \frac{H_S}{H_T}
 \end{aligned}
 
-This parameter has been so misused in the literature, it is almost a caricature of itself.  As we see from the formula, it is the reduction in heterozygosity of the subpopulation relative to the entire data set.  This parameter can be either positive or negative.  Wright's original formulation of the parameter [~] was as:
+This parameter has been so misused in the literature, it is almost a caricature of itself.  As we see from the formula, it is the reduction in heterozygosity of the subpopulation relative to the entire data set.  This parameter can be either positive or negative.  Wright's original formulation of the parameter $F_{ST}$ was as:
 
 \begin{aligned}
 F_{ST} & = \frac{\sum_{i=1}^\ell \sigma_{q_{S(i)}}^2}{\sum_{i=1}^\ell \left[ q_{T(i)}\left( 1 - q_{T(i)}\right) \right]} \\
@@ -98,11 +98,11 @@ $F_{ST}$ can be interpreted as a measure of the amount of differentiation among 
 
 This can be seen in the following examples and the values we get for the parameter $F_{ST}$ in each.  
 
-*Scenario 1:* Two populations, `A` and `B`, each fixed for a different allele. In this case, the heterozygosity at population A would be [~], likewise for population `B` at [~], and the estimate of subpopulation heterozygosity is [~].  Total heterozygosity, $H_T$, is defined using allele frequencies averaged across populations and would be [~] making [~].  These two populations are diverged completely from each other and this makes sense.  Subpopulation heterozygosity, $H_S$, is always zero when any number of populations are fixed for a single allele.
+*Scenario 1:* Two populations, `A` and `B`, each fixed for a different allele. In this case, the heterozygosity at population `A` would be $2p_Aq_A = 2*0*1 = 0$, likewise for population `B` at $2p_Bq_B = 2*1*0 = 0$, and the estimate of subpopulation heterozygosity is $H_S = \frac{0+0}{2} = 0$.  Total heterozygosity, $H_T$, is defined using allele frequencies averaged across populations and would be $H_T = 2\bar{p}\bar{q} = 2*0.5*0.5 = 0.5$ making $F_{ST} = 1 - \frac{0}{0.5} = 1.0$.  These two populations are diverged completely from each other and this makes sense.  Subpopulation heterozygosity, $H_S$, is *always* zero when any number of populations are fixed for a single allele.
 
-*Scenario 2:* Two populations with two alleles each, though not the same alleles.  In the most simple case lest assume population `A` is in HWE with alleles `A` and `B` occurring at equal frequencies and the other population has alleles `C` and `D` also at equal frequencies.  In this case, heterozygosity at each population would be $H_{S,A } = H_{S,B} = 0.5$ and $H_S = 0.5$ as it is the average of the expected population-level heterozygosity.  The total expected heterozygosity is the heterozygosity of allele frequencies averaged across populations, which in this simple example we have [~] and [~] (n.b., when we have more than 2 alleles at a locus, it is often easier to estimate the part that is not homozygote rather than adding up for example $2pq + 2pr + 2ps + 2qr + 2qs + 2rs$ to estimate heterozygotes).  This makes [~].  Intuitively, this does not make much sense, why would it be a third if both populations are in HWE, just for different alleles?
+*Scenario 2:* Two populations with two alleles each, though not the same alleles.  In the most simple case lest assume population `A` is in HWE with alleles `A` and `B` occurring at equal frequencies and the other population has alleles `C` and `D` also at equal frequencies.  In this case, heterozygosity at each population would be $H_{S,A} = H_{S,B} = 0.5$ and $H_S = 0.5$ as it is the average of the expected population-level heterozygosity.  The total expected heterozygosity is the heterozygosity of allele frequencies averaged across populations, which in this simple example we have $\bar{p}_A = \bar{p}_B = \bar{p}_C = \bar{p}_D$  and $H_T = 1 - \sum_{i=1}^\ell p_i^2 = 0.75$^[When we have more than 2 alleles at a locus, it is often easier to estimate the part that is not homozygote rather than adding up for example $2pq + 2pr + 2ps + 2qr + 2qs + 2rs$ to estimate heterozygotes.]  This makes $F_{ST} = \frac{H_T - H_S}{H_T} = \frac{0.75 - 0.25}{0.75} = 0.33$.  Intuitively, this does not make much sense, why would it be a third if *both* populations are in HWE, just for different alleles?
 
-*Scenario 3:* Three populations, the first of which is fixed for allele `A` and the rest that are fixed for allele `B`.  In this scenario, [~] but $H_T$, being defined as the expected heterozygosity of averaged allele frequencies, [~] and [~] would be [~] and [~].  Again, when populations are fixed for different alleles, $F_{ST} = 1.0$.  However, in this case, two of our populations are entirely identical!  How is it that the two populations with identical allele frequencies (and whose own FST = 0 by the way) can cause $F_{ST}$ to go to unity?  In fact, we could have 100 populations fixed for one allele and 1 population fixed for the other and still have $F_{ST} = 1.0$.
+*Scenario 3:* Three populations, the first of which is fixed for allele `A` and the rest that are fixed for allele `B`.  In this scenario, $H_S = \frac{1}{3}\left[ 2p_1q_1 + 2p_2q_2 + 2p_3q_3 \right] = 0$ but $H_T$, being defined as the expected heterozygosity of averaged allele frequencies, $\bar{p} = \frac{1+0+0}{3} = 0.33$ and $\bar{q} = \frac{0+1+1}{3} = 0.66$ would be $H_T = 2\bar{p}\bar{q} = 2*0.33*0.66 = 0.4356$ and $F_{ST} = \frac{0.4356 - 0}{0.4356} = 1$.  Again, when populations are fixed for different alleles, $F_{ST} = 1.0$.  However, in this case, two of our populations are entirely identical!  How is it that the two populations with identical allele frequencies (and whose own $F_{ST} = 0$ by the way) can cause $F_{ST}$ to go to unity?  In fact, we could have 100 populations fixed for one allele and 1 population fixed for the other and still have $F_{ST} = 1.0$!
 
 This is because, as Wright (1984, pg 82) pointed out:
 
@@ -112,27 +112,32 @@ This is not how it is used in the literature, where it is often used to describe
 
 For completeness, we can also estimate the inbreeding of an individual relative to the total population, 
 
-[~]
+\[
+F_{IT} = \frac{H_T - H_I}{H_T}
+\]
 
 though it is not often used because individuals are inbred relative to the populations within which they are found, not within which the entire dataset is composed.  Moreover, the three parameters have the following relationship, 
 
-[~]
+\[
+(1-F_{IS})(1-F_{ST}) = (1-F_{IT})
+\]
 
-which means that once FIS and FST are estimated, FIT is completely defined.  
-Here is an example of how we estimate these parameters from real data.  There is another issue that we need to consider when doing this for real.
+which means that once $F_{IS}$ and $F_{ST}$ are estimated, $F_{IT}$ is completely defined.  
+
+Before we jump into some data, we need to address one more issue that we are confronted with.
 
 *Scenario 4:* Estimation of the population-level heterozygosity is not done without error.  In fact, we are estimating these parameters for each of the populations and every time we need to determine estimates of allele frequencies.  As such, if we are going to take this into consideration, we need to correct estimates of heterozygosity accordingly.
 
-In the arapat data set, I'm going to use the two of the mainland populations and estimate $F_{ST}$ from them for a single locus as an example to demonstrate this last issue and show the magnitude of the bias that may be introduced by not considering that each of the stratum have estimated heterozygosity with a bit of error.
+Here is an example of the differences we will see if we do not account for these problems (as well as the issue of samples sizes and sampling locations discussed in \@ref(samples-from-several-locales)).  In the arapat data set, I'm going to use the two of the mainland populations and estimate $F_{ST}$ from them for a single locus as an example to demonstrate this last issue and show the magnitude of the bias that may be introduced by not considering that each of the stratum have estimated heterozygosity with a bit of error.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 require(gstudio)
 data(arapat)
 df <- arapat[ arapat$Population %in% c("101","102"), c(3,13)]
 df <- droplevels( df )
 ```
 
-Here is what that looks like (the droplevels() bit is to remove the non-observed populations from the stratum column in the derived data.frame).
+Here is what that looks like (the `droplevels()` bit is to remove the non-observed populations from the stratum column in the derived `data.frame`).
 
 ```{r}
 df
