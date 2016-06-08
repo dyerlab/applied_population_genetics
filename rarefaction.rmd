@@ -1,4 +1,6 @@
-# Rarefaction
+# Rarefaction {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_pepsis.jpg"></div>
 
 The primary reason for looking at diversity is to perform some comparison, which provides some insights into the biological and/or demographic processes influencing your data.  Without a basis for comparison, diversity estimates are just numbers. However, deriving an estimate of diversity is a statistical sampling process and as such we must be aware of the consequences our sampling regime has on the interpretation of the data.  This is where rarefaction comes in, a technique commonly used in ecology when comparing species richness among groups.
 

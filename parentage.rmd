@@ -1,4 +1,6 @@
-# Parentage Analyses
+# Parentage Analyses   {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_butterfly.jpg"></div>
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}

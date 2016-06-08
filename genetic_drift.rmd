@@ -1,4 +1,7 @@
-# Genetic Drift
+# Genetic Drift {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_beach_donkey.jpg"></div>
+
 
 Genetic drift is the stochastic process resulting from a reduction in the size of a population.  If populations are infinite in size, both allele and genotype frequencies should remain constant through time.  However, if populations are not infinite (reality knocking), then drift may act as a diversifying force.  This chapter examines the process of drift how we can measure its consequences.
 

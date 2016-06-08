@@ -1,4 +1,6 @@
-# Admixture
+# Admixture {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_palm.jpg"></div>
 
 Admixture is the mixing of two or more populations whose frequency spectra may differ.  If they differ considerably, then the admixed population may be easily examined to determine relative contributions of each population.  In a previous chapter, we covered a phenomenon called the Wahlund Effect (Chapter \@ref(wahlund-effects)).  In that situation, we inadvertently mixed two populations, both of which were in Hardy-Weinberg Equilibrium, creating a new synthetic population consisting of individuals from two functionally separate populations. If this synthetic group were to mix, their offspring would contain mixtures of chromosomes from both ancestral populations, as depicted in Figure \@ref(fig:admixture).
 

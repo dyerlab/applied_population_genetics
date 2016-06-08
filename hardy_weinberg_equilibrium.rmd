@@ -1,6 +1,6 @@
 # Hardy-Weinberg Equilibrium {.imageChapter}
 
-<iframe class="chapter_image" width="640" height="360" src="https://www.youtube.com/embed/s5Z0nItrdSo?list=PLjvIGgJ_mgVokdI-r7q_erREHi-DGnGSq" frameborder="0" allowfullscreen></iframe>
+<div class="chapter_image"><img src="chapter_images/ch_flounder.jpg"></div>
 
 At the heart of population genetics is the expectation that genotypes will occur at predictable frequencies given a set of assumptions about the underlying population.  This is formulated in the enigmatic Hardy-Weinberg Equation, $p^2 + 2pq + q^2 = 1$.  
 

@@ -1,4 +1,6 @@
-# Genetic Structure
+# Genetic Structure {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_xian_kan.jpg"></div>
 
 The term 'structure' is used in many different ways in population genetics.  Essentially, data has genetic structure if there is a non-random association of genotypes across your samples.  The interaction of population genetic processes create the genetic structure we see, though it is not easy to infer historical process from the presence of structure alone.  For this we need to rely upon more cleaver experimental design.  In this chapter we examine parameters designed to describe the amount of structure present in a dataset and how we can derive some level of inference from their magnitudes.
 
@@ -6,7 +8,7 @@ Structure in populations influences the distribution (spatial, ecological, and t
 
 In this section, we will explore genetic structure, sensu lato, providing examples of single and multilocus statistics and how we currently think they should be used.  
 
-## The $F$-Statistic Family
+## The F-Statistic Family
 
 The most commonly used parameter for in population genetics are derived from Wright's $F$-Statistics.  We have already encountered one of them, the inbreeding parameter F, which we calculated using the `genetic_diversity()` function using `mode="Fis"`.  This parameter compares the level of observed heterozygosity to that expected under HWE as:
 
@@ -16,29 +18,38 @@ F_{IS} = 1 - \frac{H_O}{H_E}
 
 If the locale in question is producing heterozygotes at a rate consistent with HWE then there is no 'inbreeding' (as we defined it previously).  This being said, the expected frequency of heterozygotes can be estimated at several different demographic levels if you have data that is subdivided.  Assuming you have individuals, sampled from K different locales, you can estimate heterozygosity at the following levels:  
 
-- Individual heterozygosity ($H_I$):  This is what we've been calling HO, observed heterozygosity and is estimated as the fraction of heterozygotes in your sample for a particular locale, [~].  This value can be interpreted as the “average heterozygosity of all genes in an individual" or as “the probability of observing a heterozygote at a particular locus."  
-- Subpopulation heterozygosity ($H_S$):  This is the rate of heterozygosity expected at a particular sampling sub-population (or what I refer to in this text as a locale).  This is estimated as the average in expected heterozygosity ($H_E$) across all $K$ sampling locales; [~].  It assumes that each of your sampling locales is in HWE, each conforming to the host of assumptions necessary to satisfy that condition.  
-- Total heterozygosity ($H_T$):  This is the total heterozygosity across all the data.  This is the expected heterozygosity if all the data were merged and mating as a single panmictic population.  This parameter is estimated as [~], where the frequencies for each allele are determined as the average across all sampling locales.
+- Individual heterozygosity ($H_I$):  This is what we've been calling HO, observed heterozygosity and is estimated as the fraction of heterozygotes in your sample for a particular locale, $H_I = \frac{N_{ij}}{N}$.  This value can be interpreted as the “average heterozygosity of all genes in an individual" or as “the probability of observing a heterozygote at a particular locus."  
+- Subpopulation heterozygosity ($H_S$):  This is the rate of heterozygosity expected at a particular sampling sub-population (or what I refer to in this text as a locale).  This is estimated as the average in expected heterozygosity ($H_E$) across all $K$ sampling locales; $H_S = \frac{1}{K}\sum_{i=1}^K 2p_iq_i$.  It assumes that each of your sampling locales is in HWE, each conforming to the host of assumptions necessary to satisfy that condition.  
+- Total heterozygosity ($H_T$):  This is the total heterozygosity across all the data.  This is the expected heterozygosity if all the data were merged and mating as a single panmictic population.  This parameter is estimated as $H_T = 2\bar{p}\bar{q}$, where the frequencies for each allele are determined as the average across all sampling locales.
 
-If the underlying mating patterns among subdivided populations restrict gene flow, then these estimates of heterozygosity will change. At one extreme, if all populations are mixing freely and it is essentially a single panmictic population then heterozygosity at the sub-population and total population levels will be equal, HT=HS, independent of the amount of inbreeding (or consanguineous mating that is actually occurring).  At the other extreme, if all locales are genetically isolated from each other, then each will be diverging its own evolutionary trajectory both sub-population and total estimates of heterozygosity will diverge.  In fact, it is exactly these relationships between estimates of heterozygosity that Sewell Wright used to derive the oft-misused $F$-Statistics.  
+If the underlying mating patterns among subdivided populations restrict *gene flow*, then these estimates of heterozygosity will change. At one extreme, if all populations are mixing freely and it is essentially a single panmictic population then heterozygosity at the sub-population and total population levels will be equal, $H_T=H_S$, independent of the amount of inbreeding (or consanguineous mating that is actually occurring).  At the other extreme, if all locales are genetically isolated from each other, then each will be diverging its own evolutionary trajectory both sub-population and total estimates of heterozygosity will diverge.  In fact, it is exactly these relationships between estimates of heterozygosity that Sewell Wright used to derive the oft-misused $F$-Statistics.  
 
 To date, we've already used one of these parameters, when examining inbreeding.  Our $F$-statistic is the first demographic level.  Using this new terminology for heterozygosity, the inbreeding statistic is defined as: 
 
-[~]
+\begin{aligned}
+F_{IS} &= \frac{H_S - H_I}{H_S} \\
+& = 1 - \frac{H_I}{H_S}
+\end{aligned}
 
 where the subscripts on the parameters reveal the sampling level being used.  In this case, the subscripts on $F_{IS}$ stand for “inbreeding of Individuals relative to the Subpopulation they are sampled."  The values of this parameter are positive when we see less heterozygotes than expected, and can be negative when we see more heterozygotes than expected under HWE.  This parameter makes particular sense in light of unknown subdivision in populations, the Wahlund Effect discussed earlier.  
 
 At the next level, we can examine inbreeding of the Subpopulation relative to the Total data set, $F_{ST}$.  This is defined as:
 
-[~]
+\begin{aligned}
+F_{ST} &= \frac{H_T - H_S}{H_T} \\
+&= 1 - \frac{H_S}{H_T}
+\end{aligned}
 
 This parameter has been so misused in the literature, it is almost a caricature of itself.  As we see from the formula, it is the reduction in heterozygosity of the subpopulation relative to the entire data set.  This parameter can be either positive or negative.  Wright's original formulation of the parameter [~] was as:
 
-[~]
+\begin{aligned}
+F_{ST} & = \frac{\sum_{i=1}^\ell \sigma_{q_{S(i)}}^2}{\sum_{i=1}^\ell \left[ q_{T(i)}\left( 1 - q_{T(i)}\right) \right]} \\
+& = 1 - \frac{y_{ST}}{y_T}
+\end{aligned}
 
-Where [~] is the variance in allele frequencies across subpopulations (the [~] subscript) using all [~] alleles at the locus, and [~] is the average allele frequency across all subpopulations.  The parameters [~] and [~] are equivalent to [~] (average expected heterozygosity across subpopulations) and [~] (expected heterozygosity of average allele frequencies) respectively. 
+Where $\sum_{i=1}^\ell \sigma_{q_{S(i)}}^2$ is the variance in allele frequencies across subpopulations (the $S(i)$ subscript) using all $\ell$ alleles at the locus, and $q_{T(i)}$ is the average allele frequency across all subpopulations.  The parameters $y_{ST}$ and $y_T$ are equivalent to $H_S$ (average expected heterozygosity across subpopulations) and $H_T$ (expected heterozygosity of average allele frequencies) respectively. 
 
-Lets take a simple example and work though this for clarity as the estimators [~] and [~] can be a bit confusing at times.  Consider the case where we have three populations assayed for a single bi-allelic locus.  Allele frequencies at each of the populations are:
+Lets take a simple example and work though this for clarity as the estimators $H_S$ and $H_T$ can be a bit confusing at times.  Consider the case where we have three populations assayed for a single bi-allelic locus.  Allele frequencies at each of the populations are:
 
 ```{r}
 p <- c(0.2, 0.3, 0.4)
@@ -58,7 +69,7 @@ Whose average is:
 mean(hs)
 ```
 
-For [~], we estimate the average of the allele frequencies ([~] and [~]) and then the expectation for heterozygosity ([~]) as:
+For $H_T$, we estimate the average of the allele frequencies ($\bar{p}$ and $\bar{q}$) and then the expectation for heterozygosity ($2\bar{p}\bar{q}$) as:
 
 ```{r}
 pbar <- mean(p)
@@ -67,15 +78,19 @@ ht <- 2*pbar*qbar
 ht
 ```
 
-From these values, we can estimate [~] as:
+From these values, we can estimate $F_{ST}$ as:
 
-[~]
+\begin{aligned}
+F_{ST}  & = 1 - \frac{H_S}{H_T} \\
+&= 1 - \frac{0.4067}{0.42} \\
+& \approx 0.317
+\end{aligned}
 
-Values of [~] that are close to zero indicate low levels of differentiation, whereas those close to unity represent complete differentiation (with very important caveats that follow).
+Values of $F_{ST}$ that are close to zero indicate low levels of differentiation, whereas those close to unity represent complete differentiation (with very important caveats that follow).
 
 ### Issues with Fixation Indices
 
-One could interpret the original configuration of [~] as being a ratio of variances.  The numerator is the variance in allele frequencies across sampled locations and the denominator is essentially the variance of binomial (or multinomial if [~]).
+One could interpret the original configuration of $F_{ST}$ as being a ratio of variances.  The numerator is the variance in allele frequencies across sampled locations and the denominator is essentially the variance of binomial (or multinomial if $\ell > 2$).
 
 The largest issues with this parameter is that it is NOT a measure of genetic differentiation in the sense that it tells us how different populations are (e.g., how we would use this term in the common vernacular).  In fact, Sewell Wright (1984) specifically states that
 
@@ -160,7 +175,7 @@ Fst_biased
 If we do take into consideration the error associated with estimating these parameters, we find a much smaller value:
 
 ```{r}
-Fst(df)
+#Fst(df)
 ```
 
 Notice here that [~] is estimated from averaging (the first way) 10% lower than done when considering sampling allocations.  The bias associated with [~] is much smaller but exists all the same.  Overall, the problem here is an overestimation of [~] by a factor of almost 3!  These results are exaggerated a bit because of the small size—it would be foolish to estimate [~] from only N=17 individuals from two populations.  However, it does show the importance of considering sampling allocations.  As you sample more individuals, these estimates of heterozygosity will converge.

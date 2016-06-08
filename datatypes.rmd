@@ -1,6 +1,6 @@
 # Data Types {.imageChapter}
 
-<iframe width="640" height="360" class="chapter_image" src="https://www.youtube.com/embed/HLX397T5yqw?list=PLjvIGgJ_mgVokdI-r7q_erREHi-DGnGSq" frameborder="0" allowfullscreen></iframe>
+<div class="chapter_image"><img src="chapter_images/ch_milipedes.jpg"></div>
 
 > The data we work with comes in many forms—integers, stratum, categories, genotypes, etc.—all of which we need to be able to work with in our analyses. In this chapter, the basic data types we will commonly use in population genetic analyses.  This section covers some of the basic types of data we will use in R.  These include numbers, character, factors, and logical data types.  We will also introduce the locus object from the gstudio library and see how it is just another data type that we can manipulate in R.  
 

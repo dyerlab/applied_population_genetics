@@ -1,4 +1,6 @@
-# Selfing
+# Selfing  {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_dogwood.jpg"></div>
 
 Inbreeding is one of the most common deviations from random mating (and hence Hardy-Weinberg Equilibrium) that we encounter in natural populations.  Inbreeding is defined, sensu stricto, as mating between two related individuals.  This ranges from complete selfing, where one parent alone produces offspring, to consanguineous mating, where individuals with some degree of relatedness produce offspring.  The genetic consequences of inbreeding are entirely in how alleles are arranged into genotypes, not in changing allele frequencies.
 

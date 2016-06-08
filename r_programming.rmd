@@ -1,6 +1,6 @@
 # Programming {.imageChapter}
 
-<iframe class="chapter_image"  width="640" height="360" src="https://www.youtube.com/embed/V9pR4busgDc?list=PLjvIGgJ_mgVokdI-r7q_erREHi-DGnGSq" frameborder="0" allowfullscreen></iframe>
+<div class="chapter_image"><img src="chapter_images/ch_beach_ponies.jpg"></div>
 
 One of the strengths of R as an analysis platform is that it is a language rather than a program.  With programs, such as SPSS & JMP, you are limited by the functionality that the designers thought would be necessary to meet the broadest audience.  In R, you can rely upon simple functions or you can create entire analysis and simulation programs de novo.  To do this, we need to dig into flow control and decision making processes, both of which you need for doing more in-depth programming.
 

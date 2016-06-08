@@ -1,4 +1,7 @@
-# Niche Modeling
+# Niche Modeling {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_bird.jpg"></div>
+
 
 
 ```{r eval=FALSE}

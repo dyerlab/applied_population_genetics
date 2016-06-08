@@ -1,4 +1,6 @@
-# Mutation
+# Mutation  {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_red_newt.jpg"></div>
 
 Mutation is the ultimate source of genetic variation.   If mutation never existed, all our loci would be the same homozygote and all of you would look like me!
 

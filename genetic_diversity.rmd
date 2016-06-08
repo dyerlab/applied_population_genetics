@@ -1,4 +1,6 @@
-# Genetic Diversity 
+# Genetic Diversity {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_milkweedbug.jpg"></div>
 
 At a base level, genetic diversity is the fundamental components upon which evolution operates. Without diversity, there is no evolution and as such species cannot respond to selective pressure. Genetic diversity is a property of sampling locales.  It is created and maintained by demographic and evolutionary processes and the history of the organisms being examined.  It is also used as a surrogate measure for the consequences of several microevolutionary processes. In this section, we will examine how to estimate genetic diversity within a sample of individuals.
 

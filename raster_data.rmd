@@ -1,4 +1,6 @@
-# Raster Data 
+# Raster Data {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_jaguar.jpg"></div>
 
 Rasters are a form of data that is georeferenced and (somewhat) continuous.  Raster data is perhaps best envisioned as a matrix of values, whose entries represent spatially referenced data points.  The raster itself can be visualized as you could for normal matrix output (as we did in \@ref(r-matrices) ).  What makes a raster different, however, is that it is (or should be) georeferenced. This means that each element of the matrix represents some measurement on the ground having a specific location and spread.  This is analogous to an image, where if you zoom in on it enough, you will be able to differentiate between individual pixels, it is just that for rasters, each pixel has a spatial location and size associated with it that we can map onto the earth.
 

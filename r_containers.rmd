@@ -1,6 +1,6 @@
 # Data Containers {.imageChapter}
 
-<iframe class="chapter_image" width="640" height="360" src="https://www.youtube.com/embed/lCpw22x9xbQ?list=PLjvIGgJ_mgVokdI-r7q_erREHi-DGnGSq" frameborder="0" allowfullscreen></iframe>
+<div class="chapter_image"><img src="chapter_images/ch_turtle.jpg"></div>
 
 We almost never work with a single piece of datum, rather we keep lots of data.  Moreover, the kinds of data are often heterogeneous, including categorical (Populations, Regions),  continuous (coordinates, rainfall, elevation), and genetic (this is after all a population genetics textbook).  R has a very rich set of containers into which we can stuff our data as we work with it.  Here these container types are examined and the restrictions and benefits associated with each type are explained.
 

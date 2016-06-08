@@ -1,4 +1,6 @@
-# Distance Networks
+# Distance Networks {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_dogwood2.jpg"></div>
 
 ## Graph Structure
 

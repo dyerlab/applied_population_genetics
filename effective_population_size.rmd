@@ -1,4 +1,6 @@
-# Effective Population Size
+# Effective Population Size  {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_chiten.jpg"></div> 
 
 The concept of a "population" is a bit nebulous and up for debate depending upon how you define it and what you are measuring.  This section examines the way in which the size of a population can be estimated and the consequences of how alternative mating systems may influence the distribution of genetic variation within populations.
 

@@ -1,4 +1,6 @@
-# Reproducable Research
+# Reproducable Research  {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_cactus.jpg"></div>
 
 As a scientist, the integrity of your data is your #1 priority. In fact, I argue that your ability to write advertisements of your research, which is what manuscripts really are, is secondary to the data that you collect and provide the community. As a practitioner, you get more credit and are providing more to your research community if your data are not only collected with integrity but able to be used by others. In the near future, the DOI for your data sets will be as important as the ones for your manuscripts.
 

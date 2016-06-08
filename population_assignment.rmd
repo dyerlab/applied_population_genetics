@@ -1,4 +1,6 @@
-# Population Assignment
+# Population Assignment  {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_salamander.jpg"></div>
 
 With population subdivision, individual population allele spectra may diverge if there is not panmictic connectivity.  Along with this differentiation, it is possible to begin estimating the origin of individual samples.  We can also use models of admixture to understand how both individuals and populations are connected
 

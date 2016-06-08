@@ -1,4 +1,6 @@
-# Mapping Populations
+# Mapping Populations {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_lake.jpg"></div>
 
 Almost every data set we will work on has a spatial context.  Until relatively recently, this was largely ignored and at most given as a 2-dimensional projection of sampling locations on a black and white map in our manuscripts.  Here we explore methodologies to provide more intuitive approaches for plotting the spatial location of our sampling sites.
 
@@ -141,4 +143,66 @@ coords$label <- paste("<h2>",coords$Stratum,"</h2><table><tr><th>Parameter</th><
 map <- addTiles( leaflet( data=coords) )
 addCircleMarkers( ~Longitude, ~Latitude, popup=~label, radius=~Size, color="red", fillOpacity=0.75, map = map, data = coords) 
 ```
+
+
+### Sankey Networks
+
+A Sankey Diagram is a kind of flow diagram used to indicate allocation of one set of object into two other sets.  This is a complicated set of interactions to display.  In the following example, I'll use the populations from the *A. attenuata* data set and then map each individual onto its STRUCTURE cluster and mtDNA clade.  This plot needs a `data.frame` for nodes and one for edges created in a particular way.
+
+
+
+```{r,warning=FALSE, message=FALSE}
+require(networkD3)
+pops <- as.character(unique(arapat$Population))
+species <- as.character(unique(arapat$Species))
+cluster <- as.character(unique(arapat$Cluster))
+
+sankey.nodes <- data.frame( name = c( pops, species, cluster), 
+                            stringsAsFactors = FALSE)
+
+
+# takes vector of values and finds out the number of times
+# each combination is found in the pair.
+get_sets <- function( source, target ) {
+  t <- table(source, target)
+  m <- which( t > 0, arr.ind = TRUE)
+  suppressWarnings( df <- data.frame( ind=m ) )
+  df$source <- rownames(t)[df$ind.source]
+  df$target <- colnames(t)[df$ind.target]
+  df$value <- sapply(seq(1,dim(df)[1]), 
+                     function(x) {
+                         return(t[df$ind.source[x],df$ind.target[x]])
+                         })
+  return( df[,3:5] )
+}
+
+# For finding the number of the name instead of the name
+nameIndex <- function(vals,names){
+  ret <- sapply( vals, function(x) {which(x==names)-1}, USE.NAMES = FALSE)
+  return(ret)
+}
+
+
+
+sankey.edges <- rbind( get_sets(arapat$Species,arapat$Population),
+                       get_sets(arapat$Population, arapat$Cluster) )
+sankey.edges$targetNum <- nameIndex(sankey.edges$target, sankey.nodes$name)
+sankey.edges$sourceNum <- nameIndex(sankey.edges$source, sankey.nodes$name)
+```
+
+
+What it does produce is a very cool and dynamic plot.  The colored boxes represeent the groups--Species & STRUCTURE Cluster on the outside, population on the inside.  Connecting lines indicate individuals who are in each of these partially overlapping groups. For example, if you grab the population *Mat*, you will see it has samples in it who are identified as either mtDNA type *Peninsual* or *Cape* as well as belonging to STRUCTURE groups *CBP-C* and *SCBP-A*.  If you have difficult data such as these, this kind of plot may be very helpful.
+
+```{r}
+sankeyNetwork( Links=sankey.edges, Nodes=sankey.nodes,
+               Source = "sourceNum", Target = "targetNum",
+               Value = "value", NodeID = "name",
+               width = 700, fontSize = 12, nodeWidth = 30)
+```
+
+
+
+
+
+
 

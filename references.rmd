@@ -1,4 +1,4 @@
-# References {.hanging}
+# References {- .hanging}
 
 Bivand RS, Pebesma EJ, G\'omez-Rubio V.  2008.  *Applied Spatial Data Analysis with R*  Springer, New York.
 

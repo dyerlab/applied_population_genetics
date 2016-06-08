@@ -1,4 +1,6 @@
-# Genetic Distances
+# Genetic Distances {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_northbaja.jpg"></div>
 
 One can measure the relative distance between items based upon some basic assumptions.  In Euclidean geometry, the underlying distance measures are based upon the triangle inequality.  The same kinds of approaches are available in characterizing genetic separation, either among individuals or among locales.  This chapter introduces some of the methodologies used in estimating genetic distances, how we analyze them, and how we portray our results in a graphical fashion amenable for interpretation.
 

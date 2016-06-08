@@ -1,4 +1,6 @@
-# Wahlund Effects
+# Wahlund Effects  {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_snake.jpg"></div>
 
 Inbreeding may be indicated in the parameter $F$ due to selfing (the most direct type \@ref(selfing)), mating amongst relatives (the most common type, \@ref(mixed-mating-systems)), or due to problems that we as the investigator cause due to our ignorance of the underlying demography.  Yes, if done incorrectly, the way in which you sample individuals may may lead to incorrect inferences.  The Wahlund effect is one such way that problems in your study design may incorrectly result in inferences of inbreeding.  Here is how it works.
 

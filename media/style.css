@@ -43,7 +43,7 @@ pre code {
 
 
 .imageChapter {
-  padding-top: 600px;
+  padding-top: 498px;
 }
 
 
@@ -102,13 +102,15 @@ tr:nth-child(2n){
 
 .chapter_image {
   top:0;
-  width:800px;
-  height:600px;
+
   position:absolute;
 }
 
 .chapter_image img {
   border-radius: 15px 15px 5px 5px;
+    margin:auto;
+      width:650px;
+  height:488px;
 }
 
 

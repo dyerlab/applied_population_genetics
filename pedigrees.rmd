@@ -1,4 +1,6 @@
-# Pedigrees
+# Pedigrees  {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_trees.jpg"></div>
 
 Pedigrees are visual representations of genetic relations.  They are extremely important for estimating inbreeding and following traits or diseases in lineages.  In this lecture, we will learn:
 

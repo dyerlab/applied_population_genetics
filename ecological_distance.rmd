@@ -1,4 +1,7 @@
-# Ecological Distance
+# Ecological Distance {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_mountain.jpg"></div>
+
 
 Previously we have been focused on population separation in Euclidean space (e.g., physical distance).  However, populations may be functionally separated by features of the intervening landscape.  It is entirely possible that features existing between populations may influence the ability of gene flow to maintain connectivity between sites.  
 

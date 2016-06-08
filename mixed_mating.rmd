@@ -1,4 +1,6 @@
-# Mixed Mating Systems
+# Mixed Mating Systems  {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_solanum.jpg"></div>
 
 Not all species that can produce selfed offspring produce only selfed offspring.  In many systems, organisms may produce offspring that are a mix of inbred and outcross matings, a condition mixed mating systems.  Using the same approach, we can define expectations for allele frequencies (a cinch since they do not change), genotype frequencies (by mixing selfing and regular HWE expectations), and the evolution of the inbreeding parameter $F$.  
 

@@ -1,4 +1,6 @@
-# Ordination of Genetic Data
+# Ordination of Genetic Data {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_vernal_pool.jpg"></div>
 
 There are several ways that we can look for natural groupings in our data.  Barriers and sources of vicariance across the landscape create discontinuities in the genetic structure.  As we begin to analyze the spatial structure of the data itself, one of the first things that needs to be done is to allow the data to tell the analyst how it is internally structured.  This is a deviation from common approaches in statistical analyses.  Typically, we start with a model and then see the extent to which the data fit into a model framework, potentially testing many different models.  However, just because you get a significant model does not mean it is the best or even the correct one describing the underlying processes.  In Dyer & Nason (2004), we examined the spatial genetic structure of Lophocereus schottii (Cactaceae) and found that while the Sea of Cortéz has acted to separate mainland populations from those on peninsular Baja California, there is a particular population at the very northern extent of the range that is really a peninsular population even though it is spatially on the mainland.  The differences, in aggregate, between peninsula and mainland populations are so large that even if we allocated an individual stratum into the wrong region, we still were able to derive a significant model.  This is where model-free approaches are most powerful, they let the data tell us how it is distributed as opposed to asking if there is enough structure to fit into some pre-conceived model.
 
@@ -115,5 +117,30 @@ There are some interesting things to notice here.
 
 This approach is pretty good at pulling apart components within the data set that represent different genetic clusters.
 
+## Interactive Tree Display
+
+Another network approach that could be used is defining bifurcating networks.  Here we will examine the *A. attenuatus* data set using Nei's genetic distance metric.
+
+\[
+D_{nei} = -\ln( L )
+\]
+
+where
+
+\[
+L = \frac{\sum_l\sum_u x_uy_u}{\sqrt{(\sum_l\sum_u x_u^2)(\sum_l\sum_u y_u^2)}}
+\]
+
+I make the among stratum distance matrix and then turn it into a `dist` object to do a hierarchal clustering on the populations. I then plot it and make the node colors equal to the grouping of the dendrogram *if* there were 4 groups in the dataset.  This is also zoomable, for large trees, so if you want to figure out the relationships at the leaves, where the internal edges are smaller, zoom in with the mouse.
+
+```{r message=FALSE, error=FALSE, warning=FALSE}
+require(networkD3)
+d <- genetic_distance(arapat,stratum = "Population", mode="Nei")
+d <- as.dist( d )
+hc <- hclust(d)
+dendroNetwork(hc, height=600, 
+              zoom=TRUE, 
+              textColour = c("red","green","orange","blue")[ cutree(hc,4)])
+```
 
 

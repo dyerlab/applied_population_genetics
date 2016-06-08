@@ -1,4 +1,6 @@
-# Vector Data 
+# Vector Data  {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_newt2.jpg"></div>
 
 For the purposes of this chapter, I will consider vector data as consisting of a finite set of points that may or may not be connected.  In `R`, these points can be used directly, as a numeric data type, or as a Spatial* class object.  The `sp` library contains a lot of functions that help deal with points, lines, and polygons and this is going to be a short overview of how they can be derived and manipulated in the pursuit of population genetic studies.
 

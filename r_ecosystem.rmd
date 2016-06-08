@@ -1,12 +1,12 @@
 # The R Ecosystem {.imageChapter}
 
-<iframe class="chapter_image" width="640" height="360" src="https://www.youtube.com/embed/Xz5EgzV2S58?list=PLjvIGgJ_mgVokdI-r7q_erREHi-DGnGSq" frameborder="0" allowfullscreen></iframe>
+<div class="chapter_image"><img src="chapter_images/ch_farm.jpg"></div>
 
 > R is an open-source, community driven platform available for a wide variety of computer operating systems and is becoming a de facto standard in modern biological analyses.  It is not a point-and-click interface, rather it is a rich analytical ecosystem that will make your research and scientific life more pleasurable.
 
 ## Getting R Configured
 
-The grammar of the R language was derived from another system called S-Plus.  S-Plus was a proprietary analysis platform developed by AT&T and licenses were sold for its use, mostly in industry and education.  The development of R was initiated by `XXXX` and `XXX`, whose goal was to create an interpreter that could read grammar similar to S-Plus but be available to the larger education community.   The use of R has increased dramatically due to its open nature and the ability of people to share code solutions with relatively little barriers.
+The grammar of the R language was derived from another system called S-Plus.  S-Plus was a proprietary analysis platform developed by AT&T and licenses were sold for its use, mostly in industry and education.  Given the closed nature of the S-Plus platform, R was developed with the goal of creating an interpreter that could read grammar similar to S-Plus but be available to the larger research community.   The use of R has increased dramatically due to its open nature and the ability of people to share code solutions with relatively little barriers.
 
 The main repository for R is located at the [CRAN Repository](http://cran.r-project.org), which is where you can download the latest version.  It is in your best interests to make sure you update the underlying R system, changes are made continually (perhaps despite the outward appearance of the website).  
 
