@@ -1,9 +1,249 @@
 # Genetic Structure
 
+The term 'structure' is used in many different ways in population genetics.  Essentially, data has genetic structure if there is a non-random association of genotypes across your samples.  The interaction of population genetic processes create the genetic structure we see, though it is not easy to infer historical process from the presence of structure alone.  For this we need to rely upon more cleaver experimental design.  In this chapter we examine parameters designed to describe the amount of structure present in a dataset and how we can derive some level of inference from their magnitudes.
 
-## Summary Structure Parameters
+Structure in populations influences the distribution (spatial, ecological, and temporal) distribution of of alleles.  Until this point, we have focused on how alleles coalesce into genotypes at the individual level, local allele frequencies and the Hardy Weinberg expansion provide an expectation for the probability of seeing a heterozygote, for example.  As we scale up from the individual itself to the deme (or sub-population) in which it resides, we can also estimate heterozygosity.  As we coalesce these demes into populations, regions, continents, etc. we can also estimate expectations for heterozygosity at these levels as well. The deviance from these expectations at all levels can be captured in a statistic—the $F$-statistic we've seen already is on of them—useful for comparisons among studies, sites, etc. The $F$-statistics are perhaps the most misused parameters in population genetics but they have both a long history of use and pretty robust expectations with respect to how they will respond to various evolutionary processes.
+
+In this section, we will explore genetic structure, sensu lato, providing examples of single and multilocus statistics and how we currently think they should be used.  
+
+## The $F$-Statistic Family
+
+The most commonly used parameter for in population genetics are derived from Wright's $F$-Statistics.  We have already encountered one of them, the inbreeding parameter F, which we calculated using the `genetic_diversity()` function using `mode="Fis"`.  This parameter compares the level of observed heterozygosity to that expected under HWE as:
+
+\[
+F_{IS} = 1 - \frac{H_O}{H_E}
+\]
+
+If the locale in question is producing heterozygotes at a rate consistent with HWE then there is no 'inbreeding' (as we defined it previously).  This being said, the expected frequency of heterozygotes can be estimated at several different demographic levels if you have data that is subdivided.  Assuming you have individuals, sampled from K different locales, you can estimate heterozygosity at the following levels:  
+
+- Individual heterozygosity ($H_I$):  This is what we've been calling HO, observed heterozygosity and is estimated as the fraction of heterozygotes in your sample for a particular locale, [~].  This value can be interpreted as the “average heterozygosity of all genes in an individual" or as “the probability of observing a heterozygote at a particular locus."  
+- Subpopulation heterozygosity ($H_S$):  This is the rate of heterozygosity expected at a particular sampling sub-population (or what I refer to in this text as a locale).  This is estimated as the average in expected heterozygosity ($H_E$) across all $K$ sampling locales; [~].  It assumes that each of your sampling locales is in HWE, each conforming to the host of assumptions necessary to satisfy that condition.  
+- Total heterozygosity ($H_T$):  This is the total heterozygosity across all the data.  This is the expected heterozygosity if all the data were merged and mating as a single panmictic population.  This parameter is estimated as [~], where the frequencies for each allele are determined as the average across all sampling locales.
+
+If the underlying mating patterns among subdivided populations restrict gene flow, then these estimates of heterozygosity will change. At one extreme, if all populations are mixing freely and it is essentially a single panmictic population then heterozygosity at the sub-population and total population levels will be equal, HT=HS, independent of the amount of inbreeding (or consanguineous mating that is actually occurring).  At the other extreme, if all locales are genetically isolated from each other, then each will be diverging its own evolutionary trajectory both sub-population and total estimates of heterozygosity will diverge.  In fact, it is exactly these relationships between estimates of heterozygosity that Sewell Wright used to derive the oft-misused $F$-Statistics.  
+
+To date, we've already used one of these parameters, when examining inbreeding.  Our $F$-statistic is the first demographic level.  Using this new terminology for heterozygosity, the inbreeding statistic is defined as: 
+
+[~]
+
+where the subscripts on the parameters reveal the sampling level being used.  In this case, the subscripts on $F_{IS}$ stand for “inbreeding of Individuals relative to the Subpopulation they are sampled."  The values of this parameter are positive when we see less heterozygotes than expected, and can be negative when we see more heterozygotes than expected under HWE.  This parameter makes particular sense in light of unknown subdivision in populations, the Wahlund Effect discussed earlier.  
+
+At the next level, we can examine inbreeding of the Subpopulation relative to the Total data set, $F_{ST}$.  This is defined as:
+
+[~]
+
+This parameter has been so misused in the literature, it is almost a caricature of itself.  As we see from the formula, it is the reduction in heterozygosity of the subpopulation relative to the entire data set.  This parameter can be either positive or negative.  Wright's original formulation of the parameter [~] was as:
+
+[~]
+
+Where [~] is the variance in allele frequencies across subpopulations (the [~] subscript) using all [~] alleles at the locus, and [~] is the average allele frequency across all subpopulations.  The parameters [~] and [~] are equivalent to [~] (average expected heterozygosity across subpopulations) and [~] (expected heterozygosity of average allele frequencies) respectively. 
+
+Lets take a simple example and work though this for clarity as the estimators [~] and [~] can be a bit confusing at times.  Consider the case where we have three populations assayed for a single bi-allelic locus.  Allele frequencies at each of the populations are:
+
+```{r}
+p <- c(0.2, 0.3, 0.4)
+q <- 1-p
+```
+
+which give an expected heterozygosity of:
+
+```{r}
+hs <- 2*p*q
+hs
+```
+
+Whose average is:
+
+```{r}
+mean(hs)
+```
+
+For [~], we estimate the average of the allele frequencies ([~] and [~]) and then the expectation for heterozygosity ([~]) as:
+
+```{r}
+pbar <- mean(p)
+qbar <- mean(q)
+ht <- 2*pbar*qbar
+ht
+```
+
+From these values, we can estimate [~] as:
+
+[~]
+
+Values of [~] that are close to zero indicate low levels of differentiation, whereas those close to unity represent complete differentiation (with very important caveats that follow).
+
+### Issues with Fixation Indices
+
+One could interpret the original configuration of [~] as being a ratio of variances.  The numerator is the variance in allele frequencies across sampled locations and the denominator is essentially the variance of binomial (or multinomial if [~]).
+
+The largest issues with this parameter is that it is NOT a measure of genetic differentiation in the sense that it tells us how different populations are (e.g., how we would use this term in the common vernacular).  In fact, Sewell Wright (1984) specifically states that
+
+$F_{ST}$ can be interpreted as a measure of the amount of differentiation among subpopulations, relative to the limiting amount under complete fixation...
+
+This can be seen in the following examples and the values we get for the parameter $F_{ST}$ in each.  
+
+*Scenario 1:* Two populations, `A` and `B`, each fixed for a different allele. In this case, the heterozygosity at population A would be [~], likewise for population `B` at [~], and the estimate of subpopulation heterozygosity is [~].  Total heterozygosity, $H_T$, is defined using allele frequencies averaged across populations and would be [~] making [~].  These two populations are diverged completely from each other and this makes sense.  Subpopulation heterozygosity, $H_S$, is always zero when any number of populations are fixed for a single allele.
+
+*Scenario 2:* Two populations with two alleles each, though not the same alleles.  In the most simple case lest assume population `A` is in HWE with alleles `A` and `B` occurring at equal frequencies and the other population has alleles `C` and `D` also at equal frequencies.  In this case, heterozygosity at each population would be $H_{S,A } = H_{S,B} = 0.5$ and $H_S = 0.5$ as it is the average of the expected population-level heterozygosity.  The total expected heterozygosity is the heterozygosity of allele frequencies averaged across populations, which in this simple example we have [~] and [~] (n.b., when we have more than 2 alleles at a locus, it is often easier to estimate the part that is not homozygote rather than adding up for example $2pq + 2pr + 2ps + 2qr + 2qs + 2rs$ to estimate heterozygotes).  This makes [~].  Intuitively, this does not make much sense, why would it be a third if both populations are in HWE, just for different alleles?
+
+*Scenario 3:* Three populations, the first of which is fixed for allele `A` and the rest that are fixed for allele `B`.  In this scenario, [~] but $H_T$, being defined as the expected heterozygosity of averaged allele frequencies, [~] and [~] would be [~] and [~].  Again, when populations are fixed for different alleles, $F_{ST} = 1.0$.  However, in this case, two of our populations are entirely identical!  How is it that the two populations with identical allele frequencies (and whose own FST = 0 by the way) can cause $F_{ST}$ to go to unity?  In fact, we could have 100 populations fixed for one allele and 1 population fixed for the other and still have $F_{ST} = 1.0$.
+
+This is because, as Wright (1984, pg 82) pointed out:
+
+>> The fixation index is thus not a measure of degree of differentiation in the sense implied by the extreme case by absence of any common allele.  It measures differentiation within the total array in the sense of the extent to which the process of fixation has gone towards completion.
+
+This is not how it is used in the literature, where it is often used to describe the differences among populations in an absolute sense.  This is why these are called fixation indices (the $F$ is for fixation).
+
+For completeness, we can also estimate the inbreeding of an individual relative to the total population, 
+
+[~]
+
+though it is not often used because individuals are inbred relative to the populations within which they are found, not within which the entire dataset is composed.  Moreover, the three parameters have the following relationship, 
+
+[~]
+
+which means that once FIS and FST are estimated, FIT is completely defined.  
+Here is an example of how we estimate these parameters from real data.  There is another issue that we need to consider when doing this for real.
+
+*Scenario 4:* Estimation of the population-level heterozygosity is not done without error.  In fact, we are estimating these parameters for each of the populations and every time we need to determine estimates of allele frequencies.  As such, if we are going to take this into consideration, we need to correct estimates of heterozygosity accordingly.
+
+In the arapat data set, I'm going to use the two of the mainland populations and estimate $F_{ST}$ from them for a single locus as an example to demonstrate this last issue and show the magnitude of the bias that may be introduced by not considering that each of the stratum have estimated heterozygosity with a bit of error.
+
+```{r}
+require(gstudio)
+data(arapat)
+df <- arapat[ arapat$Population %in% c("101","102"), c(3,13)]
+df <- droplevels( df )
+```
+
+Here is what that looks like (the droplevels() bit is to remove the non-observed populations from the stratum column in the derived data.frame).
+
+```{r}
+df
+```
+
+If you look at the alleles present by locus, you can see quite that the allele frequencies (above) are not that close to each other—in fact, population 101 has the 04 allele that is not present in population 102.  Numerically, they are:
+
+```{r}
+frequencies(df, stratum = "Population")
+```
+
+If we estimate heterozygosity directly for each population we see that the individual, population-level, heterozygosity, is estimated as:
+
+```{r}
+x <- c(genetic_diversity(df[df$Population=="101",],mode="He")$He, genetic_diversity(df[df$Population=="102",],mode="He")$He)
+x
+```
+
+which results in an estimate of [~] of:
+
+```{r}
+hs <- mean(x)
+hs
+```
+
+Similarly, the parameter [~] is:
+
+```{r}
+ht <- genetic_diversity(df,mode="He")$He
+ht
+```
+
+We can estimate [~] as:
+
+```{r}
+Fst_biased <- 1 - hs/ht
+Fst_biased
+```
+
+If we do take into consideration the error associated with estimating these parameters, we find a much smaller value:
+
+```{r}
+Fst(df)
+```
+
+Notice here that [~] is estimated from averaging (the first way) 10% lower than done when considering sampling allocations.  The bias associated with [~] is much smaller but exists all the same.  Overall, the problem here is an overestimation of [~] by a factor of almost 3!  These results are exaggerated a bit because of the small size—it would be foolish to estimate [~] from only N=17 individuals from two populations.  However, it does show the importance of considering sampling allocations.  As you sample more individuals, these estimates of heterozygosity will converge.
+
+### Additional $X_{ST}$-like Parameters
+
+The use (and perhaps misuse) of [~] has supported the development of almost a cottage industry in other parameters, each trying to fit into a specific perceived problem in the original parameter.  Here are some other extensions of this basic parameter that you may come across:  
+
+- [~] for Microsatellite loci.  This uses the ladder genetic distance metric discussed previously.  
+- [~] for Nucleotides variation.  
+- [~] for population subdivision (and in some cases mutation).  
+- [~] for loci with high allelic diversity (along with its nemesis [~]).
+
+Each of these parameters attempts to solve an additional problem that people have posed for [~].  The magnitude of bias associated with each may be differential, depending upon the extent to which your data are violating underlying assumptions.  For example, at highly diverse loci, the expectation for [~] is limited in that it cannot reach its theoretical maximum.  As such, Hedrick (ref) has derived the [~] parameter that corrects for this.  In general, the degree to which [~] and [~] diverge depend upon both the diversity and the evenness of allele frequencies in your populations.  This begs the question, “Is there a cutoff when I should not longer use [~] and prefer [~] instead?"  I think Hedrick would suggest to always use it the secondary one, just in case, though it may be in your best interest to examine the differences in the parameters in your own data first.
+
+Here is an example of how these parameters may give alternative estimates.  I'll use the MP20 locus as it is a microsatellite locus of high diversity and compare the [~], [~], and [~] estimates.
+
+```{r}
+df <- arapat[, c(3,14)]
+genetic_structure(df,stratum="Population",mode="Gst")
+genetic_structure(df,stratum="Population",mode="Gst_prime")
+genetic_structure(df,stratum="Population",mode="Dest")
+```
+
+Is the diversity at this locus influencing structure estimation?  Yes, you can clearly see that [~] alone produces a much smaller value than the other parameters.  Which of the other ones are more accurate?  That is an interpretive question you have to answer knowing your study system.
+
+## Statistical Structure
+
+Thus far, we've examined parameters that describe genetic structure, in relation to fixation.  These paremeters are all based upon underlying population genetic assumptions.  However, that need not be the case.  In 1984, Wier & Cockerham derived a parameter [~], which was an estimator for [~] but based upon an analysis of variance approach rather than expectations relying upon heterozygosity. This statistic is essentially a variance ratio, derived from a random-effects analysis of variance model, just like we would use in normal parametric statistics.  Later, Excoffier et al. (1992) expanded upon this approach to provide a multilocus estimate of this parameter, which they called [~] using an analysis they termed AMOVA (for Analysis of MOlecular VAriance).  In 2004, Dyer et al. showed how both of these approaches are just special cases of a more general family of Q-mode linear regression models, amenable to broad ranges of sampling designs and configurations.  In what follows, I'm going to focus on the AMOVA configuration, mostly for completeness in relation to the individual AMVOA distance described previously (reproduced on the right).  The geometry of this encoding provides an easy heuristic for quantifying genetic distances between pairs of individuals.
+
+Taken as a whole, the distance among all N individuals can be represented as a pairwise genetic distance matrix, [~].  This matrix has the form:
+
+[~]
+
+which is symmetric ([~]) and has zero squared distance down the diagonal ([~]).  This can be evaluated as an Analysis of Variance by decomposing the squared distance values into the Total Sums of Squared Distances
+
+[~], 
+
+the Sums of Squared Distances Within strata
+
+[~]
+
+and the Sums of Squared Distances Among populations.
+
+[~]
+
+The notation is a bit odd here, but it is essentially all the squared distances between individuals found in different populations.
+
+You can visualize these parameters in matrix form as depicted below. The pairwise distance matrix has individuals in it sorted in order of appearance within populations.  As such, [~] is the sum of all squared distances and is decomposed to the additive components of [~] (summing distances within populations), and [~] (summing values representing among stratum distances). For each of these parameters is standardized by the number of entries in that particular group.
+
+These sums of squares are easily put into a traditional AMOVA table.  From here, it is identical to a normal ANOVA analysis.  We have degrees of freedom, mean squares, and variance components.  The AMOVA itself, due to the way we sample the individuals and populations is a random-effects model.  Our sampling typically consists of us going out and sampling a portion of the potential populations that exist rather than sampling all specified populations.  As a statistical consequence, this means that the variance within (the error term) and among (the treatment variance) have to be corrected because we are taking only a sample from all potential populations.  For a 1-level analysis, we can perform this in R by first setting up the data as a distance matrix and a vector of population assignments (it appears that the values need to be either numeric or as a factor for populations, though at the time of this writing, I could not get a factor representation to work properly).
+
+```{r}
+D <- genetic_distance(arapat, stratum="Population", mode="AMOVA")
+D <- as.dist( D )
+pop <- as.numeric( arapat$Population )
+```
+
+and then using the `amova()` function from the pegas library (there are many different implementations of this kind of analysis, decompose the variance into and fill out the AMOVA table as:
+
+```{r}
+require(pegas)
+fit <- amova( D ~ pop, nperm=1000 )
+fit
+```
+
+This gives us the standard anova table and an estimate of the probability associated with the variance component representing among-population variance, [~].  
+The estimated variance components of this model, we can estimate a structure statistic, [~], which for a 1-level analysis is
+
+[~]
+
+and from the output of the amova() function can be estimated as (don't know why this isn't done automagically)
+
+```{r}
+PhiST <- 1 - fit$varcoef/(fit$varcoef+fit$varcomp[2,1])
+PhiST
+```
+
+Which means that roughly `r print(PhiST*100,digits=3)`% of the genetic variation observed in these data can be attributed to individuals being assigned to different populations.
+
+## Final Thoughts on Structure
+
+The estimation of genetic structure is a fundamental endeavor in population genetics that at times can be given a bit more weight than it may warrant.  These parameters are simply estimates of a magnitude of structure in relation to either the degree to which populations have gone to fixation or as a statistical decomposition of raw variation.  The important component here is that there are a lot of ways that a set of population histories may result in the same amount of genetic variation.  The important point here is that simply looking at the magnitude of variation among strata does not allow us to differentiate among alternative demographic histories.  
 
 
 
-
-## Statistical Structure 

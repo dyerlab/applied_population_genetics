@@ -6,7 +6,7 @@ Underlying most estimates of genetic distance are sets of geometric and/or evolu
 
 There are two main characteristics that control our ability to map collections of genotypes onto a real number line; Self identity and Symmetry.  Self identity implies that the distance, $\delta$, between an object (a single genotype or a collection of genotypes in a population) and itself must be zero: $\delta_{ii}=0$.  You are absolutely identical to yourself.  Symmetry implies that the distance between objects is independent of the order in which we measure it; $\delta_{ij} = \delta_{ji}$.  This can be a more problematic assumption in some cases and when we examine estimation of ecological distances later, we will see this may not be the case.  
 
-If these two conditions are satisfied, the distance may be considered *metric* if (and only if) it satisfies the triangle inequality, $\delta_{ij} \le \delta_{ik} + \delta_{kj}$.  We’ve seen this relationship in Euclidean Geometry, the squared length of the hypotenuse is equal to the sum of the squared length of both legs in a triangle; $z^2 = x^2 + y^2$.
+If these two conditions are satisfied, the distance may be considered *metric* if (and only if) it satisfies the triangle inequality, $\delta_{ij} \le \delta_{ik} + \delta_{kj}$.  We've seen this relationship in Euclidean Geometry, the squared length of the hypotenuse is equal to the sum of the squared length of both legs in a triangle; $z^2 = x^2 + y^2$.
 
 Genetic distance itself is not the final product that allows us to gain inferences about underlying population genetic processes.  Rather, it is the input into subsequent analyses.  This section focuses first on how we estimate distances, depending upon the level of interest, and then highlights some approaches for visualizing and gaining inferences from the distance matrix itself.  In later chapters, we return to the use of distance matrices when we examine network models and analyses based upon the idea of isolation models commonly used in modern population genetic analyses.
 
@@ -54,7 +54,7 @@ The output variable, `D.euc`, is of type
 class(D.euc)
 ```
 
-which is definitely not a matrix object. It is a specific data type that is used for dealing with distance matrices.  There are some analyses (variants of AMOVA and the Mantel test come to mind) that require the input matrix to be of type dist rather than of type matrix and don’t do the conversion for you directly.
+which is definitely not a matrix object. It is a specific data type that is used for dealing with distance matrices.  There are some analyses (variants of AMOVA and the Mantel test come to mind) that require the input matrix to be of type dist rather than of type matrix and don't do the conversion for you directly.
 
 Because most distance matrices have a zero diagonal ($1^{st}$ requirement outlined previously) and symmetry (the upper diagonal is equal to the lower diagonal, the $2^{nd}$ requirement), it is possible to save computer memory by only dealing with the data below the diagonal.  Some analyses, such as an implementation of the Mantel test, require the use of dist objects instead of matrices.  
 
@@ -83,11 +83,11 @@ rownames(D.amova) <- colnames(D.amova) <- as.character( Locus )
 D.amova
 ```
 
-For completeness, the previous figure should be drawn as a tetrahedron with the possibility of four alleles at a locus (allowing for distances between two heterozygotes that do not share any alleles).  However, that is not an easy thing to draw for me...  The only interesting distance you’ll need to think about (and perhaps grab a piece of paper and draw some triangles) is the distance between two two heterozygotes that share no alleles.  I’ll leave it up to you to figure out that one (or use `genetic_distance()` for it).  
+For completeness, the previous figure should be drawn as a tetrahedron with the possibility of four alleles at a locus (allowing for distances between two heterozygotes that do not share any alleles).  However, that is not an easy thing to draw for me...  The only interesting distance you'll need to think about (and perhaps grab a piece of paper and draw some triangles) is the distance between two two heterozygotes that share no alleles.  I'll leave it up to you to figure out that one (or use `genetic_distance()` for it).  
 
 ### Bray-Curtis Individual Distance
 
-A distance metric that can be used to test differences among individuals or populations is that of Bray-Curtis.  This distance is a transformation of Jaccard’s distance (see below) and is derived from an ecological ordination paper by Bray & Curtis (1957).
+A distance metric that can be used to test differences among individuals or populations is that of Bray-Curtis.  This distance is a transformation of Jaccard's distance (see below) and is derived from an ecological ordination paper by Bray & Curtis (1957).
 
 \[
 D_C = 1 - 2\frac{\sum_{i=1}^\ell min(p_{X,i},p_{Y,i})}{\sum_{i=1}^\ell p_{X,i} + \sum_{i=1}^\ell p_{Y,i}}
@@ -125,7 +125,7 @@ where the pipes, $|x|$, indicate taking the absolute value.
 
 ### Rogers (Euclidean) Distance
 
-Stepping up, slightly, in complexity, we get to Roger’s distance.  This distance metric is roughly equivalent to Euclidean distance (and indeed in gstudio it is called euclidean).  
+Stepping up, slightly, in complexity, we get to Roger's distance.  This distance metric is roughly equivalent to Euclidean distance (and indeed in gstudio it is called euclidean).  
 
 ```{r echo=FALSE}
 knitr::include_graphics("media/Rodgers_Distance.png")
@@ -146,7 +146,7 @@ This is a more common distance metric than that of Czkanowski and has been used 
 
 If you are using this metric at short time intervals, have loci of moderately diversity, or are not concerned about homology, this is a quick metric.
 
-### Nei’s Genetic Distance
+### Nei's Genetic Distance
 
 One of the most common distance metrics used is that of Nei, and is estimated as:
 

@@ -88,7 +88,7 @@ do_it <- function( x ) {
 }
 ```
 
-When I call the function, the variable x that is the argument of the function is not the same variable that is in the environment that I assigned a value of 10.  The x in the function argument is what we call “local to that function” in that within the curly brackets that follow (and any number of curly brackets nested within those, the value of x is given whatever was passed to the function.
+When I call the function, the variable x that is the argument of the function is not the same variable that is in the environment that I assigned a value of 10.  The x in the function argument is what we call “local to that function" in that within the curly brackets that follow (and any number of curly brackets nested within those, the value of x is given whatever was passed to the function.
 
 ## Decision Making
 

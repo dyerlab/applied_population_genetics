@@ -75,26 +75,26 @@ There are several parameters common to the various plotting functions used in R.
 
 Command  |  Usage           | Description
 ---------|------------------|-------------------------------------------------
-bg       | bg=”white”       | Sets the background color for the entire figure.
-bty      | bty=”n”	        | Sets the style of the box type around the graph. Useful values are ”o” for complete box (the default), ”l”, ”7”, ”c”, ”u”, ”]” which will make a box with sides around the plot area resembling the upper case version of these letters, and ”n” for no box.
+bg       | bg="white"       | Sets the background color for the entire figure.
+bty      | bty="n"	        | Sets the style of the box type around the graph. Useful values are "o" for complete box (the default), "l", "7", "c", "u", "]" which will make a box with sides around the plot area resembling the upper case version of these letters, and "n" for no box.
 cex      | cex=2            | Magnifies the default font size by the corresponding factor.
 cex.axis | cex.axis=2       | Magnifies the font size on the axes.
-col      | col=”blue”       | Sets the plot color for the points, lines, etc.
-fg       | fg=”blue”        | Sets the foreground color for the image.
+col      | col="blue"       | Sets the plot color for the points, lines, etc.
+fg       | fg="blue"        | Sets the foreground color for the image.
 lty      | lty=1            | Sets the type of line as 0-none, 1-solid, 2-dashed, 3-dotted, etc.
 lwd      | lwd=3            | Specifies the width of the line.
-main     | main=”title”     | Sets the title to be displayed over the top of the graph.
+main     | main="title"     | Sets the title to be displayed over the top of the graph.
 mfrow    | mfrow=c(2,2)     | Creates a ‘matrix' of plots in a single figure.
 pch      | pch=16	          | Sets the type of symbol to be used in a scatter plot.
-sub      | sub=”subtitle”   | Sets the subtitle under the main title on the graph.
-type     | type=”l”         | Specifies the type of the graph to be shown using a generic plot() command.  Types are “p” for points (default), “l” for lines, and “b” for both.
-xlab     | xlab=”Size (m)”  | Sets the label attached to the x-axis.
-ylab     | ylab=”Frequency” | Sets the label attached to the y-axis.
+sub      | sub="subtitle"   | Sets the subtitle under the main title on the graph.
+type     | type="l"         | Specifies the type of the graph to be shown using a generic plot() command.  Types are “p" for points (default), “l" for lines, and “b" for both.
+xlab     | xlab="Size (m)"  | Sets the label attached to the x-axis.
+ylab     | ylab="Frequency" | Sets the label attached to the y-axis.
 
 
 ## Density Plots
 
-Another way of looking at the distribution of univariate data is through the use of the `density()` function. This function takes a vector of values and creates a probability density function of it returning an object of class ”density”. 
+Another way of looking at the distribution of univariate data is through the use of the `density()` function. This function takes a vector of values and creates a probability density function of it returning an object of class "density". 
 
 ```{r}
 d <- density( iris$Sepal.Length) 
@@ -139,7 +139,7 @@ d.vi <- density( d.virginica )
 
 I can now plot the densities independently.  After the first `plot()` function is called, you can add to it by using `lines()` or `points()` function calls.  They will overlay the subsequent plots over the first one.  One of the things you need to be careful of is that you need to make sure the x- and y-axes are properly scaled so that subsequent calls to `points()` or `lines()` does not plot stuff outside the boundaries of your initial plot.
 
-Here I plot the setosa data first, specify the `xlim` (limits of the x-axis), set the color, and labels.  On subsequent plotting calls, I do not specify labels but set alternative colors.  Then a nice legend is placed on the graph, the coordinates of which are specified on the values of the x- and y-axis (I also dislike the boxes around graphic so I remove them as well with `bty=”n”`).
+Here I plot the setosa data first, specify the `xlim` (limits of the x-axis), set the color, and labels.  On subsequent plotting calls, I do not specify labels but set alternative colors.  Then a nice legend is placed on the graph, the coordinates of which are specified on the values of the x- and y-axis (I also dislike the boxes around graphic so I remove them as well with `bty="n"`).
 
 ```{r}
 plot(d.se,xlim=c(4,8),col="red", lwd=2, bty="n", xlab="Sepal Length (cm)", main="Sepal Lengths")
@@ -195,7 +195,7 @@ Here is how the sepal length can be plot as a function of the Iris species.
 boxplot(Sepal.Length ~ Species, data=iris, notch=TRUE, xlab="Species", ylab="Sepal Length (cm)", frame.plot=FALSE)
 ```
 
-A couple of things should be noted on this plot call.  First, I used a ‘functional' form for the relationship between the continuous variable (Sepal.Length) and the factor (Species) with the response variable indicated on the left side of the tilde and the predictor variables on the right side.  It is just as reasonable to use boxplot(Species,Sepal.Length, ...) in the call as x- and y- variables in the first two positions.  However, it reads a bit better to do it as a function, like a regression.  Also, it should be noted that I added the optional term, `data=iris`, to the call.  This allowed me to reference the columns in the iris data.frame without the dollar sign notation.  Without that I would have had to write `boxplot( data$Sepal.Length ~ data$Species, ...)`, a much more verbose way of doing it but most programmers are relatively lazy and anything they can do to get more functionality out of less typing...  Finally, I set `frame.plot=FALSE` to remove the box around the plot since the `bty=”n”` does not work on boxplots.  I don't know why these are different, I just hate the box.
+A couple of things should be noted on this plot call.  First, I used a ‘functional' form for the relationship between the continuous variable (Sepal.Length) and the factor (Species) with the response variable indicated on the left side of the tilde and the predictor variables on the right side.  It is just as reasonable to use boxplot(Species,Sepal.Length, ...) in the call as x- and y- variables in the first two positions.  However, it reads a bit better to do it as a function, like a regression.  Also, it should be noted that I added the optional term, `data=iris`, to the call.  This allowed me to reference the columns in the iris data.frame without the dollar sign notation.  Without that I would have had to write `boxplot( data$Sepal.Length ~ data$Species, ...)`, a much more verbose way of doing it but most programmers are relatively lazy and anything they can do to get more functionality out of less typing...  Finally, I set `frame.plot=FALSE` to remove the box around the plot since the `bty="n"` does not work on boxplots.  I don't know why these are different, I just hate the box.
 
 ## Scatter Plots
 

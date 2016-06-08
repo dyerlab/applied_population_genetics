@@ -71,7 +71,7 @@ and
 
 $f(B) = R + \frac{Q}{2} = q$
 
-using the lower case versions of $p$ and $q$.  Be careful about switching these up.  The population geneticist [John Nason](http://jnason.eeob.iastate.edu), makes the connection that this is what it means to “mind our p's and q's” though I suspect the etiology of this statement has more to do with liquid volume measurements than population genetics...  
+using the lower case versions of $p$ and $q$.  Be careful about switching these up.  The population geneticist [John Nason](http://jnason.eeob.iastate.edu), makes the connection that this is what it means to “mind our p's and q's" though I suspect the etiology of this statement has more to do with liquid volume measurements than population genetics...  
 
 Intuitively the formulation denoted above for $p$ and $q$ makes sense as the heterozygote genotype ($AB$) frequency, $Q$, is split evenly between the homozygote genotype frequencies, $P$ (for $AA$) and $R$ (for $BB$).   If these are the only two alleles in the population then there is the additional restriction that $p + q = 1$.  It is easy to expand these methods to more than two alleles, but again the original approximation was specifically set for 2-allele systems.
 

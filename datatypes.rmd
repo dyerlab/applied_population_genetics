@@ -235,7 +235,7 @@ If you try to add a data point to a factor list that does not have the factor th
 region[1] <- "Bob"
 ```
 
-Now, I have to admit that the Error message in its entirety, with its `“[<-.factor`(`*tmp*`, 1, value = "Bob")”` part is, perhaps, not the most informative.  Agreed.  However, the “invalid factor level” does tell you something useful.  Unfortunately, the programmers that put in the error handling system in R did not quite adhere to the spirit of the “fail loudly” mantra.  It is something you will have to get good at.  Google is your friend, and if you post a questions to (http://stackoverflow.org) or the R user list without doing serious homework, put on your asbestos shorts!
+Now, I have to admit that the Error message in its entirety, with its `“[<-.factor`(`*tmp*`, 1, value = "Bob")"` part is, perhaps, not the most informative.  Agreed.  However, the “invalid factor level" does tell you something useful.  Unfortunately, the programmers that put in the error handling system in R did not quite adhere to the spirit of the “fail loudly" mantra.  It is something you will have to get good at.  Google is your friend, and if you post a questions to (http://stackoverflow.org) or the R user list without doing serious homework, put on your asbestos shorts!
 
 Unfortunately, the error above changed the first element of the region vector to NA (missing data). I'll turn it back before we move too much further.
 
@@ -281,7 +281,7 @@ stable <- c( "RGIII" == 0, nchar("Marshawn") == 8)
 stable
 ```
 
-on the variables.  Notice here how each of the items is actually evaluated as to determine the truth of each expression.  In the first case, the character is not equal to zero and in the second, the number of characters (what `nchar()` does) is indeed equal to 8 for the character string “Marshawn”.
+on the variables.  Notice here how each of the items is actually evaluated as to determine the truth of each expression.  In the first case, the character is not equal to zero and in the second, the number of characters (what `nchar()` does) is indeed equal to 8 for the character string “Marshawn".
 
 It is common to use logical types to serve as indices for vectors.  Say for example, you have a vector of data that you want to select some subset from.
 

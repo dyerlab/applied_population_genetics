@@ -148,7 +148,7 @@ Just to check, we can see the starting allele frequencies as:
 frequencies(pop)
 ```
 
-The inbreeding parameter, $F$, is estimated on a data.frame object that has at least one column of data of type locus using the wrapper function `genetic_diversity()` and passing it the `mode=”Fis”` option—the 'is' subscript here is because there are additional $F$ statistics that may be calculated for different groups of individuals which will be covered in the section on genetic structure.  The parameter $F$ is estimated for each locus and the results are given in a data.frame.
+The inbreeding parameter, $F$, is estimated on a data.frame object that has at least one column of data of type locus using the wrapper function `genetic_diversity()` and passing it the `mode="Fis"` option—the 'is' subscript here is because there are additional $F$ statistics that may be calculated for different groups of individuals which will be covered in the section on genetic structure.  The parameter $F$ is estimated for each locus and the results are given in a data.frame.
 
 ```{r}
 genetic_diversity(pop,mode="Fis")

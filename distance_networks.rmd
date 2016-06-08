@@ -96,19 +96,19 @@ How to specify graphical parameters
 
 There are three ways to give values to the parameters described below, in section 'Parameters'. We give these three ways here in the order of their precedence.
 
-The first method is to supply named arguments to the plotting commands: plot.igraph, tkplot or rglplot. Parameters for vertices start with prefix ‘vertex.’, parameters for edges have prefix ‘edge.’, and global parameters have no prefix. Eg. the color of the vertices can be given via argument vertex.color, whereas edge.color sets the color of the edges. layout gives the layout of the graphs.
+The first method is to supply named arguments to the plotting commands: plot.igraph, tkplot or rglplot. Parameters for vertices start with prefix ‘vertex.', parameters for edges have prefix ‘edge.', and global parameters have no prefix. Eg. the color of the vertices can be given via argument vertex.color, whereas edge.color sets the color of the edges. layout gives the layout of the graphs.
 
-The second way is to assign vertex, edge and graph attributes to the graph. These attributes have no prefix, ie. the color of the vertices is taken from the color vertex attribute and the color of the edges from the color edge attribute. The layout of the graph is given by the layout graph attribute. (Always assuming that the corresponding command argument is not present.) Setting vertex and edge attributes are handy if you want to assign a given ‘look’ to a graph, attributes are saved with the graph is you save it with save or in GraphML format with write_graph, so the graph will have the same look after loading it again.
+The second way is to assign vertex, edge and graph attributes to the graph. These attributes have no prefix, ie. the color of the vertices is taken from the color vertex attribute and the color of the edges from the color edge attribute. The layout of the graph is given by the layout graph attribute. (Always assuming that the corresponding command argument is not present.) Setting vertex and edge attributes are handy if you want to assign a given ‘look' to a graph, attributes are saved with the graph is you save it with save or in GraphML format with write_graph, so the graph will have the same look after loading it again.
 
-If a parameter is not given in the command line, and the corresponding vertex/edge/graph attribute is also missing then the general igraph parameters handled by igraph_options are also checked. Vertex parameters have prefix ‘vertex.’, edge parameters are prefixed with ‘edge.’, general parameters like layout are prefixed with ‘plot’. These parameters are useful if you want all or most of your graphs to have the same look, vertex size, vertex color, etc. Then you don't need to set these at every plotting, and you also don't need to assign vertex/edge attributes to every graph.
+If a parameter is not given in the command line, and the corresponding vertex/edge/graph attribute is also missing then the general igraph parameters handled by igraph_options are also checked. Vertex parameters have prefix ‘vertex.', edge parameters are prefixed with ‘edge.', general parameters like layout are prefixed with ‘plot'. These parameters are useful if you want all or most of your graphs to have the same look, vertex size, vertex color, etc. Then you don't need to set these at every plotting, and you also don't need to assign vertex/edge attributes to every graph.
 
 If the value of a parameter is not specified by any of the three ways described here, its default valued is used, as given in the source code.
 
-Different parameters can have different type, eg. vertex colors can be given as a character vector with color names, or as an integer vector with the color numbers from the current palette. Different types are valid for different parameters, this is discussed in detail in the next section. It is however always true that the parameter can always be a function object in which it will be called with the graph as its single argument to get the “proper” value of the parameter. (If the function returns another function object that will not be called again...)
+Different parameters can have different type, eg. vertex colors can be given as a character vector with color names, or as an integer vector with the color numbers from the current palette. Different types are valid for different parameters, this is discussed in detail in the next section. It is however always true that the parameter can always be a function object in which it will be called with the graph as its single argument to get the “proper" value of the parameter. (If the function returns another function object that will not be called again...)
 
 The list of parameters
 
-Vertex parameters first, note that the ‘vertex.’ prefix needs to be added if they are used as an argument or when setting via igraph_options. The value of the parameter may be scalar valid for every vertex or a vector with a separate value for each vertex. (Shorter vectors are recycled.)
+Vertex parameters first, note that the ‘vertex.' prefix needs to be added if they are used as an argument or when setting via igraph_options. The value of the parameter may be scalar valid for every vertex or a vector with a separate value for each vertex. (Shorter vectors are recycled.)
 
 size
 The size of the vertex, a numeric scalar or vector, in the latter case each vertex sizes may differ. This vertex sizes are scaled in order have about the same size of vertices for a given value for all three plotting commands. It does not need to be an integer number.
@@ -116,30 +116,30 @@ The size of the vertex, a numeric scalar or vector, in the latter case each vert
 The default value is 15. This is big enough to place short labels on vertices.
 
 size2
-The “other” size of the vertex, for some vertex shapes. For the various rectangle shapes this gives the height of the vertices, whereas size gives the width. It is ignored by shapes for which the size can be specified with a single number.
+The “other" size of the vertex, for some vertex shapes. For the various rectangle shapes this gives the height of the vertices, whereas size gives the width. It is ignored by shapes for which the size can be specified with a single number.
 
 The default is 15.
 
 color
-The fill color of the vertex. If it is numeric then the current palette is used, see palette. If it is a character vector then it may either contain integer values, named colors or RGB specified colors with three or four bytes. All strings starting with ‘#’ are assumed to be RGB color specifications. It is possible to mix named color and RGB colors. Note that tkplot ignores the fourth byte (alpha channel) in the RGB color specification.
+The fill color of the vertex. If it is numeric then the current palette is used, see palette. If it is a character vector then it may either contain integer values, named colors or RGB specified colors with three or four bytes. All strings starting with ‘#' are assumed to be RGB color specifications. It is possible to mix named color and RGB colors. Note that tkplot ignores the fourth byte (alpha channel) in the RGB color specification.
 
-For plot.igraph and integer values, the default igraph palette is used (see the ‘palette’ parameter below. Note that this is different from the R palette.
+For plot.igraph and integer values, the default igraph palette is used (see the ‘palette' parameter below. Note that this is different from the R palette.
 
 If you don't want (some) vertices to have any color, supply NA as the color name.
 
-The default value is “SkyBlue2”.
+The default value is “SkyBlue2".
 
 frame.color
 The color of the frame of the vertices, the same formats are allowed as for the fill color.
 
 If you don't want vertices to have a frame, supply NA as the color name.
 
-By default it is “black”.
+By default it is “black".
 
 shape
-The shape of the vertex, currently “circle”, “square”, “csquare”, “rectangle”, “crectangle”, “vrectangle”, “pie” (see vertex.shape.pie), ‘sphere’, and “none” are supported, and only by the plot.igraph command. “none” does not draw the vertices at all, although vertex label are plotted (if given). See shapes for details about vertex shapes and vertex.shape.pie for using pie charts as vertices.
+The shape of the vertex, currently “circle", “square", “csquare", “rectangle", “crectangle", “vrectangle", “pie" (see vertex.shape.pie), ‘sphere', and “none" are supported, and only by the plot.igraph command. “none" does not draw the vertices at all, although vertex label are plotted (if given). See shapes for details about vertex shapes and vertex.shape.pie for using pie charts as vertices.
 
-The “sphere” vertex shape plots vertices as 3D ray-traced spheres, in the given color and size. This produces a raster image and it is only supported with some graphics devices. On some devices raster transparency is not supported and the spheres do not have a transparent background. See dev.capabilities and the ‘rasterImage’ capability to check that your device is supported.
+The “sphere" vertex shape plots vertices as 3D ray-traced spheres, in the given color and size. This produces a raster image and it is only supported with some graphics devices. On some devices raster transparency is not supported and the spheres do not have a transparent background. See dev.capabilities and the ‘rasterImage' capability to check that your device is supported.
 
 By default vertices are drawn as circles.
 
@@ -153,9 +153,9 @@ The font family to be used for vertex labels. As different plotting commands can
 
 For plot.igraph this parameter is simply passed to text as argument family.
 
-For tkplot some conversion is performed. If this parameter is the name of an exixting Tk font, then that font is used and the label.font and label.cex parameters are ignored complerely. If it is one of the base families (serif, sans, mono) then Times, Helvetica or Courier fonts are used, there are guaranteed to exist on all systems. For the ‘symbol’ base family we used the symbol font is available, otherwise the first font which has ‘symbol’ in its name. If the parameter is not a name of the base families and it is also not a named Tk font then we pass it to tkfont.create and hope the user knows what she is doing. The label.font and label.cex parameters are also passed to tkfont.create in this case.
+For tkplot some conversion is performed. If this parameter is the name of an exixting Tk font, then that font is used and the label.font and label.cex parameters are ignored complerely. If it is one of the base families (serif, sans, mono) then Times, Helvetica or Courier fonts are used, there are guaranteed to exist on all systems. For the ‘symbol' base family we used the symbol font is available, otherwise the first font which has ‘symbol' in its name. If the parameter is not a name of the base families and it is also not a named Tk font then we pass it to tkfont.create and hope the user knows what she is doing. The label.font and label.cex parameters are also passed to tkfont.create in this case.
 
-The default value is ‘serif’.
+The default value is ‘serif'.
 
 label.font
 The font within the font family to use for the vertex labels. It is interpreted the same way as the the font graphical parameter: 1 is plain text, 2 is bold face, 3 is italic, 4 is bold and italic and 5 specifies the symbol font.
@@ -185,7 +185,7 @@ The distance of the label from the center of the vertex. If it is 0 then the lab
 The default value is 0.
 
 label.degree
-It defines the position of the vertex labels, relative to the center of the vertices. It is interpreted as an angle in radian, zero means ‘to the right’, and ‘pi’ means to the left, up is -pi/2 and down is pi/2.
+It defines the position of the vertex labels, relative to the center of the vertices. It is interpreted as an angle in radian, zero means ‘to the right', and ‘pi' means to the left, up is -pi/2 and down is pi/2.
 
 The default value is -pi/4.
 
@@ -194,7 +194,7 @@ The color of the labels, see the color vertex parameter discussed earlier for th
 
 The default value is black.
 
-Edge parameters require to add the ‘edge.’ prefix when used as arguments or set by igraph_options. The edge parameters:
+Edge parameters require to add the ‘edge.' prefix when used as arguments or set by igraph_options. The edge parameters:
 
 color
 The color of the edges, see the color vertex parameter for the possible values.
@@ -219,9 +219,9 @@ This argument is currently only used by plot.igraph.
 The default value is 1, which gives the same width as before this option appeared in igraph.
 
 lty
-The line type for the edges. Almost the same format is accepted as for the standard graphics par, 0 and “blank” mean no edges, 1 and “solid” are for solid lines, the other possible values are: 2 (“dashed”), 3 (“dotted”), 4 (“dotdash”), 5 (“longdash”), 6 (“twodash”).
+The line type for the edges. Almost the same format is accepted as for the standard graphics par, 0 and “blank" mean no edges, 1 and “solid" are for solid lines, the other possible values are: 2 (“dashed"), 3 (“dotted"), 4 (“dotdash"), 5 (“longdash"), 6 (“twodash").
 
-tkplot also accepts standard Tk line type strings, it does not however support “blank” lines, instead of type ‘0’ type ‘1’, ie. solid lines will be drawn.
+tkplot also accepts standard Tk line type strings, it does not however support “blank" lines, instead of type ‘0' type ‘1', ie. solid lines will be drawn.
 
 This argument is ignored for rglplot.
 
@@ -262,9 +262,9 @@ The default value is FALSE.
 This parameter is currently ignored by rglplot.
 
 arrow.mode
-This parameter can be used to specify for which edges should arrows be drawn. If this parameter is given by the user (in either of the three ways) then it specifies which edges will have forward, backward arrows, or both, or no arrows at all. As usual, this parameter can be a vector or a scalar value. It can be an integer or character type. If it is integer then 0 means no arrows, 1 means backward arrows, 2 is for forward arrows and 3 for both. If it is a character vector then “<” and “<-” specify backward, “>” and “->” forward arrows and “<>” and “<->” stands for both arrows. All other values mean no arrows, perhaps you should use “-” or “–” to specify no arrows.
+This parameter can be used to specify for which edges should arrows be drawn. If this parameter is given by the user (in either of the three ways) then it specifies which edges will have forward, backward arrows, or both, or no arrows at all. As usual, this parameter can be a vector or a scalar value. It can be an integer or character type. If it is integer then 0 means no arrows, 1 means backward arrows, 2 is for forward arrows and 3 for both. If it is a character vector then “<" and “<-" specify backward, “>" and “->" forward arrows and “<>" and “<->" stands for both arrows. All other values mean no arrows, perhaps you should use “-" or “–" to specify no arrows.
 
-Hint: this parameter can be used as a ‘cheap’ solution for drawing “mixed” graphs: graphs in which some edges are directed some are not. If you want do this, then please create a directed graph, because as of version 0.4 the vertex pairs in the edge lists can be swapped in undirected graphs.
+Hint: this parameter can be used as a ‘cheap' solution for drawing “mixed" graphs: graphs in which some edges are directed some are not. If you want do this, then please create a directed graph, because as of version 0.4 the vertex pairs in the edge lists can be swapped in undirected graphs.
 
 By default, no arrows will be drawn for undirected graphs, and for directed graphs, an arrow will be drawn for each edge, according to its direction. This is not very surprising, it is the expected behavior.
 

@@ -69,7 +69,7 @@ p <- p + geom_histogram( binwidth=0.1, fill="orange", color="black", aes(y=..den
 p + xlab("Sepal Width") + ylab("Frequency")
 ```
 
-by sequentially adding the layers.  The plot itself does not show until the last command is given, where you are displaying the value of p and its axes labels.  Of particular note here is that I had to specify a different `aes()` for the `geom_histogram()` function.  What I passed to it was “..density..” which is a shorthand notation for `ggplot()` to return the data not as raw counts but as a density frequency.  This is because the `geom_density()` function plots the y-axis data as a frequency, not a count and if you don't tell them to be on the same scale, the histograms will have a range of 0-26 whereas the density plot will be on 0-1.  Also, the order in which you add the layers creates the stacking of the data—the histogram is over the top of the density plot because it was added to the data layer after the density layer.
+by sequentially adding the layers.  The plot itself does not show until the last command is given, where you are displaying the value of p and its axes labels.  Of particular note here is that I had to specify a different `aes()` for the `geom_histogram()` function.  What I passed to it was “..density.." which is a shorthand notation for `ggplot()` to return the data not as raw counts but as a density frequency.  This is because the `geom_density()` function plots the y-axis data as a frequency, not a count and if you don't tell them to be on the same scale, the histograms will have a range of 0-26 whereas the density plot will be on 0-1.  Also, the order in which you add the layers creates the stacking of the data—the histogram is over the top of the density plot because it was added to the data layer after the density layer.
 
 Aesthetics can also be augmented by subsequent geometry layers.  In the iris example, we can plot the density of the sepal width, partitioned by species, but this time we can put that information into the call on the `geom_density()` function rather than having it all in the `aes()` call in the `ggplot()` data layer. This may be a bit confusing, but there are many times when you are plotting two ore more kinds of data that just cannot be depicted in a single data.frame object.  The calls 
 ```{r}
@@ -90,7 +90,7 @@ ggplot() + geom_density( aes(x=Sepal.Width,fill=Species), data=iris, alpha=0.7 )
 
 all produce the same exact figure.  There is quite a bit of flexibility that comes in handy when crafting complicated graphics (n.b., that should not be the goal, graphics should be reality interpreted).
 
-And for completeness, we can do the same thing with a geom_histogram() and have the bars plot in a staggered fashion (`position=”dodge”` in the parlance of ggplot).
+And for completeness, we can do the same thing with a geom_histogram() and have the bars plot in a staggered fashion (`position="dodge"` in the parlance of ggplot).
 
 ```{r}
 p + geom_histogram( aes(fill=Species), binwidth=0.1, position="dodge")
@@ -214,7 +214,7 @@ tiff(filename = "Rplot%03d.tiff",
      type = c("cairo", "Xlib", "quartz"), antialias)
 ```
      
-These are the default values.  If you need a transparent background, it is easiest to use the png file and set `bg=”transparent”`.  If you are producing an image for a publication, you will most likely be given specific parameters about the image format in terms of DPI, pointsize, dimensions, etc.  They can be set here.
+These are the default values.  If you need a transparent background, it is easiest to use the png file and set `bg="transparent"`.  If you are producing an image for a publication, you will most likely be given specific parameters about the image format in terms of DPI, pointsize, dimensions, etc.  They can be set here.
 
 To create the image, call the appropriate function above, and a file will be created for your plotting.  You must then call the plotting functions to create your graphic.  Instead of showing up in a graphical display window, they will instead be plot to the file. When done you must tell R that your plotting is now finished and it can close the graphics file.  This is done by calling dev.off().  Here is an example workflow saving an image of a scatter plot with a smoothed line through it using ggplot.
 
