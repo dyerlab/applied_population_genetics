@@ -2,8 +2,5 @@
 
 <div class="chapter_image"><img src="chapter_images/ch_author.jpg"></div>
 
-Rodney Dyer is an Associate Professor at Virginia Commonwealth University.  When not writing code and developing new analytical approaches for understanding the spatial distribution of genetic variation, he enjoys fishing and spending time with his family outdoors.
+Rodney Dyer is an Associate Professor at Virginia Commonwealth University.  When not writing code and developing new analytical approaches for understanding the spatial distribution of genetic variation, he enjoys fishing, fermentation sciences, and spending time with his family outdoors.
 
-TODO:
-- Move interactive visualization within other chapters
-- Integrate ggplot, gstudio, and popgraph into chapters

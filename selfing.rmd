@@ -17,7 +17,7 @@ Conceptually, we can define an inbreeding parameter, $F$, depicting the extent t
 
 **Autozygous** - Two alleles that are identical within a genotype because they came from the same individual in the previous generation. These alleles are Identical by Descent and will be found in the population at a rate of $pF$.
 
-*Allozygous* - Two alleles that are identical within a genotype but they came from alternate individuals in the parental generation. These alleles have Identity by State and are expected to occur at a frequency of $p^2(1-F)$.
+**Allozygous** - Two alleles that are identical within a genotype but they came from alternate individuals in the parental generation. These alleles have Identity by State and are expected to occur at a frequency of $p^2(1-F)$.
 
 Together, the expected frequency of the AA genotype, $E[AA] = p^2(1-F) + pF$.
 

@@ -14,9 +14,11 @@ description: "This is intended to be used as a textbook in population genetics f
 
 # Applied Population Genetics {- .white_letters}
 
+<a href="http://dyerlab.bio.vcu.edu">
 ```{r echo=FALSE, out.width="250px"}
 knitr::include_graphics("./media/APG-Title-Small.png")
 ```
+</a>
 
 Build Date: **`r date()`**
 
