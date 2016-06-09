@@ -16,6 +16,8 @@ Excoffier, L., Smouse, P.E., and Quattro, J.M. 1992. Analysis of molecular varia
 
 Garrick RC, Nason JD, Fernandez-Manjaress JFF, Dyer RJ. In Press. Ecological co-associations influence species' responses to past climatic change: an example from a Sonoran Desert bark beetle. *Molecular Ecology*
 
+Legendre P, Fortin MJ.  2010.  Comparison of the Mantel test and alternative approaches for detecting complex multivariate relationships in the spatial analysis of genetic data. *Molecular Ecology Resrouces*, **10**, 831-844.
+
 McRae, B.H. 2006. Isolation by resistance. *Evolution*, **60**, 1551-1561.
 
 Nei, M. 1978. Estimation of average heterozygosity and genetic distance from a small number of individuals. *Genetics*, **76**, 379-390.

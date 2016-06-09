@@ -13,7 +13,7 @@ rmd_files: [
   "part_subdivided_populations.rmd",   "mapping_populations.rmd", "population_models.rmd", 
     "genetic_diversity.rmd", "genetic_distance.rmd", "genetic_structure.rmd", 
     "rarefaction.rmd", "population_assignment.rmd", "admixture.rmd", 
-    "ordination.rmd",
+    "ordination.rmd","distance_matrices.rmd",
   "part_networks.rmd", "distance_networks.rmd","population_graphs.rmd", "interactive_visualization.rmd",
   "part_spatial_data.rmd","vector_data.rmd", "raster_data.rmd",
   "projections.rmd", "ecological_distance.rmd", "niche_modeling.rmd",  

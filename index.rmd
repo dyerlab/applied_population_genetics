@@ -15,20 +15,20 @@ description: "This is intended to be used as a textbook in population genetics f
 # Applied Population Genetics {- .white_letters}
 
 <a href="http://dyerlab.bio.vcu.edu">
-```{r echo=FALSE, out.width="250px"}
-knitr::include_graphics("./media/APG-Title-Small.png")
+```{r echo=FALSE}
+knitr::include_graphics("media/APG-Title-Wide.png")
 ```
 </a>
 
 Build Date: **`r date()`**
 
-The content of this text is modified, added to, and changed continually.  You are welcome to use the content of this book in its present form and you can provide feedback, comments, or suggestions for additions by contacting me at [rjdyer@vcu.edu](mailto://rjdyer@vcu.edu).  By fall 2016, a PDF and hard-copy version will be made available.
-
-
+The content of this text is modified, added to, and changed continually.  You are welcome to use the content of this book in its present form and you can provide feedback, comments, or suggestions for additions by contacting me at [rjdyer@vcu.edu](mailto://rjdyer@vcu.edu).  This work will continue to be hosted online and continually updated as new approaches and applications become available.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(ggplot2)
+require(knitr)
 theme_set( theme_bw(base_size=14) )
+knitr::opts_chunk$set( warning=FALSE, message=FALSE )
 ```
 
 
@@ -127,7 +127,7 @@ help.start(remote = paste0("file://", R.home()))
 In addition to shoving static content into scrolling windows, longer R scripts will also be inserted into these widgets so that space can be saved while preserving syntax highlighting and code format.
 
 
-## Interactive Content
+## Interactive Content {-}
 
 Where possible, I have included interactive content in the text.  Examples include dynamical plots such as embedding google map objects in the page, network structure that can be manipulated in the browser, and widgets that show how a process influences popualtion genetic features by allowing you to direclty manipulate the parameters in the model.  
 

@@ -189,7 +189,7 @@ Notice here that [~] is estimated from averaging (the first way) 10% lower than 
 
 The use (and perhaps misuse) of [~] has supported the development of almost a cottage industry in other parameters, each trying to fit into a specific perceived problem in the original parameter.  Here are some other extensions of this basic parameter that you may come across:  
 
-- [~] for Microsatellite loci.  This uses the ladder genetic distance metric discussed previously.  
+- $R_{ST}$ for Microsatellite loci.  This uses the ladder genetic distance metric discussed previously.  
 - [~] for Nucleotides variation.  
 - [~] for population subdivision (and in some cases mutation).  
 - [~] for loci with high allelic diversity (along with its nemesis [~]).
