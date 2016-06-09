@@ -359,19 +359,6 @@ par(mfrow=c(2,2))
 plot( lm( Sepal.Length ~ Sepal.Width, data=iris))
 ```
 
-This produces the combined figure with all four graphics presented in one plot. If you are to plot more graphics, the output will remain as a 2x2 grid, even if you only pass it a single graphic to create.
-
-```{r}
-plot(Sepal.Length ~ Sepal.Width, data=iris)
-```
-
-until you either close the plotting device or reset the `par` value.
-
-```{r}
-par(mfrow=c(1,1))
-plot(Sepal.Length ~ Sepal.Width, data=iris)
-```
-
 
 
 
