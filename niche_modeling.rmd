@@ -66,12 +66,7 @@ Which produces output that looks something like the following inset.
 
 <iframe width="100%" height="480px" src="media/maxent_euphorbia.htm" frameborder="1" allowfullscreen></iframe>
 
-You can also gain information on the
-
-
-
-
-
+Here are some quick ways to view and interpret output from the maxent approach.  
 
 ```{r}
 plot(fit)
