@@ -90,7 +90,7 @@ or as each item in the vector repeated.
 rep(x,each=3)
 ```
 
-## Matrices {#r-matrices}
+## Matrices 
 
 A matrix is a 2- or multiple dimensional container, most commonly used to store numeric data types.  There are some libraries that use matrices in more than two dimensions (rows and columns and sheets), though you will not run across them too often.  Here I restrict myself to only 2-dimensional matrices.
 
@@ -197,6 +197,7 @@ In combination, these can be quite helpful.  Here is an example using numeric se
 indices <- cbind( rep(1:2, each=3), rep(1:3,times=2), rep(5,length.out=6)  )
 indices
 ```
+
 
 ## Lists
 A list is a type of vector but is indexed by ‘keys' rather than by numeric indices.  Moreover, it can contain heterogeneous types of data, which is not possible in a vector type.  For example, consider the list

@@ -1,3 +1,4 @@
+# cd Library/Mobile\ Documents/com~apple~CloudDocs/Books/AMG/
 # rsync -zvhre ssh --progress --delete _book/ rodney@popgen.bio.vcu.edu:/var/www/
 
 # RStudio related stuff

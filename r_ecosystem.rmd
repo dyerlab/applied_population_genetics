@@ -28,10 +28,10 @@ library(package_name)
 or
 
 ```{r eval=FALSE}
-library(package_name)
+require(package_name)
 ```
 
-They are approximately equivalent, differing in only that the second one actually returns a TRUE or FALSE indicating the presence of that library on you machine.  I prefer the later and use it throughout.  
+They are approximately equivalent, differing in only that the second one actually returns a TRUE or FALSE indicating the presence of that library on you machine.  If you do not want to be mocked by other users of R, I would recommend the `library` version---there are situations where `require` will not do what you think you want it to do (even though it is a verb and should probably be the correct one to use grammatically).  
 
 There are, at present, a few different places you can get packages. The packages can either be downloaded from these online repositories and installed into R or you can install them from within R itself.  Again, I'll prefer the latter as it is a bit more straightforward.   
 
@@ -63,9 +63,14 @@ install.packages("devtools")
 library(devtools)
 ```
 
-Then you need to use the devtools function `install_github()` to go grab it.  To do so you need two separate pieces of information, the name of the developer who is creating the repository and the name of the repository it is contained within.  For the gstudio package, the develop is dyerlab and the repository name is gstudio. If you are comfortable with git, you can also check out certain branches of development if you like with optional arguments to the `install_github()` function.  
+Then you need to use the devtools function `install_github()` to go grab it.  To do so you need two separate pieces of information, the name of the developer who is creating the repository and the name of the repository it is contained within.  For the gstudio package, the develop is `dyerlab` and the repository name is `gstudio`. If you are comfortable with git, you can also check out certain branches of development if you like with optional arguments to the `install_github()` function.  Here is how you would install both the `gstudio` and `popgraph` libraries I use in this book.
 
-If you are starting to work with R and intend to compile packages, there are some tools that you will need to have on your machine.  For Windows machines, there is an rtools download EXE that you can get.  On OSX, you need to download the developers tools from Apple (available on the Application Store for free).  In either case, the developer (if they care about their code being used by others) should provide sufficient documentation.
+```{r eval=FALSE}
+install_github("dyerlab/gstudio")
+install_github("dyerlab/popgraph")
+```
+
+If you are starting to work with R and intend to compile packages, there are some tools that you will need to have on your machine.  For Windows machines, there is an rtools download EXE that you can get.  On OSX, you need to download the developers tools from Apple (available on the Application Store for free).  In either case, the developer (if they care about their code being used by others) should provide sufficient documentation.  If you are working on Windows, I do not know how that system (and never have used it for any prolonged period of time) so you'll have to look to the internet on where to find compilers and other developer tools.
 
 ### Bioconductor
 
@@ -87,7 +92,7 @@ There are no libraries used in this text from bioconductor as this text is more 
 
 ### Troublesome Packages
 
-Some packages provide a unique set of problems for getting them onto your computer.  There are a variety of reasons for this and Google is your friend (though it would be easier if R was named something more unique than the 18th letter of the alphabet...). 
+Some packages provide a unique set of problems for getting them onto your computer.  There are a variety of reasons for this and Google is your friend (though it would be easier if R was named something more unique than the 18^^th^^ letter of the alphabet...). 
 
 #### RGDAL & RGEOS {#rgdal-rgeos-packages}
 
@@ -146,6 +151,13 @@ inst_pkgs <- installed.packages()
 to_install <- setdiff( pkgs, inst_pkgs )
 if( length(to_install))
   install.packages(to_install, repos="https://cran.rstudio.org")
+
+
+# See if maxent.jar is installed in the dismo java package.
+path <- system.file("java", package="dismo")
+files <- list.files(system.file("java", package="dismo"))
+if( !("maxent.jar" %in% files) )
+  system( paste("cp ./spatial_data/maxent.jar", path) )
 
 ```
 

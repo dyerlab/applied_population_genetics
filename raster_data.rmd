@@ -2,7 +2,7 @@
 
 <div class="chapter_image"><img src="chapter_images/ch_jaguar.jpg"></div>
 
-Rasters are a form of data that is georeferenced and (somewhat) continuous.  Raster data is perhaps best envisioned as a matrix of values, whose entries represent spatially referenced data points.  The raster itself can be visualized as you could for normal matrix output (as we did in \@ref(r-matrices) ).  What makes a raster different, however, is that it is (or should be) georeferenced. This means that each element of the matrix represents some measurement on the ground having a specific location and spread.  This is analogous to an image, where if you zoom in on it enough, you will be able to differentiate between individual pixels, it is just that for rasters, each pixel has a spatial location and size associated with it that we can map onto the earth.
+Rasters are a form of data that is georeferenced and (somewhat) continuous.  Raster data is perhaps best envisioned as a matrix of values, whose entries represent spatially referenced data points.  The raster itself can be visualized as you could for normal matrix output.  What makes a raster different, however, is that it is (or should be) georeferenced. This means that each element of the matrix represents some measurement on the ground having a specific location and spread.  This is analogous to an image, where if you zoom in on it enough, you will be able to differentiate between individual pixels, it is just that for rasters, each pixel has a spatial location and size associated with it that we can map onto the earth.
 
 You can either create raster objects *de novo* or you can acquire them from some external source.  To create one from scratch, you start with a matrix of values and then construct the raster object using the `raster()` function as:
 
@@ -442,7 +442,7 @@ As it turns out, the observed edges do in fact appear to be traversing lower ele
 
 ## Rasters & ggplot
 
-As is the case with a lot of data types in R, there is a way to use the `ggplot` library to visualize rasters.  Essentially, what 
+As is the case with a lot of data types in R, there is a way to use the `ggplot` library to visualize rasters.  Essentially, what you need to do is to transform your raster objects into `data.frame` objects for `ggplot`'s `geom_tile()` function.  Here is an example.
 
 ```{r}
 library(ggplot2)
@@ -465,6 +465,93 @@ tmp.df <- data.frame( Stratum, Species )
 sites <- merge( coords, tmp.df )
 p + geom_point( aes(x=Longitude,y=Latitude, shape=Species), size=3, data=sites )
 ```
+
+
+<!-- ### Stacking Rasters -->
+
+<!-- You can also sheer a raster's coordinate system and then stack several of them on the same plot. This is an example I use altitude and average rainfall (the *BIO1* layer from worldclim) in a single plot. -->
+
+<!-- ```{r} -->
+<!-- temp1 <- raster( "spatial_data/bio1_22.tif") -->
+<!-- temp1 <- crop( temp1, e ) -->
+<!-- temp2 <- raster( "spatial_data/bio5_22.tif") -->
+<!-- temp2 <- crop( temp2, e ) -->
+<!-- temp3 <- raster( "spatial_data/bio6_22.tif") -->
+<!-- temp3 <- crop( temp3, e ) -->
+<!-- ``` -->
+
+<!-- From these rastes, we make a single `data.frame` where we add a category for each layer. -->
+
+<!-- ```{r} -->
+<!-- df1 <- data.frame( rasterToPoints( temp1 ) ) -->
+<!-- df2 <- data.frame( rasterToPoints( temp2 ) ) -->
+<!-- df3 <- data.frame( rasterToPoints( temp3 ) ) -->
+<!-- df1$ID <- "BIO1" -->
+<!-- df2$ID <- "BIO5" -->
+<!-- df3$ID <- "BIO6" -->
+<!-- names(df1) <- names(df2) <- names(df3) <- c("Longitude","Latitude","Temperature","ID") -->
+<!-- df <- rbind( df1, df2, df3 ) -->
+<!-- # change to C from C*10 -->
+<!-- df$Temperature <- df$Temperature / 10.0 -->
+<!-- df$ID <- factor( df$ID ) -->
+<!-- ``` -->
+
+
+<!-- We can plot these as a `facet`-ed output. -->
+
+<!-- ```{r} -->
+<!-- ggplot( df ) +  -->
+<!--   geom_tile( aes(x=Longitude, y=Latitude, fill=Temperature)) +  -->
+<!--   facet_grid( ID~.) + coord_equal() +  -->
+<!--   xlab("") + ylab("") +  -->
+<!--   scale_fill_gradient2(low="#3182bd",mid="white",high="#de2d26", name="Temperature (C)")  -->
+<!-- ``` -->
+
+<!-- That is great, but it would be cool to have all these in the same window, plot with a little perspective tilt to the data.  That requires us to 'sheer' the coordinates of each layer to put into a single plot where there is the illusion of perspective.  To do this we create a transmission matrix on which we multiply the original coordinates onto a new coordiante system. -->
+
+<!-- ```{r} -->
+<!-- sheer <- matrix( c(2,1.5,0,1), nrow = 2, ncol = 2) -->
+<!-- sheer -->
+<!-- ``` -->
+
+<!-- Here is an example of what this does to the coordiante spaces.   -->
+
+<!-- ```{r} -->
+<!-- coords <- matrix( cbind(x=rnorm(100), y=rnorm(100)), ncol=2) -->
+<!-- coords_sheer <- coords %*% sheer -->
+<!-- ex <- data.frame( rbind( coords, coords_sheer)) -->
+<!-- ex$Category <- factor( rep( c("Original","Sheered"), each=100) ) -->
+<!-- ggplot( ex, aes(x=X1,y=X2)) + geom_point() + facet_grid( Category ~.) -->
+<!-- ``` -->
+
+<!-- Essentially, the *x-* and *y-* coordiantes are translated into a new coordiante space in two ways.    -->
+<!-- 1. The magnitude of the values are multiplied by $2$ (the `sheer[1,1]` element) for the x-value, and $1$ for the y-value (the `sheer[2,2]` element).   -->
+<!-- 2. They are rotated in coordinate space by the values located in the offdiagonal elements (e.g., the `sheer[1,2]` and `sheer[2,1]` elements). -->
+
+<!-- Our new coordiantes can be rotated by sheering our old ones: -->
+
+<!-- ```{r} -->
+<!-- df1 <- cbind( df1, as.matrix( df1[,1:2] ) %*% sheer ) -->
+<!-- df2 <- cbind( df2, as.matrix( df2[,1:2] ) %*% sheer ) -->
+<!-- df3 <- cbind( df3, as.matrix( df3[,1:2] ) %*% sheer ) -->
+<!-- ``` -->
+
+<!-- And now we can plot htem all in the same window -->
+
+<!-- ```{r, eval=FALSE} -->
+<!-- ggplot(df) + -->
+<!--   geom_tile( aes(x=x, y=y, group=ID, fill=Temperature)) +  -->
+<!--   geom_tile( aes(x=x, y=y + 10, group=ID, fill=Temperature)) + -->
+<!--   geom_tile( aes(x=x, y=y + 20, group=ID, fill=Temperature)) +  -->
+
+<!-- # STILL WORKING ON THIS ONE -->
+
+<!--   annotate( "text", x=-113, y=25, label="Minimum") +  -->
+<!--   annotate( "text", x=-113, y=35, label="Maximum") +  -->
+<!--   annotate( "text", x=-113, y=45, label="Average") -->
+
+<!--   theme(axis.text=element_blank(), axis.ticks=element_blank() )  -->
+<!-- ``` -->
 
 
 
