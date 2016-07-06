@@ -2,7 +2,7 @@
 
 <div class="chapter_image"><img src="chapter_images/ch_araptus.jpg"></div>
 
->> It is often common in population genetics to estimate pairwise distance matrices representing difference in quantities such as spatial location, phenological overlap, genetic differentiation, ecological separation.  Dealing with distances is fraught with problems and continues to be an area of active research.  This chapter focuses on how we can create, manipulate, and analyze distance matrices.
+> It is often common in population genetics to estimate pairwise distance matrices representing difference in quantities such as spatial location, phenological overlap, genetic differentiation, ecological separation.  Dealing with distances is fraught with problems and continues to be an area of active research.  This chapter focuses on how we can create, manipulate, and analyze distance matrices.
 
 
 In this section, we examined several different ways in which we can estimate pairwise genetic distances.  In this section, we examine ways in which we can gain some statistical confidence in the way that we can compare the components of genetic matrices.  

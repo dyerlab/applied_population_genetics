@@ -34,7 +34,7 @@ To start with, I will use the elevation raster and modifications thereof.  The u
 ```{r eco-convex-hull, warning=FALSE, message=FALSE}
 library(rgeos) 
 library(raster)
-alt <- raster("./spatial_data/alt_22.tif")
+alt <- raster("./spatial_data/alt.tif")
 baja_pts <- SpatialPoints( coords[,2:3])
 hull <- gConvexHull(baja_pts)
 hull_plus_buffer <- gBuffer(hull,width=.2)

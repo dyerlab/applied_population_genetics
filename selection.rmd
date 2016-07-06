@@ -1,0 +1,3 @@
+# Classical Selection {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_red_fish.jpg"></div>

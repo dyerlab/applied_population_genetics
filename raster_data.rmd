@@ -43,7 +43,7 @@ Common raster formats include GeoTiff, essentially an image file with some metad
 From Worldclim, I downloaded the elevation raster for Tile 22 and can load it into R using the `raster()` function as:
 
 ```{r warning=FALSE, message=FALSE}
-alt <- raster("./spatial_data/alt_22.tif")
+alt <- raster("./spatial_data/alt.tif")
 alt
 ```
 
@@ -195,14 +195,13 @@ plot( bc, add=TRUE, legend=FALSE)
 
 ## Extracting Point Data From Rasters
 
-
 So far, rastes have been confined to representing a single static object.  However, it is not uncommon to need to query a raster and find out the values at particular points.  These points may be pre-defined or they may be dynamic (e.g., you need to point at a location on the map and determine the value there).
 
 For queries of the first kind, we can use the `extract()` function.  For this I downloaded the average temperature and precipitation rasters from Worldclim.
 
 ```{r}
-baja_temp <- raster("./spatial_data/bio1_22.tif")
-baja_prec <- raster("./spatial_data/bio12_22.tif")
+baja_temp <- raster("./spatial_data/bio1.tif")
+baja_prec <- raster("./spatial_data/bio12.tif")
 ```
 
 And then extract the values from each of these layers into the `coords` data we already have set up.
@@ -295,149 +294,38 @@ click(baja_california, xy=TRUE)
 ```
 
 
+### Stacks of Rasters
 
-## Extracting Data Along Vectors
-
-It is also possible to extract data along vectors or other *SpatialLines* objects.  This is a particularly helpful approach if you are trying to quantify the value of characteristics of the environment between your sampling locations.  In the following example, I estimate the popualtion graph from the `arapat` data set 
-
-```{r popgraphInBaja, warning=FALSE,message=FALSE, echo=-1}
-library(popgraph)
-graph <- popgraph( to_mv( arapat ), arapat$Population )
-graph <- decorate_graph( graph, coords )
-edges <- to_SpatialLines(graph)
-proj4string(edges) <- CRS( proj4string(baja_california))
-plot( baja_california, legend=FALSE)
-plot(edges,add=TRUE)
-```
-
-and determine which of the edges has the longest length.  
+It is not uncommon to be working with many different raster layers at the same time.  Instead of loading them individually, the `raster` library has a `RasterStack` object that can hold several rasters at one time and can be used in places where we would use individual rasters.  Here is an example using the elevation and temperature rasters for tile 22.
 
 ```{r}
-edge_lengths <- SpatialLinesLengths( edges )
-longest <- sort( edge_lengths,decreasing = TRUE )[1]
-longest
+files <- c("./spatial_data/alt.tif", "./spatial_data/bio1.tif", "./spatial_data/bio5.tif", "./spatial_data/bio6.tif")
+bio_layers <- stack( files )
+bio_layers
 ```
 
-This edge is found at:
-
-```{r echo=-1}
-idx <- which( edge_lengths == longest )
-idx
-edge <- edges[ 37 ]
-edge
-plot( baja_california, legend=FALSE)
-plot(edge,add=TRUE)
-```
-
-From this edge object (or a collection of edge objects) we can again extract values from a raster.  Here I pull out the elevation profile of this edge.  To plot it, I need to make a sequence of latitude values equal in length to that of the observed elevation values I extracted.  
-
-```{r warning=FALSE,message=FALSE}
-require(igraph)
-elev <- extract( baja_california, edge )[[1]]
-from_lat <- V(graph)$Latitude[igraph::V(graph)$name == "SFr"]
-to_lat <- V(graph)$Latitude[igraph::V(graph)$name == "164"]
-lat <- seq( from=from_lat, to=to_lat, length.out = length(elev) )
-df <- data.frame( Latitude=lat, Elevation=elev)
-p <- ggplot( df, aes(Latitude,Elevation)) + geom_line(color="lightgrey") 
-p + geom_point() + ylab("Elevation (m)")
-```
-
-
-## Extracting Data Along Popgraph Edges
-
-Population Graphs have been used to determine if there is an preference (or avoidance) of a specific raster value for the location of individual edges on the landscape. For example, Dyer *et al.* (2012) were interested in determining if there the edge in the pollination graph (e.g., a population graph constructed from male pollen haplotypes) preferentially traverse (or avoid) specific intervening habitat features.  To do this, they permuted the edge set among nodes in the graph and recorded the prevalence (mean and variance) of specific features extracted from specific categorical rasters representing both canopy and understory features.  The permutation of a network should be done such that you preserve aspects of the spatial heterogeneity and spatial arrangement of the nodes on the landscape.  You probably do not want to permute all edges randomly in the graph (though this option is available in the code), but would probably be better served by permuting the network while maintaining both the node coordinates (e.g., where they exist on the landscape) as well as the degree distribution of the overall network.  This second criteria holds constant higher network structure.  The general idea is to:  
-
-1. Create a saturated graph and extract ecological features for all potential connections.  This gives us a `data.frame` within which we can pull out ecological values for each permutation.  This is the most computationally intensive process and doing it once and then extracting values from the `data.frame` for each permutation is a more efficient approach.
-2. Once you have all the potential values of your features, you can permute the observed matrix, while holding both the connection probability (e.g., the number of edges) and the degree distribution (e.g., the amount of edges connected to nodes) constant using the `randomize_graph` function included in the `popgraph` library.  For each permutation, you then compile the permuted environmental factor as a null distribution and then compare those to the observed.  
-
-This may sound a bit convoluted, but this example may help.  Consider the hypothetical case where we think that the edges in the population graph from Figure \@ref(fig:popgraphInBaja), are restricted in elevation because we believe that dispersing insects fly around high elevation mountains rather than over them.^[This is a truly hypothetical and contrived example to show how you would do this in the code and is not motivated by any biologically motivated reasons.  Ya' gotta make up examples sometimes...]  If this is true, then we should expect that the average (or max) elevation along any of the observed edges in the Population Graph would be less than what would be expected if we permuted the edges among nodes and measured elevation along edges from permuted graphs.
-
-First, we need to set up the network and extract values of elevation along all potential edges.  I make a saturated graph from all potential 
+Performing operations on a stack is as easy as performing them on individual layers.  Here, I trim them to the hull defined above.
 
 ```{r}
-data(baja)
-graph <- popgraph( to_mv( arapat ), arapat$Population )
-graph <- decorate_graph( graph, coords )
-allpops <- V(graph)$name
+e <- extent( c(-115,-109,22,30) )
+bio_layers <- crop( bio_layers, e )
+plot(bio_layers)
 ```
 
-I then can make an adjacency matrix connecting all pairs of populations
+From which values may be extracted using normal methods as outlined above.
 
 ```{r}
-A <- matrix(1,nrow=length(allpops),ncol=length(allpops))
-diag(A) <- 0
-rownames(A) <- colnames(A) <- allpops
-saturated_graph <- graph.adjacency(A, mode = "undirected")
-saturated_graph <- as.popgraph( saturated_graph )
+df <- extract( bio_layers, baja_pts)
+df <- df[ !is.na(df[,1]),]
+head(df)
 ```
 
-From which I can pull all the edges (all `r 0.5*nrow(A)*(nrow(A)-1)` of them) as `SpatialLines` objects
+And visualized normally.
 
 ```{r}
-saturated_graph <- decorate_graph( saturated_graph, coords )
-all_edges <- to_SpatialLines( saturated_graph )
+library( GGally )
+ggpairs(df)
 ```
-
-From these `r length(all_edges)` `SpatialLines` objects, we can extract data from the elevation raster.  
-
-```{r echo=TRUE, eval=FALSE}
-edge_values <- extract( baja_california, all_edges, fun=max, na.rm=TRUE, df=TRUE)
-```
-
-This will take a bit of time to complete.  The options that I provided were:  
-- `fun=max` - The function used is the max function.
-- `na.rm=TRUE` - Ignore all missing data (e.g., when an edge crosses water on the `baja_california` raster, the extracted values are `NA`)
-- `df=TRUE` - Return the answer as a `data.frame` object instead of just a vector.
-
-```{r eval=TRUE, echo=FALSE}
-load("./spatial_data/edge_values.rmd")
-```
-
-This `data.frame` has two columns, one for edge number and the other for value.  I'm going to put an additional pair of columns with the names of the nodes the edges are connected to into this `data.frame`
-
-```{r}
-edge_names <- as_edgelist( saturated_graph )
-edge_values$Nodes <- paste( edge_names[,1], edge_names[,2], sep="-")
-head(edge_values)
-```
-
-This constitutes *all potential* connections across the landscape.  From this we can extract the edges that we observed in the original Population Graph
-
-```{r}
-e <- as_edgelist( graph )
-obs <- edge_values$alt_22[ edge_values$Nodes %in% paste( e[,1], e[,2], sep="-") ]
-mean(obs)
-```
-
-We can now permute the network a moderate number of times and take the values of permuted elevation to see if our observed are smaller than all potential elevations for this specific network.
-
-```{r}
-perm_elev <- rep(NA,999)
-for( i in 1:length(perm_elev) ) {
-  perm_graph <- randomize_graph( graph )
-  e <- as_edgelist( perm_graph )
-  perm_val <- edge_values$alt_22[ edge_values$Nodes %in% paste( e[,1], e[,2], sep="-") ]
-  perm_elev[i] <- mean(perm_val)
-}
-```
-
-Now, we can see where the observed value occurs in the distribution of elevations created under the null hypothesis of no difference in elevation across edges.
-
-```{r}
-df <- data.frame( Elevation=c(mean(obs),perm_elev), Category=c("Observed",rep("Permuted",999)))
-ggplot( df, aes(x=Elevation,fill=Category)) + geom_histogram(stat="bin", bins=40) + xlab("Elevation (m)") + ylab("Distribution of Permuted Elevations")
-```
-
-In fact, we can estimate the probablity as:
-
-```{r}
-sum( mean(obs) >= perm_elev )
-```
-
-As it turns out, the observed edges do in fact appear to be traversing lower elevations than the potential set of edges that could be present (while controlling for spatial location of populations and graph structure).  
-
-
-
 
 
 ## Rasters & ggplot
@@ -482,16 +370,13 @@ knitr::include_graphics("./media/Baja_Plot3D.png")
 The `zfac` option in the plot is the amount to scale the z-axis (elevation) in relation to the x-axis and y-axis dimensions.  It is a bit exagerated at `zfac=0.1` but you get the idea.
 
 
-## Categorical Rasters 
+<!-- TODO: Add Categorical Rasters -->
 
-**ADD HERE**
+<!-- ## Categorical Rasters  -->
 
-
-
-## Rescaling Raster Data
+<!-- **ADD HERE** -->
 
 
-**ADD HERE**
 
 
 

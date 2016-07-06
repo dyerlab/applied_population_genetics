@@ -123,7 +123,7 @@ When working with rasters, we can reproject these onto other projections rather 
 
 ```{r message=FALSE, warning=FALSE}
 library(raster)
-alt <- raster("./spatial_data/alt_22.tif")
+alt <- raster("./spatial_data/alt.tif")
 e <- extent( c(-115,-109,22,30) )
 baja_california <- crop( alt, e )
 baja_california
