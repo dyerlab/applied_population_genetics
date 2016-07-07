@@ -312,14 +312,14 @@ idx <- which( edge_lengths == longest )
 idx
 edge <- edges[ 37 ]
 edge
-plot( baja_california, legend=FALSE)
+plot( alt, legend=FALSE)
 plot(edge,add=TRUE)
 ```
 
 From this edge object (or a collection of edge objects) we can again extract values from a raster.  Here I pull out the elevation profile of this edge.  To plot it, I need to make a sequence of latitude values equal in length to that of the observed elevation values I extracted.  
 
 ```{r warning=FALSE,message=FALSE}
-elev <- extract( baja_california, edge )[[1]]
+elev <- extract( alt, edge )[[1]]
 from_lat <- V(graph)$Latitude[V(graph)$name == "SFr"]
 to_lat <- V(graph)$Latitude[ V(graph)$name == "164"]
 lat <- seq( from=from_lat, to=to_lat, length.out = length(elev) )
@@ -365,12 +365,12 @@ all_edges <- to_SpatialLines( saturated_graph )
 From these `r length(all_edges)` `SpatialLines` objects, we can extract data from the elevation raster.  
 
 ```{r echo=TRUE, eval=FALSE}
-edge_values <- extract( baja_california, all_edges, fun=max, na.rm=TRUE, df=TRUE)
+edge_values <- extract( alt, all_edges, fun=max, na.rm=TRUE, df=TRUE)
 ```
 
 This will take a bit of time to complete.  The options that I provided were:  
 - `fun=max` - The function used is the max function.
-- `na.rm=TRUE` - Ignore all missing data (e.g., when an edge crosses water on the `baja_california` raster, the extracted values are `NA`)
+- `na.rm=TRUE` - Ignore all missing data (e.g., when an edge crosses water on the `alt` raster, the extracted values are `NA`)
 - `df=TRUE` - Return the answer as a `data.frame` object instead of just a vector.
 
 ```{r eval=TRUE, echo=FALSE}
@@ -503,6 +503,7 @@ ggpairs(df.nodes,columns=2:9, color='Region')
 Edges may have specific properties as well.  Here are some examples using betweeness centrality, community, and regionality (if the edge connects within Baja or Sonora or crosses the Sea of Cortéz).
 
 ```{r}
+df.edge <- data.frame( Weight=E(lopho)$weight )
 df.edge$betweenness <- edge.betweenness(lopho)
 df.edge$Region <- rep("Baja",52)
 df.edge$Region[36:52] <- "Sonora"

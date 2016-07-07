@@ -1,3 +1,125 @@
-# Classical Selection {.imageChapter}
+# Classical Selection Models {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_red_fish.jpg"></div>
+
+
+> Selection is the evoluationary process that differentiates among individuals.  It is the most fundamental mechanism of evoluation and in this exercise you will explore how to estimate the effects, at the level of the population, how allele and genotype frequencies change under various selection regimes.
+
+Selection is a foundational process in population genetics and evolutionary biology.  It is based upon one of the few Theorem's we have in this discipline.  In this section, we will focus on developing the theory underlying single locus selection models and provide a general framework on which we can use in a variety of scenarios.
+
+One of the simplest selection models is one that differentiates amongst individuals by modifying fertility and/or survival.  For simplicity, consider the life history represented below.
+
+
+Moreover, lets consider assume that this hypothetical species has:
+
+- Non-overlapping generations,
+- No inbreeding ($F=0$),
+- An infinite population size (e.g., $N=\infty$), and
+- No mutation ($\mu=0$)
+
+We can equate the genotype frequencies for a single locus with two alleles as to fertility ($m_{XY}$) and survival ($\ell_{XY}$) as:
+
+Genotype | Count    | Survival    | Fertility  
+---------|:--------:|:-----------:|:-----------:
+$P$      | $p^2N_t$ | $\ell_{AA}$ | $m_{AA}$  
+$Q$      | $2pqN_t$ | $\ell_{Aa}$ | $m_{Aa}$  
+$R$      | $q^2N_t$ | $\ell_{aa}$ | $m_{aa}$   
+
+
+defining relative survival and fertility.  Standardized among genotypes, we see \emph{Relative Selective Values} defined as:
+
+Relative Selective Values | Absolute Value 
+:------------------------:|:---------------------------------------------:
+$w_{AA}$                  | $\frac{\ell_{AA}m_{AA}}{max(\ell_{XX}m_{XX})}$  
+$w_{Aa}$                  | $\frac{\ell_{Aa}m_{Aa}}{max(\ell_{XX}m_{XX})}$  
+$w_{aa}$                  | $\frac{\ell_{aa}m_{aa}}{max(\ell_{XX}m_{XX})}$  
+
+From these, we can look at the relative frequencies of the genotypes, standardized by the \emph{Relative Selective Values}, we can estimate the allele frequencies for the next generation.  This standardization is the essence of this topic and is defined as:
+
+\[
+p_{t+1} = \frac{p_t(p_tw_{AA}+q_tw_{Aa})}{\bar{w}} 
+\]
+
+Where the component $\bar{w}$ is the "average population fitness" defined as the weighted average of all genotypes as:
+
+\[
+\bar{w} = q^2w_{AA} + 2pqw_{Aa} + q^2w_{aa}
+\]
+
+From this we can define a function in \R that allows us to explore the relationship between the relative fitness values (the $w_{xx}$ values) and how allele frequencies change.  This function is going to be a pretty easy thing, essentially iterating the stuff in Eqn. \ref{eqn:pt1} across generations and returning it.
+
+So, instead of doing a bunch of comments, I'm going to just outline what needs to be done in order and let you look at the code and see how it is implemented.  Essentially, we need to write a function that:  
+
+1. Takes $p$, the $w_{xx}$ values, and an estimate of how long to run (I'll call it $T$).
+2. Iterate across $T$ generations.  For each generation we will:
+  - Estimate $\bar{w}$, the mean population fitness
+  - Estimate frequency for the next generation
+3. Return the estimated frequencies.
+
+In the code, it looks like:
+
+```{r}
+iterate_selection <- function(p=0.5, wAA=1, wAa=1, waa=1, T=100) {
+  freq <- rep(p,T)
+  for(i in 2:T){
+    pt <- freq[(i-1)]
+    qt <- 1-pt
+    wbar <- pt^2*wAA + 2*pt*qt*wAa + qt^2*waa
+    top <-  pt*(pt*wAA + qt*wAa)
+    freq[i] <- top/wbar
+  }
+  return(freq)
+}
+```
+
+
+This should work.  Let's test it. You should always try to see if your functions give you values you know are true, if it cannot then it is a poor function.  Here are some situations.
+
+If I put no parameters, it should use the defaults and return 100 generations of 0.5 (all selective values are equal and $p = q$).
+
+```{r}
+iterate_selection()
+```
+
+It should be stable for other values of $p$ (I'll do 20 generations for brevity):
+
+```{r}
+iterate_selection(p=0.42,T=20)
+```
+
+
+If I make selection against one of the alleles, I should have fixation for the others.  Here I will select against the $A$ allele:
+
+
+```{r}
+iterate_selection(wAA=0,wAa=0,T=10)
+```
+
+OK, so it appears to be giving us stuff that what we expect.  From here it would be easy to explore the work of any of the selection regimes outlined in the lecture.
+
+
+
+## The Strength of Selection
+
+The strength of selection can be estimated from looking at the relative allele frequencies for populations before and after selection.  In the lecture, we covered an example based upon resistance to prion disease. There we quantifed genotypes frequencies as $P$, $Q$, and $R$ for those before selection and $\hat{P}$, $\hat{Q}$ and $\hat{R}$ for genotype frequencies after selection.  Their relationships are given by:
+
+\begin{eqnarray*}
+\hat{P} &=  P\; \ell_{AA}\; m_{AA} \\
+\hat{Q} &=  Q\; \ell_{Aa}\; m_{Aa} \\
+\hat{R} &=  R\; \ell_{aa}\; m_{aa} \\
+\end{eqnarray*}
+
+If we take the genotype frequencies and divide the homozygotes by the heterozygotes and reorganize the relationship, we get:
+
+\begin{eqnarray*}
+  \hat{\ell}_{AA}\hat{m}_{AA} = & \frac{\hat{P}Q}{\hat{Q}P}\\
+	\hat{\ell}_{aa}\hat{m}_{aa} = & \frac{\hat{R}Q}{\hat{Q}R}\\
+\end{eqnarray*}
+
+And from this we can estimate fertility and survival values by genotype.  In the lecture, we assumed that fertility, the $m_{xx}$ parameters, were not changed so we dropped them (or at least thought they were all equal to 1.0).  
+
+This is sufficient information for you to estimate the consequences of selection from real data.
+
+
+
+
