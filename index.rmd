@@ -2,10 +2,9 @@
 title: "Applied Population Genetics"
 author: "Rodney J. Dyer"
 description: "A textbook for the use of R in spatial genetic data analysis."
-cover-image: media/TitlePage_small.png
+cover-image: "media/TitlePage_small.png"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
-url: "http://"
 documentclass: book
 bibliography: packages.bib
 biblio-style: apalike
