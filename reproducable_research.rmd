@@ -58,6 +58,90 @@ I recommend looking into more approaches on Reproducible Research as they will h
 
 
 
+## Integrating into Slack
+
+If you and your group use (Slack)[http://slack.com] to help in productivity, you can post text and results directly from R into your Slack channels without the copy-paste, save file, upload, etc. routine. Here is how you set it up.  This is still a bit in development and the latest version needs a little tweeking to work correctly (see subsection below).  
+
+While this package is currently on CRAN, I recommend downloading the latest version from github.
+First things first, I recommend installing the latest version from the github repository.
+
+```{r eval=FALSE}
+library(devtools)
+install_github("hrbrmstr/slackr")
+```
+
+### Fixing Problem with Version 1.4.1
+
+There is a slight problem though.  The current version of the slackr library has an error in it associated with (perhaps) a recent change in the Slack API that has not been fixed by the developer.
+
+For me to get this to work, I had to compile the package myself after making the following change in one file.  To fix it, do the following:  
+
+1. Download (or checkout) the repository from github at: https://github.com/hrbrmstr/slackr  
+2. Open the project in RStudio  
+3. Open the R file names `slackr_utils.R`  
+4. In the function named `slackr_ims`  the last line (line 117) is something like `dplyr::left_join( %some stuff% )`.  Replace this line with `suppressWarnings( merge(users, ims, by.x="id", by.y='user') )`
+5. The compile and install the package as:
+```{r eval=FALSE}
+library(devtools)
+load_all()
+build()
+install()
+```
+
+
+It should work just fine from then on.  Hopefully, on the next time that this package is updated by the author, the `left_join()` problem will have been resolved.  This issue had been marked as “resolved” in the github issues a while back but apparently not pushed to the repository.
+
+
+### Configuration
+
+You can configure it from the command line, but perhaps the easiest way to get it going is to set up a config file. By default, it will look for the file `~/.slackr`  This is a plain text file (actually it is a Debian Control File - DCF) and needs the following content
+
+<pre>
+api_token: xoxp-XXXXXXXXXXX-XXXXXXXXX-XXXXXXXXXX-XXXXXXXXX
+channel: #r
+username: rodney
+incoming_webhook_url: https://hooks.slack.com/services/XXXXXXXX/XXXXXXXX/XXXXXXXX
+</pre>
+
+You need to get the `api_token` and the `incoming_webhook_url` from slack itself.  Save that file.
+
+### Sending Text and Graphical Ouput
+
+Both textual output (e.g., the results of an analysis) or graphical output (such as `ggplot` objects) can be sent to your slack channels now.  Here are some examples:
+
+```{r echo=FALSE}
+library(slackr)
+slackr_setup()
+slackr("This is an incoming piece of text from RStudio")
+```
+
+
+Which results in the following in my #r slack channel:
+
+```{r echo=FALSE}
+knitr::include_graphics("media/slack_text_output.png")
+```
+
+
+There is also a provision for sending output graphics like `ggplot` objects.  Here is an example of a barplot of heterozygosity across all loci in the included `arapat` dataset.
+
+```{r eval=FALSE}
+library(gstudio)
+library(ggplot2)
+data(arapat)
+he <- genetic_diversity(arapat,mode="He")
+p <- ggplot( he, aes(x=Locus, y=He)) + geom_bar(stat="identity") + theme_bw()
+ggslack(p)
+```
+
+Which produces the following image in my channel
+
+```{r echo=FALSE}
+knitr::include_graphics("media/slack_ggplot_output.png")
+```
+
+Very Cool!  I can imagine a lot of situations where it would be helpful to have a script send a slack notification when it has finished (or crapped out on an error) in some long-running analyses.  Now if we could just get slack to integrate with RStudio server version... 
+
 
 
 

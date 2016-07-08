@@ -3,7 +3,6 @@
 <div class="chapter_image"><img src="chapter_images/ch_bird.jpg"></div>
 
 
-
 ```{r eval=FALSE}
 install.packages(c("rJava","dismo"))
 library("rJava")
