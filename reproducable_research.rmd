@@ -109,7 +109,7 @@ You need to get the `api_token` and the `incoming_webhook_url` from slack itself
 
 Both textual output (e.g., the results of an analysis) or graphical output (such as `ggplot` objects) can be sent to your slack channels now.  Here are some examples:
 
-```{r echo=FALSE}
+```{r echo=FALSE, eval=FALSE}
 library(slackr)
 slackr_setup()
 slackr("This is an incoming piece of text from RStudio")
