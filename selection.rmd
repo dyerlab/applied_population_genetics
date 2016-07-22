@@ -3,11 +3,15 @@
 <div class="chapter_image"><img src="chapter_images/ch_red_fish.jpg"></div>
 
 
-> Selection is the evoluationary process that differentiates among individuals.  It is the most fundamental mechanism of evoluation and in this exercise you will explore how to estimate the effects, at the level of the population, how allele and genotype frequencies change under various selection regimes.
+> Selection is an evoluationary process that differentiates individuals.  It is the most fundamental mechanism of evoluation and in this exercise you will explore how to estimate the effects, at the level of the population, how allele and genotype frequencies change under various selection regimes.
 
 Selection is a foundational process in population genetics and evolutionary biology.  It is based upon one of the few Theorem's we have in this discipline.  In this section, we will focus on developing the theory underlying single locus selection models and provide a general framework on which we can use in a variety of scenarios.
 
 One of the simplest selection models is one that differentiates amongst individuals by modifying fertility and/or survival.  For simplicity, consider the life history represented below.
+
+```{r echo=FALSE}
+knitr::include_graphics("media/life_cycles.png")
+```
 
 
 Moreover, lets consider assume that this hypothetical species has:

@@ -26,6 +26,6 @@ rmd_files: [
   "part_selection.rmd", 
     "selection.rmd",
   "part_backmatter.rmd", 
-    "references.rmd", "about_the_author.rmd"
+    "references.rmd", "data_sets.rmd", "about_the_author.rmd"
 ]
 
