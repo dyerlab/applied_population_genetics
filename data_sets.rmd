@@ -33,6 +33,8 @@ ggmap(map) + geom_point(aes(x=Longitude,y=Latitude), data=coords) + xlab("Longit
 The markers in the `arapat` data set consist of eight polymorphic and codominant nuclear markers. 
 
 ```{r message=FALSE}
+library(gstudio)
+data(arapat)
 column_class( arapat, "locus") 
 ```
 
@@ -55,10 +57,25 @@ In addition to codominant nuclear markers, an msAFLP analysis was performed on t
 ## The Flowering Dogwood *Cornus florida*
 
 ```{r echo=FALSE, fig.cap="Inflorescence for flowering dogwood with conspicuous showy bracts and many small flowers in the center."}
-knitr::include_graphics("media/dogwood_flower.png")
+knitr::include_graphics("media/dogwood_flower.png",)
 ```
 
 
-Flowering dogwood is an ubiquitous feature of eastern north american forests.  
+Flowering dogwood is an ubiquitous feature of eastern north american forests. 
+
+The data set contains five microsatellite loci.
+
+```{r}
+data(cornus)
+column_class( cornus, "locus") 
+```
+
+of roughly equal genetic diversity.
+
+```{r echo=FALSE}
+df <- merge( genetic_diversity(cornus,mode="A"), genetic_diversity(cornus,mode="He"))
+df <- merge( df, genetic_diversity(cornus, mode="Ae"))
+knitr::kable(df,align=c("l","c","c","c"),digits=3)
+```
 
 
