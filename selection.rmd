@@ -7,30 +7,49 @@
 
 Selection is a foundational process in population genetics and evolutionary biology.  It is based upon one of the few Theorem's we have in this discipline.  In this section, we will focus on developing the theory underlying single locus selection models and provide a general framework on which we can use in a variety of scenarios.
 
-One of the simplest selection models is one that differentiates amongst individuals by modifying fertility and/or survival.  For simplicity, consider the life history represented below.
-
-```{r echo=FALSE}
-knitr::include_graphics("media/life_cycles.png")
-```
-
-
-Moreover, lets consider assume that this hypothetical species has:
+As a starting point, lets consider assume that this hypothetical species has:
 
 - Non-overlapping generations,
 - No inbreeding ($F=0$),
 - An infinite population size (e.g., $N=\infty$), and
 - No mutation ($\mu=0$)
 
-We can equate the genotype frequencies for a single locus with two alleles as to fertility ($m_{XY}$) and survival ($\ell_{XY}$) as:
+For this hypothetical species, individuals differ in fertility and/or survival.  For simplicity, consider the life history represented below.
+
+```{r echo=FALSE}
+knitr::include_graphics("media/life_cycle.png")
+```
+
+To quantify this example, lets add parameters to differential success based upon genotypes as $m_{XY}$ for fertility and $\ell_{XY}$ for survival.  In our original nomenclature, we now have genotype frequencies as:
 
 Genotype | Count    | Survival    | Fertility  
 ---------|:--------:|:-----------:|:-----------:
 $P$      | $p^2N_t$ | $\ell_{AA}$ | $m_{AA}$  
-$Q$      | $2pqN_t$ | $\ell_{Aa}$ | $m_{Aa}$  
-$R$      | $q^2N_t$ | $\ell_{aa}$ | $m_{aa}$   
+$Q$      | $2pqN_t$ | $\ell_{AB}$ | $m_{AB}$  
+$R$      | $q^2N_t$ | $\ell_{BB}$ | $m_{BB}$   
 
 
-defining relative survival and fertility.  Standardized among genotypes, we see \emph{Relative Selective Values} defined as:
+From these data, we can create the expectation for allele frequencies in the next generation.  For the **A** allele, we have:
+
+\[
+f(A) = \frac{N_t\left(2\ell_{AA}m_{AA}p^2 + m_{AB}\ell_{AB}2pq\right)}{N_t\left(2\ell_{AA}m_{AA}p^2 + m_{AB}\ell_{AB}2pq + 2\ell_{BB}m_{BB}q^2\right)}
+\]
+
+For simplicity, lets define the $\ell_{XY}m_{XY}$ as a parameter
+
+\begin{eqnarray*}
+W_{AA} &= \ell_{AA}m_{AA} \\
+W_{AB} &= \ell_{AB}m_{AB} \\
+W_{BB} &= \ell_{BB}m_{BB}
+\end{eqnarray*}
+
+which we will call the *Absolute Selective Value* (this makes our equations much easier to write without error), simplifying the above to:
+
+\[
+f(A) = \frac{p_t(p_tW_{AA} + q_tW_{AB})}{p_t^2W_{AA} + 2p_tq_tW_{AB} + q_t^2W_{BB}}
+\]
+
+The magnitude of these values depends upon the $\ell$ and $m$ parameters and can vary considerably across different taxa.  We can standardize these values by dividing by the maximum fertitlity, turning these into *Relative Selective Values* which are defined as:
 
 Relative Selective Values | Absolute Value 
 :------------------------:|:---------------------------------------------:
@@ -38,7 +57,11 @@ $w_{AA}$                  | $\frac{\ell_{AA}m_{AA}}{max(\ell_{XX}m_{XX})}$
 $w_{Aa}$                  | $\frac{\ell_{Aa}m_{Aa}}{max(\ell_{XX}m_{XX})}$  
 $w_{aa}$                  | $\frac{\ell_{aa}m_{aa}}{max(\ell_{XX}m_{XX})}$  
 
-From these, we can look at the relative frequencies of the genotypes, standardized by the \emph{Relative Selective Values}, we can estimate the allele frequencies for the next generation.  This standardization is the essence of this topic and is defined as:
+
+
+
+
+This standardization is the essence of this topic and is defined as:
 
 \[
 p_{t+1} = \frac{p_t(p_tw_{AA}+q_tw_{Aa})}{\bar{w}} 
