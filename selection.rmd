@@ -37,11 +37,11 @@ f(A) = \frac{N_t\left(2\ell_{AA}m_{AA}p^2 + m_{AB}\ell_{AB}2pq\right)}{N_t\left(
 
 For simplicity, lets define the $\ell_{XY}m_{XY}$ as a parameter
 
-\begin{eqnarray*}
+\begin{aligned}
 W_{AA} &= \ell_{AA}m_{AA} \\
 W_{AB} &= \ell_{AB}m_{AB} \\
 W_{BB} &= \ell_{BB}m_{BB}
-\end{eqnarray*}
+\end{aligned}
 
 which we will call the *Absolute Selective Value* (this makes our equations much easier to write without error), simplifying the above to:
 
@@ -58,22 +58,22 @@ $w_{Aa}$                  | $\frac{\ell_{Aa}m_{Aa}}{max(\ell_{XX}m_{XX})}$
 $w_{aa}$                  | $\frac{\ell_{aa}m_{aa}}{max(\ell_{XX}m_{XX})}$  
 
 
+For each genotype, we can break this down a bit more.  
 
+Category              |       AA                    |          AB                 |       BB                    | Total
+----------------------|:---------------------------:|:---------------------------:|:---------------------------:|:-------:
+Relative Fitness      | $w_{AA}$                    | $w_{AB}$                    | $w_{BB}$                    | - 
+Frequency             | $p^2$                       | $2pq$                       | $q^2$                       | 1.0
+Weighted Contribution | $p^2w_{AA}$                 | $2pqw_{AB}$                 | $q^2w_{BB}$                 | $\bar{w}$
+Frequency After       | $\frac{p^2w_{AA}}{\bar{w}}$ | $\frac{2pqw_{AB}}{\bar{w}}$ | $\frac{q^2w_{BB}}{\bar{w}}$ | 1.0
 
-
-This standardization is the essence of this topic and is defined as:
+Notice here the row sums.  The sum of genotype frequencies is 1.0 (it better be), as is that for frequency after selection.  However, the sum of the weighted contribution is defined as $\bar{w}$, or *average fitness* of the population.  This standardizes the individuals genotypic contributions and can be used to estimate allele frequencies for the next generation as:
 
 \[
-p_{t+1} = \frac{p_t(p_tw_{AA}+q_tw_{Aa})}{\bar{w}} 
+p_{t+1} = \frac{p_t(p_tw_{AA}+q_tw_{AB})}{\bar{w}} 
 \]
 
-Where the component $\bar{w}$ is the "average population fitness" defined as the weighted average of all genotypes as:
-
-\[
-\bar{w} = q^2w_{AA} + 2pqw_{Aa} + q^2w_{aa}
-\]
-
-From this we can define a function in \R that allows us to explore the relationship between the relative fitness values (the $w_{xx}$ values) and how allele frequencies change.  This function is going to be a pretty easy thing, essentially iterating the stuff in Eqn. \ref{eqn:pt1} across generations and returning it.
+Lets use this relationship and define a function in \R that allows us to explore the relationship between the relative fitness values (the $w_{xx}$ values) and how allele frequencies change.  This function is going to be a pretty easy thing, essentially iterating the stuff through the equations above and iterate across generations.
 
 So, instead of doing a bunch of comments, I'm going to just outline what needs to be done in order and let you look at the code and see how it is implemented.  Essentially, we need to write a function that:  
 
@@ -86,13 +86,13 @@ So, instead of doing a bunch of comments, I'm going to just outline what needs t
 In the code, it looks like:
 
 ```{r}
-iterate_selection <- function(p=0.5, wAA=1, wAa=1, waa=1, T=100) {
+iterate_selection <- function(p=0.5, wAA=1, wAB=1, wBB=1, T=100) {
   freq <- rep(p,T)
   for(i in 2:T){
     pt <- freq[(i-1)]
     qt <- 1-pt
-    wbar <- pt^2*wAA + 2*pt*qt*wAa + qt^2*waa
-    top <-  pt*(pt*wAA + qt*wAa)
+    wbar <- pt^2*wAA + 2*pt*qt*wAB + qt^2*wBB
+    top <-  pt*(pt*wAA + qt*wAB)
     freq[i] <- top/wbar
   }
   return(freq)
@@ -119,10 +119,46 @@ If I make selection against one of the alleles, I should have fixation for the o
 
 
 ```{r}
-iterate_selection(wAA=0,wAa=0,T=10)
+iterate_selection(wAA=0,wAB=0,T=10)
 ```
 
-OK, so it appears to be giving us stuff that what we expect.  From here it would be easy to explore the work of any of the selection regimes outlined in the lecture.
+OK, so it appears to be giving us stuff that what we expect.  From here it would be easy to explore a variety of different selection regimes.  Lets start with a simple example.Consider a single locus that contributes to variability in both fertility and survival.  Here are some parameters.  
+
+- Individuals with the homozygote `AA` genotype average 100 offspring, twice as much as that for the heterozygote (`AB`) and four times as much as individuals with the `BB` genotype.  
+- Offspring with the `AA` genotype have an observed survival of 75%, those with the `AB` genotype have 50%, and those with the `BB` have 20%.
+
+Under this regime, the relative values are:
+
+Genotype | $\ell_{XX}$ | $m_{XX}$ | $W_{XX}$ | $w_{XX}$ 
+---------|:-----------:|:--------:|:--------:|:---------------
+`AA`     | $0.75$      | $100$    | $75$     | $1.0$
+`AB`     | $0.50$      | $50$     | $25$     | $\frac{1}{3}$
+`BB`     | $0.20$      | $25$     | $5$      | $\frac{1}{15}$
+
+Through time, this would change allele frequencies (assuming they start out at $p=q$) as:
+
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+df <- data.frame( Generation=1:10, p=iterate_selection(wAB=1/3, wBB=1/15, T=10))
+ggplot( df, aes(x=Generation, y=p)) + geom_line() + geom_point() + ylim(c(0,1))
+```
+
+So, through time, we see a relatively rapid change in allele frequencies.  This is evolution, *sensu stricto*.  To parameterize the amount of change in allele frequencies we can take the equation for $p_{t+1}$ and $p_t$ and solve throwing away the subscripts of which generation is which:
+
+\begin{aligned}
+\delta p &= p_1 - p_0 \\
+        &= \frac{p^2w_{AA} + pqw_{AB}}{\bar{w}} \\
+        &= \frac{p^2w_{AA} + pqw_{AB}}{\bar{w}} - p_0\\
+        &= \frac{p^2w_{AA} + pqw_{AB}}{\bar{w}} - p_0\frac{\bar{w}}{\bar{w}}\\
+        &= \frac{p^2w_{AA} + pqw_{AB} + p_0(q^2w_{AA} + 2pqw_{AB} + q^2w_{BB})}{\bar{w}}\\
+        &\cdots\;several\;simplifications\;\cdots\\
+        &= \frac{pq[p(w_{AA} - w_{AB}) - q(w_{BB} - w_{AB})]}{\bar{w}}
+\end{aligned}
+
+
+
+
+
 
 
 
@@ -130,18 +166,18 @@ OK, so it appears to be giving us stuff that what we expect.  From here it would
 
 The strength of selection can be estimated from looking at the relative allele frequencies for populations before and after selection.  In the lecture, we covered an example based upon resistance to prion disease. There we quantifed genotypes frequencies as $P$, $Q$, and $R$ for those before selection and $\hat{P}$, $\hat{Q}$ and $\hat{R}$ for genotype frequencies after selection.  Their relationships are given by:
 
-\begin{eqnarray*}
+\begin{aligned}
 \hat{P} &=  P\; \ell_{AA}\; m_{AA} \\
-\hat{Q} &=  Q\; \ell_{Aa}\; m_{Aa} \\
-\hat{R} &=  R\; \ell_{aa}\; m_{aa} \\
-\end{eqnarray*}
+\hat{Q} &=  Q\; \ell_{AB}\; m_{AB} \\
+\hat{R} &=  R\; \ell_{BB}\; m_{BB} \\
+\end{aligned}
 
 If we take the genotype frequencies and divide the homozygotes by the heterozygotes and reorganize the relationship, we get:
 
-\begin{eqnarray*}
+\begin{aligned}
   \hat{\ell}_{AA}\hat{m}_{AA} = & \frac{\hat{P}Q}{\hat{Q}P}\\
-	\hat{\ell}_{aa}\hat{m}_{aa} = & \frac{\hat{R}Q}{\hat{Q}R}\\
-\end{eqnarray*}
+	\hat{\ell}_{BB}\hat{m}_{BB} = & \frac{\hat{R}Q}{\hat{Q}R}\\
+\end{aligned}
 
 And from this we can estimate fertility and survival values by genotype.  In the lecture, we assumed that fertility, the $m_{xx}$ parameters, were not changed so we dropped them (or at least thought they were all equal to 1.0).  
 
