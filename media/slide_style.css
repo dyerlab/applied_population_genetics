@@ -1,0 +1,32 @@
+.reveal section del {
+  color: red;
+}
+
+
+.footer {
+    color: black; background: #E8E8E8;
+    position: fixed; top: 90%;
+    text-align:center; width:100%;
+}
+
+
+.reveal h1, .reveal h2, .reveal h3 {
+  word-wrap: normal;
+  -moz-hyphens: none;
+  -epub-hyphens: none;
+}
+
+
+.small-code pre code {
+  font-size: 1em;
+}
+
+.section .reveal .state-background {
+   background: #000000;
+}
+
+.midcenter {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}

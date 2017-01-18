@@ -1,5 +1,6 @@
 book_filename: "amg"
 chapter_name: ""
+output_dir: "docs"
 before_chapter_script: "scripts/before_chapter.R"
 after_chapter_script: "scripts/after_chapter.R"
 rmd_files: [ 

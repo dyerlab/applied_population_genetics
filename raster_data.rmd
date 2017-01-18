@@ -324,7 +324,7 @@ And visualized normally.
 
 ```{r}
 library( GGally )
-ggpairs(df)
+ggpairs( as.data.frame(df))
 ```
 
 
