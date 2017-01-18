@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Applied Population Genetics</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="A textbook for the use of R in spatial genetic data analysis.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Applied Population Genetics" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="media/TitlePage_small.png" />
+  <meta property="og:description" content="A textbook for the use of R in spatial genetic data analysis." />
+  <meta name="github-repo" content="dyerlab/AMG" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Applied Population Genetics" />
+  
+  <meta name="twitter:description" content="A textbook for the use of R in spatial genetic data analysis." />
+  <meta name="twitter:image" content="media/TitlePage_small.png" />
+
+<meta name="author" content="Rodney J. Dyer">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="mutation.html">
+<link rel="next" href="mixed-mating-systems.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.8/htmlwidgets.js"></script>
+<link href="libs/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-0.7.3/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-1.0.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.0.27/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-1.0.1/leaflet-providers-plugin.js"></script>
+<script src="libs/d3-3.5.2/d3.min.js"></script>
+<script src="libs/sankey-1/sankey.js"></script>
+<script src="libs/sankeyNetwork-binding-0.2.13/sankeyNetwork.js"></script>
+<script src="libs/dendroNetwork-binding-0.2.13/dendroNetwork.js"></script>
+<script src="libs/simpleNetwork-binding-0.2.13/simpleNetwork.js"></script>
+<script src="libs/forceNetwork-binding-0.2.13/forceNetwork.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="media/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Applied Population Genetics</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#logistics"><i class="fa fa-check"></i>Logistics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#motivation"><i class="fa fa-check"></i>Motivation</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#typography"><i class="fa fa-check"></i>Typography</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#interactive-content"><i class="fa fa-check"></i>Interactive Content</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#dedication"><i class="fa fa-check"></i>Dedication</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html"><i class="fa fa-check"></i><b>1</b> The R Ecosystem</a><ul>
+<li class="chapter" data-level="1.1" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#getting-r-configured"><i class="fa fa-check"></i><b>1.1</b> Getting R Configured</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#packages"><i class="fa fa-check"></i><b>1.1.1</b> Packages</a></li>
+<li class="chapter" data-level="1.1.2" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#cran"><i class="fa fa-check"></i><b>1.1.2</b> CRAN</a></li>
+<li class="chapter" data-level="1.1.3" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#github"><i class="fa fa-check"></i><b>1.1.3</b> GitHub</a></li>
+<li class="chapter" data-level="1.1.4" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#bioconductor"><i class="fa fa-check"></i><b>1.1.4</b> Bioconductor</a></li>
+<li class="chapter" data-level="1.1.5" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#troublesome-packages"><i class="fa fa-check"></i><b>1.1.5</b> Troublesome Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#libraries-used-in-text"><i class="fa fa-check"></i><b>1.2</b> Libraries Used in Text</a></li>
+<li class="chapter" data-level="1.3" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#the-rstudio-environment"><i class="fa fa-check"></i><b>1.3</b> The RStudio Environment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>2</b> Data Types</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-types.html"><a href="data-types.html#numeric-data-types"><i class="fa fa-check"></i><b>2.1</b> Numeric Data Types</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="data-types.html"><a href="data-types.html#coercion-to-numeric"><i class="fa fa-check"></i><b>2.1.1</b> Coercion to Numeric</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-types.html"><a href="data-types.html#characters"><i class="fa fa-check"></i><b>2.2</b> Characters</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="data-types.html"><a href="data-types.html#concatenation-of-characters"><i class="fa fa-check"></i><b>2.2.1</b> Concatenation of Characters</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-types.html"><a href="data-types.html#coercion-to-characters"><i class="fa fa-check"></i><b>2.2.2</b> Coercion to Characters</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-types.html"><a href="data-types.html#factors"><i class="fa fa-check"></i><b>2.3</b> Factors</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="data-types.html"><a href="data-types.html#missing-levels-in-factors"><i class="fa fa-check"></i><b>2.3.1</b> Missing Levels in Factors</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="data-types.html"><a href="data-types.html#logical-types"><i class="fa fa-check"></i><b>2.4</b> Logical Types</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-containers.html"><a href="data-containers.html"><i class="fa fa-check"></i><b>3</b> Data Containers</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-containers.html"><a href="data-containers.html#vectors"><i class="fa fa-check"></i><b>3.1</b> Vectors</a></li>
+<li class="chapter" data-level="3.2" data-path="data-containers.html"><a href="data-containers.html#matrices"><i class="fa fa-check"></i><b>3.2</b> Matrices</a></li>
+<li class="chapter" data-level="3.3" data-path="data-containers.html"><a href="data-containers.html#lists"><i class="fa fa-check"></i><b>3.3</b> Lists</a></li>
+<li class="chapter" data-level="3.4" data-path="data-containers.html"><a href="data-containers.html#data-frames"><i class="fa fa-check"></i><b>3.4</b> Data Frames</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="data-containers.html"><a href="data-containers.html#indexing-data-frames"><i class="fa fa-check"></i><b>3.4.1</b> Indexing Data Frames</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="programming.html"><a href="programming.html"><i class="fa fa-check"></i><b>4</b> Programming</a><ul>
+<li class="chapter" data-level="4.1" data-path="programming.html"><a href="programming.html#function-writing"><i class="fa fa-check"></i><b>4.1</b> Function Writing</a></li>
+<li class="chapter" data-level="4.2" data-path="programming.html"><a href="programming.html#variable-scope"><i class="fa fa-check"></i><b>4.2</b> Variable Scope</a></li>
+<li class="chapter" data-level="4.3" data-path="programming.html"><a href="programming.html#decision-making"><i class="fa fa-check"></i><b>4.3</b> Decision Making</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="programming.html"><a href="programming.html#the-if-pattern"><i class="fa fa-check"></i><b>4.3.1</b> The if Pattern</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="programming.html"><a href="programming.html#the-if-else-pattern"><i class="fa fa-check"></i><b>4.4</b> The <code>if-else</code> Pattern</a></li>
+<li class="chapter" data-level="4.5" data-path="programming.html"><a href="programming.html#flow-control"><i class="fa fa-check"></i><b>4.5</b> Flow Control</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="programming.html"><a href="programming.html#the-for-loop"><i class="fa fa-check"></i><b>4.5.1</b> The for() Loop</a></li>
+<li class="chapter" data-level="4.5.2" data-path="programming.html"><a href="programming.html#short-circuiting-the-loop"><i class="fa fa-check"></i><b>4.5.2</b> Short Circuiting the Loop</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="graphics.html"><a href="graphics.html"><i class="fa fa-check"></i><b>5</b> Graphics</a><ul>
+<li class="chapter" data-level="5.1" data-path="graphics.html"><a href="graphics.html#univariate-data"><i class="fa fa-check"></i><b>5.1</b> Univariate Data</a></li>
+<li class="chapter" data-level="5.2" data-path="graphics.html"><a href="graphics.html#plotting-parameters"><i class="fa fa-check"></i><b>5.2</b> Plotting Parameters</a></li>
+<li class="chapter" data-level="5.3" data-path="graphics.html"><a href="graphics.html#density-plots"><i class="fa fa-check"></i><b>5.3</b> Density Plots</a></li>
+<li class="chapter" data-level="5.4" data-path="graphics.html"><a href="graphics.html#overlaying-plots"><i class="fa fa-check"></i><b>5.4</b> Overlaying Plots</a></li>
+<li class="chapter" data-level="5.5" data-path="graphics.html"><a href="graphics.html#boxplots"><i class="fa fa-check"></i><b>5.5</b> Boxplots</a></li>
+<li class="chapter" data-level="5.6" data-path="graphics.html"><a href="graphics.html#scatter-plots"><i class="fa fa-check"></i><b>5.6</b> Scatter Plots</a></li>
+<li class="chapter" data-level="5.7" data-path="graphics.html"><a href="graphics.html#multiple-plots"><i class="fa fa-check"></i><b>5.7</b> Multiple Plots</a></li>
+<li class="chapter" data-level="5.8" data-path="graphics.html"><a href="graphics.html#color-palettes"><i class="fa fa-check"></i><b>5.8</b> Color Palettes</a></li>
+<li class="chapter" data-level="5.9" data-path="graphics.html"><a href="graphics.html#rcolorbrewer"><i class="fa fa-check"></i><b>5.9</b> RColorBrewer</a></li>
+<li class="chapter" data-level="5.10" data-path="graphics.html"><a href="graphics.html#saving-imagery"><i class="fa fa-check"></i><b>5.10</b> Saving Imagery</a></li>
+<li class="chapter" data-level="5.11" data-path="graphics.html"><a href="graphics.html#interactive-graphics"><i class="fa fa-check"></i><b>5.11</b> Interactive Graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="reproducable-research.html"><a href="reproducable-research.html"><i class="fa fa-check"></i><b>6</b> Reproducable Research</a><ul>
+<li class="chapter" data-level="6.1" data-path="reproducable-research.html"><a href="reproducable-research.html#keeping-data-on-google-drive"><i class="fa fa-check"></i><b>6.1</b> Keeping Data on Google Drive</a></li>
+<li class="chapter" data-level="6.2" data-path="reproducable-research.html"><a href="reproducable-research.html#integrating-into-slack"><i class="fa fa-check"></i><b>6.2</b> Integrating into Slack</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="reproducable-research.html"><a href="reproducable-research.html#fixing-problem-with-version-1.4.1"><i class="fa fa-check"></i><b>6.2.1</b> Fixing Problem with Version 1.4.1</a></li>
+<li class="chapter" data-level="6.2.2" data-path="reproducable-research.html"><a href="reproducable-research.html#configuration"><i class="fa fa-check"></i><b>6.2.2</b> Configuration</a></li>
+<li class="chapter" data-level="6.2.3" data-path="reproducable-research.html"><a href="reproducable-research.html#sending-text-and-graphical-ouput"><i class="fa fa-check"></i><b>6.2.3</b> Sending Text and Graphical Ouput</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Single Population</b></span></li>
+<li class="chapter" data-level="7" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html"><i class="fa fa-check"></i><b>7</b> Hardy-Weinberg Equilibrium</a><ul>
+<li class="chapter" data-level="7.1" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#genetic-assumptions"><i class="fa fa-check"></i><b>7.1</b> Genetic Assumptions</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#punnet-squares"><i class="fa fa-check"></i><b>7.1.1</b> Punnet Squares</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#evolutionary-assumptions"><i class="fa fa-check"></i><b>7.2</b> Evolutionary Assumptions</a></li>
+<li class="chapter" data-level="7.3" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#the-mechanics"><i class="fa fa-check"></i><b>7.3</b> The Mechanics</a></li>
+<li class="chapter" data-level="7.4" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#trans-generational-transition-probabilities"><i class="fa fa-check"></i><b>7.4</b> Trans-Generational Transition Probabilities</a></li>
+<li class="chapter" data-level="7.5" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#consequences-of-hwe"><i class="fa fa-check"></i><b>7.5</b> Consequences of HWE</a></li>
+<li class="chapter" data-level="7.6" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#zygotic-gene-flow"><i class="fa fa-check"></i><b>7.6</b> Zygotic Gene Flow</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="genetic-drift.html"><a href="genetic-drift.html"><i class="fa fa-check"></i><b>8</b> Genetic Drift</a><ul>
+<li class="chapter" data-level="8.1" data-path="genetic-drift.html"><a href="genetic-drift.html#consequences-of-genetic-drift"><i class="fa fa-check"></i><b>8.1</b> Consequences of Genetic Drift</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="genetic-drift.html"><a href="genetic-drift.html#time-to-fixation"><i class="fa fa-check"></i><b>8.1.1</b> Time to Fixation</a></li>
+<li class="chapter" data-level="8.1.2" data-path="genetic-drift.html"><a href="genetic-drift.html#time-to-allele-loss"><i class="fa fa-check"></i><b>8.1.2</b> Time to Allele Loss</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="genetic-drift.html"><a href="genetic-drift.html#mutation-drift"><i class="fa fa-check"></i><b>8.2</b> Mutation &amp; Drift</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="effective-population-size.html"><a href="effective-population-size.html"><i class="fa fa-check"></i><b>9</b> Effective Population Size</a><ul>
+<li class="chapter" data-level="9.1" data-path="effective-population-size.html"><a href="effective-population-size.html#demographic-effective-population-sizes"><i class="fa fa-check"></i><b>9.1</b> Demographic Effective Population Sizes</a></li>
+<li class="chapter" data-level="9.2" data-path="effective-population-size.html"><a href="effective-population-size.html#genetic-effective-population-size"><i class="fa fa-check"></i><b>9.2</b> Genetic Effective Population Size</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="effective-population-size.html"><a href="effective-population-size.html#inbreeding-effective-population-size"><i class="fa fa-check"></i><b>9.2.1</b> Inbreeding Effective Population Size</a></li>
+<li class="chapter" data-level="9.2.2" data-path="effective-population-size.html"><a href="effective-population-size.html#variance-effective-population-size"><i class="fa fa-check"></i><b>9.2.2</b> Variance Effective Population Size</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="effective-population-size.html"><a href="effective-population-size.html#fluctuating-population-size"><i class="fa fa-check"></i><b>9.3</b> Fluctuating Population Size</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="mutation.html"><a href="mutation.html"><i class="fa fa-check"></i><b>10</b> Mutation</a><ul>
+<li class="chapter" data-level="10.1" data-path="mutation.html"><a href="mutation.html#mutation-models"><i class="fa fa-check"></i><b>10.1</b> Mutation Models</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="mutation.html"><a href="mutation.html#fixed-allele-model"><i class="fa fa-check"></i><b>10.1.1</b> Fixed Allele Model</a></li>
+<li class="chapter" data-level="10.1.2" data-path="mutation.html"><a href="mutation.html#infinite-allele-model"><i class="fa fa-check"></i><b>10.1.2</b> Infinite Allele Model</a></li>
+<li class="chapter" data-level="10.1.3" data-path="mutation.html"><a href="mutation.html#stepwise-mutation-model"><i class="fa fa-check"></i><b>10.1.3</b> Stepwise Mutation Model</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="mutation.html"><a href="mutation.html#mutation-and-inbreeding"><i class="fa fa-check"></i><b>10.2</b> Mutation and Inbreeding</a></li>
+<li class="chapter" data-level="10.3" data-path="mutation.html"><a href="mutation.html#estimating-mutation"><i class="fa fa-check"></i><b>10.3</b> Estimating Mutation</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="mutation.html"><a href="mutation.html#phenotypes"><i class="fa fa-check"></i><b>10.3.1</b> Phenotypes</a></li>
+<li class="chapter" data-level="10.3.2" data-path="mutation.html"><a href="mutation.html#genotypes"><i class="fa fa-check"></i><b>10.3.2</b> Genotypes</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Nonrandom Rating</b></span></li>
+<li class="chapter" data-level="11" data-path="selfing.html"><a href="selfing.html"><i class="fa fa-check"></i><b>11</b> Selfing</a><ul>
+<li class="chapter" data-level="11.1" data-path="selfing.html"><a href="selfing.html#changes-in-f"><i class="fa fa-check"></i><b>11.1</b> Changes in F</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="selfing.html"><a href="selfing.html#theoretical-expectations"><i class="fa fa-check"></i><b>11.1.1</b> Theoretical Expectations</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="selfing.html"><a href="selfing.html#simulation-example"><i class="fa fa-check"></i><b>11.2</b> Simulation Example</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="mixed-mating-systems.html"><a href="mixed-mating-systems.html"><i class="fa fa-check"></i><b>12</b> Mixed Mating Systems</a><ul>
+<li class="chapter" data-level="12.1" data-path="mixed-mating-systems.html"><a href="mixed-mating-systems.html#mixed-mating-genotype-frequency-equilibriums"><i class="fa fa-check"></i><b>12.1</b> Mixed Mating Genotype Frequency Equilibriums</a></li>
+<li class="chapter" data-level="12.2" data-path="mixed-mating-systems.html"><a href="mixed-mating-systems.html#estimating-selfing-rates"><i class="fa fa-check"></i><b>12.2</b> Estimating Selfing Rates</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="wahlund-effects.html"><a href="wahlund-effects.html"><i class="fa fa-check"></i><b>13</b> Wahlund Effects</a></li>
+<li class="part"><span><b>III Parent Offspring Data</b></span></li>
+<li class="chapter" data-level="14" data-path="pedigrees.html"><a href="pedigrees.html"><i class="fa fa-check"></i><b>14</b> Pedigrees</a><ul>
+<li class="chapter" data-level="14.1" data-path="pedigrees.html"><a href="pedigrees.html#expectations-for-f-in-a-pedigree."><i class="fa fa-check"></i><b>14.1</b> Expectations for F in a pedigree.</a></li>
+<li class="chapter" data-level="14.2" data-path="pedigrees.html"><a href="pedigrees.html#drawing-pedigrees"><i class="fa fa-check"></i><b>14.2</b> Drawing Pedigrees</a></li>
+<li class="chapter" data-level="14.3" data-path="pedigrees.html"><a href="pedigrees.html#skills"><i class="fa fa-check"></i><b>14.3</b> Skills</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="parentage-analyses.html"><a href="parentage-analyses.html"><i class="fa fa-check"></i><b>15</b> Parentage Analyses</a><ul>
+<li class="chapter" data-level="15.1" data-path="parentage-analyses.html"><a href="parentage-analyses.html#paternity-vs.maternity"><i class="fa fa-check"></i><b>15.1</b> Paternity vs. Maternity</a></li>
+<li class="chapter" data-level="15.2" data-path="parentage-analyses.html"><a href="parentage-analyses.html#probability-of-exclusion"><i class="fa fa-check"></i><b>15.2</b> Probability of Exclusion</a></li>
+<li class="chapter" data-level="15.3" data-path="parentage-analyses.html"><a href="parentage-analyses.html#paternity-exclusion"><i class="fa fa-check"></i><b>15.3</b> Paternity Exclusion</a></li>
+<li class="chapter" data-level="15.4" data-path="parentage-analyses.html"><a href="parentage-analyses.html#fractional-paternity"><i class="fa fa-check"></i><b>15.4</b> Fractional Paternity</a></li>
+<li class="chapter" data-level="15.5" data-path="parentage-analyses.html"><a href="parentage-analyses.html#dispersal-kernels"><i class="fa fa-check"></i><b>15.5</b> Dispersal Kernels</a></li>
+</ul></li>
+<li class="part"><span><b>IV Subdivided Populations</b></span></li>
+<li class="chapter" data-level="16" data-path="mapping-populations.html"><a href="mapping-populations.html"><i class="fa fa-check"></i><b>16</b> Mapping Populations</a><ul>
+<li class="chapter" data-level="16.1" data-path="mapping-populations.html"><a href="mapping-populations.html#procedure"><i class="fa fa-check"></i><b>16.1</b> Procedure</a></li>
+<li class="chapter" data-level="16.2" data-path="mapping-populations.html"><a href="mapping-populations.html#plotting-population-locations"><i class="fa fa-check"></i><b>16.2</b> Plotting Population Locations</a></li>
+<li class="chapter" data-level="16.3" data-path="mapping-populations.html"><a href="mapping-populations.html#population-allele-frequencies"><i class="fa fa-check"></i><b>16.3</b> Population Allele Frequencies</a></li>
+<li class="chapter" data-level="16.4" data-path="mapping-populations.html"><a href="mapping-populations.html#dynamic-maps"><i class="fa fa-check"></i><b>16.4</b> Dynamic maps</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="mapping-populations.html"><a href="mapping-populations.html#sankey-networks"><i class="fa fa-check"></i><b>16.4.1</b> Sankey Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="population-models.html"><a href="population-models.html"><i class="fa fa-check"></i><b>17</b> Population Models</a><ul>
+<li class="chapter" data-level="17.1" data-path="population-models.html"><a href="population-models.html#models-of-partition"><i class="fa fa-check"></i><b>17.1</b> Models of Partition</a></li>
+<li class="chapter" data-level="17.2" data-path="population-models.html"><a href="population-models.html#island-mainland-model"><i class="fa fa-check"></i><b>17.2</b> Island Mainland Model</a></li>
+<li class="chapter" data-level="17.3" data-path="population-models.html"><a href="population-models.html#the-island-model"><i class="fa fa-check"></i><b>17.3</b> The Island Model</a></li>
+<li class="chapter" data-level="17.4" data-path="population-models.html"><a href="population-models.html#stepping-stone-models"><i class="fa fa-check"></i><b>17.4</b> Stepping Stone Models</a></li>
+<li class="chapter" data-level="17.5" data-path="population-models.html"><a href="population-models.html#the-general-model"><i class="fa fa-check"></i><b>17.5</b> The General Model</a></li>
+<li class="chapter" data-level="17.6" data-path="population-models.html"><a href="population-models.html#general-strategies"><i class="fa fa-check"></i><b>17.6</b> General Strategies</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="genetic-diversity.html"><a href="genetic-diversity.html"><i class="fa fa-check"></i><b>18</b> Genetic Diversity</a><ul>
+<li class="chapter" data-level="18.1" data-path="genetic-diversity.html"><a href="genetic-diversity.html#allelic-diversity"><i class="fa fa-check"></i><b>18.1</b> Allelic Diversity</a></li>
+<li class="chapter" data-level="18.2" data-path="genetic-diversity.html"><a href="genetic-diversity.html#genotypic-diversity"><i class="fa fa-check"></i><b>18.2</b> Genotypic Diversity</a></li>
+<li class="chapter" data-level="18.3" data-path="genetic-diversity.html"><a href="genetic-diversity.html#samples-from-several-locales"><i class="fa fa-check"></i><b>18.3</b> Samples from Several Locales</a></li>
+<li class="chapter" data-level="18.4" data-path="genetic-diversity.html"><a href="genetic-diversity.html#multilocus-diversity"><i class="fa fa-check"></i><b>18.4</b> Multilocus Diversity</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="rarefaction.html"><a href="rarefaction.html"><i class="fa fa-check"></i><b>19</b> Rarefaction</a><ul>
+<li class="chapter" data-level="19.1" data-path="rarefaction.html"><a href="rarefaction.html#mapping-diversity"><i class="fa fa-check"></i><b>19.1</b> Mapping Diversity</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="genetic-distances.html"><a href="genetic-distances.html"><i class="fa fa-check"></i><b>20</b> Genetic Distances</a><ul>
+<li class="chapter" data-level="20.1" data-path="genetic-distances.html"><a href="genetic-distances.html#individual-genetic-distance"><i class="fa fa-check"></i><b>20.1</b> Individual Genetic Distance</a><ul>
+<li class="chapter" data-level="20.1.1" data-path="genetic-distances.html"><a href="genetic-distances.html#euclidean-distance"><i class="fa fa-check"></i><b>20.1.1</b> Euclidean Distance</a></li>
+<li class="chapter" data-level="20.1.2" data-path="genetic-distances.html"><a href="genetic-distances.html#amova-distance"><i class="fa fa-check"></i><b>20.1.2</b> AMOVA Distance</a></li>
+<li class="chapter" data-level="20.1.3" data-path="genetic-distances.html"><a href="genetic-distances.html#bray-curtis-individual-distance"><i class="fa fa-check"></i><b>20.1.3</b> Bray-Curtis Individual Distance</a></li>
+<li class="chapter" data-level="20.1.4" data-path="genetic-distances.html"><a href="genetic-distances.html#ladder-distance"><i class="fa fa-check"></i><b>20.1.4</b> Ladder Distance</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="genetic-distances.html"><a href="genetic-distances.html#population-level-genetic-distances"><i class="fa fa-check"></i><b>20.2</b> Population-Level Genetic Distances</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="genetic-distances.html"><a href="genetic-distances.html#czekanowski-manhattan-distance"><i class="fa fa-check"></i><b>20.2.1</b> Czekanowski (Manhattan) Distance</a></li>
+<li class="chapter" data-level="20.2.2" data-path="genetic-distances.html"><a href="genetic-distances.html#rogers-euclidean-distance"><i class="fa fa-check"></i><b>20.2.2</b> Rogers (Euclidean) Distance</a></li>
+<li class="chapter" data-level="20.2.3" data-path="genetic-distances.html"><a href="genetic-distances.html#neis-genetic-distance"><i class="fa fa-check"></i><b>20.2.3</b> Nei’s Genetic Distance</a></li>
+<li class="chapter" data-level="20.2.4" data-path="genetic-distances.html"><a href="genetic-distances.html#conditional-genetic-distance"><i class="fa fa-check"></i><b>20.2.4</b> Conditional Genetic Distance</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="genetic-structure.html"><a href="genetic-structure.html"><i class="fa fa-check"></i><b>21</b> Genetic Structure</a><ul>
+<li class="chapter" data-level="21.1" data-path="genetic-structure.html"><a href="genetic-structure.html#f-statistics-and-thier-ilk"><i class="fa fa-check"></i><b>21.1</b> F-Statistics and Thier Ilk</a><ul>
+<li class="chapter" data-level="21.1.1" data-path="genetic-structure.html"><a href="genetic-structure.html#issues-with-fixation-indices"><i class="fa fa-check"></i><b>21.1.1</b> Issues with Fixation Indices</a></li>
+<li class="chapter" data-level="21.1.2" data-path="genetic-structure.html"><a href="genetic-structure.html#additional-x_st-like-parameters"><i class="fa fa-check"></i><b>21.1.2</b> Additional <span class="math inline">\(X_{ST}\)</span>-like Parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="21.2" data-path="genetic-structure.html"><a href="genetic-structure.html#statistical-structure"><i class="fa fa-check"></i><b>21.2</b> Statistical Structure</a></li>
+<li class="chapter" data-level="21.3" data-path="genetic-structure.html"><a href="genetic-structure.html#final-thoughts-on-structure"><i class="fa fa-check"></i><b>21.3</b> Final Thoughts on Structure</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="population-assignment.html"><a href="population-assignment.html"><i class="fa fa-check"></i><b>22</b> Population Assignment</a></li>
+<li class="chapter" data-level="23" data-path="admixture.html"><a href="admixture.html"><i class="fa fa-check"></i><b>23</b> Admixture</a></li>
+<li class="part"><span><b>V Statistical Models</b></span></li>
+<li class="chapter" data-level="24" data-path="ordination-of-genetic-data.html"><a href="ordination-of-genetic-data.html"><i class="fa fa-check"></i><b>24</b> Ordination of Genetic Data</a><ul>
+<li class="chapter" data-level="24.1" data-path="ordination-of-genetic-data.html"><a href="ordination-of-genetic-data.html#hierarchical-clustering"><i class="fa fa-check"></i><b>24.1</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="24.2" data-path="ordination-of-genetic-data.html"><a href="ordination-of-genetic-data.html#interactive-tree-display"><i class="fa fa-check"></i><b>24.2</b> Interactive Tree Display</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="distance-matrices.html"><a href="distance-matrices.html"><i class="fa fa-check"></i><b>25</b> Distance Matrices</a><ul>
+<li class="chapter" data-level="25.1" data-path="distance-matrices.html"><a href="distance-matrices.html#visual-comparisons"><i class="fa fa-check"></i><b>25.1</b> Visual Comparisons</a></li>
+<li class="chapter" data-level="25.2" data-path="distance-matrices.html"><a href="distance-matrices.html#the-mantel-test"><i class="fa fa-check"></i><b>25.2</b> The Mantel Test</a></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>26</b> Linear Models</a><ul>
+<li class="chapter" data-level="26.1" data-path="linear-models.html"><a href="linear-models.html#dependent-independent-relationships"><i class="fa fa-check"></i><b>26.1</b> Dependent &amp; Independent Relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="27" data-path="distance-networks.html"><a href="distance-networks.html"><i class="fa fa-check"></i><b>27</b> Distance Networks</a><ul>
+<li class="chapter" data-level="27.1" data-path="distance-networks.html"><a href="distance-networks.html#graph-structure"><i class="fa fa-check"></i><b>27.1</b> Graph Structure</a><ul>
+<li class="chapter" data-level="27.1.1" data-path="distance-networks.html"><a href="distance-networks.html#node-edge-attributes"><i class="fa fa-check"></i><b>27.1.1</b> Node &amp; Edge Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="27.2" data-path="distance-networks.html"><a href="distance-networks.html#plotting-a-graphs"><i class="fa fa-check"></i><b>27.2</b> Plotting a Graphs</a></li>
+<li class="chapter" data-level="27.3" data-path="distance-networks.html"><a href="distance-networks.html#mapping-networks"><i class="fa fa-check"></i><b>27.3</b> Mapping Networks</a></li>
+<li class="chapter" data-level="27.4" data-path="distance-networks.html"><a href="distance-networks.html#genetic-distance-graphs"><i class="fa fa-check"></i><b>27.4</b> Genetic Distance Graphs</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="population-graphs.html"><a href="population-graphs.html"><i class="fa fa-check"></i><b>28</b> Population Graphs</a><ul>
+<li class="chapter" data-level="28.1" data-path="population-graphs.html"><a href="population-graphs.html#adding-data-to-a-graph"><i class="fa fa-check"></i><b>28.1</b> Adding data to a graph</a><ul>
+<li class="chapter" data-level="28.1.1" data-path="population-graphs.html"><a href="population-graphs.html#plotting-a-graph-using-ggplot2-routines"><i class="fa fa-check"></i><b>28.1.1</b> Plotting a graph using <strong>ggplot2</strong> routines</a></li>
+<li class="chapter" data-level="28.1.2" data-path="population-graphs.html"><a href="population-graphs.html#reading-existing-popgraph-files"><i class="fa fa-check"></i><b>28.1.2</b> Reading Existing <strong>popgraph</strong> Files</a></li>
+<li class="chapter" data-level="28.1.3" data-path="population-graphs.html"><a href="population-graphs.html#saving-population-graph-objects"><i class="fa fa-check"></i><b>28.1.3</b> Saving Population Graph Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="28.2" data-path="population-graphs.html"><a href="population-graphs.html#interactive-networks"><i class="fa fa-check"></i><b>28.2</b> Interactive Networks</a></li>
+<li class="chapter" data-level="28.3" data-path="population-graphs.html"><a href="population-graphs.html#spatial-population-graphs"><i class="fa fa-check"></i><b>28.3</b> Spatial Population Graphs</a><ul>
+<li class="chapter" data-level="28.3.1" data-path="population-graphs.html"><a href="population-graphs.html#integrating-google-and-ggplot2-for-plotting"><i class="fa fa-check"></i><b>28.3.1</b> Integrating Google and <strong>ggplot2</strong> for Plotting</a></li>
+<li class="chapter" data-level="28.3.2" data-path="population-graphs.html"><a href="population-graphs.html#integrating-raster-maps"><i class="fa fa-check"></i><b>28.3.2</b> Integrating Raster Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="28.4" data-path="population-graphs.html"><a href="population-graphs.html#extracting-spatial-data-using-population-graphs"><i class="fa fa-check"></i><b>28.4</b> Extracting Spatial Data Using Population Graphs</a><ul>
+<li class="chapter" data-level="28.4.1" data-path="population-graphs.html"><a href="population-graphs.html#node-specific-data"><i class="fa fa-check"></i><b>28.4.1</b> Node Specific Data</a></li>
+<li class="chapter" data-level="28.4.2" data-path="population-graphs.html"><a href="population-graphs.html#extracting-data-along-popgraph-edges"><i class="fa fa-check"></i><b>28.4.2</b> Extracting Data Along Popgraph Edges</a></li>
+</ul></li>
+<li class="chapter" data-level="28.5" data-path="population-graphs.html"><a href="population-graphs.html#extracting-graph-theoretic-parameters"><i class="fa fa-check"></i><b>28.5</b> Extracting Graph-Theoretic Parameters</a><ul>
+<li class="chapter" data-level="28.5.1" data-path="population-graphs.html"><a href="population-graphs.html#matrix-representations-of-population-graph-objects"><i class="fa fa-check"></i><b>28.5.1</b> Matrix Representations of Population Graph Objects</a></li>
+<li class="chapter" data-level="28.5.2" data-path="population-graphs.html"><a href="population-graphs.html#node-specific-parameters"><i class="fa fa-check"></i><b>28.5.2</b> Node Specific Parameters</a></li>
+<li class="chapter" data-level="28.5.3" data-path="population-graphs.html"><a href="population-graphs.html#edge-specific-parameters"><i class="fa fa-check"></i><b>28.5.3</b> Edge Specific Parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="28.6" data-path="population-graphs.html"><a href="population-graphs.html#testing-for-topological-congruence"><i class="fa fa-check"></i><b>28.6</b> Testing for Topological Congruence</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="interactive-visualization.html"><a href="interactive-visualization.html"><i class="fa fa-check"></i><b>29</b> Interactive Visualization</a><ul>
+<li class="chapter" data-level="29.1" data-path="interactive-visualization.html"><a href="interactive-visualization.html#procedure-1"><i class="fa fa-check"></i><b>29.1</b> Procedure</a><ul>
+<li class="chapter" data-level="29.1.1" data-path="interactive-visualization.html"><a href="interactive-visualization.html#interactive-networks-1"><i class="fa fa-check"></i><b>29.1.1</b> Interactive Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VI Spatial Data</b></span></li>
+<li class="chapter" data-level="30" data-path="vector-data.html"><a href="vector-data.html"><i class="fa fa-check"></i><b>30</b> Vector Data</a><ul>
+<li class="chapter" data-level="30.1" data-path="vector-data.html"><a href="vector-data.html#points"><i class="fa fa-check"></i><b>30.1</b> Points</a></li>
+<li class="chapter" data-level="30.2" data-path="vector-data.html"><a href="vector-data.html#lines"><i class="fa fa-check"></i><b>30.2</b> Lines</a></li>
+<li class="chapter" data-level="30.3" data-path="vector-data.html"><a href="vector-data.html#polygons"><i class="fa fa-check"></i><b>30.3</b> Polygons</a></li>
+<li class="chapter" data-level="30.4" data-path="vector-data.html"><a href="vector-data.html#saving-vector-objects"><i class="fa fa-check"></i><b>30.4</b> Saving Vector Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="31" data-path="raster-data.html"><a href="raster-data.html"><i class="fa fa-check"></i><b>31</b> Raster Data</a><ul>
+<li class="chapter" data-level="31.1" data-path="raster-data.html"><a href="raster-data.html#cropping-rasters"><i class="fa fa-check"></i><b>31.1</b> Cropping Rasters</a><ul>
+<li class="chapter" data-level="31.1.1" data-path="raster-data.html"><a href="raster-data.html#cropping-rasters-via-polygons"><i class="fa fa-check"></i><b>31.1.1</b> Cropping Rasters Via Polygons</a></li>
+<li class="chapter" data-level="31.1.2" data-path="raster-data.html"><a href="raster-data.html#cropping-rasters-via-convex-hull"><i class="fa fa-check"></i><b>31.1.2</b> Cropping Rasters Via Convex Hull</a></li>
+</ul></li>
+<li class="chapter" data-level="31.2" data-path="raster-data.html"><a href="raster-data.html#modifying-rasters"><i class="fa fa-check"></i><b>31.2</b> Modifying Rasters</a></li>
+<li class="chapter" data-level="31.3" data-path="raster-data.html"><a href="raster-data.html#extracting-point-data-from-rasters"><i class="fa fa-check"></i><b>31.3</b> Extracting Point Data From Rasters</a><ul>
+<li class="chapter" data-level="31.3.1" data-path="raster-data.html"><a href="raster-data.html#stacks-of-rasters"><i class="fa fa-check"></i><b>31.3.1</b> Stacks of Rasters</a></li>
+</ul></li>
+<li class="chapter" data-level="31.4" data-path="raster-data.html"><a href="raster-data.html#rasters-ggplot"><i class="fa fa-check"></i><b>31.4</b> Rasters &amp; ggplot</a></li>
+<li class="chapter" data-level="31.5" data-path="raster-data.html"><a href="raster-data.html#d-visualization"><i class="fa fa-check"></i><b>31.5</b> 3D Visualization</a></li>
+<li class="chapter" data-level="31.6" data-path="raster-data.html"><a href="raster-data.html#saving-exporting-rasters"><i class="fa fa-check"></i><b>31.6</b> Saving &amp; Exporting Rasters</a></li>
+</ul></li>
+<li class="chapter" data-level="32" data-path="map-projections.html"><a href="map-projections.html"><i class="fa fa-check"></i><b>32</b> Map Projections</a><ul>
+<li class="chapter" data-level="32.1" data-path="map-projections.html"><a href="map-projections.html#projections"><i class="fa fa-check"></i><b>32.1</b> Projections</a><ul>
+<li class="chapter" data-level="32.1.1" data-path="map-projections.html"><a href="map-projections.html#equatorial-projections"><i class="fa fa-check"></i><b>32.1.1</b> Equatorial Projections</a></li>
+<li class="chapter" data-level="32.1.2" data-path="map-projections.html"><a href="map-projections.html#azimuth-projections"><i class="fa fa-check"></i><b>32.1.2</b> Azimuth Projections</a></li>
+<li class="chapter" data-level="32.1.3" data-path="map-projections.html"><a href="map-projections.html#polar-conic-projections"><i class="fa fa-check"></i><b>32.1.3</b> Polar Conic Projections</a></li>
+<li class="chapter" data-level="32.1.4" data-path="map-projections.html"><a href="map-projections.html#miscellaneous-projections"><i class="fa fa-check"></i><b>32.1.4</b> Miscellaneous Projections</a></li>
+<li class="chapter" data-level="32.1.5" data-path="map-projections.html"><a href="map-projections.html#reprojecting-rasters"><i class="fa fa-check"></i><b>32.1.5</b> Reprojecting Rasters</a></li>
+<li class="chapter" data-level="32.1.6" data-path="map-projections.html"><a href="map-projections.html#projecting-in-ggplot"><i class="fa fa-check"></i><b>32.1.6</b> Projecting In GGPlot</a></li>
+</ul></li>
+<li class="chapter" data-level="32.2" data-path="map-projections.html"><a href="map-projections.html#coordinate-systems"><i class="fa fa-check"></i><b>32.2</b> Coordinate Systems</a><ul>
+<li class="chapter" data-level="32.2.1" data-path="map-projections.html"><a href="map-projections.html#changing-datum"><i class="fa fa-check"></i><b>32.2.1</b> Changing Datum</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="33" data-path="ecological-distance.html"><a href="ecological-distance.html"><i class="fa fa-check"></i><b>33</b> Ecological Distance</a><ul>
+<li class="chapter" data-level="33.1" data-path="ecological-distance.html"><a href="ecological-distance.html#the-concept-of-resistance"><i class="fa fa-check"></i><b>33.1</b> The Concept of Resistance</a><ul>
+<li class="chapter" data-level="33.1.1" data-path="ecological-distance.html"><a href="ecological-distance.html#absolute-resistance"><i class="fa fa-check"></i><b>33.1.1</b> Absolute Resistance</a></li>
+</ul></li>
+<li class="chapter" data-level="33.2" data-path="ecological-distance.html"><a href="ecological-distance.html#relative-resistance"><i class="fa fa-check"></i><b>33.2</b> Relative Resistance</a></li>
+<li class="chapter" data-level="33.3" data-path="ecological-distance.html"><a href="ecological-distance.html#estimating-separation"><i class="fa fa-check"></i><b>33.3</b> Estimating Separation</a><ul>
+<li class="chapter" data-level="33.3.1" data-path="ecological-distance.html"><a href="ecological-distance.html#least-cost-distance"><i class="fa fa-check"></i><b>33.3.1</b> Least Cost Distance</a></li>
+<li class="chapter" data-level="33.3.2" data-path="ecological-distance.html"><a href="ecological-distance.html#all-paths-circuit-distance"><i class="fa fa-check"></i><b>33.3.2</b> All Paths (Circuit) Distance</a></li>
+<li class="chapter" data-level="33.3.3" data-path="ecological-distance.html"><a href="ecological-distance.html#path-corridor-constraints"><i class="fa fa-check"></i><b>33.3.3</b> Path &amp; Corridor Constraints</a></li>
+</ul></li>
+<li class="chapter" data-level="33.4" data-path="ecological-distance.html"><a href="ecological-distance.html#estimating-correlations-in-distance"><i class="fa fa-check"></i><b>33.4</b> Estimating Correlations in Distance</a><ul>
+<li class="chapter" data-level="33.4.1" data-path="ecological-distance.html"><a href="ecological-distance.html#pairwise-least-cost-path"><i class="fa fa-check"></i><b>33.4.1</b> Pairwise Least Cost Path</a></li>
+<li class="chapter" data-level="33.4.2" data-path="ecological-distance.html"><a href="ecological-distance.html#pairwise-all-pairs"><i class="fa fa-check"></i><b>33.4.2</b> Pairwise All Pairs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
+<li class="part"><span><b>VII Selection</b></span></li>
+<li class="chapter" data-level="35" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>35</b> Classical Selection Models</a><ul>
+<li class="chapter" data-level="35.1" data-path="classical-selection-models.html"><a href="classical-selection-models.html#the-strength-of-selection"><i class="fa fa-check"></i><b>35.1</b> The Strength of Selection</a></li>
+</ul></li>
+<li class="part"><span><b>VIII Backmatter</b></span></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="36" data-path="included-data-sets.html"><a href="included-data-sets.html"><i class="fa fa-check"></i><b>36</b> Included Data Sets</a><ul>
+<li class="chapter" data-level="36.1" data-path="included-data-sets.html"><a href="included-data-sets.html#the-sonoran-desert-bark-beetle-araptus-attenuata"><i class="fa fa-check"></i><b>36.1</b> The Sonoran desert bark beetle, <em>Araptus attenuata</em></a><ul>
+<li class="chapter" data-level="36.1.1" data-path="included-data-sets.html"><a href="included-data-sets.html#nuclear-markers"><i class="fa fa-check"></i><b>36.1.1</b> Nuclear Markers</a></li>
+<li class="chapter" data-level="36.1.2" data-path="included-data-sets.html"><a href="included-data-sets.html#methylation-markers"><i class="fa fa-check"></i><b>36.1.2</b> Methylation Markers</a></li>
+</ul></li>
+<li class="chapter" data-level="36.2" data-path="included-data-sets.html"><a href="included-data-sets.html#the-flowering-dogwood-cornus-florida"><i class="fa fa-check"></i><b>36.2</b> The Flowering Dogwood <em>Cornus florida</em></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="divider"></li>
+<li><a href="http://dyerlab.bio.vcu.edu" target="blank">the Dyer Laboratory</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Population Genetics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="selfing" class="section level1 imageChapter">
+<h1><span class="header-section-number">11</span> Selfing</h1>
+<div class="chapter_image">
+<img src="chapter_images/ch_dogwood.jpg">
+</div>
+<p>Inbreeding is one of the most common deviations from random mating (and hence Hardy-Weinberg Equilibrium) that we encounter in natural populations. Inbreeding is defined, sensu stricto, as mating between two related individuals. This ranges from complete selfing, where one parent alone produces offspring, to consanguineous mating, where individuals with some degree of relatedness produce offspring. The genetic consequences of inbreeding are entirely in how alleles are arranged into genotypes, not in changing allele frequencies.</p>
+<p>The primary consequence of inbreeding is a reduction in the frequency of the heterozygous genotype. Consider the following Punnet square where a heterozygote is producing a selfed offspring.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right"> </th>
+<th align="center"><span class="math inline">\(A\)</span></th>
+<th align="center"><span class="math inline">\(B\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><span class="math inline">\(A\)</span></td>
+<td align="center"><span class="math inline">\(AA\)</span></td>
+<td align="center"><span class="math inline">\(AB\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(B\)</span></td>
+<td align="center"><span class="math inline">\(AB\)</span></td>
+<td align="center"><span class="math inline">\(BB\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The offspring in the next generation are only 50% heterozygotes. Each generation of selfing, homozygotes produce homozygotes but only half of the offspring from heterozygotes stay as such. This process increases the relative frequency of homozygous genotypes in the population, though if you look at the offspring, the frequency of alleles do not change—there are as many A alleles as B alleles in the next generation of selfing.</p>
+<p>Conceptually, we can define an inbreeding parameter, <span class="math inline">\(F\)</span>, depicting the extent to which genotype frequencies have deviated from HWE due to inbreeding. But to do so, we need to differentiate between homozygote genotypes that have the same alleles because they are inbred (e.g., both alleles can be traced to a single allele in common ancestor) from those that are identical because they just happen to have the same allele (not of common ancestry). For this, we will define terms for these genotypes as:</p>
+<p><strong>Autozygous</strong> - Two alleles that are identical within a genotype because they came from the same individual in the previous generation. These alleles are Identical by Descent and will be found in the population at a rate of <span class="math inline">\(pF\)</span>.</p>
+<p><strong>Allozygous</strong> - Two alleles that are identical within a genotype but they came from alternate individuals in the parental generation. These alleles have Identity by State and are expected to occur at a frequency of <span class="math inline">\(p^2(1-F)\)</span>.</p>
+<p>Together, the expected frequency of the AA genotype, <span class="math inline">\(E[AA] = p^2(1-F) + pF\)</span>.</p>
+<p>At the extremes, if there is no inbreeding—all homozygotes are allozygous—the inbreeding statistic, <span class="math inline">\(F=0\)</span> and the expectation reduces to <span class="math inline">\(E[AA] = p^2\)</span>. Conversely, if all offspring are the result of selfing, <span class="math inline">\(F=1\)</span> and <span class="math inline">\(E[AA] = p\)</span>.</p>
+<p>Often the parameter <span class="math inline">\(F\)</span> is the subject of our analyses and the item that is to be estimated from genetic data. Give the definition above, <span class="math inline">\(F\)</span> is defined as the proportional loss of heterozygosity and is estimated as:</p>
+<p><span class="math display">\[
+\begin{aligned}
+F &amp;= \frac{H_e - H_o}{H_e} \\ 
+  &amp;= 1 - \frac{H_o}{H_e}
+\end{aligned}
+\]</span></p>
+<p>The key point here is that inbreeding (autozygosity) is estimated ‘relative’ to the expected frequencies of non-inbred heterozygotes (allozygosity).</p>
+<p>Selfing is the most extreme form of inbreeding is that of selfing—one parent donates both gametes to the offspring. In selfing systems, the frequency of genotypes <span class="math inline">\(P = freq(AA)\)</span>, <span class="math inline">\(Q = freq(AB)\)</span>, and <span class="math inline">\(R = freq(BB)\)</span>, change in through time in a predictable fashion providing us a quantitative approach to characterizing the duration of inbreeding from allele and genotype frequencies.</p>
+<p>From first principles, selfing for these genotypes produces the following expected offspring genotype frequencies:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Parent</th>
+<th align="center">Offspring</th>
+<th align="left">Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><span class="math inline">\(AA\)</span></td>
+<td align="center"><span class="math inline">\(AA\)</span></td>
+<td align="left"><span class="math inline">\(P\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(AB\)</span></td>
+<td align="center"><span class="math inline">\(1/4\;AA\)</span></td>
+<td align="left"><span class="math inline">\(Q/4\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"> </td>
+<td align="center"><span class="math inline">\(1/2\;AB\)</span></td>
+<td align="left"><span class="math inline">\(Q/2\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"> </td>
+<td align="center"><span class="math inline">\(1/4\;BB\)</span></td>
+<td align="left"><span class="math inline">\(Q/4\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(BB\)</span></td>
+<td align="center"><span class="math inline">\(BB\)</span></td>
+<td align="left"><span class="math inline">\(R\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Such that the genotype frequencies in the next generation are:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P_{t+1} &amp;= P_t + \frac{1}{4}Q_t \\
+Q_{t+1} &amp;= \frac{1}{2}Q_t \\
+R_{t+1} &amp;= R_t + \frac{1}{4}R_t
+\end{aligned}
+\]</span></p>
+<p>The interesting thing here is that the allele frequencies at the next generation are derived from the genotype frequencies as:</p>
+<p><span class="math display">\[
+p_{t+1} = P_{t+1} + \frac{1}{2}Q_{t+1}
+\]</span></p>
+<p>But with a little re-arrangement of terms, we see that</p>
+<p><span class="math display">\[
+\begin{aligned}
+p_{t+1} &amp;= P_{t+1} + \frac{1}{2}Q_{t+1} \\
+ &amp;= \left(P_t + \frac{1}{4}Q_t \right) + \frac{1}{2}\left( \frac{1}{2}Q_t \right) \\
+ &amp;= P_t + \frac{1}{2}Q_t \\
+ &amp;= p_t
+\end{aligned}
+\]</span></p>
+<p>showing that while genotype frequencies change with each generation of inbreeding, the underlying allele frequencies remain constant! Inbreeding only changes how alleles are packed into genotypes and in not changing frequencies, does not result in evolutionary change, <em>sensu stricto</em>.</p>
+<div id="changes-in-f" class="section level2">
+<h2><span class="header-section-number">11.1</span> Changes in F</h2>
+<p>For every generation with selfing, the average level of inbreeding in the population will increase. The amount it increases depends upon how inbred the population already is, outbred populations will have larger <span class="math inline">\(\delta F\)</span> than similar populations with higher initial <span class="math inline">\(F\)</span>.</p>
+<div id="theoretical-expectations" class="section level3">
+<h3><span class="header-section-number">11.1.1</span> Theoretical Expectations</h3>
+<p>As expected, selfing changes the estimate of <span class="math inline">\(F\)</span> as well. It changes across generations with continued selfing as:</p>
+<p><span class="math display">\[
+F_1 = 1 - \frac{H_O}{H_E} = 1 - \frac{Q_1}{2pq}
+\]</span></p>
+<p>for the first generation,</p>
+<p><span class="math display">\[
+F_2 = 1 - \frac{ \frac{Q_1}{2} }{2pq}
+\]</span></p>
+<p>for the second,</p>
+<p><span class="math display">\[
+F_3 = \frac{\frac{Q_2}{2}}{2pq}  = \frac{\frac{\frac{Q_1}{2}}{2}}{2pq}
+\]</span></p>
+<p>and the next</p>
+<p><span class="math display">\[
+F_4 = \frac{\frac{Q_3}{2}}{2pq}  = \frac{\frac{\frac{Q_2}{2}}{2}}{2pq} =
+\frac{\frac{\frac{\frac{Q_1}{2}}{2}}{2}}{2pq}
+\]</span></p>
+<p>and so on. Numerically, if <span class="math inline">\(F_1=0\)</span>, then $F2 = 0.50, F3 = 0.75, and F4 = 0.875. Each generation, <span class="math inline">\(F\)</span> approaches 1.0 by half way. From this pattern, the change in <span class="math inline">\(F\)</span> each generation can be estimated as:</p>
+<p><span class="math display">\[
+F_{t+1} = \frac{1}{2} + \frac{1}{2}F_t
+\]</span></p>
+<p>for each generation or</p>
+<p><span class="math display">\[
+F_t = 1 - \left(\frac{1}{2}\right)^t(1-F_O)
+\]</span></p>
+<p>for any arbitrary time, <span class="math inline">\(t\)</span>, in the future given some starting level of inbreeding. This expectation looks like:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+T &lt;-<span class="st"> </span><span class="dv">0</span>:<span class="dv">15</span>
+F &lt;-<span class="st"> </span><span class="dv">1</span> -<span class="st"> </span><span class="fl">0.5</span>^T
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( T, F)
+<span class="kw">ggplot</span>(df,<span class="kw">aes</span>(T,F)) +<span class="st"> </span><span class="kw">geom_line</span>() +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Generation (t)&quot;</span>) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Inbreeding (F)&quot;</span>)</code></pre></div>
+<p><img src="amg_files/figure-html/unnamed-chunk-242-1.png" width="672" /></p>
+</div>
+</div>
+<div id="simulation-example" class="section level2">
+<h2><span class="header-section-number">11.2</span> Simulation Example</h2>
+<p>These smooth expectations are nice but real data is a bit more complex. Real data is not so clean but it is pretty easy to simulate this process and measure the change in inbreeding through time. Here is how that can be done.</p>
+<p>First, I’m going to start with a population in HWE with allele frequencies of <span class="math inline">\(p=q\)</span>. To do this, we start by importing the gstudio library and making raw genotypes. We can replicate them to make a starting population with <span class="math inline">\(N=100\)</span> individuals.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gstudio)
+AA &lt;-<span class="st"> </span><span class="kw">locus</span>( <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;A&quot;</span>) )
+AB &lt;-<span class="st"> </span><span class="kw">locus</span>( <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>) )
+BB &lt;-<span class="st"> </span><span class="kw">locus</span>( <span class="kw">c</span>(<span class="st">&quot;B&quot;</span>,<span class="st">&quot;B&quot;</span>) )
+pop &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">ID=</span><span class="dv">1</span>:<span class="dv">100</span>, <span class="dt">Locus1=</span><span class="kw">c</span>( <span class="kw">rep</span>(AA,<span class="dv">25</span>), <span class="kw">rep</span>(AB,<span class="dv">50</span>), <span class="kw">rep</span>(BB,<span class="dv">25</span>) ) )</code></pre></div>
+<p>Just to check, we can see the starting allele frequencies as:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">frequencies</span>(pop)</code></pre></div>
+<pre><code>##    Locus Allele Frequency
+## 1 Locus1      A       0.5
+## 2 Locus1      B       0.5</code></pre>
+<p>The inbreeding parameter, <span class="math inline">\(F\)</span>, is estimated on a data.frame object that has at least one column of data of type locus using the wrapper function <code>genetic_diversity()</code> and passing it the <code>mode=&quot;Fis&quot;</code> option—the ‘is’ subscript here is because there are additional <span class="math inline">\(F\)</span> statistics that may be calculated for different groups of individuals which will be covered in the section on genetic structure. The parameter <span class="math inline">\(F\)</span> is estimated for each locus and the results are given in a data.frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">genetic_diversity</span>(pop,<span class="dt">mode=</span><span class="st">&quot;Fis&quot;</span>)</code></pre></div>
+<pre><code>##    Locus Fis
+## 1 Locus1   0</code></pre>
+<p>I am going to simulate 10 replicate runs of selfing, each starting with this very population. During each replicate, each individual will produce one and only one offspring through selfing using the function <code>mate()</code> and iterated across generations as in the expectation. The parameter F will be recorded after all replications are finished plot against time.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df$Category =<span class="st"> &quot;Expectations&quot;</span>
+for( rep in <span class="dv">0</span>:<span class="dv">9</span> ) {
+  data &lt;-<span class="st"> </span>pop
+  F &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">length</span>(T) )
+  for(t in T){
+    <span class="co"># estimate F</span>
+    F[(t<span class="dv">+1</span>)] &lt;-<span class="st"> </span><span class="kw">genetic_diversity</span>(data,<span class="dt">mode=</span><span class="st">&quot;Fis&quot;</span>)$Fis[<span class="dv">1</span>]
+    <span class="co"># self all adults to make offspring</span>
+    data &lt;-<span class="st"> </span><span class="kw">mate</span>( data, data, <span class="dt">N=</span><span class="dv">1</span> )
+  }
+  df.rep &lt;-<span class="st"> </span><span class="kw">data.frame</span>( T, F, <span class="dt">Category=</span><span class="kw">paste</span>(<span class="st">&quot;Replicate&quot;</span>,rep))
+  df &lt;-<span class="st"> </span><span class="kw">rbind</span>( df, df.rep )
+}</code></pre></div>
+<p>The variance around expectation is moderate shows that even if all expectations are met, real data is a bit messy—perhaps expectations are more of what you’d call ‘guidelines’ than strict rules.</p>
+<div class="figure"><span id="fig:unnamed-chunk-247"></span>
+<img src="amg_files/figure-html/unnamed-chunk-247-1.png" alt="Replicate simulations of inbreeding in purely selfing populations (colored lines) with theoretical expectation (black line)." width="672" />
+<p class="caption">
+Figure 11.1: Replicate simulations of inbreeding in purely selfing populations (colored lines) with theoretical expectation (black line).
+</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="mutation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mixed-mating-systems.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"],
+"instapaper": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

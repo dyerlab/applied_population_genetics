@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Applied Population Genetics</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="A textbook for the use of R in spatial genetic data analysis.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Applied Population Genetics" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="media/TitlePage_small.png" />
+  <meta property="og:description" content="A textbook for the use of R in spatial genetic data analysis." />
+  <meta name="github-repo" content="dyerlab/AMG" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Applied Population Genetics" />
+  
+  <meta name="twitter:description" content="A textbook for the use of R in spatial genetic data analysis." />
+  <meta name="twitter:image" content="media/TitlePage_small.png" />
+
+<meta name="author" content="Rodney J. Dyer">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="linear-models.html">
+<link rel="next" href="population-graphs.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.8/htmlwidgets.js"></script>
+<link href="libs/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-0.7.3/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-1.0.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.0.27/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-1.0.1/leaflet-providers-plugin.js"></script>
+<script src="libs/d3-3.5.2/d3.min.js"></script>
+<script src="libs/sankey-1/sankey.js"></script>
+<script src="libs/sankeyNetwork-binding-0.2.13/sankeyNetwork.js"></script>
+<script src="libs/dendroNetwork-binding-0.2.13/dendroNetwork.js"></script>
+<script src="libs/simpleNetwork-binding-0.2.13/simpleNetwork.js"></script>
+<script src="libs/forceNetwork-binding-0.2.13/forceNetwork.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="media/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Applied Population Genetics</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#logistics"><i class="fa fa-check"></i>Logistics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#motivation"><i class="fa fa-check"></i>Motivation</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#typography"><i class="fa fa-check"></i>Typography</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#interactive-content"><i class="fa fa-check"></i>Interactive Content</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#dedication"><i class="fa fa-check"></i>Dedication</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html"><i class="fa fa-check"></i><b>1</b> The R Ecosystem</a><ul>
+<li class="chapter" data-level="1.1" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#getting-r-configured"><i class="fa fa-check"></i><b>1.1</b> Getting R Configured</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#packages"><i class="fa fa-check"></i><b>1.1.1</b> Packages</a></li>
+<li class="chapter" data-level="1.1.2" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#cran"><i class="fa fa-check"></i><b>1.1.2</b> CRAN</a></li>
+<li class="chapter" data-level="1.1.3" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#github"><i class="fa fa-check"></i><b>1.1.3</b> GitHub</a></li>
+<li class="chapter" data-level="1.1.4" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#bioconductor"><i class="fa fa-check"></i><b>1.1.4</b> Bioconductor</a></li>
+<li class="chapter" data-level="1.1.5" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#troublesome-packages"><i class="fa fa-check"></i><b>1.1.5</b> Troublesome Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#libraries-used-in-text"><i class="fa fa-check"></i><b>1.2</b> Libraries Used in Text</a></li>
+<li class="chapter" data-level="1.3" data-path="the-r-ecosystem.html"><a href="the-r-ecosystem.html#the-rstudio-environment"><i class="fa fa-check"></i><b>1.3</b> The RStudio Environment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>2</b> Data Types</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-types.html"><a href="data-types.html#numeric-data-types"><i class="fa fa-check"></i><b>2.1</b> Numeric Data Types</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="data-types.html"><a href="data-types.html#coercion-to-numeric"><i class="fa fa-check"></i><b>2.1.1</b> Coercion to Numeric</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-types.html"><a href="data-types.html#characters"><i class="fa fa-check"></i><b>2.2</b> Characters</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="data-types.html"><a href="data-types.html#concatenation-of-characters"><i class="fa fa-check"></i><b>2.2.1</b> Concatenation of Characters</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-types.html"><a href="data-types.html#coercion-to-characters"><i class="fa fa-check"></i><b>2.2.2</b> Coercion to Characters</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-types.html"><a href="data-types.html#factors"><i class="fa fa-check"></i><b>2.3</b> Factors</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="data-types.html"><a href="data-types.html#missing-levels-in-factors"><i class="fa fa-check"></i><b>2.3.1</b> Missing Levels in Factors</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="data-types.html"><a href="data-types.html#logical-types"><i class="fa fa-check"></i><b>2.4</b> Logical Types</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-containers.html"><a href="data-containers.html"><i class="fa fa-check"></i><b>3</b> Data Containers</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-containers.html"><a href="data-containers.html#vectors"><i class="fa fa-check"></i><b>3.1</b> Vectors</a></li>
+<li class="chapter" data-level="3.2" data-path="data-containers.html"><a href="data-containers.html#matrices"><i class="fa fa-check"></i><b>3.2</b> Matrices</a></li>
+<li class="chapter" data-level="3.3" data-path="data-containers.html"><a href="data-containers.html#lists"><i class="fa fa-check"></i><b>3.3</b> Lists</a></li>
+<li class="chapter" data-level="3.4" data-path="data-containers.html"><a href="data-containers.html#data-frames"><i class="fa fa-check"></i><b>3.4</b> Data Frames</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="data-containers.html"><a href="data-containers.html#indexing-data-frames"><i class="fa fa-check"></i><b>3.4.1</b> Indexing Data Frames</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="programming.html"><a href="programming.html"><i class="fa fa-check"></i><b>4</b> Programming</a><ul>
+<li class="chapter" data-level="4.1" data-path="programming.html"><a href="programming.html#function-writing"><i class="fa fa-check"></i><b>4.1</b> Function Writing</a></li>
+<li class="chapter" data-level="4.2" data-path="programming.html"><a href="programming.html#variable-scope"><i class="fa fa-check"></i><b>4.2</b> Variable Scope</a></li>
+<li class="chapter" data-level="4.3" data-path="programming.html"><a href="programming.html#decision-making"><i class="fa fa-check"></i><b>4.3</b> Decision Making</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="programming.html"><a href="programming.html#the-if-pattern"><i class="fa fa-check"></i><b>4.3.1</b> The if Pattern</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="programming.html"><a href="programming.html#the-if-else-pattern"><i class="fa fa-check"></i><b>4.4</b> The <code>if-else</code> Pattern</a></li>
+<li class="chapter" data-level="4.5" data-path="programming.html"><a href="programming.html#flow-control"><i class="fa fa-check"></i><b>4.5</b> Flow Control</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="programming.html"><a href="programming.html#the-for-loop"><i class="fa fa-check"></i><b>4.5.1</b> The for() Loop</a></li>
+<li class="chapter" data-level="4.5.2" data-path="programming.html"><a href="programming.html#short-circuiting-the-loop"><i class="fa fa-check"></i><b>4.5.2</b> Short Circuiting the Loop</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="graphics.html"><a href="graphics.html"><i class="fa fa-check"></i><b>5</b> Graphics</a><ul>
+<li class="chapter" data-level="5.1" data-path="graphics.html"><a href="graphics.html#univariate-data"><i class="fa fa-check"></i><b>5.1</b> Univariate Data</a></li>
+<li class="chapter" data-level="5.2" data-path="graphics.html"><a href="graphics.html#plotting-parameters"><i class="fa fa-check"></i><b>5.2</b> Plotting Parameters</a></li>
+<li class="chapter" data-level="5.3" data-path="graphics.html"><a href="graphics.html#density-plots"><i class="fa fa-check"></i><b>5.3</b> Density Plots</a></li>
+<li class="chapter" data-level="5.4" data-path="graphics.html"><a href="graphics.html#overlaying-plots"><i class="fa fa-check"></i><b>5.4</b> Overlaying Plots</a></li>
+<li class="chapter" data-level="5.5" data-path="graphics.html"><a href="graphics.html#boxplots"><i class="fa fa-check"></i><b>5.5</b> Boxplots</a></li>
+<li class="chapter" data-level="5.6" data-path="graphics.html"><a href="graphics.html#scatter-plots"><i class="fa fa-check"></i><b>5.6</b> Scatter Plots</a></li>
+<li class="chapter" data-level="5.7" data-path="graphics.html"><a href="graphics.html#multiple-plots"><i class="fa fa-check"></i><b>5.7</b> Multiple Plots</a></li>
+<li class="chapter" data-level="5.8" data-path="graphics.html"><a href="graphics.html#color-palettes"><i class="fa fa-check"></i><b>5.8</b> Color Palettes</a></li>
+<li class="chapter" data-level="5.9" data-path="graphics.html"><a href="graphics.html#rcolorbrewer"><i class="fa fa-check"></i><b>5.9</b> RColorBrewer</a></li>
+<li class="chapter" data-level="5.10" data-path="graphics.html"><a href="graphics.html#saving-imagery"><i class="fa fa-check"></i><b>5.10</b> Saving Imagery</a></li>
+<li class="chapter" data-level="5.11" data-path="graphics.html"><a href="graphics.html#interactive-graphics"><i class="fa fa-check"></i><b>5.11</b> Interactive Graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="reproducable-research.html"><a href="reproducable-research.html"><i class="fa fa-check"></i><b>6</b> Reproducable Research</a><ul>
+<li class="chapter" data-level="6.1" data-path="reproducable-research.html"><a href="reproducable-research.html#keeping-data-on-google-drive"><i class="fa fa-check"></i><b>6.1</b> Keeping Data on Google Drive</a></li>
+<li class="chapter" data-level="6.2" data-path="reproducable-research.html"><a href="reproducable-research.html#integrating-into-slack"><i class="fa fa-check"></i><b>6.2</b> Integrating into Slack</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="reproducable-research.html"><a href="reproducable-research.html#fixing-problem-with-version-1.4.1"><i class="fa fa-check"></i><b>6.2.1</b> Fixing Problem with Version 1.4.1</a></li>
+<li class="chapter" data-level="6.2.2" data-path="reproducable-research.html"><a href="reproducable-research.html#configuration"><i class="fa fa-check"></i><b>6.2.2</b> Configuration</a></li>
+<li class="chapter" data-level="6.2.3" data-path="reproducable-research.html"><a href="reproducable-research.html#sending-text-and-graphical-ouput"><i class="fa fa-check"></i><b>6.2.3</b> Sending Text and Graphical Ouput</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Single Population</b></span></li>
+<li class="chapter" data-level="7" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html"><i class="fa fa-check"></i><b>7</b> Hardy-Weinberg Equilibrium</a><ul>
+<li class="chapter" data-level="7.1" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#genetic-assumptions"><i class="fa fa-check"></i><b>7.1</b> Genetic Assumptions</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#punnet-squares"><i class="fa fa-check"></i><b>7.1.1</b> Punnet Squares</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#evolutionary-assumptions"><i class="fa fa-check"></i><b>7.2</b> Evolutionary Assumptions</a></li>
+<li class="chapter" data-level="7.3" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#the-mechanics"><i class="fa fa-check"></i><b>7.3</b> The Mechanics</a></li>
+<li class="chapter" data-level="7.4" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#trans-generational-transition-probabilities"><i class="fa fa-check"></i><b>7.4</b> Trans-Generational Transition Probabilities</a></li>
+<li class="chapter" data-level="7.5" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#consequences-of-hwe"><i class="fa fa-check"></i><b>7.5</b> Consequences of HWE</a></li>
+<li class="chapter" data-level="7.6" data-path="hardy-weinberg-equilibrium.html"><a href="hardy-weinberg-equilibrium.html#zygotic-gene-flow"><i class="fa fa-check"></i><b>7.6</b> Zygotic Gene Flow</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="genetic-drift.html"><a href="genetic-drift.html"><i class="fa fa-check"></i><b>8</b> Genetic Drift</a><ul>
+<li class="chapter" data-level="8.1" data-path="genetic-drift.html"><a href="genetic-drift.html#consequences-of-genetic-drift"><i class="fa fa-check"></i><b>8.1</b> Consequences of Genetic Drift</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="genetic-drift.html"><a href="genetic-drift.html#time-to-fixation"><i class="fa fa-check"></i><b>8.1.1</b> Time to Fixation</a></li>
+<li class="chapter" data-level="8.1.2" data-path="genetic-drift.html"><a href="genetic-drift.html#time-to-allele-loss"><i class="fa fa-check"></i><b>8.1.2</b> Time to Allele Loss</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="genetic-drift.html"><a href="genetic-drift.html#mutation-drift"><i class="fa fa-check"></i><b>8.2</b> Mutation &amp; Drift</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="effective-population-size.html"><a href="effective-population-size.html"><i class="fa fa-check"></i><b>9</b> Effective Population Size</a><ul>
+<li class="chapter" data-level="9.1" data-path="effective-population-size.html"><a href="effective-population-size.html#demographic-effective-population-sizes"><i class="fa fa-check"></i><b>9.1</b> Demographic Effective Population Sizes</a></li>
+<li class="chapter" data-level="9.2" data-path="effective-population-size.html"><a href="effective-population-size.html#genetic-effective-population-size"><i class="fa fa-check"></i><b>9.2</b> Genetic Effective Population Size</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="effective-population-size.html"><a href="effective-population-size.html#inbreeding-effective-population-size"><i class="fa fa-check"></i><b>9.2.1</b> Inbreeding Effective Population Size</a></li>
+<li class="chapter" data-level="9.2.2" data-path="effective-population-size.html"><a href="effective-population-size.html#variance-effective-population-size"><i class="fa fa-check"></i><b>9.2.2</b> Variance Effective Population Size</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="effective-population-size.html"><a href="effective-population-size.html#fluctuating-population-size"><i class="fa fa-check"></i><b>9.3</b> Fluctuating Population Size</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="mutation.html"><a href="mutation.html"><i class="fa fa-check"></i><b>10</b> Mutation</a><ul>
+<li class="chapter" data-level="10.1" data-path="mutation.html"><a href="mutation.html#mutation-models"><i class="fa fa-check"></i><b>10.1</b> Mutation Models</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="mutation.html"><a href="mutation.html#fixed-allele-model"><i class="fa fa-check"></i><b>10.1.1</b> Fixed Allele Model</a></li>
+<li class="chapter" data-level="10.1.2" data-path="mutation.html"><a href="mutation.html#infinite-allele-model"><i class="fa fa-check"></i><b>10.1.2</b> Infinite Allele Model</a></li>
+<li class="chapter" data-level="10.1.3" data-path="mutation.html"><a href="mutation.html#stepwise-mutation-model"><i class="fa fa-check"></i><b>10.1.3</b> Stepwise Mutation Model</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="mutation.html"><a href="mutation.html#mutation-and-inbreeding"><i class="fa fa-check"></i><b>10.2</b> Mutation and Inbreeding</a></li>
+<li class="chapter" data-level="10.3" data-path="mutation.html"><a href="mutation.html#estimating-mutation"><i class="fa fa-check"></i><b>10.3</b> Estimating Mutation</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="mutation.html"><a href="mutation.html#phenotypes"><i class="fa fa-check"></i><b>10.3.1</b> Phenotypes</a></li>
+<li class="chapter" data-level="10.3.2" data-path="mutation.html"><a href="mutation.html#genotypes"><i class="fa fa-check"></i><b>10.3.2</b> Genotypes</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Nonrandom Rating</b></span></li>
+<li class="chapter" data-level="11" data-path="selfing.html"><a href="selfing.html"><i class="fa fa-check"></i><b>11</b> Selfing</a><ul>
+<li class="chapter" data-level="11.1" data-path="selfing.html"><a href="selfing.html#changes-in-f"><i class="fa fa-check"></i><b>11.1</b> Changes in F</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="selfing.html"><a href="selfing.html#theoretical-expectations"><i class="fa fa-check"></i><b>11.1.1</b> Theoretical Expectations</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="selfing.html"><a href="selfing.html#simulation-example"><i class="fa fa-check"></i><b>11.2</b> Simulation Example</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="mixed-mating-systems.html"><a href="mixed-mating-systems.html"><i class="fa fa-check"></i><b>12</b> Mixed Mating Systems</a><ul>
+<li class="chapter" data-level="12.1" data-path="mixed-mating-systems.html"><a href="mixed-mating-systems.html#mixed-mating-genotype-frequency-equilibriums"><i class="fa fa-check"></i><b>12.1</b> Mixed Mating Genotype Frequency Equilibriums</a></li>
+<li class="chapter" data-level="12.2" data-path="mixed-mating-systems.html"><a href="mixed-mating-systems.html#estimating-selfing-rates"><i class="fa fa-check"></i><b>12.2</b> Estimating Selfing Rates</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="wahlund-effects.html"><a href="wahlund-effects.html"><i class="fa fa-check"></i><b>13</b> Wahlund Effects</a></li>
+<li class="part"><span><b>III Parent Offspring Data</b></span></li>
+<li class="chapter" data-level="14" data-path="pedigrees.html"><a href="pedigrees.html"><i class="fa fa-check"></i><b>14</b> Pedigrees</a><ul>
+<li class="chapter" data-level="14.1" data-path="pedigrees.html"><a href="pedigrees.html#expectations-for-f-in-a-pedigree."><i class="fa fa-check"></i><b>14.1</b> Expectations for F in a pedigree.</a></li>
+<li class="chapter" data-level="14.2" data-path="pedigrees.html"><a href="pedigrees.html#drawing-pedigrees"><i class="fa fa-check"></i><b>14.2</b> Drawing Pedigrees</a></li>
+<li class="chapter" data-level="14.3" data-path="pedigrees.html"><a href="pedigrees.html#skills"><i class="fa fa-check"></i><b>14.3</b> Skills</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="parentage-analyses.html"><a href="parentage-analyses.html"><i class="fa fa-check"></i><b>15</b> Parentage Analyses</a><ul>
+<li class="chapter" data-level="15.1" data-path="parentage-analyses.html"><a href="parentage-analyses.html#paternity-vs.maternity"><i class="fa fa-check"></i><b>15.1</b> Paternity vs. Maternity</a></li>
+<li class="chapter" data-level="15.2" data-path="parentage-analyses.html"><a href="parentage-analyses.html#probability-of-exclusion"><i class="fa fa-check"></i><b>15.2</b> Probability of Exclusion</a></li>
+<li class="chapter" data-level="15.3" data-path="parentage-analyses.html"><a href="parentage-analyses.html#paternity-exclusion"><i class="fa fa-check"></i><b>15.3</b> Paternity Exclusion</a></li>
+<li class="chapter" data-level="15.4" data-path="parentage-analyses.html"><a href="parentage-analyses.html#fractional-paternity"><i class="fa fa-check"></i><b>15.4</b> Fractional Paternity</a></li>
+<li class="chapter" data-level="15.5" data-path="parentage-analyses.html"><a href="parentage-analyses.html#dispersal-kernels"><i class="fa fa-check"></i><b>15.5</b> Dispersal Kernels</a></li>
+</ul></li>
+<li class="part"><span><b>IV Subdivided Populations</b></span></li>
+<li class="chapter" data-level="16" data-path="mapping-populations.html"><a href="mapping-populations.html"><i class="fa fa-check"></i><b>16</b> Mapping Populations</a><ul>
+<li class="chapter" data-level="16.1" data-path="mapping-populations.html"><a href="mapping-populations.html#procedure"><i class="fa fa-check"></i><b>16.1</b> Procedure</a></li>
+<li class="chapter" data-level="16.2" data-path="mapping-populations.html"><a href="mapping-populations.html#plotting-population-locations"><i class="fa fa-check"></i><b>16.2</b> Plotting Population Locations</a></li>
+<li class="chapter" data-level="16.3" data-path="mapping-populations.html"><a href="mapping-populations.html#population-allele-frequencies"><i class="fa fa-check"></i><b>16.3</b> Population Allele Frequencies</a></li>
+<li class="chapter" data-level="16.4" data-path="mapping-populations.html"><a href="mapping-populations.html#dynamic-maps"><i class="fa fa-check"></i><b>16.4</b> Dynamic maps</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="mapping-populations.html"><a href="mapping-populations.html#sankey-networks"><i class="fa fa-check"></i><b>16.4.1</b> Sankey Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="population-models.html"><a href="population-models.html"><i class="fa fa-check"></i><b>17</b> Population Models</a><ul>
+<li class="chapter" data-level="17.1" data-path="population-models.html"><a href="population-models.html#models-of-partition"><i class="fa fa-check"></i><b>17.1</b> Models of Partition</a></li>
+<li class="chapter" data-level="17.2" data-path="population-models.html"><a href="population-models.html#island-mainland-model"><i class="fa fa-check"></i><b>17.2</b> Island Mainland Model</a></li>
+<li class="chapter" data-level="17.3" data-path="population-models.html"><a href="population-models.html#the-island-model"><i class="fa fa-check"></i><b>17.3</b> The Island Model</a></li>
+<li class="chapter" data-level="17.4" data-path="population-models.html"><a href="population-models.html#stepping-stone-models"><i class="fa fa-check"></i><b>17.4</b> Stepping Stone Models</a></li>
+<li class="chapter" data-level="17.5" data-path="population-models.html"><a href="population-models.html#the-general-model"><i class="fa fa-check"></i><b>17.5</b> The General Model</a></li>
+<li class="chapter" data-level="17.6" data-path="population-models.html"><a href="population-models.html#general-strategies"><i class="fa fa-check"></i><b>17.6</b> General Strategies</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="genetic-diversity.html"><a href="genetic-diversity.html"><i class="fa fa-check"></i><b>18</b> Genetic Diversity</a><ul>
+<li class="chapter" data-level="18.1" data-path="genetic-diversity.html"><a href="genetic-diversity.html#allelic-diversity"><i class="fa fa-check"></i><b>18.1</b> Allelic Diversity</a></li>
+<li class="chapter" data-level="18.2" data-path="genetic-diversity.html"><a href="genetic-diversity.html#genotypic-diversity"><i class="fa fa-check"></i><b>18.2</b> Genotypic Diversity</a></li>
+<li class="chapter" data-level="18.3" data-path="genetic-diversity.html"><a href="genetic-diversity.html#samples-from-several-locales"><i class="fa fa-check"></i><b>18.3</b> Samples from Several Locales</a></li>
+<li class="chapter" data-level="18.4" data-path="genetic-diversity.html"><a href="genetic-diversity.html#multilocus-diversity"><i class="fa fa-check"></i><b>18.4</b> Multilocus Diversity</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="rarefaction.html"><a href="rarefaction.html"><i class="fa fa-check"></i><b>19</b> Rarefaction</a><ul>
+<li class="chapter" data-level="19.1" data-path="rarefaction.html"><a href="rarefaction.html#mapping-diversity"><i class="fa fa-check"></i><b>19.1</b> Mapping Diversity</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="genetic-distances.html"><a href="genetic-distances.html"><i class="fa fa-check"></i><b>20</b> Genetic Distances</a><ul>
+<li class="chapter" data-level="20.1" data-path="genetic-distances.html"><a href="genetic-distances.html#individual-genetic-distance"><i class="fa fa-check"></i><b>20.1</b> Individual Genetic Distance</a><ul>
+<li class="chapter" data-level="20.1.1" data-path="genetic-distances.html"><a href="genetic-distances.html#euclidean-distance"><i class="fa fa-check"></i><b>20.1.1</b> Euclidean Distance</a></li>
+<li class="chapter" data-level="20.1.2" data-path="genetic-distances.html"><a href="genetic-distances.html#amova-distance"><i class="fa fa-check"></i><b>20.1.2</b> AMOVA Distance</a></li>
+<li class="chapter" data-level="20.1.3" data-path="genetic-distances.html"><a href="genetic-distances.html#bray-curtis-individual-distance"><i class="fa fa-check"></i><b>20.1.3</b> Bray-Curtis Individual Distance</a></li>
+<li class="chapter" data-level="20.1.4" data-path="genetic-distances.html"><a href="genetic-distances.html#ladder-distance"><i class="fa fa-check"></i><b>20.1.4</b> Ladder Distance</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="genetic-distances.html"><a href="genetic-distances.html#population-level-genetic-distances"><i class="fa fa-check"></i><b>20.2</b> Population-Level Genetic Distances</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="genetic-distances.html"><a href="genetic-distances.html#czekanowski-manhattan-distance"><i class="fa fa-check"></i><b>20.2.1</b> Czekanowski (Manhattan) Distance</a></li>
+<li class="chapter" data-level="20.2.2" data-path="genetic-distances.html"><a href="genetic-distances.html#rogers-euclidean-distance"><i class="fa fa-check"></i><b>20.2.2</b> Rogers (Euclidean) Distance</a></li>
+<li class="chapter" data-level="20.2.3" data-path="genetic-distances.html"><a href="genetic-distances.html#neis-genetic-distance"><i class="fa fa-check"></i><b>20.2.3</b> Nei’s Genetic Distance</a></li>
+<li class="chapter" data-level="20.2.4" data-path="genetic-distances.html"><a href="genetic-distances.html#conditional-genetic-distance"><i class="fa fa-check"></i><b>20.2.4</b> Conditional Genetic Distance</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="genetic-structure.html"><a href="genetic-structure.html"><i class="fa fa-check"></i><b>21</b> Genetic Structure</a><ul>
+<li class="chapter" data-level="21.1" data-path="genetic-structure.html"><a href="genetic-structure.html#f-statistics-and-thier-ilk"><i class="fa fa-check"></i><b>21.1</b> F-Statistics and Thier Ilk</a><ul>
+<li class="chapter" data-level="21.1.1" data-path="genetic-structure.html"><a href="genetic-structure.html#issues-with-fixation-indices"><i class="fa fa-check"></i><b>21.1.1</b> Issues with Fixation Indices</a></li>
+<li class="chapter" data-level="21.1.2" data-path="genetic-structure.html"><a href="genetic-structure.html#additional-x_st-like-parameters"><i class="fa fa-check"></i><b>21.1.2</b> Additional <span class="math inline">\(X_{ST}\)</span>-like Parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="21.2" data-path="genetic-structure.html"><a href="genetic-structure.html#statistical-structure"><i class="fa fa-check"></i><b>21.2</b> Statistical Structure</a></li>
+<li class="chapter" data-level="21.3" data-path="genetic-structure.html"><a href="genetic-structure.html#final-thoughts-on-structure"><i class="fa fa-check"></i><b>21.3</b> Final Thoughts on Structure</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="population-assignment.html"><a href="population-assignment.html"><i class="fa fa-check"></i><b>22</b> Population Assignment</a></li>
+<li class="chapter" data-level="23" data-path="admixture.html"><a href="admixture.html"><i class="fa fa-check"></i><b>23</b> Admixture</a></li>
+<li class="part"><span><b>V Statistical Models</b></span></li>
+<li class="chapter" data-level="24" data-path="ordination-of-genetic-data.html"><a href="ordination-of-genetic-data.html"><i class="fa fa-check"></i><b>24</b> Ordination of Genetic Data</a><ul>
+<li class="chapter" data-level="24.1" data-path="ordination-of-genetic-data.html"><a href="ordination-of-genetic-data.html#hierarchical-clustering"><i class="fa fa-check"></i><b>24.1</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="24.2" data-path="ordination-of-genetic-data.html"><a href="ordination-of-genetic-data.html#interactive-tree-display"><i class="fa fa-check"></i><b>24.2</b> Interactive Tree Display</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="distance-matrices.html"><a href="distance-matrices.html"><i class="fa fa-check"></i><b>25</b> Distance Matrices</a><ul>
+<li class="chapter" data-level="25.1" data-path="distance-matrices.html"><a href="distance-matrices.html#visual-comparisons"><i class="fa fa-check"></i><b>25.1</b> Visual Comparisons</a></li>
+<li class="chapter" data-level="25.2" data-path="distance-matrices.html"><a href="distance-matrices.html#the-mantel-test"><i class="fa fa-check"></i><b>25.2</b> The Mantel Test</a></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>26</b> Linear Models</a><ul>
+<li class="chapter" data-level="26.1" data-path="linear-models.html"><a href="linear-models.html#dependent-independent-relationships"><i class="fa fa-check"></i><b>26.1</b> Dependent &amp; Independent Relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="27" data-path="distance-networks.html"><a href="distance-networks.html"><i class="fa fa-check"></i><b>27</b> Distance Networks</a><ul>
+<li class="chapter" data-level="27.1" data-path="distance-networks.html"><a href="distance-networks.html#graph-structure"><i class="fa fa-check"></i><b>27.1</b> Graph Structure</a><ul>
+<li class="chapter" data-level="27.1.1" data-path="distance-networks.html"><a href="distance-networks.html#node-edge-attributes"><i class="fa fa-check"></i><b>27.1.1</b> Node &amp; Edge Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="27.2" data-path="distance-networks.html"><a href="distance-networks.html#plotting-a-graphs"><i class="fa fa-check"></i><b>27.2</b> Plotting a Graphs</a></li>
+<li class="chapter" data-level="27.3" data-path="distance-networks.html"><a href="distance-networks.html#mapping-networks"><i class="fa fa-check"></i><b>27.3</b> Mapping Networks</a></li>
+<li class="chapter" data-level="27.4" data-path="distance-networks.html"><a href="distance-networks.html#genetic-distance-graphs"><i class="fa fa-check"></i><b>27.4</b> Genetic Distance Graphs</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="population-graphs.html"><a href="population-graphs.html"><i class="fa fa-check"></i><b>28</b> Population Graphs</a><ul>
+<li class="chapter" data-level="28.1" data-path="population-graphs.html"><a href="population-graphs.html#adding-data-to-a-graph"><i class="fa fa-check"></i><b>28.1</b> Adding data to a graph</a><ul>
+<li class="chapter" data-level="28.1.1" data-path="population-graphs.html"><a href="population-graphs.html#plotting-a-graph-using-ggplot2-routines"><i class="fa fa-check"></i><b>28.1.1</b> Plotting a graph using <strong>ggplot2</strong> routines</a></li>
+<li class="chapter" data-level="28.1.2" data-path="population-graphs.html"><a href="population-graphs.html#reading-existing-popgraph-files"><i class="fa fa-check"></i><b>28.1.2</b> Reading Existing <strong>popgraph</strong> Files</a></li>
+<li class="chapter" data-level="28.1.3" data-path="population-graphs.html"><a href="population-graphs.html#saving-population-graph-objects"><i class="fa fa-check"></i><b>28.1.3</b> Saving Population Graph Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="28.2" data-path="population-graphs.html"><a href="population-graphs.html#interactive-networks"><i class="fa fa-check"></i><b>28.2</b> Interactive Networks</a></li>
+<li class="chapter" data-level="28.3" data-path="population-graphs.html"><a href="population-graphs.html#spatial-population-graphs"><i class="fa fa-check"></i><b>28.3</b> Spatial Population Graphs</a><ul>
+<li class="chapter" data-level="28.3.1" data-path="population-graphs.html"><a href="population-graphs.html#integrating-google-and-ggplot2-for-plotting"><i class="fa fa-check"></i><b>28.3.1</b> Integrating Google and <strong>ggplot2</strong> for Plotting</a></li>
+<li class="chapter" data-level="28.3.2" data-path="population-graphs.html"><a href="population-graphs.html#integrating-raster-maps"><i class="fa fa-check"></i><b>28.3.2</b> Integrating Raster Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="28.4" data-path="population-graphs.html"><a href="population-graphs.html#extracting-spatial-data-using-population-graphs"><i class="fa fa-check"></i><b>28.4</b> Extracting Spatial Data Using Population Graphs</a><ul>
+<li class="chapter" data-level="28.4.1" data-path="population-graphs.html"><a href="population-graphs.html#node-specific-data"><i class="fa fa-check"></i><b>28.4.1</b> Node Specific Data</a></li>
+<li class="chapter" data-level="28.4.2" data-path="population-graphs.html"><a href="population-graphs.html#extracting-data-along-popgraph-edges"><i class="fa fa-check"></i><b>28.4.2</b> Extracting Data Along Popgraph Edges</a></li>
+</ul></li>
+<li class="chapter" data-level="28.5" data-path="population-graphs.html"><a href="population-graphs.html#extracting-graph-theoretic-parameters"><i class="fa fa-check"></i><b>28.5</b> Extracting Graph-Theoretic Parameters</a><ul>
+<li class="chapter" data-level="28.5.1" data-path="population-graphs.html"><a href="population-graphs.html#matrix-representations-of-population-graph-objects"><i class="fa fa-check"></i><b>28.5.1</b> Matrix Representations of Population Graph Objects</a></li>
+<li class="chapter" data-level="28.5.2" data-path="population-graphs.html"><a href="population-graphs.html#node-specific-parameters"><i class="fa fa-check"></i><b>28.5.2</b> Node Specific Parameters</a></li>
+<li class="chapter" data-level="28.5.3" data-path="population-graphs.html"><a href="population-graphs.html#edge-specific-parameters"><i class="fa fa-check"></i><b>28.5.3</b> Edge Specific Parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="28.6" data-path="population-graphs.html"><a href="population-graphs.html#testing-for-topological-congruence"><i class="fa fa-check"></i><b>28.6</b> Testing for Topological Congruence</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="interactive-visualization.html"><a href="interactive-visualization.html"><i class="fa fa-check"></i><b>29</b> Interactive Visualization</a><ul>
+<li class="chapter" data-level="29.1" data-path="interactive-visualization.html"><a href="interactive-visualization.html#procedure-1"><i class="fa fa-check"></i><b>29.1</b> Procedure</a><ul>
+<li class="chapter" data-level="29.1.1" data-path="interactive-visualization.html"><a href="interactive-visualization.html#interactive-networks-1"><i class="fa fa-check"></i><b>29.1.1</b> Interactive Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VI Spatial Data</b></span></li>
+<li class="chapter" data-level="30" data-path="vector-data.html"><a href="vector-data.html"><i class="fa fa-check"></i><b>30</b> Vector Data</a><ul>
+<li class="chapter" data-level="30.1" data-path="vector-data.html"><a href="vector-data.html#points"><i class="fa fa-check"></i><b>30.1</b> Points</a></li>
+<li class="chapter" data-level="30.2" data-path="vector-data.html"><a href="vector-data.html#lines"><i class="fa fa-check"></i><b>30.2</b> Lines</a></li>
+<li class="chapter" data-level="30.3" data-path="vector-data.html"><a href="vector-data.html#polygons"><i class="fa fa-check"></i><b>30.3</b> Polygons</a></li>
+<li class="chapter" data-level="30.4" data-path="vector-data.html"><a href="vector-data.html#saving-vector-objects"><i class="fa fa-check"></i><b>30.4</b> Saving Vector Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="31" data-path="raster-data.html"><a href="raster-data.html"><i class="fa fa-check"></i><b>31</b> Raster Data</a><ul>
+<li class="chapter" data-level="31.1" data-path="raster-data.html"><a href="raster-data.html#cropping-rasters"><i class="fa fa-check"></i><b>31.1</b> Cropping Rasters</a><ul>
+<li class="chapter" data-level="31.1.1" data-path="raster-data.html"><a href="raster-data.html#cropping-rasters-via-polygons"><i class="fa fa-check"></i><b>31.1.1</b> Cropping Rasters Via Polygons</a></li>
+<li class="chapter" data-level="31.1.2" data-path="raster-data.html"><a href="raster-data.html#cropping-rasters-via-convex-hull"><i class="fa fa-check"></i><b>31.1.2</b> Cropping Rasters Via Convex Hull</a></li>
+</ul></li>
+<li class="chapter" data-level="31.2" data-path="raster-data.html"><a href="raster-data.html#modifying-rasters"><i class="fa fa-check"></i><b>31.2</b> Modifying Rasters</a></li>
+<li class="chapter" data-level="31.3" data-path="raster-data.html"><a href="raster-data.html#extracting-point-data-from-rasters"><i class="fa fa-check"></i><b>31.3</b> Extracting Point Data From Rasters</a><ul>
+<li class="chapter" data-level="31.3.1" data-path="raster-data.html"><a href="raster-data.html#stacks-of-rasters"><i class="fa fa-check"></i><b>31.3.1</b> Stacks of Rasters</a></li>
+</ul></li>
+<li class="chapter" data-level="31.4" data-path="raster-data.html"><a href="raster-data.html#rasters-ggplot"><i class="fa fa-check"></i><b>31.4</b> Rasters &amp; ggplot</a></li>
+<li class="chapter" data-level="31.5" data-path="raster-data.html"><a href="raster-data.html#d-visualization"><i class="fa fa-check"></i><b>31.5</b> 3D Visualization</a></li>
+<li class="chapter" data-level="31.6" data-path="raster-data.html"><a href="raster-data.html#saving-exporting-rasters"><i class="fa fa-check"></i><b>31.6</b> Saving &amp; Exporting Rasters</a></li>
+</ul></li>
+<li class="chapter" data-level="32" data-path="map-projections.html"><a href="map-projections.html"><i class="fa fa-check"></i><b>32</b> Map Projections</a><ul>
+<li class="chapter" data-level="32.1" data-path="map-projections.html"><a href="map-projections.html#projections"><i class="fa fa-check"></i><b>32.1</b> Projections</a><ul>
+<li class="chapter" data-level="32.1.1" data-path="map-projections.html"><a href="map-projections.html#equatorial-projections"><i class="fa fa-check"></i><b>32.1.1</b> Equatorial Projections</a></li>
+<li class="chapter" data-level="32.1.2" data-path="map-projections.html"><a href="map-projections.html#azimuth-projections"><i class="fa fa-check"></i><b>32.1.2</b> Azimuth Projections</a></li>
+<li class="chapter" data-level="32.1.3" data-path="map-projections.html"><a href="map-projections.html#polar-conic-projections"><i class="fa fa-check"></i><b>32.1.3</b> Polar Conic Projections</a></li>
+<li class="chapter" data-level="32.1.4" data-path="map-projections.html"><a href="map-projections.html#miscellaneous-projections"><i class="fa fa-check"></i><b>32.1.4</b> Miscellaneous Projections</a></li>
+<li class="chapter" data-level="32.1.5" data-path="map-projections.html"><a href="map-projections.html#reprojecting-rasters"><i class="fa fa-check"></i><b>32.1.5</b> Reprojecting Rasters</a></li>
+<li class="chapter" data-level="32.1.6" data-path="map-projections.html"><a href="map-projections.html#projecting-in-ggplot"><i class="fa fa-check"></i><b>32.1.6</b> Projecting In GGPlot</a></li>
+</ul></li>
+<li class="chapter" data-level="32.2" data-path="map-projections.html"><a href="map-projections.html#coordinate-systems"><i class="fa fa-check"></i><b>32.2</b> Coordinate Systems</a><ul>
+<li class="chapter" data-level="32.2.1" data-path="map-projections.html"><a href="map-projections.html#changing-datum"><i class="fa fa-check"></i><b>32.2.1</b> Changing Datum</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="33" data-path="ecological-distance.html"><a href="ecological-distance.html"><i class="fa fa-check"></i><b>33</b> Ecological Distance</a><ul>
+<li class="chapter" data-level="33.1" data-path="ecological-distance.html"><a href="ecological-distance.html#the-concept-of-resistance"><i class="fa fa-check"></i><b>33.1</b> The Concept of Resistance</a><ul>
+<li class="chapter" data-level="33.1.1" data-path="ecological-distance.html"><a href="ecological-distance.html#absolute-resistance"><i class="fa fa-check"></i><b>33.1.1</b> Absolute Resistance</a></li>
+</ul></li>
+<li class="chapter" data-level="33.2" data-path="ecological-distance.html"><a href="ecological-distance.html#relative-resistance"><i class="fa fa-check"></i><b>33.2</b> Relative Resistance</a></li>
+<li class="chapter" data-level="33.3" data-path="ecological-distance.html"><a href="ecological-distance.html#estimating-separation"><i class="fa fa-check"></i><b>33.3</b> Estimating Separation</a><ul>
+<li class="chapter" data-level="33.3.1" data-path="ecological-distance.html"><a href="ecological-distance.html#least-cost-distance"><i class="fa fa-check"></i><b>33.3.1</b> Least Cost Distance</a></li>
+<li class="chapter" data-level="33.3.2" data-path="ecological-distance.html"><a href="ecological-distance.html#all-paths-circuit-distance"><i class="fa fa-check"></i><b>33.3.2</b> All Paths (Circuit) Distance</a></li>
+<li class="chapter" data-level="33.3.3" data-path="ecological-distance.html"><a href="ecological-distance.html#path-corridor-constraints"><i class="fa fa-check"></i><b>33.3.3</b> Path &amp; Corridor Constraints</a></li>
+</ul></li>
+<li class="chapter" data-level="33.4" data-path="ecological-distance.html"><a href="ecological-distance.html#estimating-correlations-in-distance"><i class="fa fa-check"></i><b>33.4</b> Estimating Correlations in Distance</a><ul>
+<li class="chapter" data-level="33.4.1" data-path="ecological-distance.html"><a href="ecological-distance.html#pairwise-least-cost-path"><i class="fa fa-check"></i><b>33.4.1</b> Pairwise Least Cost Path</a></li>
+<li class="chapter" data-level="33.4.2" data-path="ecological-distance.html"><a href="ecological-distance.html#pairwise-all-pairs"><i class="fa fa-check"></i><b>33.4.2</b> Pairwise All Pairs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
+<li class="part"><span><b>VII Selection</b></span></li>
+<li class="chapter" data-level="35" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>35</b> Classical Selection Models</a><ul>
+<li class="chapter" data-level="35.1" data-path="classical-selection-models.html"><a href="classical-selection-models.html#the-strength-of-selection"><i class="fa fa-check"></i><b>35.1</b> The Strength of Selection</a></li>
+</ul></li>
+<li class="part"><span><b>VIII Backmatter</b></span></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="36" data-path="included-data-sets.html"><a href="included-data-sets.html"><i class="fa fa-check"></i><b>36</b> Included Data Sets</a><ul>
+<li class="chapter" data-level="36.1" data-path="included-data-sets.html"><a href="included-data-sets.html#the-sonoran-desert-bark-beetle-araptus-attenuata"><i class="fa fa-check"></i><b>36.1</b> The Sonoran desert bark beetle, <em>Araptus attenuata</em></a><ul>
+<li class="chapter" data-level="36.1.1" data-path="included-data-sets.html"><a href="included-data-sets.html#nuclear-markers"><i class="fa fa-check"></i><b>36.1.1</b> Nuclear Markers</a></li>
+<li class="chapter" data-level="36.1.2" data-path="included-data-sets.html"><a href="included-data-sets.html#methylation-markers"><i class="fa fa-check"></i><b>36.1.2</b> Methylation Markers</a></li>
+</ul></li>
+<li class="chapter" data-level="36.2" data-path="included-data-sets.html"><a href="included-data-sets.html#the-flowering-dogwood-cornus-florida"><i class="fa fa-check"></i><b>36.2</b> The Flowering Dogwood <em>Cornus florida</em></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="divider"></li>
+<li><a href="http://dyerlab.bio.vcu.edu" target="blank">the Dyer Laboratory</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Population Genetics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="distance-networks" class="section level1 imageChapter">
+<h1><span class="header-section-number">27</span> Distance Networks</h1>
+<div class="chapter_image">
+<img src="chapter_images/ch_dogwood2.JPG">
+</div>
+<div id="graph-structure" class="section level2">
+<h2><span class="header-section-number">27.1</span> Graph Structure</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dt">nrow=</span><span class="dv">5</span>, <span class="dt">ncol=</span><span class="dv">5</span>)
+A[<span class="dv">1</span>,<span class="dv">2</span>] &lt;-<span class="st"> </span>A[<span class="dv">2</span>,<span class="dv">3</span>] &lt;-<span class="st"> </span>A[<span class="dv">1</span>,<span class="dv">3</span>] &lt;-<span class="st"> </span>A[<span class="dv">3</span>,<span class="dv">4</span>] &lt;-<span class="st"> </span>A[<span class="dv">4</span>,<span class="dv">5</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
+A &lt;-<span class="st"> </span>A +<span class="st"> </span><span class="kw">t</span>(A)
+A</code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    0    1    1    0    0
+## [2,]    1    0    1    0    0
+## [3,]    1    1    0    1    0
+## [4,]    0    0    1    0    1
+## [5,]    0    0    0    1    0</code></pre>
+<p>There is a quick function, <code>as.popgraph()</code> that takes either an existing <strong>igraph</strong>object or a matrix and turns them into <em>popgraph</em> objects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(igraph)
+g &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>( A , <span class="dt">mode=</span><span class="st">&quot;undirected&quot;</span>)</code></pre></div>
+<p>There are several options available under the <code>mode</code> parameter. We typically use the undirected graph option but the following are also available:</p>
+<ol style="list-style-type: decimal">
+<li><code>undirected</code> The connections between nodes are symmetric. This is the default for population graphs as covariance, the quantity the edge is representing is symmetrical.</li>
+<li><code>directed</code> The edges are asymetric.</li>
+<li><code>max</code> or <code>min</code> Will take the largest (or smallest) value of the matrix (e.g., <span class="math inline">\(max(A[i,j], A[j,i])\)</span> or <span class="math inline">\(min( A[i,j], A[j,i])\)</span> ).</li>
+<li><code>upper</code> or <code>lower</code> Uses either the upper or lower element of the matrix.</li>
+<li><code>plus</code> Adds upper and lower values (e.g., <span class="math inline">\(A[i,j] + A[j,i]\)</span>).</li>
+</ol>
+<p>The graph object presents several characteristics as an output including the number of nodes and edges, the mode of the graph, and a list of the edges (if there aren’t too many–in which case the list is truncated).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g</code></pre></div>
+<pre><code>## IGRAPH U--- 5 5 -- 
+## + edges:
+## [1] 1--2 1--3 2--3 3--4 4--5</code></pre>
+<p>Here we see that this object is an igraph, is ’U’ndirected, and has 5 nodes and 5 edges. The edges are indicated by numbers and are graphically displayed.</p>
+<div id="node-edge-attributes" class="section level3">
+<h3><span class="header-section-number">27.1.1</span> Node &amp; Edge Attributes</h3>
+<p>The underlying structure of an <code>igraph</code> object allows you to assoicate attributes (e.g., other data) with nodes and edges. Node attributes are accessed using the <span class="math inline">\(V(graph)\)</span> operator (for vertex) and edge attributes are done via <span class="math inline">\(E(graph)\)</span>. Attributes can be set as well as retrieved using the same mechanisms for nodes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(g)$name &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Olympia&quot;</span>,<span class="st">&quot;Bellingham&quot;</span>,<span class="st">&quot;St. Louis&quot;</span>,<span class="st">&quot;Ames&quot;</span>,<span class="st">&quot;Richmond&quot;</span>)
+<span class="kw">V</span>(g)$group &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;West&quot;</span>,<span class="st">&quot;West&quot;</span>, <span class="st">&quot;Central&quot;</span>,<span class="st">&quot;Central&quot;</span>,<span class="st">&quot;East&quot;</span>)
+<span class="kw">V</span>(g)$color &lt;-<span class="st"> &quot;#cca160&quot;</span>
+<span class="kw">list.vertex.attributes</span>( g )</code></pre></div>
+<pre><code>## [1] &quot;name&quot;  &quot;group&quot; &quot;color&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(g)$name</code></pre></div>
+<pre><code>## [1] &quot;Olympia&quot;    &quot;Bellingham&quot; &quot;St. Louis&quot;  &quot;Ames&quot;       &quot;Richmond&quot;</code></pre>
+<p>and for edges</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g)</code></pre></div>
+<pre><code>## + 5/5 edges (vertex names):
+## [1] Olympia   --Bellingham Olympia   --St. Louis  Bellingham--St. Louis 
+## [4] St. Louis --Ames       Ames      --Richmond</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g)$color &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;red&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>,<span class="st">&quot;dark green&quot;</span>)
+<span class="kw">list.edge.attributes</span>( g )</code></pre></div>
+<pre><code>## [1] &quot;color&quot;</code></pre>
+</div>
+</div>
+<div id="plotting-a-graphs" class="section level2">
+<h2><span class="header-section-number">27.2</span> Plotting a Graphs</h2>
+<p>One of the main benefits to using R is that you can leverage the mutlitude of other packages to visualize and manipulate your data in interesting and informative ways. Since a <code>popgraph</code> is an instance of an <em>igraph</em> element, we can use the <em>igraph</em> routines for plotting. Here is an example.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(g)</code></pre></div>
+<p><img src="amg_files/figure-html/unnamed-chunk-444-1.png" width="672" /></p>
+<p>There are several different options you can use to manipulate the graphical forms. By default, the plotting routines look for node and edge attributes such as <code>name</code> and <code>color</code> to plot the output appropriately. There are several additional plotting functions for plotting <em>igraph</em> objects. Here are some examples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(g, <span class="dt">edge.color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;darkred&quot;</span>, <span class="dt">vertex.color=</span><span class="st">&quot;#cccccc&quot;</span>, <span class="dt">vertex.label.dist=</span><span class="dv">1</span>)</code></pre></div>
+<p><img src="amg_files/figure-html/unnamed-chunk-445-1.png" width="672" /></p>
+<p>Below is the output from the <code>igraph.plotting</code> help file that covers the main options that you have for customizing the way that the network is displayed.</p>
+<div class="scrollingbox">
+<pre>
+Drawing graphs {igraph} R Documentation
+Drawing graphs
+
+Description
+
+The common bits of the three plotting functions plot.igraph, tkplot and rglplot are discussed in this manual page
+
+Details
+
+There are currently three different functions in the igraph package which can draw graph in various ways:
+
+plot.igraph does simple non-interactive 2D plotting to R devices. Actually it is an implementation of the plot generic function, so you can write plot(graph) instead of plot.igraph(graph). As it used the standard R devices it supports every output format for which R has an output device. The list is quite impressing: PostScript, PDF files, XFig files, SVG files, JPG, PNG and of course you can plot to the screen as well using the default devices, or the good-looking anti-aliased Cairo device. See plot.igraph for some more information.
+
+tkplot does interactive 2D plotting using the tcltk package. It can only handle graphs of moderate size, a thousend vertices is probably already too many. Some parameters of the plotted graph can be changed interactively after issuing the tkplot command: the position, color and size of the vertices and the color and width of the edges. See tkplot for details.
+
+rglplot is an experimental function to draw graphs in 3D using OpenGL. See rglplot for some more information.
+
+Please also check the examples below.
+
+How to specify graphical parameters
+
+There are three ways to give values to the parameters described below, in section 'Parameters'. We give these three ways here in the order of their precedence.
+
+The first method is to supply named arguments to the plotting commands: plot.igraph, tkplot or rglplot. Parameters for vertices start with prefix ‘vertex.', parameters for edges have prefix ‘edge.', and global parameters have no prefix. Eg. the color of the vertices can be given via argument vertex.color, whereas edge.color sets the color of the edges. layout gives the layout of the graphs.
+
+The second way is to assign vertex, edge and graph attributes to the graph. These attributes have no prefix, ie. the color of the vertices is taken from the color vertex attribute and the color of the edges from the color edge attribute. The layout of the graph is given by the layout graph attribute. (Always assuming that the corresponding command argument is not present.) Setting vertex and edge attributes are handy if you want to assign a given ‘look' to a graph, attributes are saved with the graph is you save it with save or in GraphML format with write_graph, so the graph will have the same look after loading it again.
+
+If a parameter is not given in the command line, and the corresponding vertex/edge/graph attribute is also missing then the general igraph parameters handled by igraph_options are also checked. Vertex parameters have prefix ‘vertex.', edge parameters are prefixed with ‘edge.', general parameters like layout are prefixed with ‘plot'. These parameters are useful if you want all or most of your graphs to have the same look, vertex size, vertex color, etc. Then you don't need to set these at every plotting, and you also don't need to assign vertex/edge attributes to every graph.
+
+If the value of a parameter is not specified by any of the three ways described here, its default valued is used, as given in the source code.
+
+Different parameters can have different type, eg. vertex colors can be given as a character vector with color names, or as an integer vector with the color numbers from the current palette. Different types are valid for different parameters, this is discussed in detail in the next section. It is however always true that the parameter can always be a function object in which it will be called with the graph as its single argument to get the “proper" value of the parameter. (If the function returns another function object that will not be called again...)
+
+The list of parameters
+
+Vertex parameters first, note that the ‘vertex.' prefix needs to be added if they are used as an argument or when setting via igraph_options. The value of the parameter may be scalar valid for every vertex or a vector with a separate value for each vertex. (Shorter vectors are recycled.)
+
+size
+The size of the vertex, a numeric scalar or vector, in the latter case each vertex sizes may differ. This vertex sizes are scaled in order have about the same size of vertices for a given value for all three plotting commands. It does not need to be an integer number.
+
+The default value is 15. This is big enough to place short labels on vertices.
+
+size2
+The “other" size of the vertex, for some vertex shapes. For the various rectangle shapes this gives the height of the vertices, whereas size gives the width. It is ignored by shapes for which the size can be specified with a single number.
+
+The default is 15.
+
+color
+The fill color of the vertex. If it is numeric then the current palette is used, see palette. If it is a character vector then it may either contain integer values, named colors or RGB specified colors with three or four bytes. All strings starting with ‘#' are assumed to be RGB color specifications. It is possible to mix named color and RGB colors. Note that tkplot ignores the fourth byte (alpha channel) in the RGB color specification.
+
+For plot.igraph and integer values, the default igraph palette is used (see the ‘palette' parameter below. Note that this is different from the R palette.
+
+If you don't want (some) vertices to have any color, supply NA as the color name.
+
+The default value is “SkyBlue2".
+
+frame.color
+The color of the frame of the vertices, the same formats are allowed as for the fill color.
+
+If you don't want vertices to have a frame, supply NA as the color name.
+
+By default it is “black".
+
+shape
+The shape of the vertex, currently “circle", “square", “csquare", “rectangle", “crectangle", “vrectangle", “pie" (see vertex.shape.pie), ‘sphere', and “none" are supported, and only by the plot.igraph command. “none" does not draw the vertices at all, although vertex label are plotted (if given). See shapes for details about vertex shapes and vertex.shape.pie for using pie charts as vertices.
+
+The “sphere" vertex shape plots vertices as 3D ray-traced spheres, in the given color and size. This produces a raster image and it is only supported with some graphics devices. On some devices raster transparency is not supported and the spheres do not have a transparent background. See dev.capabilities and the ‘rasterImage' capability to check that your device is supported.
+
+By default vertices are drawn as circles.
+
+label
+The vertex labels. They will be converted to character. Specify NA to omit vertex labels.
+
+The default vertex labels are the vertex ids.
+
+label.family
+The font family to be used for vertex labels. As different plotting commands can used different fonts, they interpret this parameter different ways. The basic notation is, however, understood by both plot.igraph and tkplot. rglplot does not support fonts at all right now, it ignores this parameter completely.
+
+For plot.igraph this parameter is simply passed to text as argument family.
+
+For tkplot some conversion is performed. If this parameter is the name of an exixting Tk font, then that font is used and the label.font and label.cex parameters are ignored complerely. If it is one of the base families (serif, sans, mono) then Times, Helvetica or Courier fonts are used, there are guaranteed to exist on all systems. For the ‘symbol' base family we used the symbol font is available, otherwise the first font which has ‘symbol' in its name. If the parameter is not a name of the base families and it is also not a named Tk font then we pass it to tkfont.create and hope the user knows what she is doing. The label.font and label.cex parameters are also passed to tkfont.create in this case.
+
+The default value is ‘serif'.
+
+label.font
+The font within the font family to use for the vertex labels. It is interpreted the same way as the the font graphical parameter: 1 is plain text, 2 is bold face, 3 is italic, 4 is bold and italic and 5 specifies the symbol font.
+
+For plot.igraph this parameter is simply passed to text.
+
+For tkplot, if the label.family parameter is not the name of a Tk font then this parameter is used to set whether the newly created font should be italic and/or boldface. Otherwise it is ignored.
+
+For rglplot it is ignored.
+
+The default value is 1.
+
+label.cex
+The font size for vertex labels. It is interpreted as a multiplication factor of some device-dependent base font size.
+
+For plot.igraph it is simply passed to text as argument cex.
+
+For tkplot it is multiplied by 12 and then used as the size argument for tkfont.create. The base font is thus 12 for tkplot.
+
+For rglplot it is ignored.
+
+The default value is 1.
+
+label.dist
+The distance of the label from the center of the vertex. If it is 0 then the label is centered on the vertex. If it is 1 then the label is displayed beside the vertex.
+
+The default value is 0.
+
+label.degree
+It defines the position of the vertex labels, relative to the center of the vertices. It is interpreted as an angle in radian, zero means ‘to the right', and ‘pi' means to the left, up is -pi/2 and down is pi/2.
+
+The default value is -pi/4.
+
+label.color
+The color of the labels, see the color vertex parameter discussed earlier for the possible values.
+
+The default value is black.
+
+Edge parameters require to add the ‘edge.' prefix when used as arguments or set by igraph_options. The edge parameters:
+
+color
+The color of the edges, see the color vertex parameter for the possible values.
+
+By default this parameter is darkgrey.
+
+width
+The width of the edges.
+
+The default value is 1.
+
+arrow.size
+The size of the arrows. Currently this is a constant, so it is the same for every edge. If a vector is submitted then only the first element is used, ie. if this is taken from an edge attribute then only the attribute of the first edge is used for all arrows. This will likely change in the future.
+
+The default value is 1.
+
+arrow.width
+The width of the arrows. Currently this is a constant, so it is the same for every edge. If a vector is submitted then only the first element is used, ie. if this is taken from an edge attribute then only the attribute of the first edge is used for all arrows. This will likely change in the future.
+
+This argument is currently only used by plot.igraph.
+
+The default value is 1, which gives the same width as before this option appeared in igraph.
+
+lty
+The line type for the edges. Almost the same format is accepted as for the standard graphics par, 0 and “blank" mean no edges, 1 and “solid" are for solid lines, the other possible values are: 2 (“dashed"), 3 (“dotted"), 4 (“dotdash"), 5 (“longdash"), 6 (“twodash").
+
+tkplot also accepts standard Tk line type strings, it does not however support “blank" lines, instead of type ‘0' type ‘1', ie. solid lines will be drawn.
+
+This argument is ignored for rglplot.
+
+The default value is type 1, a solid line.
+
+label
+The edge labels. They will be converted to character. Specify NA to omit edge labels.
+
+Edge labels are omitted by default.
+
+label.family
+Font family of the edge labels. See the vertex parameter with the same name for the details.
+
+label.font
+The font for the edge labels. See the corresponding vertex parameter discussed earlier for details.
+
+label.cex
+The font size for the edge labels, see the corresponding vertex parameter for details.
+
+label.color
+The color of the edge labels, see the color vertex parameters on how to specify colors.
+
+label.x
+The horizontal coordinates of the edge labels might be given here, explicitly. The NA elements will be replaced by automatically calculated coordinates. If NULL, then all edge horizontal coordinates are calculated automatically. This parameter is only supported by plot.igraph.
+
+label.y
+The same as label.x, but for vertical coordinates.
+
+curved
+Specifies whether to draw curved edges, or not. This can be a logical or a numeric vector or scalar.
+
+First the vector is replicated to have the same length as the number of edges in the graph. Then it is interpreted for each edge separately. A numeric value specifies the curvature of the edge; zero curvature means straight edges, negative values means the edge bends clockwise, positive values the opposite. TRUE means curvature 0.5, FALSE means curvature zero.
+
+By default the vector specifying the curvatire is calculated via a call to the curve_multiple function. This function makes sure that multiple edges are curved and are all visible. This parameter is ignored for loop edges.
+
+The default value is FALSE.
+
+This parameter is currently ignored by rglplot.
+
+arrow.mode
+This parameter can be used to specify for which edges should arrows be drawn. If this parameter is given by the user (in either of the three ways) then it specifies which edges will have forward, backward arrows, or both, or no arrows at all. As usual, this parameter can be a vector or a scalar value. It can be an integer or character type. If it is integer then 0 means no arrows, 1 means backward arrows, 2 is for forward arrows and 3 for both. If it is a character vector then “<" and “<-" specify backward, “>" and “->" forward arrows and “<>" and “<->" stands for both arrows. All other values mean no arrows, perhaps you should use “-" or “–" to specify no arrows.
+
+Hint: this parameter can be used as a ‘cheap' solution for drawing “mixed" graphs: graphs in which some edges are directed some are not. If you want do this, then please create a directed graph, because as of version 0.4 the vertex pairs in the edge lists can be swapped in undirected graphs.
+
+By default, no arrows will be drawn for undirected graphs, and for directed graphs, an arrow will be drawn for each edge, according to its direction. This is not very surprising, it is the expected behavior.
+
+loop.angle
+Gives the angle in radian for plotting loop edges. See the label.dist vertex parameter to see how this is interpreted.
+
+The default value is 0.
+
+loop.angle2
+Gives the second angle in radian for plotting loop edges. This is only used in 3D, loop.angle is enough in 2D.
+
+The default value is 0.
+
+Other parameters:
+
+layout
+Either a function or a numeric matrix. It specifies how the vertices will be placed on the plot.
+
+If it is a numeric matrix, then the matrix has to have one line for each vertex, specifying its coordinates. The matrix should have at least two columns, for the x and y coordinates, and it can also have third column, this will be the z coordinate for 3D plots and it is ignored for 2D plots.
+
+If a two column matrix is given for the 3D plotting function rglplot then the third column is assumed to be 1 for each vertex.
+
+If layout is a function, this function will be called with the graph as the single parameter to determine the actual coordinates. The function should return a matrix with two or three columns. For the 2D plots the third column is ignored.
+
+The default value is layout_nicely, a smart function that chooses a layouter based on the graph.
+
+margin
+The amount of empty space below, over, at the left and right of the plot, it is a numeric vector of length four. Usually values between 0 and 0.5 are meaningful, but negative values are also possible, that will make the plot zoom in to a part of the graph. If it is shorter than four then it is recycled.
+
+rglplot does not support this parameter, as it can zoom in and out the graph in a more flexible way.
+
+Its default value is 0.
+
+palette
+The color palette to use for vertex color. The default is categorical_pal, which is a color-blind friendly categorical palette. See its manual page for details and other palettes. This parameters is only supported by plot, and not by tkplot and rglplot.
+
+rescale
+Logical constant, whether to rescale the coordinates to the [-1,1]x[-1,1](x[-1,1]) interval. This parameter is not implemented for tkplot.
+
+Defaults to TRUE, the layout will be rescaled.
+
+asp
+A numeric constant, it gives the asp parameter for plot, the aspect ratio. Supply 0 here if you don't want to give an aspect ratio. It is ignored by tkplot and rglplot.
+
+Defaults to 1.
+
+frame
+Boolean, whether to plot a frame around the graph. It is ignored by tkplot and rglplot.
+
+Defaults to FALSE.
+
+main
+Overall title for the main plot. The default is empty if the annotate.plot igraph option is FALSE, and the graph's name attribute otherwise. See the same argument of the base plot function. Only supported by plot.
+
+sub
+Subtitle of the main plot, the default is empty. Only supported by plot.
+
+xlab
+Title for the x axis, the default is empty if the annotate.plot igraph option is FALSE, and the number of vertices and edges, if it is TRUE. Only supported by plot.
+
+ylab
+Title for the y axis, the default is empty. Only supported by plot.
+
+Author(s)
+
+Gabor Csardi csardi.gabor@gmail.com
+
+See Also
+
+plot.igraph, tkplot, rglplot, igraph_options
+
+Examples
+
+## Not run: 
+
+# plotting a simple ring graph, all default parameters, except the layout
+g <- make_ring(10)
+g$layout <- layout_in_circle
+plot(g)
+tkplot(g)
+rglplot(g)
+
+# plotting a random graph, set the parameters in the command arguments
+g <- barabasi.game(100)
+plot(g, layout=layout_with_fr, vertex.size=4,
+     vertex.label.dist=0.5, vertex.color="red", edge.arrow.size=0.5)
+
+# plot a random graph, different color for each component
+g <- sample_gnp(100, 1/100)
+comps <- components(g)$membership
+colbar <- rainbow(max(comps)+1)
+V(g)$color <- colbar[comps+1]
+plot(g, layout=layout_with_fr, vertex.size=5, vertex.label=NA)
+
+# plot communities in a graph
+g <- make_full_graph(5) %du% make_full_graph(5) %du% make_full_graph(5)
+g <- add_edges(g, c(1,6, 1,11, 6,11))
+com <- cluster_spinglass(g, spins=5)
+V(g)$color <- com$membership+1
+g <- set_graph_attr(g, "layout", layout_with_kk(g))
+plot(g, vertex.label.dist=1.5)
+
+# draw a bunch of trees, fix layout
+igraph_options(plot.layout=layout_as_tree)
+plot(make_tree(20, 2))
+plot(make_tree(50, 3), vertex.size=3, vertex.label=NA)
+tkplot(make_tree(50, 2, mode="undirected"), vertex.size=10,
+vertex.color="green")
+
+## End(Not run)
+</pre>
+</div>
+<p>In addition to the physical appearance of nodes, edges, and labels, networks are must also have a ‘layout’ that describes the relative position of nodes on the plot surface. There are several ways you can define a layout, here are some examples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">layout &lt;-<span class="st"> </span><span class="kw">layout.circle</span>( g )
+<span class="kw">plot</span>( g, <span class="dt">layout=</span>layout)</code></pre></div>
+<p><img src="amg_files/figure-html/unnamed-chunk-446-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">layout &lt;-<span class="st"> </span><span class="kw">layout.fruchterman.reingold</span>( g )
+<span class="kw">plot</span>( g, <span class="dt">layout=</span>layout)</code></pre></div>
+<p><img src="amg_files/figure-html/unnamed-chunk-446-2.png" width="672" /></p>
+<p>In addition to normal plotting, you can also integrate interactive plotting. Here is an example using the <code>networkD3</code> library. It is interactive, so grab one of the nodes and move it around.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(networkD3)
+edgelist &lt;-<span class="st"> </span><span class="kw">as_edgelist</span>(g) 
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">src=</span>edgelist[,<span class="dv">1</span>], <span class="dt">target=</span>edgelist[,<span class="dv">2</span>])
+<span class="kw">simpleNetwork</span>(df,<span class="dt">fontSize =</span> <span class="dv">14</span>,<span class="dt">opacity =</span> <span class="fl">0.95</span>)</code></pre></div>
+<div id="htmlwidget-fda5b13328820462d8f9" style="width:672px;height:480px;" class="simpleNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fda5b13328820462d8f9">{"x":{"links":{"source":["Olympia","Olympia","Bellingham","St. Louis","Ames"],"target":["Bellingham","St. Louis","St. Louis","Ames","Richmond"]},"options":{"linkDistance":50,"charge":-200,"fontSize":14,"fontFamily":"serif","linkColour":"#666","nodeColour":"#3182bd","nodeClickColour":"#E34A33","textColour":"#3182bd","opacity":0.95,"zoom":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="mapping-networks" class="section level2">
+<h2><span class="header-section-number">27.3</span> Mapping Networks</h2>
+<p>For quick maps I typically use the <strong>maps</strong> library. It is pretty straightforward to use and does not take too much thought to quickly plot something or find the approporiate raster files. Below, I add some coordinates to the data set.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(g)$Latitude &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="fl">47.15</span>, <span class="fl">48.75</span>,<span class="fl">38.81</span>, <span class="fl">42.26</span>, <span class="fl">37.74</span> )
+<span class="kw">V</span>(g)$Longitude &lt;-<span class="st"> </span><span class="kw">c</span>(-<span class="fl">122.89</span>,-<span class="fl">122.49</span>,-<span class="fl">89.98</span>, -<span class="fl">93.47</span>, -<span class="fl">77.16</span> )</code></pre></div>
+<p>Then overlay this onto a map using the <code>overlay_popgraph()</code> function. Here is an example where I plot it over the map of the US states.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(maps)
+<span class="kw">require</span>(popgraph)
+pg &lt;-<span class="st"> </span><span class="kw">as.popgraph</span>( g )
+
+<span class="kw">map</span>( <span class="st">&quot;state&quot;</span> )
+<span class="kw">overlay_popgraph</span>( pg )</code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-449"></span>
+<img src="amg_files/figure-html/unnamed-chunk-449-1.png" alt="Map of graph stetched onto continential US map." width="672" />
+<p class="caption">
+Figure 27.1: Map of graph stetched onto continential US map.
+</p>
+</div>
+<p>This function <strong>requires</strong> that you already have a plot available (it uses the <code>lines()</code> and <code>points()</code> routines). If you try to just overlay this with no existing plot, it will not work (and should throw an error).</p>
+</div>
+<div id="genetic-distance-graphs" class="section level2">
+<h2><span class="header-section-number">27.4</span> Genetic Distance Graphs</h2>
+<p>Several graph-theoretic approaches have been suggested in the literature, some of which are based upon statistical models (e.g., popgraphs in the next chapter) and some of which are less structured.</p>
+<p>A common approach has been to use a measure of pair-wise genetic distance, measured between individuals or strata. In the following example, Nei’s genetic distance (see Chapter <a href="#genetic-distance"><strong>??</strong></a>) is used.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(gstudio)
+<span class="kw">data</span>(arapat)
+d &lt;-<span class="st"> </span><span class="kw">genetic_distance</span>(arapat,<span class="dt">mode=</span><span class="st">&quot;Nei&quot;</span>)</code></pre></div>
+<p>yielding a <span class="math inline">\(KxK\)</span> distance matrix. Nei’s distance produces values that are non-negative</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d[<span class="dv">1</span>:<span class="dv">6</span>,<span class="dv">1</span>:<span class="dv">6</span>]</code></pre></div>
+<pre><code>##           101      102        12       153        156        157
+## 101 0.0000000 0.226820 0.8385165 0.9177730 1.19671667 1.09526743
+## 102 0.2268200 0.000000 1.2589813 1.1874872 1.29512009 1.25632140
+## 12  0.8385165 1.258981 0.0000000 0.1340892 1.22979312 0.90185134
+## 153 0.9177730 1.187487 0.1340892 0.0000000 1.14458359 0.86975864
+## 156 1.1967167 1.295120 1.2297931 1.1445836 0.00000000 0.03459425
+## 157 1.0952674 1.256321 0.9018513 0.8697586 0.03459425 0.00000000</code></pre>
+<p>and in the case of the <code>arapat</code> data, produces a bivariate distribution of distances.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(ggplot2)
+<span class="kw">qplot</span>(d[<span class="kw">lower.tri</span>(d)],<span class="dt">geom =</span> <span class="st">&quot;histogram&quot;</span>, <span class="dt">bins=</span><span class="dv">40</span>)</code></pre></div>
+<p><img src="amg_files/figure-html/unnamed-chunk-452-1.png" width="672" /></p>
+<p>Since Nei’s distance is</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="linear-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="population-graphs.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"],
+"instapaper": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
