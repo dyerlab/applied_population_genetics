@@ -8,8 +8,6 @@
 .Ruserdata
 .DS_Store
 
-amg*
-
 # folders
 _bookdown_files
 images
