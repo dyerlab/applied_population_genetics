@@ -3,15 +3,14 @@
 <div class="chapter_image"><img src="chapter_images/ch_bird.jpg"></div>
 
 
+
 ```{r eval=FALSE}
 install.packages(c("rJava","dismo"))
 library("rJava")
 library("dismo")
 ```
 
-
-
-[Download](http://www.cs.princeton.edu/~schapire/maxent/) the java interface for MaxEnt.  You will have to sign in to download the files.  Use the *.zip* archive for this, it has all the files you need.  This is *not* the GUI interface, it is only the underlying java machinery the GUI uses.
+Some of the more common approaches used to characterize a niche is through the use of either logistic regression approaches or maximum entropy.  At present, the implementation of the latter appoach, dentoed as MaxEnt, is widely used and will be highlighted in this section.  For you to use this, you need to [Download](http://www.cs.princeton.edu/~schapire/maxent/) the java interface for MaxEnt.  You will have to sign in to download the files.  Use the *.zip* archive for this, it has all the files you need.  This is *not* the GUI interface, it is only the underlying java machinery the GUI uses.  On some platforms, you may *also* need to download the *legacy* Java runtime (as of the writing of this it was SE 6) for your computer to run the analysis.  The underlying analyses are done in Java and only accessable to R using this approach.
 
 Unzip those files and put each of them in the directory defined by the following command:
 

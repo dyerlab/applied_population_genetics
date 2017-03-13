@@ -1,0 +1,73 @@
+# Eigenvector Maps {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_pond.jpg"></div>
+
+Both eigenvectors and their matched eigenvalues are somewhat mysterious mathematical creations that we ran across already in the section on ordination.
+
+
+The general eigen equation is given as:
+
+$$
+\mathbf{A} \vec{v_i} =  \lambda_i \vec{v_i}
+$$
+where $\mathbf{A}$ is a matrix, $\vec{v}_i$ is the $i^{th}$ eigenvector and is associated directly with the $i^{th}$ eigenvalue $\lambda_i$.  For any matrix, the number of corresponding eigenvectors and assocaited eigenvalues will be equal to the minimum dimensionality of $\mathbf{A}$.  In most cases, we will be using symmetric matrices so our row and column count will be equal.  However, we will have at most $det(\mathbf{A})$ non-imaginary eigenvalues associated with any matrix.  
+
+So what does this mean for us?  We are interested in determining if there are spatial components to the structure we see on the ground and if so, can we extract those implicitly spatial aspects from our model.  There are several ways space may influence our abilities to estimate connectivity.  
+
+As an exmaple, consider the *Cornus florida* Cornaceae (a temperate understory tree) data set.  In this species, seeds are dispersed in the vicinity of the maternal individual but pollen may be disbursed widely across the landscape.  Functionally, this means that if we look at genetic similiarity of individuals as a function of inter-individual distance, there will be a positive correlation between genetic and physical distances at close proximity.  
+
+
+```{r fig.cap="Spatial distribution of adult <i>Cornus florida</i> trees on the landscape."}
+library(gstudio)
+library(ggplot2)
+cornus <- read_population("./spatial_data/Cornus.csv",type="column", locus.columns = 5:14)
+ggplot(cornus, aes(x=X.Coordinate, y=Y.Coordinate)) + 
+  geom_point(alpha=0.5) + coord_equal() + 
+  xlab("X Coordiante") + ylab("Y Coordinate") + 
+  theme_bw()
+```
+
+So for the individuals in the map, we can estimate inter-individual distances for both physical and genetic separtion (n.b., I use inter-individual AMOVA distance here).
+
+```{r cache=TRUE}
+coords <- strata_coordinates(cornus, stratum = "SampleID", longitude = "X.Coordinate", latitude="Y.Coordinate")
+P <- strata_distance(coords, mode="Euclidean")
+G <- genetic_distance(cornus, mode="AMOVA")
+```
+
+We can test for positive spatial autocorrelation.  Here I use the approach of Smouse & Peakall (1999) that fits within the normal AMOVA framework.  Normaly, we examine the relationship between physical and genetic distance as in a spatial autocorrelation process.  Overall, a trend suggests a limitation in overall combined dispersal.   
+
+```{r}
+df <- data.frame( Physical=P[lower.tri(P)], Genetic=G[lower.tri(G)])
+ggplot( df, aes(Physical,Genetic)) + geom_point() + stat_smooth()
+```
+
+Here the relationship between physical and genetic distances are taken with respect to all the data across all the distances. In this case the overall correlation (if that is even appropriate) is $\rho =$ `r cor(df$Physical,df$Genetic)`.  However, we expect the relationship to be asymptotic in that at certain distances there should be some relationship and at larger distances it should be roughly random.  Here are the data separted by just up to 25 units.
+
+```{r}
+ggplot( df[ df$Physical < 25,], aes(Physical,Genetic)) + geom_point() + stat_smooth() + geom_jitter()
+```
+
+which gives a different overall correaltion ( $\rho =$ `r cor( df$Physical[ df$Physical < 25], df$Genetic[ df$Physical < 25])`).  Quite different!  
+
+To proceed, we must thus define the spatial bins in which we can categorize individuals and estimate genetic correlations.  We can test the significance of the estimator by permuting individuals across distance classes and re-estimating the parameter.  These data can be plot as:
+
+```{r cache=TRUE}
+bins <- seq(0, 1000, by=100)
+df <- genetic_autocorrelation(P,G,bins=seq(0,1000,by=100),perms=999)
+df$Significant <- df$P <= 0.05
+ggplot( df, aes(x=To,y=R)) + geom_line() + 
+  geom_point( aes(color=Significant), size=4) + 
+  geom_abline(slope=0,intercept=0, linetype=2) +
+  xlab("Physical Separation") + ylab("Genetic Correlation")
+```
+
+Showing that for the first three distance lags, there is a significantly positive (at $\alpha=0.05$) correlation between individuals.  After that distance, it levels out and we could consider it to be random.  The parameter estimated for each distance class is a true correlation and is defined as:
+
+\[
+r^h = \frac{\sum_{i\ne j}^K x^h_{ij}c^h_{ij}}{\sum_{i = 1}^K x^h_{ii}c^h_{ii}}
+\]
+
+
+
+But what if we want to get ahold of this spaital component in our data and perhaps even extract it out so it does not bias our estimates? 

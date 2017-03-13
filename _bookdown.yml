@@ -24,7 +24,7 @@ rmd_files: [
     "distance_networks.rmd","population_graphs.rmd", "interactive_visualization.rmd",
   "part_spatial_data.rmd",
     "vector_data.rmd", "raster_data.rmd", "projections.rmd", 
-    "ecological_distance.rmd", "niche_modeling.rmd",  
+    "ecological_distance.rmd", "niche_modeling.rmd", "eigenmaps.rmd",
   "part_selection.rmd", 
     "selection.rmd",
   "part_backmatter.rmd", 

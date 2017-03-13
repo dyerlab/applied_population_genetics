@@ -32,7 +32,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="niche-modeling.html">
+<link rel="prev" href="eigenvector-maps.html">
 <link rel="next" href="references.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -49,18 +49,22 @@
 
 
 <script src="libs/htmlwidgets-0.8/htmlwidgets.js"></script>
-<link href="libs/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-0.7.3/leaflet.js"></script>
+<link href="libs/leaflet-0.7.7/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-0.7.7/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-1.0.1/leaflet.js"></script>
+<link href="libs/leaflet-label-0.2.2/leaflet.label.css" rel="stylesheet" />
+<script src="libs/leaflet-label-0.2.2/leaflet.label.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4leaflet.js"></script>
+<script src="libs/leaflet-binding-1.1.0/leaflet.js"></script>
 <script src="libs/leaflet-providers-1.0.27/leaflet-providers.js"></script>
-<script src="libs/leaflet-providers-plugin-1.0.1/leaflet-providers-plugin.js"></script>
-<script src="libs/d3-3.5.2/d3.min.js"></script>
+<script src="libs/leaflet-providers-plugin-1.1.0/leaflet-providers-plugin.js"></script>
+<script src="libs/d3-4.5.0/d3.min.js"></script>
 <script src="libs/sankey-1/sankey.js"></script>
-<script src="libs/sankeyNetwork-binding-0.2.13/sankeyNetwork.js"></script>
-<script src="libs/dendroNetwork-binding-0.2.13/dendroNetwork.js"></script>
-<script src="libs/simpleNetwork-binding-0.2.13/simpleNetwork.js"></script>
-<script src="libs/forceNetwork-binding-0.2.13/forceNetwork.js"></script>
+<script src="libs/sankeyNetwork-binding-0.3/sankeyNetwork.js"></script>
+<script src="libs/dendroNetwork-binding-0.3/dendroNetwork.js"></script>
+<script src="libs/simpleNetwork-binding-0.3/simpleNetwork.js"></script>
+<script src="libs/forceNetwork-binding-0.3/forceNetwork.js"></script>
 
 
 <style type="text/css">
@@ -396,18 +400,19 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
+<li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a></li>
 <li class="part"><span><b>VII Selection</b></span></li>
-<li class="chapter" data-level="35" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>35</b> Classical Selection Models</a><ul>
-<li class="chapter" data-level="35.1" data-path="classical-selection-models.html"><a href="classical-selection-models.html#the-strength-of-selection"><i class="fa fa-check"></i><b>35.1</b> The Strength of Selection</a></li>
+<li class="chapter" data-level="36" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>36</b> Classical Selection Models</a><ul>
+<li class="chapter" data-level="36.1" data-path="classical-selection-models.html"><a href="classical-selection-models.html#the-strength-of-selection"><i class="fa fa-check"></i><b>36.1</b> The Strength of Selection</a></li>
 </ul></li>
 <li class="part"><span><b>VIII Backmatter</b></span></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="chapter" data-level="36" data-path="included-data-sets.html"><a href="included-data-sets.html"><i class="fa fa-check"></i><b>36</b> Included Data Sets</a><ul>
-<li class="chapter" data-level="36.1" data-path="included-data-sets.html"><a href="included-data-sets.html#the-sonoran-desert-bark-beetle-araptus-attenuata"><i class="fa fa-check"></i><b>36.1</b> The Sonoran desert bark beetle, <em>Araptus attenuata</em></a><ul>
-<li class="chapter" data-level="36.1.1" data-path="included-data-sets.html"><a href="included-data-sets.html#nuclear-markers"><i class="fa fa-check"></i><b>36.1.1</b> Nuclear Markers</a></li>
-<li class="chapter" data-level="36.1.2" data-path="included-data-sets.html"><a href="included-data-sets.html#methylation-markers"><i class="fa fa-check"></i><b>36.1.2</b> Methylation Markers</a></li>
+<li class="chapter" data-level="37" data-path="included-data-sets.html"><a href="included-data-sets.html"><i class="fa fa-check"></i><b>37</b> Included Data Sets</a><ul>
+<li class="chapter" data-level="37.1" data-path="included-data-sets.html"><a href="included-data-sets.html#the-sonoran-desert-bark-beetle-araptus-attenuata"><i class="fa fa-check"></i><b>37.1</b> The Sonoran desert bark beetle, <em>Araptus attenuata</em></a><ul>
+<li class="chapter" data-level="37.1.1" data-path="included-data-sets.html"><a href="included-data-sets.html#nuclear-markers"><i class="fa fa-check"></i><b>37.1.1</b> Nuclear Markers</a></li>
+<li class="chapter" data-level="37.1.2" data-path="included-data-sets.html"><a href="included-data-sets.html#methylation-markers"><i class="fa fa-check"></i><b>37.1.2</b> Methylation Markers</a></li>
 </ul></li>
-<li class="chapter" data-level="36.2" data-path="included-data-sets.html"><a href="included-data-sets.html#the-flowering-dogwood-cornus-florida"><i class="fa fa-check"></i><b>36.2</b> The Flowering Dogwood <em>Cornus florida</em></a></li>
+<li class="chapter" data-level="37.2" data-path="included-data-sets.html"><a href="included-data-sets.html#the-flowering-dogwood-cornus-florida"><i class="fa fa-check"></i><b>37.2</b> The Flowering Dogwood <em>Cornus florida</em></a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
 <li class="divider"></li>
@@ -431,7 +436,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="classical-selection-models" class="section level1 imageChapter">
-<h1><span class="header-section-number">35</span> Classical Selection Models</h1>
+<h1><span class="header-section-number">36</span> Classical Selection Models</h1>
 <div class="chapter_image">
 <img src="chapter_images/ch_red_fish.jpg">
 </div>
@@ -655,7 +660,7 @@ p_{t+1} = \frac{p_t(p_tw_{AA}+q_tw_{AB})}{\bar{w}}
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">Generation=</span><span class="dv">1</span>:<span class="dv">10</span>, <span class="dt">p=</span><span class="kw">iterate_selection</span>(<span class="dt">wAB=</span><span class="dv">1</span>/<span class="dv">3</span>, <span class="dt">wBB=</span><span class="dv">1</span>/<span class="dv">15</span>, <span class="dt">T=</span><span class="dv">10</span>))
 <span class="kw">ggplot</span>( df, <span class="kw">aes</span>(<span class="dt">x=</span>Generation, <span class="dt">y=</span>p)) +<span class="st"> </span><span class="kw">geom_line</span>() +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</code></pre></div>
-<p><img src="amg_files/figure-html/unnamed-chunk-631-1.png" width="672" /></p>
+<p><img src="amg_files/figure-html/unnamed-chunk-638-1.png" width="672" /></p>
 <p>So, through time, we see a relatively rapid change in allele frequencies. This is evolution, <em>sensu stricto</em>. To parameterize the amount of change in allele frequencies we can take the equation for <span class="math inline">\(p_{t+1}\)</span> and <span class="math inline">\(p_t\)</span> and solve throwing away the subscripts of which generation is which:</p>
 <span class="math display">\[\begin{aligned}
 \delta p &amp;= p_1 - p_0 \\
@@ -667,7 +672,7 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class
         &amp;= \frac{pq[p(w_{AA} - w_{AB}) - q(w_{BB} - w_{AB})]}{\bar{w}}
 \end{aligned}\]</span>
 <div id="the-strength-of-selection" class="section level2">
-<h2><span class="header-section-number">35.1</span> The Strength of Selection</h2>
+<h2><span class="header-section-number">36.1</span> The Strength of Selection</h2>
 <p>The strength of selection can be estimated from looking at the relative allele frequencies for populations before and after selection. In the lecture, we covered an example based upon resistance to prion disease. There we quantifed genotypes frequencies as <span class="math inline">\(P\)</span>, <span class="math inline">\(Q\)</span>, and <span class="math inline">\(R\)</span> for those before selection and <span class="math inline">\(\hat{P}\)</span>, <span class="math inline">\(\hat{Q}\)</span> and <span class="math inline">\(\hat{R}\)</span> for genotype frequencies after selection. Their relationships are given by:</p>
 <span class="math display">\[\begin{aligned}
 \hat{P} &amp;=  P\; \ell_{AA}\; m_{AA} \\
@@ -693,7 +698,7 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class
           </div>
         </div>
       </div>
-<a href="niche-modeling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="eigenvector-maps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="references.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
