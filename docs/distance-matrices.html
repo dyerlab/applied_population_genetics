@@ -6,8 +6,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Population Genetics</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="A textbook for the use of R in spatial genetic data analysis.">
-  <meta name="generator" content="bookdown 0.3.12 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Population Genetics" />
   <meta property="og:type" content="book" />
@@ -33,6 +34,7 @@
   
 <link rel="prev" href="ordination-of-genetic-data.html">
 <link rel="next" href="linear-models.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -107,7 +109,6 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
-
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -399,7 +400,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
-<li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a></li>
+<li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a><ul>
+<li class="chapter" data-level="35.1" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#eigenvectors-eigenvalues"><i class="fa fa-check"></i><b>35.1</b> Eigenvectors &amp; Eigenvalues</a></li>
+</ul></li>
 <li class="part"><span><b>VII Selection</b></span></li>
 <li class="chapter" data-level="36" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>36</b> Classical Selection Models</a><ul>
 <li class="chapter" data-level="36.1" data-path="classical-selection-models.html"><a href="classical-selection-models.html#the-strength-of-selection"><i class="fa fa-check"></i><b>36.1</b> The Strength of Selection</a></li>
@@ -519,10 +522,10 @@ Figure 25.1: Pairwise genetic distance among populations of Arapat attenuatus pa
 <p>and the corresponding one for the Euclidean distance (notice I’m flipping the coordinates here because I want the density to be along the right side of the graph to mirror the y-axis.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_side &lt;-<span class="st"> </span><span class="kw">ggplot</span>( df, <span class="kw">aes</span>(<span class="dt">x=</span>Euclidean, <span class="dt">fill=</span>Status)) +<span class="st"> </span><span class="kw">geom_density</span>(<span class="dt">alpha=</span><span class="fl">0.5</span>) +<span class="st"> </span><span class="kw">coord_flip</span>() +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</code></pre></div>
 <p>I also need an empty plot to since we are going to make a 2x2 grid of plots but the upper right one will have nothing in it (the popgraph library has a nice invisible theme called <code>theme_empty()</code>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(popgraph)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">library</span>(popgraph)
 empty &lt;-<span class="st"> </span><span class="kw">ggplot</span>() +<span class="st"> </span><span class="kw">theme_empty</span>()</code></pre></div>
 <p>Finally, we can stitch this all together and produce a single plot with these four subcomponents.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(gridExtra)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">library</span>(gridExtra)
 <span class="kw">grid.arrange</span>(plot_top, empty, scatter, plot_side, <span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">widths=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">1</span>), <span class="dt">heights=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>))</code></pre></div>
 <div class="figure"><span id="fig:unnamed-chunk-432"></span>
 <img src="amg_files/figure-html/unnamed-chunk-432-1.png" alt="Pairwise genetic distance measured using Nei's distance and Euclidean distance based upon allele frequencies for populations of Araptus attenuatus.  Each comparison is classified as being between the same species group or between mixed groups and marginal probability densities are shown for each measure." width="672" />
@@ -556,7 +559,7 @@ SS_{XY} = Z - N\bar{x}\bar{y}
 \]</span></p>
 <p>which is essentially the Pearson product moment correlation coefficient! How convenient. They go on to extend this work to show how if there are more than one ‘predictor’ matrix here, we can also derive the partial correlation coefficients, <span class="math inline">\(\rho_{x_1|x_2}\)</span> (e.g., the coorelation of <span class="math inline">\(x_1\)</span> after fixing the effects of <span class="math inline">\(x_2\)</span>) and other useful components. In R, we have this kind of work done for us rather easily. There are several packages that provide a Mantel test, we will use the one out of the vegan package.</p>
 <p>In this example, the distance matrices must first be translated into dist objects (a type of symmetrical matrix).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(vegan)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">library</span>(vegan)
 <span class="kw">mantel</span>( <span class="kw">as.dist</span>(D1), <span class="kw">as.dist</span>(D2), <span class="dt">permutations=</span><span class="dv">9999</span> )</code></pre></div>
 <pre><code>## 
 ## Mantel statistic based on Pearson&#39;s product-moment correlation 
@@ -569,7 +572,7 @@ SS_{XY} = Z - N\bar{x}\bar{y}
 ## 
 ## Upper quantiles of permutations (null model):
 ##    90%    95%  97.5%    99% 
-## 0.0694 0.0930 0.1154 0.1395 
+## 0.0723 0.0941 0.1148 0.1383 
 ## Permutation: free
 ## Number of permutations: 9999</code></pre>
 <p>From this output, we see that the two distance matrices are highly correlated. The question that I’ll leave the reader to look at is one based upon the shape of all those pairwise graphs. Is this a linear relationship? Is it ok to use a Pearson correlation on these data?</p>
@@ -589,9 +592,8 @@ SS_{XY} = Z - N\bar{x}\bar{y}
         </div>
       </div>
 <a href="ordination-of-genetic-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="linear-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
-  </div>
+<a href="linear-models.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>

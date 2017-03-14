@@ -6,8 +6,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Population Genetics</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="A textbook for the use of R in spatial genetic data analysis.">
-  <meta name="generator" content="bookdown 0.3.12 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Population Genetics" />
   <meta property="og:type" content="book" />
@@ -33,6 +34,7 @@
   
 <link rel="prev" href="linear-models.html">
 <link rel="next" href="population-graphs.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -107,7 +109,6 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
-
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -399,7 +400,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
-<li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a></li>
+<li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a><ul>
+<li class="chapter" data-level="35.1" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#eigenvectors-eigenvalues"><i class="fa fa-check"></i><b>35.1</b> Eigenvectors &amp; Eigenvalues</a></li>
+</ul></li>
 <li class="part"><span><b>VII Selection</b></span></li>
 <li class="chapter" data-level="36" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>36</b> Classical Selection Models</a><ul>
 <li class="chapter" data-level="36.1" data-path="classical-selection-models.html"><a href="classical-selection-models.html#the-strength-of-selection"><i class="fa fa-check"></i><b>36.1</b> The Strength of Selection</a></li>
@@ -452,7 +455,7 @@ A</code></pre></div>
 ## [4,]    0    0    1    0    1
 ## [5,]    0    0    0    1    0</code></pre>
 <p>There is a quick function, <code>as.popgraph()</code> that takes either an existing <strong>igraph</strong>object or a matrix and turns them into <em>popgraph</em> objects.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(igraph)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">library</span>(igraph)
 g &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>( A , <span class="dt">mode=</span><span class="st">&quot;undirected&quot;</span>)</code></pre></div>
 <p>There are several options available under the <code>mode</code> parameter. We typically use the undirected graph option but the following are also available:</p>
 <ol style="list-style-type: decimal">
@@ -815,8 +818,8 @@ vertex.color="green")
 edgelist &lt;-<span class="st"> </span><span class="kw">as_edgelist</span>(g) 
 df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">src=</span>edgelist[,<span class="dv">1</span>], <span class="dt">target=</span>edgelist[,<span class="dv">2</span>])
 <span class="kw">simpleNetwork</span>(df,<span class="dt">fontSize =</span> <span class="dv">14</span>,<span class="dt">opacity =</span> <span class="fl">0.95</span>)</code></pre></div>
-<div id="htmlwidget-6c2373f824088fc71f5d" style="width:672px;height:480px;" class="simpleNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6c2373f824088fc71f5d">{"x":{"links":{"source":["Olympia","Olympia","Bellingham","St. Louis","Ames"],"target":["Bellingham","St. Louis","St. Louis","Ames","Richmond"]},"options":{"linkDistance":50,"charge":-200,"fontSize":14,"fontFamily":"serif","linkColour":"#666","nodeColour":"#3182bd","nodeClickColour":"#E34A33","textColour":"#3182bd","opacity":0.95,"zoom":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fda5b13328820462d8f9" style="width:672px;height:480px;" class="simpleNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fda5b13328820462d8f9">{"x":{"links":{"source":["Olympia","Olympia","Bellingham","St. Louis","Ames"],"target":["Bellingham","St. Louis","St. Louis","Ames","Richmond"]},"options":{"linkDistance":50,"charge":-200,"fontSize":14,"fontFamily":"serif","linkColour":"#666","nodeColour":"#3182bd","nodeClickColour":"#E34A33","textColour":"#3182bd","opacity":0.95,"zoom":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="mapping-networks" class="section level2">
 <h2><span class="header-section-number">27.3</span> Mapping Networks</h2>
@@ -825,7 +828,7 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class
 <span class="kw">V</span>(g)$Longitude &lt;-<span class="st"> </span><span class="kw">c</span>(-<span class="fl">122.89</span>,-<span class="fl">122.49</span>,-<span class="fl">89.98</span>, -<span class="fl">93.47</span>, -<span class="fl">77.16</span> )</code></pre></div>
 <p>Then overlay this onto a map using the <code>overlay_popgraph()</code> function. Here is an example where I plot it over the map of the US states.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(maps)
-<span class="kw">require</span>(popgraph)
+ <span class="kw">library</span>(popgraph)
 pg &lt;-<span class="st"> </span><span class="kw">as.popgraph</span>( g )
 
 <span class="kw">map</span>( <span class="st">&quot;state&quot;</span> )
@@ -842,7 +845,7 @@ Figure 27.1: Map of graph stetched onto continential US map.
 <h2><span class="header-section-number">27.4</span> Genetic Distance Graphs</h2>
 <p>Several graph-theoretic approaches have been suggested in the literature, some of which are based upon statistical models (e.g., popgraphs in the next chapter) and some of which are less structured.</p>
 <p>A common approach has been to use a measure of pair-wise genetic distance, measured between individuals or strata. In the following example, Nei’s genetic distance (see Chapter <a href="#genetic-distance"><strong>??</strong></a>) is used.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(gstudio)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">library</span>(gstudio)
 <span class="kw">data</span>(arapat)
 d &lt;-<span class="st"> </span><span class="kw">genetic_distance</span>(arapat,<span class="dt">mode=</span><span class="st">&quot;Nei&quot;</span>)</code></pre></div>
 <p>yielding a <span class="math inline">\(KxK\)</span> distance matrix. Nei’s distance produces values that are non-negative</p>
@@ -855,7 +858,7 @@ d &lt;-<span class="st"> </span><span class="kw">genetic_distance</span>(arapat,
 ## 156 1.1967167 1.295120 1.2297931 1.1445836 0.00000000 0.03459425
 ## 157 1.0952674 1.256321 0.9018513 0.8697586 0.03459425 0.00000000</code></pre>
 <p>and in the case of the <code>arapat</code> data, produces a bivariate distribution of distances.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(ggplot2)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">library</span>(ggplot2)
 <span class="kw">qplot</span>(d[<span class="kw">lower.tri</span>(d)],<span class="dt">geom =</span> <span class="st">&quot;histogram&quot;</span>, <span class="dt">bins=</span><span class="dv">40</span>)</code></pre></div>
 <p><img src="amg_files/figure-html/unnamed-chunk-452-1.png" width="672" /></p>
 <p>Since Nei’s distance is</p>
@@ -868,9 +871,8 @@ d &lt;-<span class="st"> </span><span class="kw">genetic_distance</span>(arapat,
         </div>
       </div>
 <a href="linear-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="population-graphs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
-  </div>
+<a href="population-graphs.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>

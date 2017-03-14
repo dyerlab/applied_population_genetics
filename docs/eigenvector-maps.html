@@ -6,8 +6,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Population Genetics</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="A textbook for the use of R in spatial genetic data analysis.">
-  <meta name="generator" content="bookdown 0.3.12 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Population Genetics" />
   <meta property="og:type" content="book" />
@@ -33,6 +34,7 @@
   
 <link rel="prev" href="niche-modeling.html">
 <link rel="next" href="classical-selection-models.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -107,7 +109,6 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
-
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -399,7 +400,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
-<li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a></li>
+<li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a><ul>
+<li class="chapter" data-level="35.1" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#eigenvectors-eigenvalues"><i class="fa fa-check"></i><b>35.1</b> Eigenvectors &amp; Eigenvalues</a></li>
+</ul></li>
 <li class="part"><span><b>VII Selection</b></span></li>
 <li class="chapter" data-level="36" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>36</b> Classical Selection Models</a><ul>
 <li class="chapter" data-level="36.1" data-path="classical-selection-models.html"><a href="classical-selection-models.html#the-strength-of-selection"><i class="fa fa-check"></i><b>36.1</b> The Strength of Selection</a></li>
@@ -439,13 +442,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="chapter_image">
 <img src="chapter_images/ch_pond.jpg">
 </div>
-<p>Both eigenvectors and their matched eigenvalues are somewhat mysterious mathematical creations that we ran across already in the section on ordination.</p>
-<p>The general eigen equation is given as:</p>
-<p><span class="math display">\[
-\mathbf{A} \vec{v_i} =  \lambda_i \vec{v_i}
-\]</span> where <span class="math inline">\(\mathbf{A}\)</span> is a matrix, <span class="math inline">\(\vec{v}_i\)</span> is the <span class="math inline">\(i^{th}\)</span> eigenvector and is associated directly with the <span class="math inline">\(i^{th}\)</span> eigenvalue <span class="math inline">\(\lambda_i\)</span>. For any matrix, the number of corresponding eigenvectors and assocaited eigenvalues will be equal to the minimum dimensionality of <span class="math inline">\(\mathbf{A}\)</span>. In most cases, we will be using symmetric matrices so our row and column count will be equal. However, we will have at most <span class="math inline">\(det(\mathbf{A})\)</span> non-imaginary eigenvalues associated with any matrix.</p>
-<p>So what does this mean for us? We are interested in determining if there are spatial components to the structure we see on the ground and if so, can we extract those implicitly spatial aspects from our model. There are several ways space may influence our abilities to estimate connectivity.</p>
-<p>As an exmaple, consider the <em>Cornus florida</em> Cornaceae (a temperate understory tree) data set. In this species, seeds are dispersed in the vicinity of the maternal individual but pollen may be disbursed widely across the landscape. Functionally, this means that if we look at genetic similiarity of individuals as a function of inter-individual distance, there will be a positive correlation between genetic and physical distances at close proximity.</p>
+<p>There are several kinds of ‘spatial structure’ that may hinder our ability to use statistical models to uncover evolutionary processes—one of which is autocorrelation. As an example if this phenomenon, consider the <em>Cornus florida</em> Cornaceae data set included in the <code>gstudio</code> package. In this temperate understory tree species, seeds are dispersed in the vicinity of the maternal individual but pollen may be disbursed widely across the landscape. Functionally, this means that if we look at genetic similarity of individuals as a function of inter-individual distance, there will be a positive correlation between genetic and physical distances at close proximity because they are more likely to share the same maternal individual.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gstudio)
 <span class="kw">library</span>(ggplot2)
 cornus &lt;-<span class="st"> </span><span class="kw">read_population</span>(<span class="st">&quot;./spatial_data/Cornus.csv&quot;</span>,<span class="dt">type=</span><span class="st">&quot;column&quot;</span>, <span class="dt">locus.columns =</span> <span class="dv">5</span>:<span class="dv">14</span>)
@@ -459,21 +456,20 @@ cornus &lt;-<span class="st"> </span><span class="kw">read_population</span>(<sp
 Figure 35.1: Spatial distribution of adult <i>Cornus florida</i> trees on the landscape.
 </p>
 </div>
-<p>So for the individuals in the map, we can estimate inter-individual distances for both physical and genetic separtion (n.b., I use inter-individual AMOVA distance here).</p>
+<p>This is a common feature in plant populations. Limitations to seed dispersal are generally more severe than spatial limitations in pollen dispersal. As such, proximate individuals are positively correlated due to potential co-ancestry. If the dispersal processes are reversed, this is not so much of an issue. Pollen is from near neighbors but seeds are randomly distributed—the spatial location of individuals is independent of genetic correlations. As such, pollen and seed have different contributions to spatial structure, limitations in pollen dispersal can only enhance structure caused by limitations in seed dispersal. So for the individuals in the map how does this manifest? We can estimate inter-individual distances for both physical and genetic separation (n.b., I use inter-individual AMOVA distance here) and then look for any relationship.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coords &lt;-<span class="st"> </span><span class="kw">strata_coordinates</span>(cornus, <span class="dt">stratum =</span> <span class="st">&quot;SampleID&quot;</span>, <span class="dt">longitude =</span> <span class="st">&quot;X.Coordinate&quot;</span>, <span class="dt">latitude=</span><span class="st">&quot;Y.Coordinate&quot;</span>)
 P &lt;-<span class="st"> </span><span class="kw">strata_distance</span>(coords, <span class="dt">mode=</span><span class="st">&quot;Euclidean&quot;</span>)
 G &lt;-<span class="st"> </span><span class="kw">genetic_distance</span>(cornus, <span class="dt">mode=</span><span class="st">&quot;AMOVA&quot;</span>)</code></pre></div>
-<p>We can test for positive spatial autocorrelation. Here I use the approach of Smouse &amp; Peakall (1999) that fits within the normal AMOVA framework. Normaly, we examine the relationship between physical and genetic distance as in a spatial autocorrelation process. Overall, a trend suggests a limitation in overall combined dispersal.</p>
+<p>We can test for positive spatial autocorrelation. Here I use the approach of Smouse &amp; Peakall (1999) that fits within the normal AMOVA framework. Normally, we examine the relationship between physical and genetic distance as in a spatial autocorrelation process. Overall, a trend suggests a limitation in overall combined dispersal.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">Physical=</span>P[<span class="kw">lower.tri</span>(P)], <span class="dt">Genetic=</span>G[<span class="kw">lower.tri</span>(G)])
 <span class="kw">ggplot</span>( df, <span class="kw">aes</span>(Physical,Genetic)) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">stat_smooth</span>()</code></pre></div>
 <p><img src="amg_files/figure-html/unnamed-chunk-626-1.png" width="672" /></p>
-<p>Here the relationship between physical and genetic distances are taken with respect to all the data across all the distances. In this case the overall correlation (if that is even appropriate) is <span class="math inline">\(\rho =\)</span> -4.823045210^{-5}. However, we expect the relationship to be asymptotic in that at certain distances there should be some relationship and at larger distances it should be roughly random. Here are the data separted by just up to 25 units.</p>
+<p>Here the relationship between physical and genetic distances are taken with respect to all the data across all the distances. In this case the overall correlation (if that is even appropriate) is <span class="math inline">\(\rho =\)</span> -4.823045210^{-5}. However, we expect the relationship to be asymptotic in that at certain distances there should be some relationship and at larger distances it should be roughly random. Here are the data separated by just up to 25 units.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( df[ df$Physical &lt;<span class="st"> </span><span class="dv">25</span>,], <span class="kw">aes</span>(Physical,Genetic)) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">stat_smooth</span>() +<span class="st"> </span><span class="kw">geom_jitter</span>()</code></pre></div>
 <p><img src="amg_files/figure-html/unnamed-chunk-627-1.png" width="672" /></p>
-<p>which gives a different overall correaltion ( <span class="math inline">\(\rho =\)</span> 0.1810624). Quite different!</p>
+<p>which gives a different overall correlation ( <span class="math inline">\(\rho =\)</span> 0.1810624). Quite different!</p>
 <p>To proceed, we must thus define the spatial bins in which we can categorize individuals and estimate genetic correlations. We can test the significance of the estimator by permuting individuals across distance classes and re-estimating the parameter. These data can be plot as:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bins &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1000</span>, <span class="dt">by=</span><span class="dv">100</span>)
-df &lt;-<span class="st"> </span><span class="kw">genetic_autocorrelation</span>(P,G,<span class="dt">bins=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1000</span>,<span class="dt">by=</span><span class="dv">100</span>),<span class="dt">perms=</span><span class="dv">999</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">genetic_autocorrelation</span>(P,G,<span class="dt">bins=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1000</span>,<span class="dt">by=</span><span class="dv">100</span>),<span class="dt">perms=</span><span class="dv">999</span>)
 df$Significant &lt;-<span class="st"> </span>df$P &lt;=<span class="st"> </span><span class="fl">0.05</span>
 <span class="kw">ggplot</span>( df, <span class="kw">aes</span>(<span class="dt">x=</span>To,<span class="dt">y=</span>R)) +<span class="st"> </span><span class="kw">geom_line</span>() +<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>( <span class="kw">aes</span>(<span class="dt">color=</span>Significant), <span class="dt">size=</span><span class="dv">4</span>) +<span class="st"> </span>
@@ -484,8 +480,53 @@ df$Significant &lt;-<span class="st"> </span>df$P &lt;=<span class="st"> </span>
 <p><span class="math display">\[
 r^h = \frac{\sum_{i\ne j}^K x^h_{ij}c^h_{ij}}{\sum_{i = 1}^K x^h_{ii}c^h_{ii}}
 \]</span></p>
-<p>But what if we want to get ahold of this spaital component in our data and perhaps even extract it out so it does not bias our estimates?</p>
+<p>But what if we want to get a hold of this spatial component in our data and perhaps even extract it out so it does not bias our estimates?</p>
+<p>What happens if we change the size of our <code>bins</code>?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(cowplot)
+df1 &lt;-<span class="st"> </span><span class="kw">genetic_autocorrelation</span>(P,G,<span class="dt">bins=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1000</span>,<span class="dt">by=</span><span class="dv">25</span>),<span class="dt">perms=</span><span class="dv">999</span>)
+df2 &lt;-<span class="st"> </span><span class="kw">genetic_autocorrelation</span>(P,G,<span class="dt">bins=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1000</span>,<span class="dt">by=</span><span class="dv">50</span>),<span class="dt">perms=</span><span class="dv">999</span>)
+df4 &lt;-<span class="st"> </span><span class="kw">genetic_autocorrelation</span>(P,G,<span class="dt">bins=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1000</span>,<span class="dt">by=</span><span class="dv">200</span>),<span class="dt">perms=</span><span class="dv">999</span>)
+df1$Significant &lt;-<span class="st"> </span>df1$P &lt;<span class="st"> </span><span class="fl">0.05</span>
+df2$Significant &lt;-<span class="st"> </span>df2$P &lt;<span class="st"> </span><span class="fl">0.05</span>
+df4$Significant &lt;-<span class="st"> </span>df4$P &lt;<span class="st"> </span><span class="fl">0.05</span>
+p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>( df1, <span class="kw">aes</span>(<span class="dt">x=</span>To,<span class="dt">y=</span>R)) +<span class="st"> </span><span class="kw">geom_line</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>( <span class="kw">aes</span>(<span class="dt">color=</span>Significant), <span class="dt">size=</span><span class="dv">4</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope=</span><span class="dv">0</span>,<span class="dt">intercept=</span><span class="dv">0</span>, <span class="dt">linetype=</span><span class="dv">2</span>) +
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Genetic Correlation&quot;</span>) +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">xlim</span>(<span class="dv">0</span>,<span class="dv">1000</span>)
+p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>( df2, <span class="kw">aes</span>(<span class="dt">x=</span>To,<span class="dt">y=</span>R)) +<span class="st"> </span><span class="kw">geom_line</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>( <span class="kw">aes</span>(<span class="dt">color=</span>Significant), <span class="dt">size=</span><span class="dv">4</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope=</span><span class="dv">0</span>,<span class="dt">intercept=</span><span class="dv">0</span>, <span class="dt">linetype=</span><span class="dv">2</span>) +
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">xlim</span>(<span class="dv">0</span>,<span class="dv">1000</span>)
+p3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>( df, <span class="kw">aes</span>(<span class="dt">x=</span>To,<span class="dt">y=</span>R)) +<span class="st"> </span><span class="kw">geom_line</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>( <span class="kw">aes</span>(<span class="dt">color=</span>Significant), <span class="dt">size=</span><span class="dv">4</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope=</span><span class="dv">0</span>,<span class="dt">intercept=</span><span class="dv">0</span>, <span class="dt">linetype=</span><span class="dv">2</span>) +
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Physical Separation&quot;</span>) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Genetic Correlation&quot;</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">xlim</span>(<span class="dv">0</span>,<span class="dv">1000</span>)
+p4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>( df4, <span class="kw">aes</span>(<span class="dt">x=</span>To,<span class="dt">y=</span>R)) +<span class="st"> </span><span class="kw">geom_line</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>( <span class="kw">aes</span>(<span class="dt">color=</span>Significant), <span class="dt">size=</span><span class="dv">4</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope=</span><span class="dv">0</span>,<span class="dt">intercept=</span><span class="dv">0</span>, <span class="dt">linetype=</span><span class="dv">2</span>) +
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Physical Separation&quot;</span>) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>)+<span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) +<span class="st"> </span><span class="kw">xlim</span>(<span class="dv">0</span>,<span class="dv">1000</span>)
+<span class="kw">plot_grid</span>(p1,p2,p3,p4,<span class="dt">ncol=</span><span class="dv">2</span>)</code></pre></div>
+<div class="figure"><span id="fig:fourway-autocorrelation-plot"></span>
+<img src="amg_files/figure-html/fourway-autocorrelation-plot-1.png" alt="Spatial autocorrelation in the &lt;i&gt;Cornus&lt;/i&gt; data set using different bin sizes." width="672" />
+<p class="caption">
+Figure 35.2: Spatial autocorrelation in the <i>Cornus</i> data set using different bin sizes.
+</p>
+</div>
+<p>So what does this mean? Can there be many different spatial patterns nested within our populations? How can we evaluate which spatial scale has some kind of genetic autocorrelation? And more importantly, how can we regress it out of our data so we can get to asking the real questions we are trying to ask?</p>
+<div id="eigenvectors-eigenvalues" class="section level2">
+<h2><span class="header-section-number">35.1</span> Eigenvectors &amp; Eigenvalues</h2>
+<p>Both eigenvectors and their matched eigenvalues are somewhat mysterious mathematical creations that we ran across already in the section on ordination.</p>
+<p>The general eigen equation is given as:</p>
+<p><span class="math display">\[
+\mathbf{A} \vec{v_i} =  \lambda_i \vec{v_i}
+\]</span> where <span class="math inline">\(\mathbf{A}\)</span> is a matrix, <span class="math inline">\(\vec{v}_i\)</span> is the <span class="math inline">\(i^{th}\)</span> eigenvector and is associated directly with the <span class="math inline">\(i^{th}\)</span> eigenvalue <span class="math inline">\(\lambda_i\)</span>. For any matrix, the number of corresponding eigenvectors and associated eigenvalues will be equal to the minimum dimensionality of <span class="math inline">\(\mathbf{A}\)</span>. In most cases, we will be using symmetric matrices so our row and column count will be equal. However, we will have at most <span class="math inline">\(det(\mathbf{A})\)</span> non-imaginary eigenvalues associated with any matrix.</p>
+<p>So what does this mean for us? We are interested in determining if there are spatial components to the structure we see on the ground and if so, can we extract those implicitly spatial aspects from our model. There are several ways space may influence our abilities to estimate connectivity.</p>
 
+</div>
 </div>
 
 
@@ -497,9 +538,8 @@ r^h = \frac{\sum_{i\ne j}^K x^h_{ij}c^h_{ij}}{\sum_{i = 1}^K x^h_{ii}c^h_{ii}}
         </div>
       </div>
 <a href="niche-modeling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="classical-selection-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
-  </div>
+<a href="classical-selection-models.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>

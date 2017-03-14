@@ -6,8 +6,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Population Genetics</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="A textbook for the use of R in spatial genetic data analysis.">
-  <meta name="generator" content="bookdown 0.3.12 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Population Genetics" />
   <meta property="og:type" content="book" />
@@ -33,6 +34,7 @@
   
 <link rel="prev" href="data-types.html">
 <link rel="next" href="programming.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -107,7 +109,6 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
-
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -399,7 +400,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
-<li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a></li>
+<li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a><ul>
+<li class="chapter" data-level="35.1" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#eigenvectors-eigenvalues"><i class="fa fa-check"></i><b>35.1</b> Eigenvectors &amp; Eigenvalues</a></li>
+</ul></li>
 <li class="part"><span><b>VII Selection</b></span></li>
 <li class="chapter" data-level="36" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>36</b> Classical Selection Models</a><ul>
 <li class="chapter" data-level="36.1" data-path="classical-selection-models.html"><a href="classical-selection-models.html#the-strength-of-selection"><i class="fa fa-check"></i><b>36.1</b> The Strength of Selection</a></li>
@@ -644,35 +647,35 @@ theList$x</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">ID=</span><span class="dv">1</span>:<span class="dv">5</span>, <span class="dt">Names=</span><span class="kw">c</span>(<span class="st">&quot;Bob&quot;</span>,<span class="st">&quot;Alice&quot;</span>,<span class="st">&quot;Vicki&quot;</span>,<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Sarah&quot;</span>), <span class="dt">Score=</span><span class="dv">100</span> -<span class="st"> </span><span class="kw">rpois</span>(<span class="dv">5</span>,<span class="dt">lambda=</span><span class="dv">10</span>))
 df</code></pre></div>
 <pre><code>##   ID Names Score
-## 1  1   Bob    88
-## 2  2 Alice    81
-## 3  3 Vicki    86
-## 4  4  John    93
-## 5  5 Sarah    95</code></pre>
+## 1  1   Bob    91
+## 2  2 Alice    92
+## 3  3 Vicki    92
+## 4  4  John    88
+## 5  5 Sarah    97</code></pre>
 <p>You can see that each column is a unified type of data and each row is equivalent to a record. Additional data columns may be added to an existing data.frame as:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df$Passed_Class &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>,<span class="ot">TRUE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>)</code></pre></div>
 <p>Since we may have many (thousands?) of rows of observations, a <code>summary()</code> of the data.frame can provide a more compact description.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(df)</code></pre></div>
-<pre><code>##        ID      Names       Score      Passed_Class   
-##  Min.   :1   Alice:1   Min.   :81.0   Mode :logical  
-##  1st Qu.:2   Bob  :1   1st Qu.:86.0   FALSE:1        
-##  Median :3   John :1   Median :88.0   TRUE :4        
-##  Mean   :3   Sarah:1   Mean   :88.6   NA&#39;s :0        
-##  3rd Qu.:4   Vicki:1   3rd Qu.:93.0                  
-##  Max.   :5             Max.   :95.0</code></pre>
+<pre><code>##        ID      Names       Score    Passed_Class   
+##  Min.   :1   Alice:1   Min.   :88   Mode :logical  
+##  1st Qu.:2   Bob  :1   1st Qu.:91   FALSE:1        
+##  Median :3   John :1   Median :92   TRUE :4        
+##  Mean   :3   Sarah:1   Mean   :92   NA&#39;s :0        
+##  3rd Qu.:4   Vicki:1   3rd Qu.:92                  
+##  Max.   :5             Max.   :97</code></pre>
 <p>We can add columns of data to the data.frame after the fact using the <code>$</code>-operator to indicate the column name. Depending upon the data type, the summary will provide an overview of what is there.</p>
 <div id="indexing-data-frames" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> Indexing Data Frames</h3>
 <p>You can access individual items within a <code>data.frame</code> by numeric index such as:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df[<span class="dv">1</span>,<span class="dv">3</span>]</code></pre></div>
-<pre><code>## [1] 88</code></pre>
+<pre><code>## [1] 91</code></pre>
 <p>You can slide indices along rows (which return a new <code>data.frame</code> for you)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df[<span class="dv">1</span>,]</code></pre></div>
 <pre><code>##   ID Names Score Passed_Class
-## 1  1   Bob    88         TRUE</code></pre>
+## 1  1   Bob    91         TRUE</code></pre>
 <p>or along columns (which give you a vector of data)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df[,<span class="dv">3</span>]</code></pre></div>
-<pre><code>## [1] 88 81 86 93 95</code></pre>
+<pre><code>## [1] 91 92 92 88 97</code></pre>
 <p>or use the <code>$</code>-operator as you did for the list data type to get direct access to a either all the data or a specific subset therein.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df$Names[<span class="dv">3</span>]</code></pre></div>
 <pre><code>## [1] Vicki
@@ -680,12 +683,12 @@ df</code></pre></div>
 <p>Indices are ordered just like for matrices, rows first then columns. You can also pass a set of indices such as:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df[<span class="dv">1</span>:<span class="dv">3</span>,]</code></pre></div>
 <pre><code>##   ID Names Score Passed_Class
-## 1  1   Bob    88         TRUE
-## 2  2 Alice    81         TRUE
-## 3  3 Vicki    86         TRUE</code></pre>
+## 1  1   Bob    91         TRUE
+## 2  2 Alice    92         TRUE
+## 3  3 Vicki    92         TRUE</code></pre>
 <p>It is also possible to use logical operators as indices. Here I select only those names in the data.frame whose score was &gt;90 and they passed popgen.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df$Names[df$Score &gt;<span class="st"> </span><span class="dv">90</span> &amp;<span class="st"> </span>df$Passed_Class==<span class="ot">TRUE</span>]</code></pre></div>
-<pre><code>## [1] Sarah
+<pre><code>## [1] Bob   Alice Vicki Sarah
 ## Levels: Alice Bob John Sarah Vicki</code></pre>
 <p>This is why <code>data.frame</code> objects are very database like. They can contain lots of data and you can extract from them subsets that you need to work on. This is a VERY important feature, one that is vital for reproducible research. Keep you data in one and only one place.</p>
 
@@ -704,9 +707,8 @@ df</code></pre></div>
         </div>
       </div>
 <a href="data-types.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="programming.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
-  </div>
+<a href="programming.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>

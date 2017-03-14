@@ -6,8 +6,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Population Genetics</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="A textbook for the use of R in spatial genetic data analysis.">
-  <meta name="generator" content="bookdown 0.3.12 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Population Genetics" />
   <meta property="og:type" content="book" />
@@ -33,6 +34,7 @@
   
 <link rel="prev" href="index.html">
 <link rel="next" href="data-types.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -107,7 +109,6 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
-
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -399,7 +400,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
-<li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a></li>
+<li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a><ul>
+<li class="chapter" data-level="35.1" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#eigenvectors-eigenvalues"><i class="fa fa-check"></i><b>35.1</b> Eigenvectors &amp; Eigenvalues</a></li>
+</ul></li>
 <li class="part"><span><b>VII Selection</b></span></li>
 <li class="chapter" data-level="36" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>36</b> Classical Selection Models</a><ul>
 <li class="chapter" data-level="36.1" data-path="classical-selection-models.html"><a href="classical-selection-models.html#the-strength-of-selection"><i class="fa fa-check"></i><b>36.1</b> The Strength of Selection</a></li>
@@ -453,7 +456,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>The base R system comes with enough functionality to get you going. By default, there is only a limited amount of functionality in R, which is a great thing. You only load and use the packages that you intend to use. There are just too many packages to have them all loaded into memory at all times and there is such a broad range of packages, it is not likely you’d need more than a small fraction of the packages during the course of all your analyses. Once you have a package, you can tell R that you intend to use it by either</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(package_name)</code></pre></div>
 <p>or</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(package_name)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">library</span>(package_name)</code></pre></div>
 <p>They are approximately equivalent, differing in only that the second one actually returns a TRUE or FALSE indicating the presence of that library on you machine. If you do not want to be mocked by other users of R, I would recommend the <code>library</code> version—there are situations where <code>require</code> will not do what you think you want it to do (even though it is a verb and should probably be the correct one to use grammatically).</p>
 <p>There are, at present, a few different places you can get packages. The packages can either be downloaded from these online repositories and installed into R or you can install them from within R itself. Again, I’ll prefer the latter as it is a bit more straightforward.</p>
 </div>
@@ -517,40 +520,48 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">cowplot</td>
+<td align="left">Streamlined Plot Theme and Plot Annotations for ‘ggplot2’</td>
+</tr>
+<tr class="even">
 <td align="left">devtools</td>
 <td align="left">Tools to Make Developing R Packages Easier</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">dismo</td>
 <td align="left">Species Distribution Modeling</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">fields</td>
 <td align="left">Tools for Spatial Data</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">gdistance</td>
 <td align="left">Distances and Routes on Geographical Grids</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">GGally</td>
 <td align="left">Extension to ‘ggplot2’</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ggmap</td>
 <td align="left">Spatial Visualization with ggplot2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ggplot2</td>
 <td align="left">Create Elegant Data Visualisations Using the Grammar of Graphics</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ggrepel</td>
 <td align="left">Repulsive Text and Label Geoms for ‘ggplot2’</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ggtern</td>
 <td align="left">An Extension to ‘ggplot2’, for the Creation of Ternary Diagrams</td>
+</tr>
+<tr class="odd">
+<td align="left">gridExtra</td>
+<td align="left">Miscellaneous Functions for “Grid” Graphics</td>
 </tr>
 <tr class="even">
 <td align="left">gstudio</td>
@@ -581,42 +592,46 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <td align="left">D3 JavaScript Network Graphs from R</td>
 </tr>
 <tr class="odd">
+<td align="left">pegas</td>
+<td align="left">Population and Evolutionary Genetics Analysis System</td>
+</tr>
+<tr class="even">
 <td align="left">popgraph</td>
 <td align="left">This is an R package that constructs and manipulates population</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">raster</td>
 <td align="left">Geographic Data Analysis and Modeling</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rasterVis</td>
 <td align="left">Visualization Methods for Raster Data</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">RColorBrewer</td>
 <td align="left">ColorBrewer Palettes</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RCurl</td>
 <td align="left">General Network (HTTP/FTP/…) Client Interface for R</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rgdal</td>
 <td align="left">Bindings for the Geospatial Data Abstraction Library</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rgeos</td>
 <td align="left">Interface to Geometry Engine - Open Source (GEOS)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">slackr</td>
 <td align="left">Send Messages, Images, R Objects and Files to ‘Slack’</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sp</td>
 <td align="left">Classes and Methods for Spatial Data</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">vegan</td>
 <td align="left">Community Ecology Package</td>
 </tr>
@@ -638,9 +653,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data-types.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
-  </div>
+<a href="data-types.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
