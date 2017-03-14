@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Population Genetics</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="A textbook for the use of R in spatial genetic data analysis.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.12 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Population Genetics" />
   <meta property="og:type" content="book" />
@@ -34,7 +33,6 @@
   
 <link rel="prev" href="reproducable-research.html">
 <link rel="next" href="genetic-drift.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -109,6 +107,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
+
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -528,20 +527,20 @@ genotypes</code></pre></div>
 <p>To examine genotype and allele frequencies for a set of loci, I’ll make a random collection and then use those loci as an example.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loci &lt;-<span class="st"> </span><span class="kw">sample</span>(genotypes, <span class="dv">20</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>)
 loci</code></pre></div>
-<pre><code>##  [1] &quot;A:A&quot; &quot;A:A&quot; &quot;A:B&quot; &quot;A:B&quot; &quot;A:A&quot; &quot;B:B&quot; &quot;B:B&quot; &quot;B:B&quot; &quot;B:B&quot; &quot;B:B&quot; &quot;A:B&quot;
-## [12] &quot;B:B&quot; &quot;A:A&quot; &quot;A:A&quot; &quot;A:A&quot; &quot;B:B&quot; &quot;A:B&quot; &quot;B:B&quot; &quot;A:A&quot; &quot;A:A&quot;</code></pre>
+<pre><code>##  [1] &quot;A:B&quot; &quot;A:A&quot; &quot;A:A&quot; &quot;B:B&quot; &quot;B:B&quot; &quot;B:B&quot; &quot;B:B&quot; &quot;B:B&quot; &quot;A:A&quot; &quot;A:A&quot; &quot;A:A&quot;
+## [12] &quot;A:A&quot; &quot;A:B&quot; &quot;A:A&quot; &quot;A:B&quot; &quot;B:B&quot; &quot;A:A&quot; &quot;A:A&quot; &quot;A:A&quot; &quot;B:B&quot;</code></pre>
 <p>Here the function sample() makes a random draw of the arguments given in the first position (the genotypes), and selects 20 (the second argument), and since there are fewer potential values than observed ones, you need to tell it that you can sample the same genotypes more than once (the <code>replace=TRUE</code> part). In analytical population genetics, the use of randomization and permutation is critical and we will see this repeatedly throughout this text. Technically, this is a Monte Carlo simulation that was done. Fancy, no?</p>
 <p>Next, we can take these data and estimate genotype frequencies. Here the expectation is also given by the code using the methodologies described in the next section.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">genotype_frequencies</span>(loci)</code></pre></div>
 <pre><code>##   Genotype Observed Expected
-## 1      A:A        8        5
-## 2      A:B        4       10
-## 3      B:B        8        5</code></pre>
+## 1      A:A       10   6.6125
+## 2      A:B        3   9.7750
+## 3      B:B        7   3.6125</code></pre>
 <p>and allele frequencies from these loci are:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">frequencies</span>( loci )</code></pre></div>
 <pre><code>##   Allele Frequency
-## 1      A       0.5
-## 2      B       0.5</code></pre>
+## 1      A     0.575
+## 2      B     0.425</code></pre>
 <p>It should be noted that for these function, and for almost all the functions that return data in gstudio, the return object is a native data.frame. Using these tools, it is easy to take our data and extract from it the components necessary for estimating the degree to which they conform to the expectations of HWE.</p>
 </div>
 <div id="trans-generational-transition-probabilities" class="section level2">
@@ -640,8 +639,9 @@ Q_{t+1} &amp;= \frac{P_tQ_t}{2} + 2P_tR_t + \frac{Q^2_t}{2} + Q_tR_t\\
         </div>
       </div>
 <a href="reproducable-research.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="genetic-drift.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="genetic-drift.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>

@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Population Genetics</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="A textbook for the use of R in spatial genetic data analysis.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.12 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Population Genetics" />
   <meta property="og:type" content="book" />
@@ -34,7 +33,6 @@
   
 <link rel="prev" href="the-r-ecosystem.html">
 <link rel="next" href="data-containers.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -109,6 +107,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
+
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -477,19 +476,19 @@ x</code></pre></div>
 <pre><code>## [1] 0.099999999999999991673</code></pre>
 <p>Not quite 0.1 is it? Not that far away from it but not exact. That is a general problem, not one that R has any more claim to than any other language and/or implementation. Does this matter much, probably not in the realm of the kinds of things we do in population genetics, it is just something that you should be aware of. You can make random sets of numeric data by using using functions describing various distributions. For example, some random numbers from the normal distribution are:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>##  [1]  0.55715709 -0.12871546  0.94331450  1.10236096  0.62257679
-##  [6]  1.39782900  0.46911693 -0.05672749  1.90035177 -1.60390956</code></pre>
+<pre><code>##  [1] -0.98211509  0.55530292 -0.50426582  0.03748774 -1.05588925
+##  [6]  0.63348402  0.81010100 -2.17872391 -0.36618122  0.50216671</code></pre>
 <p>from the normal distribution with designated mean and standard deviation:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">10</span>,<span class="dt">mean=</span><span class="dv">42</span>,<span class="dt">sd=</span><span class="dv">12</span>)</code></pre></div>
-<pre><code>##  [1] 56.27397 62.48476 64.94703 36.84373 46.30636 48.35101 46.34930
-##  [8] 40.66427 52.90401 46.67944</code></pre>
+<pre><code>##  [1] 24.66019 40.08521 31.78401 27.64932 39.72364 35.97715 49.14747
+##  [8] 39.72947 35.38570 33.79069</code></pre>
 <p>A poisson distribution with mean 2:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rpois</span>(<span class="dv">10</span>,<span class="dt">lambda =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>##  [1] 2 3 0 3 2 1 1 4 1 4</code></pre>
+<pre><code>##  [1] 0 4 2 1 7 1 2 3 2 2</code></pre>
 <p>and the <span class="math inline">\(\chi^2\)</span> distribution with 1 degree of freedom:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rchisq</span>(<span class="dv">10</span>, <span class="dt">df=</span><span class="dv">1</span>)</code></pre></div>
-<pre><code>##  [1] 1.389117619 1.797785385 1.423753083 2.247838985 0.014778546
-##  [6] 0.008164926 0.183826152 0.178471290 0.049220163 7.809714259</code></pre>
+<pre><code>##  [1] 5.9384711 2.4323887 3.3591969 0.1151176 0.1395137 1.2357322 3.0031139
+##  [8] 7.2700267 0.2729594 1.5914706</code></pre>
 <p>There are several more distributions that if you need to access random numbers, quantiles, probability densities, and cumulative density values are available.</p>
 <div id="coercion-to-numeric" class="section level3">
 <h3><span class="header-section-number">2.1.1</span> Coercion to Numeric</h3>
@@ -610,26 +609,26 @@ stable</code></pre></div>
 <p>It is common to use logical types to serve as indices for vectors. Say for example, you have a vector of data that you want to select some subset from.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>)
 data</code></pre></div>
-<pre><code>##  [1] -0.27540442  0.02562615 -0.32105032 -0.57170644 -0.40401084
-##  [6]  0.62421637 -1.38672463 -0.54255058 -1.18084962 -1.13173163
-## [11] -0.08912983 -1.65844763 -1.96681513  0.19929013 -0.80156671
-## [16]  0.86440275  0.55041406  0.10647876 -2.80951922  0.58023977</code></pre>
+<pre><code>##  [1] -0.47790748  1.04181710 -0.68835398 -0.90818879 -0.69542665
+##  [6]  0.95720705  0.13498074  2.70270311  0.60591313  0.44537220
+## [11]  0.20775842 -1.65821455  0.78078771 -0.42484766  1.26212743
+## [16] -0.46372753 -0.24705915  0.01274463 -0.86465696 -0.39261455</code></pre>
 <p>Perhaps you are on interested in the non-negative values</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data[ data &gt;<span class="st"> </span><span class="dv">0</span> ]</code></pre></div>
-<pre><code>## [1] 0.02562615 0.62421637 0.19929013 0.86440275 0.55041406 0.10647876
-## [7] 0.58023977</code></pre>
+<pre><code>##  [1] 1.04181710 0.95720705 0.13498074 2.70270311 0.60591313 0.44537220
+##  [7] 0.20775842 0.78078771 1.26212743 0.01274463</code></pre>
 <p>If you look at the condition being passed to as the index</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &gt;<span class="st"> </span><span class="dv">0</span></code></pre></div>
-<pre><code>##  [1] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
-## [12] FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE</code></pre>
+<pre><code>##  [1] FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [12] FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE</code></pre>
 <p>you see that individually, each value in the data vector is being evaluated as a logical value, satisfying the condition that it is strictly greater than zero. When you pass that as indices to a vector it only shows the indices that are <code>TRUE</code>.</p>
 <p>You can coerce a value into a logical if you understand the rules. Numeric types that equal 0 (zero) are <code>FALSE</code>, always. Any non-zero value is considered <code>TRUE</code>. Here I use the modulus operator, <code>%%</code>, which provides the remainder of a division.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>:<span class="dv">20</span> %%<span class="st"> </span><span class="dv">2</span></code></pre></div>
 <pre><code>##  [1] 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0</code></pre>
 <p>which used as indices give us</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data[ (<span class="dv">1</span>:<span class="dv">20</span> %%<span class="st"> </span><span class="dv">2</span>) &gt;<span class="st"> </span><span class="dv">0</span> ]</code></pre></div>
-<pre><code>##  [1] -0.27540442 -0.32105032 -0.40401084 -1.38672463 -1.18084962
-##  [6] -0.08912983 -1.96681513 -0.80156671  0.55041406 -2.80951922</code></pre>
+<pre><code>##  [1] -0.4779075 -0.6883540 -0.6954266  0.1349807  0.6059131  0.2077584
+##  [7]  0.7807877  1.2621274 -0.2470591 -0.8646570</code></pre>
 <p>You can get as complicated in the creation of indices as you like, even using logical operators such as OR and AND. I leave that as an example for you to play with.</p>
 
 </div>
@@ -640,8 +639,9 @@ data</code></pre></div>
         </div>
       </div>
 <a href="the-r-ecosystem.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data-containers.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="data-containers.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>

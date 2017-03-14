@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Population Genetics</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="A textbook for the use of R in spatial genetic data analysis.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.12 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Population Genetics" />
   <meta property="og:type" content="book" />
@@ -34,7 +33,6 @@
   
 <link rel="prev" href="hardy-weinberg-equilibrium.html">
 <link rel="next" href="effective-population-size.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -109,6 +107,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
+
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -463,11 +462,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Lets now look at the data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(df)</code></pre></div>
 <pre><code>##        N           FreqA       
-##  Min.   :  5   Min.   :0.0000  
-##  1st Qu.: 10   1st Qu.:0.4000  
+##  Min.   :  5   Min.   :0.1000  
+##  1st Qu.: 10   1st Qu.:0.4200  
 ##  Median : 20   Median :0.5000  
-##  Mean   : 37   Mean   :0.4908  
-##  3rd Qu.: 50   3rd Qu.:0.5600  
+##  Mean   : 37   Mean   :0.4983  
+##  3rd Qu.: 50   3rd Qu.:0.5575  
 ##  Max.   :100   Max.   :1.0000</code></pre>
 <p>The frequencies observed in each run are all over the place, basically covering the entire allowable range for an allele frequency. More importantly though lets look graphically at the allele frequencies using a boxplot where frequencies are grouped by sample size, <code>df$N</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
@@ -606,8 +605,9 @@ t_{loss} = \frac{\ln(N_e\mu) + \gamma}{\mu}
         </div>
       </div>
 <a href="hardy-weinberg-equilibrium.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="effective-population-size.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="effective-population-size.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>

@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Population Genetics</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="A textbook for the use of R in spatial genetic data analysis.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.12 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Population Genetics" />
   <meta property="og:type" content="book" />
@@ -34,7 +33,6 @@
   
 <link rel="prev" href="programming.html">
 <link rel="next" href="reproducable-research.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -109,6 +107,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
+
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -826,11 +825,10 @@ vals</code></pre></div>
 <pre><code>## [1] 657</code></pre>
 <p>different colors available for your use. Not all are distinct as some overlap. However the benefit of these colors is that they have specific names, making it easier for you to remember than RGB or hex representations. Here are a random set of 20 color names.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colors</span>()[ <span class="kw">sample.int</span>( <span class="kw">length</span>(<span class="kw">colors</span>()), <span class="dt">size=</span><span class="dv">20</span>) ]</code></pre></div>
-<pre><code>##  [1] &quot;orangered4&quot;     &quot;lightpink4&quot;     &quot;red2&quot;           &quot;gray32&quot;        
-##  [5] &quot;gray87&quot;         &quot;paleturquoise4&quot; &quot;gray78&quot;         &quot;gray80&quot;        
-##  [9] &quot;palegreen1&quot;     &quot;slategray1&quot;     &quot;lightpink1&quot;     &quot;gray86&quot;        
-## [13] &quot;orchid1&quot;        &quot;grey27&quot;         &quot;azure1&quot;         &quot;beige&quot;         
-## [17] &quot;grey70&quot;         &quot;grey39&quot;         &quot;lightskyblue4&quot;  &quot;darkgoldenrod&quot;</code></pre>
+<pre><code>##  [1] &quot;darkgray&quot;    &quot;royalblue&quot;   &quot;deeppink3&quot;   &quot;wheat4&quot;      &quot;gray38&quot;     
+##  [6] &quot;ivory2&quot;      &quot;violetred1&quot;  &quot;gray50&quot;      &quot;lightpink2&quot;  &quot;dodgerblue4&quot;
+## [11] &quot;gray25&quot;      &quot;rosybrown&quot;   &quot;darkorchid3&quot; &quot;tan3&quot;        &quot;grey73&quot;     
+## [16] &quot;gray64&quot;      &quot;gray72&quot;      &quot;skyblue4&quot;    &quot;goldenrod3&quot;  &quot;honeydew1&quot;</code></pre>
 <p>To use these colors you can call them by name in the col= option to a plot. Here is an example where I define three named colors and then coerce the <code>iris$Species</code> variable into an integer to select the color by species and plot it in a scatter plot (another version of the <code>pch=</code> example previously).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;royalblue1&quot;</span>, <span class="st">&quot;orange1&quot;</span>, <span class="st">&quot;green3&quot;</span>)
 cols &lt;-<span class="st"> </span>colors[ iris$Species ]
@@ -921,8 +919,9 @@ tiff(filename = &quot;Rplot%03d.tiff&quot;,
         </div>
       </div>
 <a href="programming.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="reproducable-research.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="reproducable-research.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
