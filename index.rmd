@@ -26,7 +26,7 @@ The content of this text is modified, added to, and changed continually.  You ar
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(ggplot2)
-require(knitr)
+ library(knitr)
 theme_set( theme_bw(base_size=14) )
 knitr::opts_chunk$set( warning=FALSE, message=FALSE,error = FALSE )
 ```

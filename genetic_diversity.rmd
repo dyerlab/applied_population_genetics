@@ -167,7 +167,7 @@ In an ideal world, we would be able to have enough resources to sample for these
 The front part is a small sample size correction factor.  Its importance in your estimation diminishes as $N \to \infty$ as shown in Figure \@ref(fig:biasCorrection).  Once you get above $N=9$ individuals, there is an inflation of the estimated heterozygosity at a magnitude of less than 5%. 
 
 ```{r biasCorrection, echo=FALSE, fig.cap="Magnitude of the correction factor for small sample size estimations as a function of N.", message=FALSE}
-require(ggplot2)
+ library(ggplot2)
 N <- 1:100
 CF <- (2*N) / ( 2*N-1)
 df <- data.frame( N, CF)

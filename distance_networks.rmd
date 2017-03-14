@@ -16,7 +16,7 @@ There is a quick function, `as.popgraph()` that takes either an existing **igrap
 
 
 ```{r warning=FALSE, error=FALSE, message=FALSE}
-require(igraph)
+ library(igraph)
 g <- graph_from_adjacency_matrix( A , mode="undirected")
 ```
 
@@ -413,7 +413,7 @@ Then overlay this onto a map using the `overlay_popgraph()` function.    Here is
 
 ```{r,message=FALSE,fig.cap="Map of graph stetched onto continential US map."}
 library(maps)
-require(popgraph)
+ library(popgraph)
 pg <- as.popgraph( g )
 
 map( "state" )
@@ -432,7 +432,7 @@ Several graph-theoretic approaches have been suggested in the literature, some o
 A common approach has been to use a measure of pair-wise genetic distance, measured between individuals or strata.  In the following example, Nei's genetic distance (see Chapter \@ref(genetic-distance)) is used.
 
 ```{r}
-require(gstudio)
+ library(gstudio)
 data(arapat)
 d <- genetic_distance(arapat,mode="Nei")
 ```
@@ -446,7 +446,7 @@ d[1:6,1:6]
 and in the case of the `arapat` data, produces a bivariate distribution of distances.
 
 ```{r warning=FALSE, message=FALSE}
-require(ggplot2)
+ library(ggplot2)
 qplot(d[lower.tri(d)],geom = "histogram", bins=40)
 ```
 

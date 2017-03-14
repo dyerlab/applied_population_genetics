@@ -108,7 +108,7 @@ plot_side <- ggplot( df, aes(x=Euclidean, fill=Status)) + geom_density(alpha=0.5
 I also need an empty plot to since we are going to make a 2x2 grid of plots but the upper right one will have nothing in it (the popgraph library has a nice invisible theme called `theme_empty()`).
 
 ```{r message=FALSE}
-require(popgraph)
+ library(popgraph)
 empty <- ggplot() + theme_empty()
 ```
 
@@ -116,7 +116,7 @@ Finally, we can stitch this all together and produce a single plot with these fo
 
 
 ```{r message=FALSE, warning=FALSE, fig.cap="Pairwise genetic distance measured using Nei's distance and Euclidean distance based upon allele frequencies for populations of Araptus attenuatus.  Each comparison is classified as being between the same species group or between mixed groups and marginal probability densities are shown for each measure."}
-require(gridExtra)
+ library(gridExtra)
 grid.arrange(plot_top, empty, scatter, plot_side, ncol=2, nrow=2, widths=c(4,1), heights=c(1,4))
 ```
 
@@ -159,7 +159,7 @@ which is essentially the Pearson product moment correlation coefficient!  How co
 In this example, the distance matrices must first be translated into dist objects (a type of symmetrical matrix).
 
 ```{r}
-require(vegan)
+ library(vegan)
 mantel( as.dist(D1), as.dist(D2), permutations=9999 )
 ```
 

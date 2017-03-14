@@ -131,7 +131,7 @@ Before we jump into some data, we need to address one more issue that we are con
 Here is an example of the differences we will see if we do not account for these problems (as well as the issue of samples sizes and sampling locations discussed in \@ref(samples-from-several-locales)).  In the arapat data set, I'm going to use the two of the mainland populations and estimate $F_{ST}$ from them for a single locus as an example to demonstrate this last issue and show the magnitude of the bias that may be introduced by not considering that each of the stratum have estimated heterozygosity with a bit of error.
 
 ```{r message=FALSE, warning=FALSE}
-require(gstudio)
+ library(gstudio)
 data(arapat)
 df <- arapat[ arapat$Population %in% c("101","102"), c(3,13)]
 df <- droplevels( df )
@@ -242,7 +242,7 @@ pop <- as.numeric( arapat$Population )
 and then using the `amova()` function from the pegas library (there are many different implementations of this kind of analysis, decompose the variance into and fill out the AMOVA table as:
 
 ```{r}
-require(pegas)
+ library(pegas)
 fit <- amova( D ~ pop, nperm=1000 )
 fit
 ```

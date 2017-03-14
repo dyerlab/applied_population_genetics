@@ -152,7 +152,7 @@ A Sankey Diagram is a kind of flow diagram used to indicate allocation of one se
 
 
 ```{r,warning=FALSE, message=FALSE}
-require(networkD3)
+ library(networkD3)
 pops <- as.character(unique(arapat$Population))
 species <- as.character(unique(arapat$Species))
 cluster <- as.character(unique(arapat$Cluster))

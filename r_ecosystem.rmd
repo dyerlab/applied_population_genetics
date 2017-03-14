@@ -28,7 +28,7 @@ library(package_name)
 or
 
 ```{r eval=FALSE}
-require(package_name)
+ library(package_name)
 ```
 
 They are approximately equivalent, differing in only that the second one actually returns a TRUE or FALSE indicating the presence of that library on you machine.  If you do not want to be mocked by other users of R, I would recommend the `library` version---there are situations where `require` will not do what you think you want it to do (even though it is a verb and should probably be the correct one to use grammatically).  

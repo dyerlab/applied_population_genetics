@@ -67,7 +67,7 @@ This output has two important components to it.  First, it shows the axes, in de
 Where this becomes meaningful for us is in how we can project our original data onto these new coordinate locations and look at the distribution to see if there are any obvious trends, partitions, gradients, etc.  
 
 ```{r warning=FALSE, message=FALSE}
-require(ggplot2)
+ library(ggplot2)
 pred <- predict(fit.pca)
 df <- data.frame(PC1 = pred[, 1], PC2 = pred[, 2])
 df$Species <- arapat$Species
@@ -134,7 +134,7 @@ L = \frac{\sum_l\sum_u x_uy_u}{\sqrt{(\sum_l\sum_u x_u^2)(\sum_l\sum_u y_u^2)}}
 I make the among stratum distance matrix and then turn it into a `dist` object to do a hierarchal clustering on the populations. I then plot it and make the node colors equal to the grouping of the dendrogram *if* there were 4 groups in the dataset.  This is also zoomable, for large trees, so if you want to figure out the relationships at the leaves, where the internal edges are smaller, zoom in with the mouse.
 
 ```{r message=FALSE, error=FALSE, warning=FALSE}
-require(networkD3)
+ library(networkD3)
 d <- genetic_distance(arapat,stratum = "Population", mode="Nei")
 d <- as.dist( d )
 hc <- hclust(d)
