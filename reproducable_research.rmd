@@ -60,7 +60,7 @@ I recommend looking into more approaches on Reproducible Research as they will h
 
 ## Integrating into Slack
 
-If you and your group use (Slack)[http://slack.com] to help in productivity, you can post text and results directly from R into your Slack channels without the copy-paste, save file, upload, etc. routine. Here is how you set it up.  This is still a bit in development and the latest version needs a little tweeking to work correctly (see subsection below).  
+If you and your group use [Slack](http://slack.com) to help in productivity, you can post text and results directly from R into your Slack channels without the copy-paste, save file, upload, etc. routine. Here is how you set it up.  This is still a bit in development and the latest version needs a little tweeking to work correctly (see subsection below).  
 
 While this package is currently on CRAN, I recommend downloading the latest version from github.
 First things first, I recommend installing the latest version from the github repository.
@@ -144,6 +144,14 @@ Very Cool!  I can imagine a lot of situations where it would be helpful to have 
 
 
 
+### Markdown
+
+This entire book is written in [RMarkdown](http://rmarkdown.rstudio.com/), a text-based approach for mixing verbiage and analyses into a single document.  There are several advantages to adopting an open appraoch such as this including:  
+1. All the data and analyses are in the same place.  The only reason you see a graph above is because the markdown document has the specific code in it to make that graphical output.  It is not done in some other program and either imported or cut-and-paste into this document.  
+2. It is in a text format.  If you wish, you can see the entirety of this text on my [github](https://github.com/dyerlab/applied_population_genetics) site.  This means I can take advantage of:
+  - Version control. I can make branches, develop new parts, and merge them back in.
+  - No need for those *ad hoc* naming schemes (last_version.docx, really_last_version.docx, Im_totally_lost_which_version_is_this.docx), it is all kept in sync.
+  - Collaborations with others is easy, just like real programmers.
 
 
 

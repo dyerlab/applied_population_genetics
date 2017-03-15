@@ -105,3 +105,7 @@ $$
 where $\mathbf{A}$ is a matrix, $\vec{v}_i$ is the $i^{th}$ eigenvector and is associated directly with the $i^{th}$ eigenvalue $\lambda_i$.  For any matrix, the number of corresponding eigenvectors and associated eigenvalues will be equal to the minimum dimensionality of $\mathbf{A}$.  In most cases, we will be using symmetric matrices so our row and column count will be equal.  However, we will have at most $det(\mathbf{A})$ non-imaginary eigenvalues associated with any matrix.  
 
 So what does this mean for us?  We are interested in determining if there are spatial components to the structure we see on the ground and if so, can we extract those implicitly spatial aspects from our model.  There are several ways space may influence our abilities to estimate connectivity. 
+
+
+
+
