@@ -148,11 +148,16 @@ Very Cool!  I can imagine a lot of situations where it would be helpful to have 
 
 This entire book is written in [RMarkdown](http://rmarkdown.rstudio.com/), a text-based approach for mixing verbiage and analyses into a single document.  There are several advantages to adopting an open appraoch such as this including:  
 1. All the data and analyses are in the same place.  The only reason you see a graph above is because the markdown document has the specific code in it to make that graphical output.  It is not done in some other program and either imported or cut-and-paste into this document.  
-2. It is in a text format.  If you wish, you can see the entirety of this text on my [github](https://github.com/dyerlab/applied_population_genetics) site.  This means I can take advantage of:
+2. It is in a text format.  If you wish, you can see the entirety of this text on my [github](https://github.com/dyerlab/applied_population_genetics) site.  
+
+This means I can take advantage of:
   - Version control. I can make branches, develop new parts, and merge them back in.
   - No need for those *ad hoc* naming schemes (last_version.docx, really_last_version.docx, Im_totally_lost_which_version_is_this.docx), it is all kept in sync.
   - Collaborations with others is easy, just like real programmers.
+3. Analyses and figures can be re-run and changes in the output can be inserted into your documents automatically.
+4. Markdown documents are the source and can be converted into HTML, PDF, DOCX, presentations, etc.  All from the same source materials.  This means that you work on one file and when you need to convert it into a finalized format, you can do so with ease.
 
+To get started working with markdown, go read over the [RMarkdown](http://rmarkdown.rstudio.com/) website and fire up RStudio. It has all the components built-in for you.  
 
 
 
