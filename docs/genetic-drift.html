@@ -189,6 +189,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.1" data-path="reproducable-research.html"><a href="reproducable-research.html#fixing-problem-with-version-1.4.1"><i class="fa fa-check"></i><b>6.2.1</b> Fixing Problem with Version 1.4.1</a></li>
 <li class="chapter" data-level="6.2.2" data-path="reproducable-research.html"><a href="reproducable-research.html#configuration"><i class="fa fa-check"></i><b>6.2.2</b> Configuration</a></li>
 <li class="chapter" data-level="6.2.3" data-path="reproducable-research.html"><a href="reproducable-research.html#sending-text-and-graphical-ouput"><i class="fa fa-check"></i><b>6.2.3</b> Sending Text and Graphical Ouput</a></li>
+<li class="chapter" data-level="6.2.4" data-path="reproducable-research.html"><a href="reproducable-research.html#markdown"><i class="fa fa-check"></i><b>6.2.4</b> Markdown</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Single Population</b></span></li>
@@ -465,11 +466,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Lets now look at the data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(df)</code></pre></div>
 <pre><code>##        N           FreqA       
-##  Min.   :  5   Min.   :0.0000  
-##  1st Qu.: 10   1st Qu.:0.4225  
+##  Min.   :  5   Min.   :0.1000  
+##  1st Qu.: 10   1st Qu.:0.4025  
 ##  Median : 20   Median :0.5000  
-##  Mean   : 37   Mean   :0.5123  
-##  3rd Qu.: 50   3rd Qu.:0.6000  
+##  Mean   : 37   Mean   :0.5044  
+##  3rd Qu.: 50   3rd Qu.:0.5800  
 ##  Max.   :100   Max.   :1.0000</code></pre>
 <p>The frequencies observed in each run are all over the place, basically covering the entire allowable range for an allele frequency. More importantly though lets look graphically at the allele frequencies using a boxplot where frequencies are grouped by sample size, <code>df$N</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)

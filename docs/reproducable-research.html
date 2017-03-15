@@ -189,6 +189,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.1" data-path="reproducable-research.html"><a href="reproducable-research.html#fixing-problem-with-version-1.4.1"><i class="fa fa-check"></i><b>6.2.1</b> Fixing Problem with Version 1.4.1</a></li>
 <li class="chapter" data-level="6.2.2" data-path="reproducable-research.html"><a href="reproducable-research.html#configuration"><i class="fa fa-check"></i><b>6.2.2</b> Configuration</a></li>
 <li class="chapter" data-level="6.2.3" data-path="reproducable-research.html"><a href="reproducable-research.html#sending-text-and-graphical-ouput"><i class="fa fa-check"></i><b>6.2.3</b> Sending Text and Graphical Ouput</a></li>
+<li class="chapter" data-level="6.2.4" data-path="reproducable-research.html"><a href="reproducable-research.html#markdown"><i class="fa fa-check"></i><b>6.2.4</b> Markdown</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Single Population</b></span></li>
@@ -503,7 +504,7 @@ cornus &lt;-<span class="st"> </span><span class="kw">read_population</span>( co
 </div>
 <div id="integrating-into-slack" class="section level2">
 <h2><span class="header-section-number">6.2</span> Integrating into Slack</h2>
-<p>If you and your group use (Slack)[<a href="http://slack.com" class="uri">http://slack.com</a>] to help in productivity, you can post text and results directly from R into your Slack channels without the copy-paste, save file, upload, etc. routine. Here is how you set it up. This is still a bit in development and the latest version needs a little tweeking to work correctly (see subsection below).</p>
+<p>If you and your group use <a href="http://slack.com">Slack</a> to help in productivity, you can post text and results directly from R into your Slack channels without the copy-paste, save file, upload, etc. routine. Here is how you set it up. This is still a bit in development and the latest version needs a little tweeking to work correctly (see subsection below).</p>
 <p>While this package is currently on CRAN, I recommend downloading the latest version from github. First things first, I recommend installing the latest version from the github repository.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
 <span class="kw">install_github</span>(<span class="st">&quot;hrbrmstr/slackr&quot;</span>)</code></pre></div>
@@ -553,6 +554,12 @@ p &lt;-<span class="st"> </span><span class="kw">ggplot</span>( he, <span class=
 <p>Which produces the following image in my channel</p>
 <p><img src="media/slack_ggplot_output.png" width="190" /></p>
 <p>Very Cool! I can imagine a lot of situations where it would be helpful to have a script send a slack notification when it has finished (or crapped out on an error) in some long-running analyses. Now if we could just get slack to integrate with RStudio server version…</p>
+</div>
+<div id="markdown" class="section level3">
+<h3><span class="header-section-number">6.2.4</span> Markdown</h3>
+<p>This entire book is written in <a href="http://rmarkdown.rstudio.com/">RMarkdown</a>, a text-based approach for mixing verbiage and analyses into a single document. There are several advantages to adopting an open appraoch such as this including:<br />
+1. All the data and analyses are in the same place. The only reason you see a graph above is because the markdown document has the specific code in it to make that graphical output. It is not done in some other program and either imported or cut-and-paste into this document.<br />
+2. It is in a text format. If you wish, you can see the entirety of this text on my <a href="https://github.com/dyerlab/applied_population_genetics">github</a> site. This means I can take advantage of: - Version control. I can make branches, develop new parts, and merge them back in. - No need for those <em>ad hoc</em> naming schemes (last_version.docx, really_last_version.docx, Im_totally_lost_which_version_is_this.docx), it is all kept in sync. - Collaborations with others is easy, just like real programmers.</p>
 
 </div>
 </div>

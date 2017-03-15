@@ -189,6 +189,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.1" data-path="reproducable-research.html"><a href="reproducable-research.html#fixing-problem-with-version-1.4.1"><i class="fa fa-check"></i><b>6.2.1</b> Fixing Problem with Version 1.4.1</a></li>
 <li class="chapter" data-level="6.2.2" data-path="reproducable-research.html"><a href="reproducable-research.html#configuration"><i class="fa fa-check"></i><b>6.2.2</b> Configuration</a></li>
 <li class="chapter" data-level="6.2.3" data-path="reproducable-research.html"><a href="reproducable-research.html#sending-text-and-graphical-ouput"><i class="fa fa-check"></i><b>6.2.3</b> Sending Text and Graphical Ouput</a></li>
+<li class="chapter" data-level="6.2.4" data-path="reproducable-research.html"><a href="reproducable-research.html#markdown"><i class="fa fa-check"></i><b>6.2.4</b> Markdown</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Single Population</b></span></li>
@@ -828,11 +829,13 @@ vals</code></pre></div>
 <pre><code>## [1] 657</code></pre>
 <p>different colors available for your use. Not all are distinct as some overlap. However the benefit of these colors is that they have specific names, making it easier for you to remember than RGB or hex representations. Here are a random set of 20 color names.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colors</span>()[ <span class="kw">sample.int</span>( <span class="kw">length</span>(<span class="kw">colors</span>()), <span class="dt">size=</span><span class="dv">20</span>) ]</code></pre></div>
-<pre><code>##  [1] &quot;goldenrod&quot;      &quot;lightblue4&quot;     &quot;gray95&quot;         &quot;lightslategray&quot;
-##  [5] &quot;gray87&quot;         &quot;dimgray&quot;        &quot;tomato&quot;         &quot;firebrick4&quot;    
-##  [9] &quot;peachpuff&quot;      &quot;peachpuff3&quot;     &quot;mediumpurple1&quot;  &quot;gray45&quot;        
-## [13] &quot;orchid1&quot;        &quot;tomato4&quot;        &quot;dimgrey&quot;        &quot;grey94&quot;        
-## [17] &quot;indianred3&quot;     &quot;gray19&quot;         &quot;lightsalmon&quot;    &quot;grey88&quot;</code></pre>
+<pre><code>##  [1] &quot;gray58&quot;          &quot;cyan2&quot;           &quot;blue&quot;           
+##  [4] &quot;grey95&quot;          &quot;white&quot;           &quot;gray22&quot;         
+##  [7] &quot;turquoise1&quot;      &quot;plum3&quot;           &quot;darkblue&quot;       
+## [10] &quot;peachpuff3&quot;      &quot;darkmagenta&quot;     &quot;darkolivegreen1&quot;
+## [13] &quot;grey49&quot;          &quot;gray29&quot;          &quot;mediumpurple1&quot;  
+## [16] &quot;darkslategray1&quot;  &quot;hotpink1&quot;        &quot;tomato1&quot;        
+## [19] &quot;lightskyblue4&quot;   &quot;gray19&quot;</code></pre>
 <p>To use these colors you can call them by name in the col= option to a plot. Here is an example where I define three named colors and then coerce the <code>iris$Species</code> variable into an integer to select the color by species and plot it in a scatter plot (another version of the <code>pch=</code> example previously).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;royalblue1&quot;</span>, <span class="st">&quot;orange1&quot;</span>, <span class="st">&quot;green3&quot;</span>)
 cols &lt;-<span class="st"> </span>colors[ iris$Species ]

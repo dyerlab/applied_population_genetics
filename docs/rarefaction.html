@@ -189,6 +189,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.1" data-path="reproducable-research.html"><a href="reproducable-research.html#fixing-problem-with-version-1.4.1"><i class="fa fa-check"></i><b>6.2.1</b> Fixing Problem with Version 1.4.1</a></li>
 <li class="chapter" data-level="6.2.2" data-path="reproducable-research.html"><a href="reproducable-research.html#configuration"><i class="fa fa-check"></i><b>6.2.2</b> Configuration</a></li>
 <li class="chapter" data-level="6.2.3" data-path="reproducable-research.html"><a href="reproducable-research.html#sending-text-and-graphical-ouput"><i class="fa fa-check"></i><b>6.2.3</b> Sending Text and Graphical Ouput</a></li>
+<li class="chapter" data-level="6.2.4" data-path="reproducable-research.html"><a href="reproducable-research.html#markdown"><i class="fa fa-check"></i><b>6.2.4</b> Markdown</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Single Population</b></span></li>
@@ -497,10 +498,10 @@ ae.mainland</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cape.pop &lt;-<span class="st"> </span>arapat[ arapat$Species==<span class="st">&quot;Cape&quot;</span>,<span class="st">&quot;WNT&quot;</span>]
 null.ae &lt;-<span class="st"> </span><span class="kw">rarefaction</span>( cape.pop, <span class="dt">mode=</span><span class="st">&quot;Ae&quot;</span>,<span class="dt">size=</span><span class="dv">36</span>)
 <span class="kw">mean</span>(null.ae)</code></pre></div>
-<pre><code>## [1] 1.312558</code></pre>
+<pre><code>## [1] 1.314233</code></pre>
 <p>So even if the samples sizes are the same, the mean level of diversity remains relatively constant. The range in diversity</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">range</span>(null.ae)</code></pre></div>
-<pre><code>## [1] 1.000000 1.789627</code></pre>
+<pre><code>## [1] 1.000000 1.829217</code></pre>
 <p>is quite large. Since this estimate is frequency based, random samples of alleles change the underlying estimate of Ae during each permutation.</p>
 <p>The observed estimate of diversity in the Mainland populations does fall within this range. However, the null hypothesis states that <span class="math inline">\(A_{e,mainland} = A_{e,cape}\)</span> and if this is true, once we standardize sample size, we can take the distribution of permuted Ae values as a statement about what we should see if the null hypothesis were true. As such, we can treat it probabilistically and estimate the probability that <span class="math inline">\(A_e\)</span>, Mainland is drawn from this distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">null.ae &lt;-<span class="st"> </span><span class="kw">c</span>( null.ae, ae.mainland[<span class="dv">1</span>,<span class="dv">1</span>])

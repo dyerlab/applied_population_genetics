@@ -189,6 +189,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.1" data-path="reproducable-research.html"><a href="reproducable-research.html#fixing-problem-with-version-1.4.1"><i class="fa fa-check"></i><b>6.2.1</b> Fixing Problem with Version 1.4.1</a></li>
 <li class="chapter" data-level="6.2.2" data-path="reproducable-research.html"><a href="reproducable-research.html#configuration"><i class="fa fa-check"></i><b>6.2.2</b> Configuration</a></li>
 <li class="chapter" data-level="6.2.3" data-path="reproducable-research.html"><a href="reproducable-research.html#sending-text-and-graphical-ouput"><i class="fa fa-check"></i><b>6.2.3</b> Sending Text and Graphical Ouput</a></li>
+<li class="chapter" data-level="6.2.4" data-path="reproducable-research.html"><a href="reproducable-research.html#markdown"><i class="fa fa-check"></i><b>6.2.4</b> Markdown</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Single Population</b></span></li>
@@ -444,7 +445,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div id="applied-population-genetics" class="section level1 unnumbered white_letters">
 <h1>Applied Population Genetics</h1>
 <p><a href="http://dyerlab.bio.vcu.edu"> <img src="media/APG-Title-Wide.png" width="273" /> </a></p>
-<p>Build Date: <strong>Tue Mar 14 10:33:39 2017</strong></p>
+<p>Build Date: <strong>Wed Mar 15 13:57:19 2017</strong></p>
 <p>The content of this text is modified, added to, and changed continually. You are welcome to use the content of this book in its present form and you can provide feedback, comments, or suggestions for additions by contacting me at <a href="mailto://rjdyer@vcu.edu">rjdyer@vcu.edu</a>. This work will continue to be hosted online and continually updated as new approaches and applications become available.</p>
 <div id="logistics" class="section level2 unnumbered">
 <h2>Logistics</h2>
@@ -465,8 +466,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 name &lt;-<span class="st"> &quot;Perdedor&quot;</span></code></pre></div>
 <p>This text is amenable to copy-and-paste action so you can perform the same calculations on your computer as are done in the text. When R returns an answer to an analysis or prints the contents of a variable out, the results are also typeset in fixed width font but each line is prefixed by two hash marks.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>##  [1]  1.70101841  0.18512696  0.92413414  2.37848039  0.79001646
-##  [6]  0.05629625  1.08673547 -0.78929769  0.80498874  0.64886666</code></pre>
+<pre><code>##  [1]  0.4243022  1.0487347  0.6493005  0.6116388  1.2816772  0.8674168
+##  [7] -0.6064766  1.7072733  2.0831638  0.4598808</code></pre>
 <p>The lines with hashes are not something you are going to copy-and-paste into your R session, it is what R is giving you. Inline code (e.g., code inserted into a sentence in a descriptive context such as discussing the <code>rnorm()</code> function in the previous example) is typeset similarly though not necessarily intended to be cut-and-pasted into your session.</p>
 <p>Throughout the ePub, there are also dynamical content. Some of this content may be condensed text put into a scrolling text-box. Here the notion is to provide direct access to information without unnecessarily adding length to the overall text. Here is an example, showing the documentation associated with the R <code>help.start()</code> function within a scrolling text box.</p>
 <div class="scrollingbox">
