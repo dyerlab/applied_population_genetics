@@ -5,7 +5,7 @@
 There are several kinds of 'spatial structure' that may hinder our ability to use statistical models to uncover evolutionary processes—one of which is autocorrelation.  As an example if this phenomenon, consider the *Cornus florida* Cornaceae data set included in the `gstudio` package.  In this temperate understory tree species, seeds are dispersed in the vicinity of the maternal individual but pollen may be disbursed widely across the landscape.  Functionally, this means that if we look at genetic similarity of individuals as a function of inter-individual distance, there will be a positive correlation between genetic and physical distances at close proximity because they are more likely to share the same maternal individual.    
 
 
-```{r fig.cap="Spatial distribution of adult <i>Cornus florida</i> trees on the landscape."}
+```{r dogwood_coords, fig.cap="Spatial distribution of adult <i>Cornus florida</i> trees on the landscape."}
 library(gstudio)
 library(ggplot2)
 cornus <- read_population("./spatial_data/Cornus.csv",type="column", locus.columns = 5:14)
@@ -27,13 +27,13 @@ We can test for positive spatial autocorrelation.  Here I use the approach of Sm
 
 ```{r}
 df <- data.frame( Physical=P[lower.tri(P)], Genetic=G[lower.tri(G)])
-ggplot( df, aes(Physical,Genetic)) + geom_point() + stat_smooth()
+ggplot( df, aes(Physical,Genetic)) + geom_point() + stat_smooth(method="gam")
 ```
 
 Here the relationship between physical and genetic distances are taken with respect to all the data across all the distances. In this case the overall correlation (if that is even appropriate) is $\rho =$ `r cor(df$Physical,df$Genetic)`.  However, we expect the relationship to be asymptotic in that at certain distances there should be some relationship and at larger distances it should be roughly random.  Here are the data separated by just up to 25 units.
 
 ```{r}
-ggplot( df[ df$Physical < 25,], aes(Physical,Genetic)) + geom_point() + stat_smooth() + geom_jitter()
+ggplot( df[ df$Physical < 25,], aes(Physical,Genetic)) + geom_point() + stat_smooth(method="loess") + geom_jitter()
 ```
 
 which gives a different overall correlation ( $\rho =$ `r cor( df$Physical[ df$Physical < 25], df$Genetic[ df$Physical < 25])`).  Quite different!  
@@ -94,18 +94,65 @@ So what does this mean?  Can there be many different spatial patterns nested wit
 
 ## Eigenvectors & Eigenvalues
 
-Both eigenvectors and their matched eigenvalues are somewhat mysterious mathematical creations that we ran across already in the section on ordination.
-
-
-The general eigen equation is given as:
+Both eigenvectors and their matched eigenvalues are somewhat mysterious mathematical creations that we ran across already in the section on ordination.  The general eigen equation is given as:
 
 $$
 \mathbf{A} \vec{v_i} =  \lambda_i \vec{v_i}
 $$
+
 where $\mathbf{A}$ is a matrix, $\vec{v}_i$ is the $i^{th}$ eigenvector and is associated directly with the $i^{th}$ eigenvalue $\lambda_i$.  For any matrix, the number of corresponding eigenvectors and associated eigenvalues will be equal to the minimum dimensionality of $\mathbf{A}$.  In most cases, we will be using symmetric matrices so our row and column count will be equal.  However, we will have at most $det(\mathbf{A})$ non-imaginary eigenvalues associated with any matrix.  
 
-So what does this mean for us?  We are interested in determining if there are spatial components to the structure we see on the ground and if so, can we extract those implicitly spatial aspects from our model.  There are several ways space may influence our abilities to estimate connectivity. 
+One way to think about eigenvalue/eigenvector pairs is via its use in spectral matrix decomposition.  Just like any number or polynomial equation, a matric can be factored into an additive set of matrices.  These matrices can be further defined as an eigenvector product scaled by the eigenvalue.  For example, the matrix $\mathbf{A}$ can be decomposed into:
 
+$$
+\begin{aligned}
+\mathbf{A} &= \sum_{i=1}^\ell \mathbf{B_i} \\
+&= \sum_{i=1}^\ell \vec{e_i}\vec{e_i}^\prime \lambda_i
+\end{aligned}
+$$
+
+where the vector $\vec{e_i}$ (and its transpose-the one with the prime on it) create the matrix $\mathbf{B_i}$ after the scaling factor $\lambda_i$.  This decomposition is esstentially what we are doing and the meaning of the $\vec{e}$ and associated $\lambda$ values depend upon how the original matrix $\mathbf{A}$ is constructed.
+
+For distance matrices, we can extract certain kinds of eigenvalue/eigenvector pairs that have interesting interpretations and aid in our understanding of latent spatial structure.  The next few sections show a few different ways we can determine the scales at which spatial structure may exist as well as how to correct for it.  Before we go into it, we should clarify a few definitions.  What we call the decomposition of data using eigenvalue/eigenvector has several different names, depending upon what kind of data you are starting from.  If we are to start from a raw set of data, say $N$ observartions with $p$ variables on each observation, say the coordiante data from the dogwood trees above:
+
+```{r}
+X = as.matrix( coords[,2:3])
+```
+
+decomposing this in into eigenvalue and eigenvector pairs is called *Principal Components Analysis* (PCA).  
+
+```{r}
+fit <- princomp(X)
+dim(fit$sdev)
+fit
+```
+
+You can see that we get as many axes as the minimum of independnet rows or columns.  Here we have `r nrow(coords)` observations and two coordinates leaving us two principal components (denoted as `Comp.1` and `Comp.2` in the output above).  As explained We can take these rotations and rotate the original data through the angle
+
+
+```{r}
+pred <- predict(fit)
+```
+
+
+If we instead take those coordinates and measure the distances betweent them (the `P` matrix from above), and then decompose it into eigenvalue/eigenvector pairs, it is called a *Principal Coordinate Analysis*.  Both this analysis and the previous one are being conducted on the same set of data, only this one has 
+
+```{r}
+fit2 <- princomp(P)
+dim(fit2$sdev)
+```
+
+
+
+
+
+
+Both the *Component* and *Coordiante* approaches do the same thing--decompose the matrix into a set of eigenvector/eigenvalue pairs.
+
+
+## Principal Coordinates of Neighborhood Matrices.
+
+The distances between all the trees shown in the map above provide a common inter-individual distance matrix, $\mathbf{D}$.  Borcard & Legendre (2002) provided one approach for uncovering spatial patterning called Principal Coordinates of Neighborhood Matrices (PCNM).  What this approach does is take the spatial coordinates of indiviudals and decomposes the pair-wise distance matrix using a Principal Coordinate decomposition.  
 
 
 

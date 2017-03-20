@@ -4,6 +4,8 @@ Bivand RS, Pebesma EJ, G\'omez-Rubio V.  2008.  *Applied Spatial Data Analysis w
 
 Bray, J. R. and J. T. Curtis. 1957. An ordination of upland forest communities of southern Wisconsin. Ecological *Monographs*, **27**, 325-349
 
+Borcard D, Legendre P.  2002.  All-scale spatial analysis of ecological data by means of principal coordinates of neighbour matrices.  *Ecological Modelling*, **153**, 51-68.
+
 Cavalli-Sforza LL and Edwards AWF. 1967. Phylogenetic analysis: models and estimation procedures. *American Journal of Human Genetics*, **19**, 233-257.
 
 Dyer RJ, Nason JD. 2004. Population Graphs: the graph theoretic shape of genetic structure. *Molecular Ecology*, **13** 1713-1727.
