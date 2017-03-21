@@ -9,10 +9,11 @@ There are several kinds of 'spatial structure' that may hinder our ability to us
 library(gstudio)
 library(ggplot2)
 cornus <- read_population("./spatial_data/Cornus.csv",type="column", locus.columns = 5:14)
-ggplot(cornus, aes(x=X.Coordinate, y=Y.Coordinate)) + 
+cornus_plot <- ggplot(cornus, aes(x=X.Coordinate, y=Y.Coordinate)) + 
   geom_point(alpha=0.5) + coord_equal() + 
   xlab("X Coordiante") + ylab("Y Coordinate") + 
-  theme_bw()
+  theme_bw() + coord_equal()
+cornus_plot
 ```
 
 This is a common feature in plant populations.  Limitations to seed dispersal are generally more severe than spatial limitations in pollen dispersal.  As such, proximate individuals are positively correlated due to potential co-ancestry.  If the dispersal processes are reversed, this is not so much of an issue.  Pollen is from near neighbors but seeds are randomly distributed---the spatial location of individuals is independent of genetic correlations.  As such, pollen and seed have different contributions to spatial structure, limitations in pollen dispersal can only enhance structure caused by limitations in seed dispersal.  So for the individuals in the map how does this manifest?  We can estimate inter-individual distances for both physical and genetic separation (n.b., I use inter-individual AMOVA distance here) and then look for any relationship.
@@ -117,42 +118,54 @@ For distance matrices, we can extract certain kinds of eigenvalue/eigenvector pa
 
 ```{r}
 X = as.matrix( coords[,2:3])
+dim(X)
 ```
 
 decomposing this in into eigenvalue and eigenvector pairs is called *Principal Components Analysis* (PCA).  
 
 ```{r}
 fit <- princomp(X)
-dim(fit$sdev)
 fit
 ```
 
-You can see that we get as many axes as the minimum of independnet rows or columns.  Here we have `r nrow(coords)` observations and two coordinates leaving us two principal components (denoted as `Comp.1` and `Comp.2` in the output above).  As explained We can take these rotations and rotate the original data through the angle
+You can see that we get as many axes as the minimum of independnet rows or columns.  Here we have `r nrow(coords)` observations and two coordinates leaving us two principal components (denoted as `Comp.1` and `Comp.2` in the output above).  The `princomp()` rotation is essentially a method to take your original data in 2, 3, or as many dimensions as you have, and create a new synthetic set of data vectors based upon linear combinations of the original ones.  These new variables are derived such that they maximize the amount of variation in the data along sucessive axes---the first axis is constructed such that the variation of data along it is the largest, the second synthetic axis is has the second largest amount of vatiation while being at a right angle to the first one, etc.  Each of these orthoginal axes are ordered in decreasing magnitude of how much of the vatiation they describe in the original data.  This is depicted below in the image showing a rotation of the original data onto new synthetic axes.
 
-
-```{r}
-pred <- predict(fit)
+```{r pca_rotation, echo=FALSE, fig.cap="Principal component rotation of bivariate data mapped from original axes (black X- and Y- axes) onto new coordinate axes (dotted red) that maximize the variation on each of the new axes (displayed as density insets for original and tranlated axes)."}
+knitr::include_graphics("./media/PCA_Rotation.png")
 ```
 
+The original data for each observation, $\vec{x_i}$, is translated into the new coordinate space, $\vec{\hat{x}_i}$ by multiplying it by the first eigenvector.
 
-If we instead take those coordinates and measure the distances betweent them (the `P` matrix from above), and then decompose it into eigenvalue/eigenvector pairs, it is called a *Principal Coordinate Analysis*.  Both this analysis and the previous one are being conducted on the same set of data, only this one has 
+$$
+\vec{\hat{x}} = \vec{e}\vec{x_i}
+$$
+
+To see this rotation, we can 
+
+```{r message=FALSE, error=FALSE, fig.cap="The (A) Original, and (B) rotated coordiantes for the <i>Cornus<i> data set."}
+library(cowplot)
+cornus_rot <- data.frame(predict(fit));
+cornus_rot_plot <- ggplot(cornus_rot, aes(x=Comp.1, y=Comp.2)) + 
+  geom_point(alpha=0.5) + coord_equal() + 
+  xlab("X Coordiante") + ylab("Y Coordinate") + 
+  theme_bw() + coord_equal()
+cornus_rot_plot
+plot_grid( cornus_plot, cornus_rot_plot, rel_widths = c(2,3), labels=c("A","B"))
+```
+
+If we work on a derivative of the original data, say we take the coordinates and measure the distances between them (the `P` matrix from the code above), *and then* decompose it into eigenvalue/eigenvector pairs, it is called a *Principal Coordinate Analysis*. 
 
 ```{r}
 fit2 <- princomp(P)
 dim(fit2$sdev)
 ```
 
-
-
-
-
-
-Both the *Component* and *Coordiante* approaches do the same thing--decompose the matrix into a set of eigenvector/eigenvalue pairs.
+Both the *Component* and *Coordiante* approaches do the same thing--decompose the matrix into a set of eigenvector/eigenvalue pairs--they just start with different original data.  With this out of the way, we can start playing around with the 
 
 
 ## Principal Coordinates of Neighborhood Matrices.
 
-The distances between all the trees shown in the map above provide a common inter-individual distance matrix, $\mathbf{D}$.  Borcard & Legendre (2002) provided one approach for uncovering spatial patterning called Principal Coordinates of Neighborhood Matrices (PCNM).  What this approach does is take the spatial coordinates of indiviudals and decomposes the pair-wise distance matrix using a Principal Coordinate decomposition.  
+The distances between all the trees shown in the map above provide a common inter-individual distance matrix, $\mathbf{P}$.  Borcard & Legendre (2002) provided one approach for uncovering spatial patterning in a response data set (say $\mathbf{D}$ above) based upon a manipulation of the inter-locale distance matrix ($\mathbf{P}$) called Principal Coordinates of Neighborhood Matrices (PCNM).  What this approach does is take the spatial coordinates of indiviudals and decomposes the pair-wise distance matrix using a Principal Coordinate decomposition.  
 
 
 
