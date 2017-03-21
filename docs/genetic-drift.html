@@ -403,6 +403,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
 <li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a><ul>
 <li class="chapter" data-level="35.1" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#eigenvectors-eigenvalues"><i class="fa fa-check"></i><b>35.1</b> Eigenvectors &amp; Eigenvalues</a></li>
+<li class="chapter" data-level="35.2" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#principal-coordinates-of-neighborhood-matrices."><i class="fa fa-check"></i><b>35.2</b> Principal Coordinates of Neighborhood Matrices.</a></li>
 </ul></li>
 <li class="part"><span><b>VII Selection</b></span></li>
 <li class="chapter" data-level="36" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>36</b> Classical Selection Models</a><ul>
@@ -467,10 +468,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(df)</code></pre></div>
 <pre><code>##        N           FreqA       
 ##  Min.   :  5   Min.   :0.1000  
-##  1st Qu.: 10   1st Qu.:0.4025  
+##  1st Qu.: 10   1st Qu.:0.4125  
 ##  Median : 20   Median :0.5000  
-##  Mean   : 37   Mean   :0.5044  
-##  3rd Qu.: 50   3rd Qu.:0.5800  
+##  Mean   : 37   Mean   :0.4942  
+##  3rd Qu.: 50   3rd Qu.:0.5600  
 ##  Max.   :100   Max.   :1.0000</code></pre>
 <p>The frequencies observed in each run are all over the place, basically covering the entire allowable range for an allele frequency. More importantly though lets look graphically at the allele frequencies using a boxplot where frequencies are grouped by sample size, <code>df$N</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)

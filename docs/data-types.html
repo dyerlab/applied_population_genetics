@@ -403,6 +403,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
 <li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a><ul>
 <li class="chapter" data-level="35.1" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#eigenvectors-eigenvalues"><i class="fa fa-check"></i><b>35.1</b> Eigenvectors &amp; Eigenvalues</a></li>
+<li class="chapter" data-level="35.2" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#principal-coordinates-of-neighborhood-matrices."><i class="fa fa-check"></i><b>35.2</b> Principal Coordinates of Neighborhood Matrices.</a></li>
 </ul></li>
 <li class="part"><span><b>VII Selection</b></span></li>
 <li class="chapter" data-level="36" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>36</b> Classical Selection Models</a><ul>
@@ -480,19 +481,19 @@ x</code></pre></div>
 <pre><code>## [1] 0.099999999999999991673</code></pre>
 <p>Not quite 0.1 is it? Not that far away from it but not exact. That is a general problem, not one that R has any more claim to than any other language and/or implementation. Does this matter much, probably not in the realm of the kinds of things we do in population genetics, it is just something that you should be aware of. You can make random sets of numeric data by using using functions describing various distributions. For example, some random numbers from the normal distribution are:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>##  [1] -0.82153192  0.14609725  1.38359769 -0.30761009 -1.67243693
-##  [6] -0.05881882  0.05604474  1.45758052  0.86268412 -0.56643628</code></pre>
+<pre><code>##  [1] -0.08110207 -0.99327735  0.89639681  1.01777039 -0.04507538
+##  [6]  1.05096090  0.10490544 -0.54211672  0.51814464 -0.42769348</code></pre>
 <p>from the normal distribution with designated mean and standard deviation:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">10</span>,<span class="dt">mean=</span><span class="dv">42</span>,<span class="dt">sd=</span><span class="dv">12</span>)</code></pre></div>
-<pre><code>##  [1] 48.41392 35.73931 39.19524 42.30585 42.84147 27.84712 37.95026
-##  [8] 34.95206 29.04621 45.14153</code></pre>
+<pre><code>##  [1] 84.69916 40.98962 37.74804 46.56250 42.14451 14.58986 46.53581
+##  [8] 56.48052 57.72133 36.34083</code></pre>
 <p>A poisson distribution with mean 2:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rpois</span>(<span class="dv">10</span>,<span class="dt">lambda =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>##  [1] 1 5 1 1 0 2 1 0 3 2</code></pre>
+<pre><code>##  [1] 2 3 2 3 2 0 0 3 1 1</code></pre>
 <p>and the <span class="math inline">\(\chi^2\)</span> distribution with 1 degree of freedom:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rchisq</span>(<span class="dv">10</span>, <span class="dt">df=</span><span class="dv">1</span>)</code></pre></div>
-<pre><code>##  [1] 3.480383286 0.007070425 0.222730288 0.468061947 0.422615584
-##  [6] 1.640129574 0.139182217 0.035906740 0.279954295 2.177703749</code></pre>
+<pre><code>##  [1] 0.022370406 2.943677904 0.004179685 0.542482901 0.018582613
+##  [6] 2.474650995 0.505773317 3.055293876 1.639658545 0.248529040</code></pre>
 <p>There are several more distributions that if you need to access random numbers, quantiles, probability densities, and cumulative density values are available.</p>
 <div id="coercion-to-numeric" class="section level3">
 <h3><span class="header-section-number">2.1.1</span> Coercion to Numeric</h3>
@@ -613,26 +614,26 @@ stable</code></pre></div>
 <p>It is common to use logical types to serve as indices for vectors. Say for example, you have a vector of data that you want to select some subset from.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>)
 data</code></pre></div>
-<pre><code>##  [1] -1.4439089  2.5037263 -0.2391560  1.0871811 -0.7208335  2.1035986
-##  [7] -0.7352748 -0.9626797 -0.2429110  0.9749150 -0.5909436  1.3637293
-## [13]  0.2813904  0.5911241 -1.2494584  0.1709447  1.8368054  1.1547226
-## [19]  0.3655685  0.9158685</code></pre>
+<pre><code>##  [1]  0.68332224  1.35606776  0.20439153 -0.89507523 -0.16643039
+##  [6] -2.77608195 -0.49828328  1.29907685 -1.76343980  0.82992713
+## [11]  0.01329136  0.85290100 -1.14872173 -0.49720649  0.79062151
+## [16]  0.27772494 -0.60266550 -0.28551587 -0.20066058 -1.25274962</code></pre>
 <p>Perhaps you are on interested in the non-negative values</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data[ data &gt;<span class="st"> </span><span class="dv">0</span> ]</code></pre></div>
-<pre><code>##  [1] 2.5037263 1.0871811 2.1035986 0.9749150 1.3637293 0.2813904 0.5911241
-##  [8] 0.1709447 1.8368054 1.1547226 0.3655685 0.9158685</code></pre>
+<pre><code>## [1] 0.68332224 1.35606776 0.20439153 1.29907685 0.82992713 0.01329136
+## [7] 0.85290100 0.79062151 0.27772494</code></pre>
 <p>If you look at the condition being passed to as the index</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &gt;<span class="st"> </span><span class="dv">0</span></code></pre></div>
-<pre><code>##  [1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
-## [12]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##  [1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE
+## [12]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE</code></pre>
 <p>you see that individually, each value in the data vector is being evaluated as a logical value, satisfying the condition that it is strictly greater than zero. When you pass that as indices to a vector it only shows the indices that are <code>TRUE</code>.</p>
 <p>You can coerce a value into a logical if you understand the rules. Numeric types that equal 0 (zero) are <code>FALSE</code>, always. Any non-zero value is considered <code>TRUE</code>. Here I use the modulus operator, <code>%%</code>, which provides the remainder of a division.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>:<span class="dv">20</span> %%<span class="st"> </span><span class="dv">2</span></code></pre></div>
 <pre><code>##  [1] 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0</code></pre>
 <p>which used as indices give us</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data[ (<span class="dv">1</span>:<span class="dv">20</span> %%<span class="st"> </span><span class="dv">2</span>) &gt;<span class="st"> </span><span class="dv">0</span> ]</code></pre></div>
-<pre><code>##  [1] -1.4439089 -0.2391560 -0.7208335 -0.7352748 -0.2429110 -0.5909436
-##  [7]  0.2813904 -1.2494584  1.8368054  0.3655685</code></pre>
+<pre><code>##  [1]  0.68332224  0.20439153 -0.16643039 -0.49828328 -1.76343980
+##  [6]  0.01329136 -1.14872173  0.79062151 -0.60266550 -0.20066058</code></pre>
 <p>You can get as complicated in the creation of indices as you like, even using logical operators such as OR and AND. I leave that as an example for you to play with.</p>
 
 </div>

@@ -204,6 +204,6 @@ resp <- resp + ceiling( abs(min_resp))
 pred <- scores(pred_pcnm)
 ord <- cca( resp ~ pred )
 multiscale_ord <- mso(ord,coords[,2:3],grain = 5)
-msoplot(multiscale_ord,xlim=c(0,100))
+msoplot(multiscale_ord,xlim=c(0,200))
 ```
 

@@ -403,6 +403,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
 <li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a><ul>
 <li class="chapter" data-level="35.1" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#eigenvectors-eigenvalues"><i class="fa fa-check"></i><b>35.1</b> Eigenvectors &amp; Eigenvalues</a></li>
+<li class="chapter" data-level="35.2" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#principal-coordinates-of-neighborhood-matrices."><i class="fa fa-check"></i><b>35.2</b> Principal Coordinates of Neighborhood Matrices.</a></li>
 </ul></li>
 <li class="part"><span><b>VII Selection</b></span></li>
 <li class="chapter" data-level="36" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>36</b> Classical Selection Models</a><ul>
@@ -447,14 +448,15 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gstudio)
 <span class="kw">library</span>(ggplot2)
 cornus &lt;-<span class="st"> </span><span class="kw">read_population</span>(<span class="st">&quot;./spatial_data/Cornus.csv&quot;</span>,<span class="dt">type=</span><span class="st">&quot;column&quot;</span>, <span class="dt">locus.columns =</span> <span class="dv">5</span>:<span class="dv">14</span>)
-<span class="kw">ggplot</span>(cornus, <span class="kw">aes</span>(<span class="dt">x=</span>X.Coordinate, <span class="dt">y=</span>Y.Coordinate)) +<span class="st"> </span>
+cornus_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(cornus, <span class="kw">aes</span>(<span class="dt">x=</span>X.Coordinate, <span class="dt">y=</span>Y.Coordinate)) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.5</span>) +<span class="st"> </span><span class="kw">coord_equal</span>() +<span class="st"> </span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;X Coordiante&quot;</span>) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Y Coordinate&quot;</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-624"></span>
-<img src="amg_files/figure-html/unnamed-chunk-624-1.png" alt="Spatial distribution of adult &lt;i&gt;Cornus florida&lt;/i&gt; trees on the landscape." width="672" />
+<span class="st">  </span><span class="kw">theme_bw</span>() +<span class="st"> </span><span class="kw">coord_equal</span>()
+cornus_plot</code></pre></div>
+<div class="figure">
+<img src="amg_files/figure-html/dogwood_coords-1.png" alt="Spatial distribution of adult &lt;i&gt;Cornus florida&lt;/i&gt; trees on the landscape." width="672" />
 <p class="caption">
-Figure 35.1: Spatial distribution of adult <i>Cornus florida</i> trees on the landscape.
+(#fig:dogwood_coords)Spatial distribution of adult <i>Cornus florida</i> trees on the landscape.
 </p>
 </div>
 <p>This is a common feature in plant populations. Limitations to seed dispersal are generally more severe than spatial limitations in pollen dispersal. As such, proximate individuals are positively correlated due to potential co-ancestry. If the dispersal processes are reversed, this is not so much of an issue. Pollen is from near neighbors but seeds are randomly distributed—the spatial location of individuals is independent of genetic correlations. As such, pollen and seed have different contributions to spatial structure, limitations in pollen dispersal can only enhance structure caused by limitations in seed dispersal. So for the individuals in the map how does this manifest? We can estimate inter-individual distances for both physical and genetic separation (n.b., I use inter-individual AMOVA distance here) and then look for any relationship.</p>
@@ -463,11 +465,11 @@ P &lt;-<span class="st"> </span><span class="kw">strata_distance</span>(coords, 
 G &lt;-<span class="st"> </span><span class="kw">genetic_distance</span>(cornus, <span class="dt">mode=</span><span class="st">&quot;AMOVA&quot;</span>)</code></pre></div>
 <p>We can test for positive spatial autocorrelation. Here I use the approach of Smouse &amp; Peakall (1999) that fits within the normal AMOVA framework. Normally, we examine the relationship between physical and genetic distance as in a spatial autocorrelation process. Overall, a trend suggests a limitation in overall combined dispersal.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">Physical=</span>P[<span class="kw">lower.tri</span>(P)], <span class="dt">Genetic=</span>G[<span class="kw">lower.tri</span>(G)])
-<span class="kw">ggplot</span>( df, <span class="kw">aes</span>(Physical,Genetic)) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">stat_smooth</span>()</code></pre></div>
-<p><img src="amg_files/figure-html/unnamed-chunk-626-1.png" width="672" /></p>
+<span class="kw">ggplot</span>( df, <span class="kw">aes</span>(Physical,Genetic)) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">stat_smooth</span>(<span class="dt">method=</span><span class="st">&quot;gam&quot;</span>)</code></pre></div>
+<p><img src="amg_files/figure-html/unnamed-chunk-625-1.png" width="672" /></p>
 <p>Here the relationship between physical and genetic distances are taken with respect to all the data across all the distances. In this case the overall correlation (if that is even appropriate) is <span class="math inline">\(\rho =\)</span> -4.823045210^{-5}. However, we expect the relationship to be asymptotic in that at certain distances there should be some relationship and at larger distances it should be roughly random. Here are the data separated by just up to 25 units.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( df[ df$Physical &lt;<span class="st"> </span><span class="dv">25</span>,], <span class="kw">aes</span>(Physical,Genetic)) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">stat_smooth</span>() +<span class="st"> </span><span class="kw">geom_jitter</span>()</code></pre></div>
-<p><img src="amg_files/figure-html/unnamed-chunk-627-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( df[ df$Physical &lt;<span class="st"> </span><span class="dv">25</span>,], <span class="kw">aes</span>(Physical,Genetic)) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">stat_smooth</span>(<span class="dt">method=</span><span class="st">&quot;loess&quot;</span>) +<span class="st"> </span><span class="kw">geom_jitter</span>()</code></pre></div>
+<p><img src="amg_files/figure-html/unnamed-chunk-626-1.png" width="672" /></p>
 <p>which gives a different overall correlation ( <span class="math inline">\(\rho =\)</span> 0.1810624). Quite different!</p>
 <p>To proceed, we must thus define the spatial bins in which we can categorize individuals and estimate genetic correlations. We can test the significance of the estimator by permuting individuals across distance classes and re-estimating the parameter. These data can be plot as:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">genetic_autocorrelation</span>(P,G,<span class="dt">bins=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1000</span>,<span class="dt">by=</span><span class="dv">100</span>),<span class="dt">perms=</span><span class="dv">999</span>)
@@ -476,7 +478,7 @@ df$Significant &lt;-<span class="st"> </span>df$P &lt;=<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>( <span class="kw">aes</span>(<span class="dt">color=</span>Significant), <span class="dt">size=</span><span class="dv">4</span>) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope=</span><span class="dv">0</span>,<span class="dt">intercept=</span><span class="dv">0</span>, <span class="dt">linetype=</span><span class="dv">2</span>) +
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Physical Separation&quot;</span>) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Genetic Correlation&quot;</span>)</code></pre></div>
-<p><img src="amg_files/figure-html/unnamed-chunk-628-1.png" width="672" /></p>
+<p><img src="amg_files/figure-html/unnamed-chunk-627-1.png" width="672" /></p>
 <p>Showing that for the first three distance lags, there is a significantly positive (at <span class="math inline">\(\alpha=0.05\)</span>) correlation between individuals. After that distance, it levels out and we could consider it to be random. The parameter estimated for each distance class is a true correlation and is defined as:</p>
 <p><span class="math display">\[
 r^h = \frac{\sum_{i\ne j}^K x^h_{ij}c^h_{ij}}{\sum_{i = 1}^K x^h_{ii}c^h_{ii}}
@@ -514,18 +516,103 @@ p4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>( df4, <span clas
 <div class="figure"><span id="fig:fourway-autocorrelation-plot"></span>
 <img src="amg_files/figure-html/fourway-autocorrelation-plot-1.png" alt="Spatial autocorrelation in the &lt;i&gt;Cornus&lt;/i&gt; data set using different bin sizes." width="672" />
 <p class="caption">
-Figure 35.2: Spatial autocorrelation in the <i>Cornus</i> data set using different bin sizes.
+Figure 35.1: Spatial autocorrelation in the <i>Cornus</i> data set using different bin sizes.
 </p>
 </div>
 <p>So what does this mean? Can there be many different spatial patterns nested within our populations? How can we evaluate which spatial scale has some kind of genetic autocorrelation? And more importantly, how can we regress it out of our data so we can get to asking the real questions we are trying to ask?</p>
 <div id="eigenvectors-eigenvalues" class="section level2">
 <h2><span class="header-section-number">35.1</span> Eigenvectors &amp; Eigenvalues</h2>
-<p>Both eigenvectors and their matched eigenvalues are somewhat mysterious mathematical creations that we ran across already in the section on ordination.</p>
-<p>The general eigen equation is given as:</p>
+<p>Both eigenvectors and their matched eigenvalues are somewhat mysterious mathematical creations that we ran across already in the section on ordination. The general eigen equation is given as:</p>
 <p><span class="math display">\[
 \mathbf{A} \vec{v_i} =  \lambda_i \vec{v_i}
-\]</span> where <span class="math inline">\(\mathbf{A}\)</span> is a matrix, <span class="math inline">\(\vec{v}_i\)</span> is the <span class="math inline">\(i^{th}\)</span> eigenvector and is associated directly with the <span class="math inline">\(i^{th}\)</span> eigenvalue <span class="math inline">\(\lambda_i\)</span>. For any matrix, the number of corresponding eigenvectors and associated eigenvalues will be equal to the minimum dimensionality of <span class="math inline">\(\mathbf{A}\)</span>. In most cases, we will be using symmetric matrices so our row and column count will be equal. However, we will have at most <span class="math inline">\(det(\mathbf{A})\)</span> non-imaginary eigenvalues associated with any matrix.</p>
-<p>So what does this mean for us? We are interested in determining if there are spatial components to the structure we see on the ground and if so, can we extract those implicitly spatial aspects from our model. There are several ways space may influence our abilities to estimate connectivity.</p>
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{A}\)</span> is a matrix, <span class="math inline">\(\vec{v}_i\)</span> is the <span class="math inline">\(i^{th}\)</span> eigenvector and is associated directly with the <span class="math inline">\(i^{th}\)</span> eigenvalue <span class="math inline">\(\lambda_i\)</span>. For any matrix, the number of corresponding eigenvectors and associated eigenvalues will be equal to the minimum dimensionality of <span class="math inline">\(\mathbf{A}\)</span>. In most cases, we will be using symmetric matrices so our row and column count will be equal. However, we will have at most <span class="math inline">\(det(\mathbf{A})\)</span> non-imaginary eigenvalues associated with any matrix.</p>
+<p>One way to think about eigenvalue/eigenvector pairs is via its use in spectral matrix decomposition. Just like any number or polynomial equation, a matric can be factored into an additive set of matrices. These matrices can be further defined as an eigenvector product scaled by the eigenvalue. For example, the matrix <span class="math inline">\(\mathbf{A}\)</span> can be decomposed into:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbf{A} &amp;= \sum_{i=1}^\ell \mathbf{B_i} \\
+&amp;= \sum_{i=1}^\ell \vec{e_i}\vec{e_i}^\prime \lambda_i
+\end{aligned}
+\]</span></p>
+<p>where the vector <span class="math inline">\(\vec{e_i}\)</span> (and its transpose-the one with the prime on it) create the matrix <span class="math inline">\(\mathbf{B_i}\)</span> after the scaling factor <span class="math inline">\(\lambda_i\)</span>. This decomposition is esstentially what we are doing and the meaning of the <span class="math inline">\(\vec{e}\)</span> and associated <span class="math inline">\(\lambda\)</span> values depend upon how the original matrix <span class="math inline">\(\mathbf{A}\)</span> is constructed.</p>
+<p>For distance matrices, we can extract certain kinds of eigenvalue/eigenvector pairs that have interesting interpretations and aid in our understanding of latent spatial structure. The next few sections show a few different ways we can determine the scales at which spatial structure may exist as well as how to correct for it. Before we go into it, we should clarify a few definitions. What we call the decomposition of data using eigenvalue/eigenvector has several different names, depending upon what kind of data you are starting from. If we are to start from a raw set of data, say <span class="math inline">\(N\)</span> observartions with <span class="math inline">\(p\)</span> variables on each observation, say the coordiante data from the dogwood trees above:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X =<span class="st"> </span><span class="kw">as.matrix</span>( coords[,<span class="dv">2</span>:<span class="dv">3</span>])
+<span class="kw">dim</span>(X)</code></pre></div>
+<pre><code>## [1] 451   2</code></pre>
+<p>decomposing this in into eigenvalue and eigenvector pairs is called <em>Principal Components Analysis</em> (PCA).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw">princomp</span>(X)
+fit</code></pre></div>
+<pre><code>## Call:
+## princomp(x = X)
+## 
+## Standard deviations:
+##    Comp.1    Comp.2 
+## 1129.8794  428.0675 
+## 
+##  2  variables and  451 observations.</code></pre>
+<p>You can see that we get as many axes as the minimum of independnet rows or columns. Here we have 451 observations and two coordinates leaving us two principal components (denoted as <code>Comp.1</code> and <code>Comp.2</code> in the output above). The <code>princomp()</code> rotation is essentially a method to take your original data in 2, 3, or as many dimensions as you have, and create a new synthetic set of data vectors based upon linear combinations of the original ones. These new variables are derived such that they maximize the amount of variation in the data along sucessive axes—the first axis is constructed such that the variation of data along it is the largest, the second synthetic axis is has the second largest amount of vatiation while being at a right angle to the first one, etc. Each of these orthoginal axes are ordered in decreasing magnitude of how much of the vatiation they describe in the original data. This is depicted below in the image showing a rotation of the original data onto new synthetic axes.</p>
+<div class="figure">
+<img src="media/PCA_Rotation.png" alt="Principal component rotation of bivariate data mapped from original axes (black X- and Y- axes) onto new coordinate axes (dotted red) that maximize the variation on each of the new axes (displayed as density insets for original and tranlated axes)." width="378" />
+<p class="caption">
+(#fig:pca_rotation)Principal component rotation of bivariate data mapped from original axes (black X- and Y- axes) onto new coordinate axes (dotted red) that maximize the variation on each of the new axes (displayed as density insets for original and tranlated axes).
+</p>
+</div>
+<p>The original data for each observation, <span class="math inline">\(\vec{x_i}\)</span>, is translated into the new coordinate space, <span class="math inline">\(\vec{\hat{x}_i}\)</span> by multiplying it by the first eigenvector.</p>
+<p><span class="math display">\[
+\vec{\hat{x}} = \vec{e}\vec{x_i}
+\]</span></p>
+<p>To see this rotation, we can</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(cowplot)
+cornus_rot &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">predict</span>(fit));
+cornus_rot_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(cornus_rot, <span class="kw">aes</span>(<span class="dt">x=</span>Comp<span class="fl">.1</span>, <span class="dt">y=</span>Comp<span class="fl">.2</span>)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.5</span>) +<span class="st"> </span><span class="kw">coord_equal</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;X Coordiante&quot;</span>) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Y Coordinate&quot;</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() +<span class="st"> </span><span class="kw">coord_equal</span>()
+<span class="kw">plot_grid</span>( cornus_plot, cornus_rot_plot, <span class="dt">rel_widths =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>))</code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-630"></span>
+<img src="amg_files/figure-html/unnamed-chunk-630-1.png" alt="The (A) Original, and (B) rotated coordiantes for the &lt;i&gt;Cornus&lt;i&gt; data set." width="672" />
+<p class="caption">
+Figure 35.2: The (A) Original, and (B) rotated coordiantes for the <i>Cornus<i> data set.
+</p>
+</div>
+<p>If we work on a derivative of the original data, say we take the coordinates and measure the distances between them (the <code>P</code> matrix from the code above), <em>and then</em> decompose it into eigenvalue/eigenvector pairs, it is called a <em>Principal Coordinate Analysis</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pca_P &lt;-<span class="st"> </span><span class="kw">princomp</span>(P)
+<span class="kw">cat</span>(<span class="st">&quot;PC Axes: &quot;</span>,<span class="kw">length</span>(pca_P$sdev))</code></pre></div>
+<pre><code>## PC Axes:  451</code></pre>
+<p>Both the <em>Component</em> and <em>Coordiante</em> approaches do the same thing–decompose the matrix into a set of eigenvector/eigenvalue pairs–they just start with different original data. With this out of the way, we can start playing around with the</p>
+</div>
+<div id="principal-coordinates-of-neighborhood-matrices." class="section level2">
+<h2><span class="header-section-number">35.2</span> Principal Coordinates of Neighborhood Matrices.</h2>
+<p>The distances between all the trees shown in the map above provide a common inter-individual distance matrix, <span class="math inline">\(\mathbf{P}\)</span>. Borcard &amp; Legendre (2002) provided one approach for uncovering spatial patterning in a response data set (say <span class="math inline">\(\mathbf{D}\)</span> above) based upon a manipulation of the inter-locale distance matrix (<span class="math inline">\(\mathbf{P}\)</span>) called Principal Coordinates of Neighborhood Matrices (PCNM). What this approach does is take the spatial coordinates of indiviudals and decomposes the pair-wise distance matrix using a Principal Coordinate decomposition.</p>
+<ol style="list-style-type: decimal">
+<li>Your data are defined as: <span class="math inline">\(Y = f(X)\)</span>, along one dimension. In this case, we have <span class="math inline">\(N\)</span> measured observations with a single response (<span class="math inline">\(\vec{y}\)</span>) and <span class="math inline">\(N\)</span> corresponding predictor (spatial) variables (<span class="math inline">\(\vec{x}\)</span>).</li>
+<li>We define a pairwise inter-neighbor distance matrix of the predictors, <span class="math inline">\(\mathbf{D}\)</span>. This can be Euclidean, great-circle, or any other distance metric.</li>
+<li>From this neighbor matrix, we set a maximum distance, <span class="math inline">\(d_{max}\)</span>. This distance is the size of the neighborhood we are interested in investigating.</li>
+<li>In <span class="math inline">\(\mathbf{D}\)</span>, set all values of the inter-observation distance that are equal to or greater than <span class="math inline">\(d_{max}\)</span> equal to <span class="math inline">\(4*d_{max}\)</span>. All values of <span class="math inline">\(md_{max};\; m &gt;= 4\)</span> are suggested to be asymptotically similar in the results that follow.</li>
+<li>Take a principal coordinate rotation on this matrix and retrain the eigenvectors whose eigenvalues are non-zero, (e.g., <span class="math inline">\(\lambda_i &gt; 0\)</span>). These constitute your new set of predictor variables for subsequent analysis via regression, canonical correlation, redundancy, etc.</li>
+</ol>
+<p>In this example, I’m going to use the dogwood data and look for spatial trends. In this example, I’m just going to take the largest axis of varaition among individual genotypes (e.g., turn genotypes into a multivariate vector then do a PCA rotation on the genotypes and keep the first, most important, variable as a predictor).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cornus_mv &lt;-<span class="st"> </span><span class="kw">to_mv</span>( cornus )
+cornus_rot &lt;-<span class="st"> </span><span class="kw">princomp</span>(cornus_mv)
+new_cornus_genetic &lt;-<span class="st"> </span><span class="kw">predict</span>(cornus_rot)
+<span class="kw">qplot</span>(new_cornus_genetic[,<span class="dv">1</span>], new_cornus_genetic[,<span class="dv">2</span>], <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Synthetic X1&quot;</span>) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Synthetic X2&quot;</span>) +<span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="amg_files/figure-html/unnamed-chunk-632-1.png" width="672" /></p>
+<p>Next, we can take the spatial coordiantes and distance matrix that we derived previously and decompose it via a Principal Coordinate Rotation (which we already did). The PCNM approach is encoded in the vegan library but to use it, we need to define a distance threshold first. If we look at the distribution of spatial autocorrelation above, perhaps something around <span class="math inline">\(250\)</span> would be appropraite.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vegan)
+threshold &lt;-<span class="st"> </span><span class="dv">200</span>
+pred_pcnm &lt;-<span class="st"> </span><span class="kw">pcnm</span>(P,threshold)</code></pre></div>
+<p>We can visualize these new predictors by plotting the synthetic values in 2-space.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ordisplom</span>( pred_pcnm, <span class="dt">choices=</span><span class="dv">1</span>:<span class="dv">4</span>)</code></pre></div>
+<p><img src="amg_files/figure-html/unnamed-chunk-634-1.png" width="672" /></p>
+<p>Then we can try to build up a multiple regression model, using these new PCNM axes as predictors and the first genetic structure variable as the response.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">resp &lt;-<span class="st"> </span>new_cornus_genetic
+min_resp &lt;-<span class="st"> </span><span class="kw">min</span>( resp )
+resp &lt;-<span class="st"> </span>resp +<span class="st"> </span><span class="kw">ceiling</span>( <span class="kw">abs</span>(min_resp))
+pred &lt;-<span class="st"> </span><span class="kw">scores</span>(pred_pcnm)
+ord &lt;-<span class="st"> </span><span class="kw">cca</span>( resp ~<span class="st"> </span>pred )
+multiscale_ord &lt;-<span class="st"> </span><span class="kw">mso</span>(ord,coords[,<span class="dv">2</span>:<span class="dv">3</span>],<span class="dt">grain =</span> <span class="dv">5</span>)
+<span class="kw">msoplot</span>(multiscale_ord,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">100</span>))</code></pre></div>
+<p><img src="amg_files/figure-html/unnamed-chunk-635-1.png" width="672" /></p>
 
 </div>
 </div>

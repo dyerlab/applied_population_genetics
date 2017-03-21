@@ -403,6 +403,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="34" data-path="niche-modeling.html"><a href="niche-modeling.html"><i class="fa fa-check"></i><b>34</b> Niche Modeling</a></li>
 <li class="chapter" data-level="35" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html"><i class="fa fa-check"></i><b>35</b> Eigenvector Maps</a><ul>
 <li class="chapter" data-level="35.1" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#eigenvectors-eigenvalues"><i class="fa fa-check"></i><b>35.1</b> Eigenvectors &amp; Eigenvalues</a></li>
+<li class="chapter" data-level="35.2" data-path="eigenvector-maps.html"><a href="eigenvector-maps.html#principal-coordinates-of-neighborhood-matrices."><i class="fa fa-check"></i><b>35.2</b> Principal Coordinates of Neighborhood Matrices.</a></li>
 </ul></li>
 <li class="part"><span><b>VII Selection</b></span></li>
 <li class="chapter" data-level="36" data-path="classical-selection-models.html"><a href="classical-selection-models.html"><i class="fa fa-check"></i><b>36</b> Classical Selection Models</a><ul>
@@ -829,13 +830,11 @@ vals</code></pre></div>
 <pre><code>## [1] 657</code></pre>
 <p>different colors available for your use. Not all are distinct as some overlap. However the benefit of these colors is that they have specific names, making it easier for you to remember than RGB or hex representations. Here are a random set of 20 color names.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colors</span>()[ <span class="kw">sample.int</span>( <span class="kw">length</span>(<span class="kw">colors</span>()), <span class="dt">size=</span><span class="dv">20</span>) ]</code></pre></div>
-<pre><code>##  [1] &quot;gray58&quot;          &quot;cyan2&quot;           &quot;blue&quot;           
-##  [4] &quot;grey95&quot;          &quot;white&quot;           &quot;gray22&quot;         
-##  [7] &quot;turquoise1&quot;      &quot;plum3&quot;           &quot;darkblue&quot;       
-## [10] &quot;peachpuff3&quot;      &quot;darkmagenta&quot;     &quot;darkolivegreen1&quot;
-## [13] &quot;grey49&quot;          &quot;gray29&quot;          &quot;mediumpurple1&quot;  
-## [16] &quot;darkslategray1&quot;  &quot;hotpink1&quot;        &quot;tomato1&quot;        
-## [19] &quot;lightskyblue4&quot;   &quot;gray19&quot;</code></pre>
+<pre><code>##  [1] &quot;wheat3&quot;        &quot;navajowhite3&quot;  &quot;hotpink&quot;       &quot;gray92&quot;       
+##  [5] &quot;slategray1&quot;    &quot;darkorange3&quot;   &quot;purple&quot;        &quot;khaki3&quot;       
+##  [9] &quot;honeydew&quot;      &quot;cyan2&quot;         &quot;chartreuse&quot;    &quot;sienna4&quot;      
+## [13] &quot;grey19&quot;        &quot;bisque&quot;        &quot;azure&quot;         &quot;grey6&quot;        
+## [17] &quot;darkslategray&quot; &quot;plum3&quot;         &quot;khaki1&quot;        &quot;gray72&quot;</code></pre>
 <p>To use these colors you can call them by name in the col= option to a plot. Here is an example where I define three named colors and then coerce the <code>iris$Species</code> variable into an integer to select the color by species and plot it in a scatter plot (another version of the <code>pch=</code> example previously).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;royalblue1&quot;</span>, <span class="st">&quot;orange1&quot;</span>, <span class="st">&quot;green3&quot;</span>)
 cols &lt;-<span class="st"> </span>colors[ iris$Species ]
