@@ -149,15 +149,14 @@ cornus_rot_plot <- ggplot(cornus_rot, aes(x=Comp.1, y=Comp.2)) +
   geom_point(alpha=0.5) + coord_equal() + 
   xlab("X Coordiante") + ylab("Y Coordinate") + 
   theme_bw() + coord_equal()
-cornus_rot_plot
 plot_grid( cornus_plot, cornus_rot_plot, rel_widths = c(2,3), labels=c("A","B"))
 ```
 
 If we work on a derivative of the original data, say we take the coordinates and measure the distances between them (the `P` matrix from the code above), *and then* decompose it into eigenvalue/eigenvector pairs, it is called a *Principal Coordinate Analysis*. 
 
 ```{r}
-fit2 <- princomp(P)
-dim(fit2$sdev)
+pca_P <- princomp(P)
+cat("PC Axes: ",length(pca_P$sdev))
 ```
 
 Both the *Component* and *Coordiante* approaches do the same thing--decompose the matrix into a set of eigenvector/eigenvalue pairs--they just start with different original data.  With this out of the way, we can start playing around with the 
@@ -167,5 +166,44 @@ Both the *Component* and *Coordiante* approaches do the same thing--decompose th
 
 The distances between all the trees shown in the map above provide a common inter-individual distance matrix, $\mathbf{P}$.  Borcard & Legendre (2002) provided one approach for uncovering spatial patterning in a response data set (say $\mathbf{D}$ above) based upon a manipulation of the inter-locale distance matrix ($\mathbf{P}$) called Principal Coordinates of Neighborhood Matrices (PCNM).  What this approach does is take the spatial coordinates of indiviudals and decomposes the pair-wise distance matrix using a Principal Coordinate decomposition.  
 
+1. Your data are defined as: $Y = f(X)$, along one dimension.  In this case, we have $N$ measured observations with a single response ($\vec{y}$) and $N$ corresponding predictor (spatial) variables ($\vec{x}$).
+2. We define a pairwise inter-neighbor distance matrix of the predictors, $\mathbf{D}$.  This can be Euclidean, great-circle, or any other distance metric.
+3. From this neighbor matrix, we set a maximum distance, $d_{max}$.  This distance is the size of the neighborhood we are interested in investigating.
+4. In $\mathbf{D}$, set all values of the inter-observation distance that are equal to or greater than $d_{max}$ equal to $4*d_{max}$.  All values of $md_{max};\; m >= 4$ are suggested to be asymptotically similar in the results that follow.
+5. Take a principal coordinate rotation on this matrix and retrain the eigenvectors whose eigenvalues are non-zero, (e.g., $\lambda_i > 0$).  These constitute your new set of predictor variables for subsequent analysis via regression, canonical correlation, redundancy, etc.
 
+In this example, I'm going to use the dogwood data and look for spatial trends.  In this example, I'm just going to take the largest axis of varaition among individual genotypes (e.g., turn genotypes into a multivariate vector then do a PCA rotation on the genotypes and keep the first, most important, variable as a predictor).
+
+```{r}
+cornus_mv <- to_mv( cornus )
+cornus_rot <- princomp(cornus_mv)
+new_cornus_genetic <- predict(cornus_rot)
+qplot(new_cornus_genetic[,1], new_cornus_genetic[,2], geom = "point") + xlab("Synthetic X1") + ylab("Synthetic X2") + theme_bw()
+```
+
+Next, we can take the spatial coordiantes and distance matrix that we derived previously and decompose it via a Principal Coordinate Rotation (which we already did).  The PCNM approach is encoded in the vegan library but to use it, we need to define a distance threshold first.  If we look at the distribution of spatial autocorrelation above, perhaps something around $250$ would be appropraite.
+
+```{r message=FALSE, warning=FALSE}
+library(vegan)
+threshold <- 200
+pred_pcnm <- pcnm(P,threshold)
+```
+
+We can visualize these new predictors by plotting the synthetic values in 2-space.  
+
+```{r}
+ordisplom( pred_pcnm, choices=1:4)
+```
+
+Then we can try to build up a multiple regression model, using these new PCNM axes as predictors and the first genetic structure variable as the response.
+
+```{r}
+resp <- new_cornus_genetic
+min_resp <- min( resp )
+resp <- resp + ceiling( abs(min_resp))
+pred <- scores(pred_pcnm)
+ord <- cca( resp ~ pred )
+multiscale_ord <- mso(ord,coords[,2:3],grain = 5)
+msoplot(multiscale_ord,xlim=c(0,100))
+```
 
