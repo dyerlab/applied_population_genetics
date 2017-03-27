@@ -8,7 +8,7 @@ bookdown::gitbook:
       scroll_highlight: true
       before: ""
       after: |
-        <li><a href="http://dyerlab.bio.vcu.edu" target="blank">the Dyer Laboratory</a></li>
+        <li><a href="http://dyerlab.org" target="blank">the Dyer Laboratory</a></li>
     sharing:
       facebook: no
       twitter: no
