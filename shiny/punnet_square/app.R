@@ -47,6 +47,17 @@ server <- function(input, output) {
   bold <- function(x){
     paste0('<font color="#3182bd"><b>', x, '</b></font>') }
   
+  uniqueify <- function(x){
+    if( length(unique(x)) == length(x) )
+      return(x)
+    x <- make.unique(x,sep="<sub>")
+    reps <- stringi::stri_detect(x,fixed="<sub>")
+    for( i in 1:length(x)){
+      if( reps[i] == TRUE)
+        x[i] <- paste(x[i],"</sub>",sep="")
+    }
+    return( x )
+  }
   
   output$offspring <- renderUI({
     
@@ -61,8 +72,8 @@ server <- function(input, output) {
       }
       
       df <- as.data.frame( x )
-      names(df) <- mom
-      rownames(df) <- dad
+      names(df) <- uniqueify(mom)
+      rownames(df) <- uniqueify(dad)
       tab <- xtable(df) 
       align(tab) <- paste(c("c|",rep("c",length(mom))),collapse="")
       
