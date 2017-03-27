@@ -42,7 +42,7 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-  require(xtable)
+  library(xtable)
   
   bold <- function(x){
     paste0('<font color="#3182bd"><b>', x, '</b></font>') }
@@ -56,7 +56,7 @@ server <- function(input, output) {
       x <- matrix(NA,nrow=length(dad),ncol=length(mom))
       for( i in 1:length(mom)){
         for( j in 1:length(dad)){
-          x[j,i] <- paste(sort(mom[i],dad[j]),collapse="")
+          x[j,i] <- paste(sort(c(mom[i],dad[j])),collapse="")
         }
       }
       
