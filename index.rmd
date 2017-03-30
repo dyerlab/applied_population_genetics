@@ -38,7 +38,7 @@ knitr::opts_chunk$set( warning=FALSE, message=FALSE,error = FALSE )
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  Under this license, authorized individuals may copy, distribute, display and perform the work and make derivative works and remixes based on this text only if they give the original author credit (attribution).  You are also free to distribute derivative works only under a license identical ("not more restrictive") to the license that governs this original work. 
 
-Dr. Rodney Dyer is an Associate Professor in the Department of Biology and the Assistant Director for the Center for Environmental Studies at Virginia Commonwealth University in Richmond, Virginia, USA.  His research focuses on genetic connectivity and structure and how the environment influences both.  More information on his research can be found at [http://dyerlab.org](http://dyerlab.org).
+Dr. Rodney Dyer is an Associate Professor and Director for the Center for Environmental Studies at Virginia Commonwealth University in Richmond, Virginia, USA.  His research focuses on genetic connectivity and structure and how the environment influences both.  More information on his research can be found at [http://dyerlab.org](http://dyerlab.org).
 
 
 
