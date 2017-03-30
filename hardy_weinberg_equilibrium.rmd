@@ -177,7 +177,6 @@ Positive Assortative Mating	Negative Assortative Mating
 Selection against Heterozygotes	Outbreeding
 Wahlund Effects	Selection for Heterozygotes
 
-##Zygotic Gene Flow	
 
 In closing, it should be noted that HWE presented here is easily expandable to loci with more than two alleles as well as for loci with different ploidy levels.  The same approaches apply, though it is not as clean to estimate the expectations.  In the next section, we look at how we specifically test for HWE in our data.
 
