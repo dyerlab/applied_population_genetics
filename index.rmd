@@ -14,7 +14,7 @@ github-repo: "dyerlab/AMG"
 
 # Applied Population Genetics {- .white_letters}
 
-<a href="http://dyerlab.bio.vcu.edu">
+<a href="http://dyerlab.org">
 ```{r echo=FALSE}
 knitr::include_graphics("media/APG-Title-Wide.png")
 ```

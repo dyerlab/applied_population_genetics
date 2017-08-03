@@ -12,7 +12,7 @@ These routines were originally in the **gstudio** package but were excised out f
 data <- as.matrix( my_genetic_data )
 ```
 
-For more information on this, see the documentation on the **gstudio** package (a copy is mirrored at http://dyerlab.bio.vcu.edu/ and a clone of the package can be checked out at https://github.com/dyerlab/gstudio)
+For more information on this, see the documentation on the **gstudio** package (a copy is mirrored at http://dyerlab.org/ and a clone of the package can be checked out at https://github.com/dyerlab/gstudio)
 
 
 ## Creating Population Graphs
@@ -21,7 +21,7 @@ For more information on this, see the documentation on the **gstudio** package (
 There are two ways to create a population graph:
 
 1. In this package using the function *popgraph()* and,
-+  Via the servers at http://dyerlab.bio.vcu.edu (which use this packages to do the translation) or via GeneticStudio (an older software package)
++  Via the servers at http://dyerlab.org (which use this packages to do the translation) or via GeneticStudio (an older software package)
 
 
 ```{r,message=FALSE, warning=FALSE}
@@ -197,7 +197,7 @@ p + theme_empty()
 ### Reading Existing **popgraph** Files
 
 
-The online versions of Population Graphs provides a *.pgraph file for visualization. These files are visualized in several different software platforms including GeneticStudio (Dyer 2009), a OpenGL visualization application (Dyer &amp; Nason 2004), an online visualization framework at http://dyerlab.bio.vcu.edu, and of course, in R.  We shall focus on this last one.  Reading in files to R 
+The online versions of Population Graphs provides a *.pgraph file for visualization. These files are visualized in several different software platforms including GeneticStudio (Dyer 2009), a OpenGL visualization application (Dyer &amp; Nason 2004), an online visualization framework at http://dyerlab.org, and of course, in R.  We shall focus on this last one.  Reading in files to R 
 
 ```{r,eval=FALSE,echo=TRUE}
 graph <- read.popgraph( "thegraph.pgraph" )
