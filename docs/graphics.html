@@ -420,7 +420,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
 <li class="divider"></li>
-<li><a href="http://dyerlab.bio.vcu.edu" target="blank">the Dyer Laboratory</a></li>
+<li><a href="http://dyerlab.org" target="blank">the Dyer Laboratory</a></li>
 
 </ul>
 
@@ -830,11 +830,11 @@ vals</code></pre></div>
 <pre><code>## [1] 657</code></pre>
 <p>different colors available for your use. Not all are distinct as some overlap. However the benefit of these colors is that they have specific names, making it easier for you to remember than RGB or hex representations. Here are a random set of 20 color names.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colors</span>()[ <span class="kw">sample.int</span>( <span class="kw">length</span>(<span class="kw">colors</span>()), <span class="dt">size=</span><span class="dv">20</span>) ]</code></pre></div>
-<pre><code>##  [1] &quot;wheat3&quot;        &quot;navajowhite3&quot;  &quot;hotpink&quot;       &quot;gray92&quot;       
-##  [5] &quot;slategray1&quot;    &quot;darkorange3&quot;   &quot;purple&quot;        &quot;khaki3&quot;       
-##  [9] &quot;honeydew&quot;      &quot;cyan2&quot;         &quot;chartreuse&quot;    &quot;sienna4&quot;      
-## [13] &quot;grey19&quot;        &quot;bisque&quot;        &quot;azure&quot;         &quot;grey6&quot;        
-## [17] &quot;darkslategray&quot; &quot;plum3&quot;         &quot;khaki1&quot;        &quot;gray72&quot;</code></pre>
+<pre><code>##  [1] &quot;grey19&quot;         &quot;peachpuff2&quot;     &quot;gray30&quot;         &quot;violetred3&quot;    
+##  [5] &quot;palevioletred2&quot; &quot;gray44&quot;         &quot;gray1&quot;          &quot;lightblue&quot;     
+##  [9] &quot;cyan1&quot;          &quot;lightskyblue1&quot;  &quot;darkorchid1&quot;    &quot;orange1&quot;       
+## [13] &quot;cyan3&quot;          &quot;seashell1&quot;      &quot;gray16&quot;         &quot;dodgerblue1&quot;   
+## [17] &quot;powderblue&quot;     &quot;purple3&quot;        &quot;grey17&quot;         &quot;seashell2&quot;</code></pre>
 <p>To use these colors you can call them by name in the col= option to a plot. Here is an example where I define three named colors and then coerce the <code>iris$Species</code> variable into an integer to select the color by species and plot it in a scatter plot (another version of the <code>pch=</code> example previously).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;royalblue1&quot;</span>, <span class="st">&quot;orange1&quot;</span>, <span class="st">&quot;green3&quot;</span>)
 cols &lt;-<span class="st"> </span>colors[ iris$Species ]

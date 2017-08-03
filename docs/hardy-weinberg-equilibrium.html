@@ -420,7 +420,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
 <li class="divider"></li>
-<li><a href="http://dyerlab.bio.vcu.edu" target="blank">the Dyer Laboratory</a></li>
+<li><a href="http://dyerlab.org" target="blank">the Dyer Laboratory</a></li>
 
 </ul>
 
@@ -456,7 +456,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div id="punnet-squares" class="section level3">
 <h3><span class="header-section-number">7.1.1</span> Punnet Squares</h3>
 <p>A Punnet square is a simple tool used to teach transition probabilities in basic genetics and biology courses. Here is an interactive example using the 2-allele locus (though the tool can handle other ploidy levels) that you can play with to see the kinds of offspring genotypes produced by individual matings.</p>
-<iframe src="http://popgen.bio.vcu.edu/shiny/apg/punnet_square/?showcase=0" width="672" height="500">
+<iframe src="http://128.172.160.215/punnet_square/?showcase=0" width="672" height="500">
 </iframe>
 <p>The population we are examining need to have some specific demographic parameters for HWE to be valid. The most basal assumption that is invoked is that the population size must be very large. In a fact, most of the work of R.A. Fisher and J.B.S. Haldane in developing the modern synthesis relied upon this assumption as well. If population size, <span class="math inline">\(N\)</span>, is too small, then the stochastic change (what we call genetic drift) can have serious influences on allele frequencies.</p>
 <p>Next, and perhaps this is more for our laziness than any other reason, we assume that the generations do not overlap. This means that the during a single generation, all individuals participate in the mating events, each of which is equally likely to be selected as one participating in a mating event (e.g., random mating). For simplicity, lets denote the frequencies of these genotypes as <span class="math inline">\(f(AA) = P\)</span>, <span class="math inline">\(f(AB) = Q\)</span>, and <span class="math inline">\(f(BB) = R\)</span>. If these individuals are really mating randomly with respect to their genotypes, then the probability of union between any pair is simply the product of their population frequencies.</p>
@@ -532,20 +532,20 @@ genotypes</code></pre></div>
 <p>To examine genotype and allele frequencies for a set of loci, I’ll make a random collection and then use those loci as an example.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loci &lt;-<span class="st"> </span><span class="kw">sample</span>(genotypes, <span class="dv">20</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>)
 loci</code></pre></div>
-<pre><code>##  [1] &quot;A:A&quot; &quot;A:B&quot; &quot;A:A&quot; &quot;A:A&quot; &quot;B:B&quot; &quot;A:B&quot; &quot;A:A&quot; &quot;A:B&quot; &quot;A:A&quot; &quot;A:A&quot; &quot;B:B&quot;
-## [12] &quot;A:B&quot; &quot;A:A&quot; &quot;A:A&quot; &quot;B:B&quot; &quot;A:B&quot; &quot;B:B&quot; &quot;A:B&quot; &quot;B:B&quot; &quot;A:B&quot;</code></pre>
+<pre><code>##  [1] &quot;B:B&quot; &quot;A:B&quot; &quot;B:B&quot; &quot;A:B&quot; &quot;A:A&quot; &quot;A:B&quot; &quot;A:A&quot; &quot;A:B&quot; &quot;B:B&quot; &quot;A:B&quot; &quot;A:A&quot;
+## [12] &quot;A:A&quot; &quot;B:B&quot; &quot;A:B&quot; &quot;A:A&quot; &quot;B:B&quot; &quot;A:A&quot; &quot;A:B&quot; &quot;B:B&quot; &quot;A:B&quot;</code></pre>
 <p>Here the function sample() makes a random draw of the arguments given in the first position (the genotypes), and selects 20 (the second argument), and since there are fewer potential values than observed ones, you need to tell it that you can sample the same genotypes more than once (the <code>replace=TRUE</code> part). In analytical population genetics, the use of randomization and permutation is critical and we will see this repeatedly throughout this text. Technically, this is a Monte Carlo simulation that was done. Fancy, no?</p>
 <p>Next, we can take these data and estimate genotype frequencies. Here the expectation is also given by the code using the methodologies described in the next section.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">genotype_frequencies</span>(loci)</code></pre></div>
 <pre><code>##   Genotype Observed Expected
-## 1      A:A        8   6.6125
-## 2      A:B        7   9.7750
-## 3      B:B        5   3.6125</code></pre>
+## 1      A:A        6        5
+## 2      A:B        8       10
+## 3      B:B        6        5</code></pre>
 <p>and allele frequencies from these loci are:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">frequencies</span>( loci )</code></pre></div>
 <pre><code>##   Allele Frequency
-## 1      A     0.575
-## 2      B     0.425</code></pre>
+## 1      A       0.5
+## 2      B       0.5</code></pre>
 <p>It should be noted that for these function, and for almost all the functions that return data in gstudio, the return object is a native data.frame. Using these tools, it is easy to take our data and extract from it the components necessary for estimating the degree to which they conform to the expectations of HWE.</p>
 </div>
 <div id="trans-generational-transition-probabilities" class="section level2">
