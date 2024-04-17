@@ -11,9 +11,6 @@ biblio-style: apalike
 link-citations: yes
 github-repo: "dyerlab/AMG"
 ---
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 
 # Applied Population Genetics {- .white_letters}
 
@@ -132,20 +129,9 @@ Where possible, I have included interactive content in the text.  Examples inclu
 
 I would like to dedicate this text and the motivations and inspirations that underly its creation, to my thesis advisor, Dr. Victoria L. Sork.  She has an uncanny ability to see beyond the questions that we know how to answer and to help us focus on the answers that we are really trying to find.
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:index.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # The R Ecosystem {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_farm.jpg"></div>
@@ -325,20 +311,9 @@ The RStudio IDE can be can be downloaded directly from (http://rstudio.org) and 
 The interface has four panes, two of which (the source code editor and the terminal output) you will work with the most often.  The other panes have information on the history of your project, plot output, packages, help, and a file browser.  You can type in R commands in the terminal window and receive responses directly, just as normal.  However, you can also type in your code into a script file (files ending in *.R) and run them directly.  You can also create Markdown and LaTeX documents embedding your code in with the verbiage, which is evaluated any time you make a html, rtf, docx, or pdf output.  All the code from R for this book was written in RMarkdown and parsed as an html document.  If you are a serious user of R, you can use LaTeX or RMarkdown to make documents, slides, presentations, posters, etc.  It is a versatile tool and one worth looking into, especially as it pertains to reproducible research (something we all need to strive for).
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:r_ecosystem.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Data Types {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_milipedes.jpg"></div>
@@ -661,20 +636,9 @@ data[ (1:20 %% 2) > 0 ]
 You can get as complicated in the creation of indices as you like, even using logical operators such as OR and AND. I leave that as an example for you to play with.  
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:datatypes.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Data Containers {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_turtle.jpg"></div>
@@ -1030,20 +994,9 @@ This is why `data.frame` objects are very database like.  They can contain lots 
 
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:r_containers.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Programming {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_beach_ponies.jpg"></div>
@@ -1304,20 +1257,9 @@ for( i in 1:10){
 }
 ```
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:r_programming.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Graphics {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_fallleaves.jpg"></div>
@@ -1815,20 +1757,9 @@ There are several other libraries available for creating useful plots in R.  The
 
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:graphics.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Reproducable Research  {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_cactus.jpg"></div>
@@ -1861,25 +1792,15 @@ It is in my opinion preferable to keep your data in a format that is accessible 
 For this example, the data from the first sheet are provided as a *.csv file and can be accessed by that long URL.
 
 In R, we can access this spreadsheet directly through that URL, which allows us to have our data located in a single centralized location and accessible by a broad range of applications and uses, none of which have the ability to duplicate your data (thereby causing a fork) or make any changes to its internal structure.  Here is how it is done.
-Load in the RCurl library that allows us to grab the contents at a site programatically.
 
-```{r}
-library(RCurl)
-link <- "https://docs.google.com/spreadsheets/d/1QL9fYeKkDKphba12WLVTBJrv_d1WHTc9SrZoBeIFgj8/pub?gid=0&single=true&output=csv"
-url <- getURL( link )
-```
-
-Initiate a text connection between R and the remote server at Google.
-
-```{r}
-con <- textConnection( url )
-```
-
-Load in the gstudio library and read the data in as a normal data file.  This last part is identical to what we would do for a normal file on our computer, it is the first two steps that extend this approach to use remote files via a url.
+1. Load in the `gstudio` library
+2. On GoogleSheets, publish your spreadsheet as a csv file.
+3. Use the `read_population()` function to grab the data.
 
 ```{r message=FALSE}
 library(gstudio)
-cornus <- read_population( con, type="column", locus.columns = 5:14, sep=",")
+link <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2fBVXzjaFTsbYX10mpTyugSLpzjyGLYE_UmLDqTyeJnzsayFgBQjnlseXgR72XE1gYc4s5oTiZLOz/pub?gid=0&single=true&output=csv"
+cornus <- read_population( link, type="column", locus.columns = 5:14, sep=",")
 summary(cornus)
 ```
 
@@ -1995,35 +1916,13 @@ To get started working with markdown, go read over the [RMarkdown](http://rmarkd
 
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:reproducable_research.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # (PART) Single Population {-}
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:part_single_population.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Hardy-Weinberg Equilibrium {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_flounder.jpg"></div>
@@ -2207,20 +2106,9 @@ Wahlund Effects	Selection for Heterozygotes
 In closing, it should be noted that HWE presented here is easily expandable to loci with more than two alleles as well as for loci with different ploidy levels.  The same approaches apply, though it is not as clean to estimate the expectations.  In the next section, we look at how we specifically test for HWE in our data.
 
 At a more meta level, one could see the entirety of this topic and population genetics as a discipline as understanding how deviations from HWE manifest and testing for the strength of these deviations.  It is becoming less common for people to actually test for HWE as there are many ways that you can have a deficiency (or excess) of heterozygotes and it is probably much better to focus on the specific processes that may causing these deviations rather than the magnitude of the deviation alone.  That said, it is a nice organizing principle to use HWE as a straw man argument on which to frame the rest of this topic.
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:hardy_weinberg_equilibrium.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Genetic Drift {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_beach_donkey.jpg"></div>
@@ -2448,20 +2336,14 @@ t_{loss} = \frac{\ln(N_e\mu) + \gamma}{\mu}
 where the $\gamma$ term is Euler's constant (Masel et al. 2007).
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:genetic_drift.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
+---
+output: 
+  html_document: 
+    keep_md: yes
+---
 # Effective Population Size  {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_chiten.jpg"></div> 
@@ -2613,20 +2495,9 @@ ggplot(df, aes(x=Time,y=Ne)) + geom_line() + geom_point() + theme_bw(base_size=1
 
 which produces the graph above showing the effects of this bottleneck on the population lasting many generations.
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:effective_population_size.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Mutation  {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_red_newt.jpg"></div>
@@ -2898,35 +2769,13 @@ Estimation of mutation in recessive alleles can be accomplished in the same way.
 Looking at the genotypes directly can also provide an estimate of mutation rate.  I'll give two quick examples below, as both are relatively straight forward in their implementation.  First, if one can maintain lineages of individuals across generations, it becomes relatively easy to monitor the rate at which novel mutations occur.  Perhaps the most elegant examples of this approach is that from Lynch *et al.* (2008) who propagated parallel yeast cell lines across roughly 4,800 divisions.  Subsequent sequencing of original and progenitor samples provided an estimated rate of $\mu=0.00000000033$ per generation (much smaller than we have been playing with in this section).  They also examined differences in transition and transversion mutations as well as those in the mitochondria.  This paper is a tour-de-force and should be read by everyone interested in mutations.
 
 Not everyones study organism fits into a 4000 generation propagation program! That said, there have been some pretty good estimates of mutation rate based upon reconstruction of relatedness among historically separated lineages.  If you have a good reconstruction of genetic divergence (as in a phylogeny) and events that have been verified to have specific dates ascribed to them (such as fossil records), you can also estimate mutation rates from these.  By far, mtDNA has been used as it has is assumed to be ‘clock-like' (though see Galtier *et al.* 2009), though other targets have been used as well.  At present, we have several lines of evidence suggesting rates of mutation in various taxonomic groups, each of which may differ substantially.  Since rates differ across groups and across regions in the genome, it is important that you consider the consequences that particular values of $\mu$ have on your biological inferences.  It is much more common to need an estimate of mutation as an input to another analysis, such as a coalescent model, than to need to estimate it directly from your data.  In these common situations, it is good practice for you examine the consequences variation in $\mu$ have on your downstream biological inferences—in some situations a magnitude or more change in mutation may have no appreciable effect whereas in others it may.
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:mutation.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # (PART) Nonrandom Rating {-}
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:part_nonrandom_mating.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Selfing  {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_dogwood.jpg"></div>
@@ -3110,20 +2959,9 @@ ggplot() + geom_line(aes(T,F,color=Category),data=df[df$Category!="Expectations"
 ```
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:selfing.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Mixed Mating Systems  {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_solanum.jpg"></div>
@@ -3321,20 +3159,9 @@ df$F <- df$s/(2-df$s)
 ggplot( df, aes(x=s,y=F) ) + geom_line() + geom_point()
 ```
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:mixed_mating.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Wahlund Effects  {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_snake.jpg"></div>
@@ -3461,35 +3288,13 @@ The take home message here that for even the most basic of parameters, we need t
 
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:wahlund_effects.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # (PART) Parent Offspring Data {-}
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:part_parent_offspring.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Pedigrees  {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_trees.jpg"></div>
@@ -3843,20 +3648,9 @@ pedigree.legend( ped, location="bottomleft",radius=.2)
 kinship(ped)
 ```
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:pedigrees.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Parentage Analyses   {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_butterfly.jpg"></div>
@@ -4132,7 +3926,7 @@ $O_i$ 	     | $AA$   | $BB$   | $Cc$   | $dd$
 $T(O|FP,MP)$ | 1.0    | 0.5    | 0.5    |  0.5
 
 \[
-T(O_1|FP,MP_2) = 0.5 * 0.5 * 1.0 * 0.25 = 0.125
+T(O_1|FP,MP_2) = 1.0 * 0.5 * 0.5 * 0.5 = 0.125
 \]
 
 And
@@ -4425,35 +4219,13 @@ In this lecture we covered some rather simple parent/offspring relationships and
 3. Estimate likelihood ratios for paternity given Mother, Offspring, and Putative Male Parent.  
 4. Use fractional paternity and understand conditional probability and how it applies to parentage.
 5. Understand dispersal kernel estimation.
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:parentage.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # (PART) Subdivided Populations {-}
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:part_subdivided_populations.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Mapping Populations {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_lake.jpg"></div>
@@ -4662,20 +4434,9 @@ sankeyNetwork( Links=sankey.edges, Nodes=sankey.nodes,
 
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:mapping_populations.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Population Models {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_baja_south_of_loreto.jpg"></div>
@@ -4906,20 +4667,9 @@ In dealing with these kinds of dynamical systems, there are some important thing
 3. Once specified, iterate through each generation slowly, checking to see if you are parameterizing the system correctly.  There are an infinite number of ways for you to not get it correct via a typo or other programatic error.  Always ‘sanity check' your results.
 
 With these strategies in mind, you should be able to attack any population arrangement.
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:population_models.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Genetic Diversity {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_milkweedbug.jpg"></div>
@@ -5142,20 +4892,9 @@ multilocus_diversity( arapat[ arapat$Species=="Peninsula",] )
 
 This is a pretty crude measurement but later when we examine models based upon conditional multilocus genetic distances, we need to make sure that the samples are both allelic rich and multilocus diverse and this approach is a nice way to do that.
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:genetic_diversity.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Rarefaction {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_pepsis.jpg"></div>
@@ -5279,20 +5018,9 @@ map <- population_map(coords)
 ggmap(map) + geom_point( aes(x=Longitude,y=Latitude,size=Ae), data=coords)
 ```
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:rarefaction.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Genetic Distances {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_northbaja.jpg"></div>
@@ -5462,20 +5190,9 @@ This metric is roughly linear in time, assuming a drift-mutation equilibrium.  P
 ### Conditional Genetic Distance
 
 There is a final genetic distance that should be discussed here, Conditional Genetic Distance, derived from a network abstraction of genetic covariance by Dyer & Nason (2004).  However, both the rationale and the approach that produce these measures of distance rely on some approaches that need further development and will be put off until a more complete treatment can be done in the chapter on population graphs.
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:genetic_distance.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Genetic Structure {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_xian_kan.jpg"></div>
@@ -5745,20 +5462,9 @@ The estimation of genetic structure is a fundamental endeavor in population gene
 
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:genetic_structure.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Population Assignment  {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_salamander.jpg"></div>
@@ -5832,20 +5538,9 @@ multilocus_assignment(individuals[3,],freqs)
 Increasing the likelihood of assignment can be achieved by adding more loci to the analysis, using loci with more alleles, and/or using loci whose allele frequencies are closer to each other (e.g., for a locus with $\ell$ alleles, the most power is achieved if the frequency of each is roughly $\ell^{-1}$).
 
 If you have information on the inbreeding status, $F$, of the dataset, you can include that as an optional parameter in the `mutlilocus_assignment()` function.
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:population_assignment.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Admixture {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_palm.jpg"></div>
@@ -5969,35 +5664,13 @@ ggplot(df,aes(x=K,y=deltaK)) + geom_line() + geom_point() + xlab("Number of Clus
 What we see is that the largest value of $\delta K$ (Figure \@ref(fig:deltaK)) followed by a steep reduction is when $K=4$.  This may indicate to us that as it stands, the totality of the data contains four groups and we can map them back onto our data set and evaluate the biological support for these groupings.
 
 The arapat data set itself has a column in it for Cluster, which is derived from an approach such as this.  What we found is that the Cape & Mainland populations were definitely separated from the Peninsular ones.  However, when we examined only the peninsular populations, we found roughly three groups contained (nested) within that main group.  One of those groups was so prominent as to be able to be identified in this analysis causing $K=4$ instead of $K=3$ (Mainland, Cape, Peninsula).  However, the distinctness of the Cape and Mainland groups hid the further sub-structuring in the Peninsula populations.  This is an example of how you should perhaps not just grab the first result you get from any analysis, but make sure the totality of your analyses are considered before jumping to biological conclusions
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:admixture.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # (PART) Statistical Models {-}
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:part_statistical_models.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Ordination of Genetic Data {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_vernal_pool.jpg"></div>
@@ -6144,20 +5817,9 @@ dendroNetwork(hc, height=600,
 ```
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:ordination.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Distance Matrices {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_araptus.jpg"></div>
@@ -6326,20 +5988,9 @@ mantel( as.dist(D1), as.dist(D2), permutations=9999 )
 From this output, we see that the two distance matrices are highly correlated.  The question that I’ll leave the reader to look at is one based upon the shape of all those pairwise graphs.  Is this a linear relationship?  Is it ok to use a Pearson correlation on these data?  
 
 Recent work by Legendre & Fortin (2010) has suggested that in some situations the use of a Mantel test results in bias assocaited with ascertaining probabilities.  
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:distance_matrices.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Linear Models {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_milkweed_bug.jpg"></div>
@@ -6368,20 +6019,9 @@ knitr::include_graphics("media/regression_vs_correlation.png")
 ```
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:linear_models.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Distance Networks {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_dogwood2.jpg"></div>
@@ -6839,20 +6479,9 @@ Since Nei's distance is
 
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:distance_networks.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Population Graphs {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_euphorbia.jpg"></div>
@@ -6950,7 +6579,7 @@ p + theme_empty()
 ### Reading Existing **popgraph** Files
 
 
-The online versions of Population Graphs provides a *.pgraph file for visualization. These files are visualized in several different software platforms including GeneticStudio (Dyer 2009), a OpenGL visualization application (Dyer &amp; Nason 2004), an online visualization framework at http://dyerlab.bio.vcu.edu, and of course, in R.  We shall focus on this last one.  Reading in files to R 
+The online versions of Population Graphs provides a *.pgraph file for visualization. These files are visualized in several different software platforms including GeneticStudio (Dyer 2009), a OpenGL visualization application (Dyer &amp; Nason 2004), an online visualization framework at http://dyerlab.org, and of course, in R.  We shall focus on this last one.  Reading in files to R 
 
 ```{r,eval=FALSE,echo=TRUE}
 graph <- read.popgraph( "thegraph.pgraph" )
@@ -7425,20 +7054,9 @@ Hope this provides enough of an overview of the **popgraph** package to get you 
 
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:population_graphs.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Interactive Visualization 
 
 Interpreting complicated networks can be difficult if the number of nodes and/or edges are large, due in large part due to the way we project network structure onto 2-dimensional spaces.  While publication-quality graphics are needed in the end, interpretation can be aided by plotting networks in a dynamic context.  Here we look at a Population Graph constructed using the *Araptus attenuatus* genetic data set.
@@ -7455,35 +7073,13 @@ First, we need to load in the proper libraries. Each of the libraries are needed
 
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:interactive_visualization.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # (PART) Spatial Data {-}
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:part_spatial_data.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Vector Data  {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_newt2.jpg"></div>
@@ -7641,20 +7237,9 @@ SPDF
 
 As all of these objects are R objects, they can be saved to disk using the `save()` function, which makes them a *.rda object.  If you have objects that take a bit of time to create, it is in your best interests to save them after creation and on subsequent analyses, just use the saved versions.
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:vector_data.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Raster Data {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_jaguar.jpg"></div>
@@ -8054,20 +7639,9 @@ writeRaster( baja_california, filename="baja_california.tif")
 ```
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:raster_data.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Map Projections {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_butterfly2.jpg"></div>
@@ -8290,20 +7864,9 @@ par(mfcol=c(1,1))
 ```
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:projections.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Ecological Distance {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_mountain.jpg"></div>
@@ -8712,20 +8275,9 @@ cor.test(data$Slope, data$Circuit, method = "spearman")
 ```
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:ecological_distance.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Niche Modeling {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_bird.jpg"></div>
@@ -8853,20 +8405,9 @@ p + xlab("Biolayer Value") + ylab("Density")
 
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:niche_modeling.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Eigenvector Maps {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_pond.jpg"></div>
@@ -9076,35 +8617,13 @@ multiscale_ord <- mso(ord,coords[,2:3],grain = 5)
 msoplot(multiscale_ord,xlim=c(0,200))
 ```
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:eigenmaps.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # (PART) Selection {-}
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:part_selection.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Classical Selection Models {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_red_fish.jpg"></div>
@@ -9293,35 +8812,13 @@ This is sufficient information for you to estimate the consequences of selection
 
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:selection.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # (PART) Backmatter {-}
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:part_backmatter.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # References {- .hanging}
 
 Bivand RS, Pebesma EJ, G\'omez-Rubio V.  2008.  *Applied Spatial Data Analysis with R*  Springer, New York.
@@ -9357,20 +8854,9 @@ Weir BS, Cockerham CC.  1984.  Estimating F-Statistics for the Analysis of Popul
 Wright, S. 1978. Evolution and the Genetics of Populations, *Vol. 4: Variability Within and Among Natural Populations*. University of Chicago Press, Chicago.
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:references.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # Included Data Sets
 
 The content of this book includes several data sets that come with the `gstudio` and `popgraph` libraries.  Here is a brief overview of those data sets with references to the manuscripts from which they were analyzed.
@@ -9452,34 +8938,15 @@ knitr::kable(df,align=c("l","c","c","c"),digits=3)
 ```
 
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:data_sets.rmd-->
 
-```{r include=FALSE, cache=FALSE}
-rm(list=ls())
-```
 # About the Author {- .imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_author.jpg"></div>
 
 Rodney Dyer is an Associate Professor at Virginia Commonwealth University.  When not writing code and developing new analytical approaches for understanding the spatial distribution of genetic variation, he enjoys fishing, fermentation sciences, and spending time with his family outdoors.
 
-```{r include=FALSE, cache=FALSE}
-#problems <- c("package:igraph","package:dplyr")
-#loaded <- grep("^package:",search(),value = TRUE)
-#to_unload <- setdiff(problems,loaded)
-#for( lib in to_unload ){
-#  suppressWarnings( detach(name=lib,character.only = TRUE,unload=TRUE) )
-#}
-```
 
 <!--chapter:end:about_the_author.rmd-->
 

@@ -1,3 +1,8 @@
+---
+output: 
+  html_document: 
+    keep_md: yes
+---
 # Effective Population Size  {.imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_chiten.jpg"></div> 
