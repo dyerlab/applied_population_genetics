@@ -22,7 +22,6 @@ We are implicitly assuming that some underlying function, $f()$, that takes the 
 The hypothesized relationship between the two variable sets determines which kind of model to assume.
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/regression_vs_correlation.png")
 ```
 

@@ -53,6 +53,7 @@ The maxent model itself is used determine the extent to which site-specific fact
 
 ```{r}
 #| cache: true
+#| eval: false 
 fit <- maxent(bio_layers,pts.train)
 ```
 
@@ -70,16 +71,20 @@ Which produces output that looks something like the following inset.
 Here are some quick ways to view and interpret output from the maxent approach.  
 
 ```{r}
+#| eval: false 
 plot(fit)
 ```
 
 
 ```{r}
+#| eval: false 
 response(fit)
+
 ```
 
 
 ```{r}
+#| eval: false 
 r <- predict( fit, bio_layers )
 plot(r, xlab="Longitude",ylab="Latitude")
 points( pts.train, pch=3, cex=0.75)
@@ -90,6 +95,7 @@ points( pts.train, pch=16, cex=0.75)
 
 
 ```{r}
+#| eval: false 
 pts.random <- randomPoints(bio_layers, 1000)
 fit.eval <- evaluate(fit, p=pts.test, a=pts.random, x=bio_layers)
 fit.eval
@@ -97,6 +103,7 @@ fit.eval
 
 
 ```{r}
+#| eval: false 
 vals.pred <- data.frame( extract( bio_layers, pts.test) )
 vals.rand <- data.frame( extract( bio_layers, pts.random) )
 fit.eval_rnd <- evaluate(fit, p=vals.pred, a=vals.rand)
@@ -104,6 +111,7 @@ fit.eval_rnd
 ```
 
 ```{r}
+#| eval: false 
 library(ggplot2)
 
 df <- data.frame( Val=NA, BioLayer=NA, Category=NA )

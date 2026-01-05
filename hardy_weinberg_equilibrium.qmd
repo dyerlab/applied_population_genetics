@@ -24,7 +24,6 @@ Finally, we will invoke both of Mendel's Laws of Inheritance.  His first law sta
 A Punnet square is a simple tool used to teach transition probabilities in basic genetics and biology courses.  Here is an interactive example using the 2-allele locus (though the tool can handle other ploidy levels) that you can play with to see the kinds of offspring genotypes produced by individual matings.  
 
 ```{r}
-#| echo: false
 knitr::include_app("http://128.172.160.215/punnet_square/", height="500")
 ```
 
@@ -79,7 +78,6 @@ Intuitively the formulation denoted above for $p$ and $q$ makes sense as the het
 Here is an interactive widget that shows how the expected frequencies of the genotypes change, even under Hardy Weinberg Equilibrium, due to changes in the allele frequencies.
 
 ```{r}
-#| echo: false
 knitr::include_app("http://popgen.bio.vcu.edu/shiny/apg/hardy_weinberg/", height="700")
 ```
 

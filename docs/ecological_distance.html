@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>33&nbsp; Ecological Distance – Applied Population Genetics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./niche_modeling.html" rel="next">
+<link href="./projections.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6d16390398e4ca57b3acf2d898365235.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="media/style.css">
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ecological_distance.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Ecological Distance</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Population Genetics</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/dyerlab/AMG" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Applied Population Genetics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_ecosystem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The R Ecosystem</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datatypes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_containers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Containers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Programming</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./graphics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Graphics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducable_research.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducable Research</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_single_population.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Single Population</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hardy_weinberg_equilibrium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Hardy-Weinberg Equilibrium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_drift.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Genetic Drift</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./effective_population_size.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Effective Population Size</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Mutation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_nonrandom_mating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Nonrandom Rating</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selfing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Selfing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mixed_mating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Mixed Mating Systems</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wahlund_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wahlund Effects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_parent_offspring.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Parent Offspring Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pedigrees.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pedigrees</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parentage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Parentage Analyses</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_subdivided_populations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Subdivided Populations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapping_populations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping Populations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Population Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_diversity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Genetic Diversity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rarefaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Rarefaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_distance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Genetic Distances</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Genetic Structure</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_assignment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Population Assignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./admixture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Admixture</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_statistical_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Statistical Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ordination.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Ordination of Genetic Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distance_matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Distance Matrices</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Linear Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distance_networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Distance Networks</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_graphs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Population Graphs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interactive_visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Interactive Visualization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_spatial_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Spatial Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./vector_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Vector Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./raster_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Raster Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./projections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Map Projections</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ecological_distance.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Ecological Distance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./niche_modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Niche Modeling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eigenmaps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Eigenvector Maps</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Selection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Classical Selection Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_backmatter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Backmatter</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Included Data Sets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the Author</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#the-concept-of-resistance" id="toc-the-concept-of-resistance" class="nav-link active" data-scroll-target="#the-concept-of-resistance"><span class="header-section-number">33.1</span> The Concept of Resistance</a>
+  <ul class="collapse">
+<li><a href="#absolute-resistance" id="toc-absolute-resistance" class="nav-link" data-scroll-target="#absolute-resistance"><span class="header-section-number">33.1.1</span> Absolute Resistance</a></li>
+  </ul>
+</li>
+  <li><a href="#relative-resistance" id="toc-relative-resistance" class="nav-link" data-scroll-target="#relative-resistance"><span class="header-section-number">33.2</span> Relative Resistance</a></li>
+  <li>
+<a href="#estimating-separation" id="toc-estimating-separation" class="nav-link" data-scroll-target="#estimating-separation"><span class="header-section-number">33.3</span> Estimating Separation</a>
+  <ul class="collapse">
+<li><a href="#least-cost-distance" id="toc-least-cost-distance" class="nav-link" data-scroll-target="#least-cost-distance"><span class="header-section-number">33.3.1</span> Least Cost Distance</a></li>
+  <li><a href="#all-paths-circuit-distance" id="toc-all-paths-circuit-distance" class="nav-link" data-scroll-target="#all-paths-circuit-distance"><span class="header-section-number">33.3.2</span> All Paths (Circuit) Distance</a></li>
+  <li><a href="#path-corridor-constraints" id="toc-path-corridor-constraints" class="nav-link" data-scroll-target="#path-corridor-constraints"><span class="header-section-number">33.3.3</span> Path &amp; Corridor Constraints</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#estimating-correlations-in-distance" id="toc-estimating-correlations-in-distance" class="nav-link" data-scroll-target="#estimating-correlations-in-distance"><span class="header-section-number">33.4</span> Estimating Correlations in Distance</a>
+  <ul class="collapse">
+<li><a href="#pairwise-least-cost-path" id="toc-pairwise-least-cost-path" class="nav-link" data-scroll-target="#pairwise-least-cost-path"><span class="header-section-number">33.4.1</span> Pairwise Least Cost Path</a></li>
+  <li><a href="#pairwise-all-pairs" id="toc-pairwise-all-pairs" class="nav-link" data-scroll-target="#pairwise-all-pairs"><span class="header-section-number">33.4.2</span> Pairwise All Pairs</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Ecological Distance</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="chapter_image">
+<img src="chapter_images/ch_mountain.jpg">
+</div>
+<p>Previously we have been focused on population separation in Euclidean space (e.g., physical distance). However, populations may be functionally separated by features of the intervening landscape. It is entirely possible that features existing between populations may influence the ability of gene flow to maintain connectivity between sites.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"./media/LandscapeResistance.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./media/LandscapeResistance.png" class="img-fluid figure-img" width="363"></p>
+<figcaption>Schematics showing consequences of intervening habitat effects on connectivity. A. Populations A and B separated in Euclidean space (black arrow) have constant resistance to connectivity (red line). B. Populations separated by similar spatial separation (black arrow) have increased overall resistance to connectivity (red line) due to the presence of the intervening forest.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>It can be argued that the <em>sine qua non</em> of applied population genetics (or landscape genetics if you like that term) is in the identification of the which subset of ecological or other features influence the connectivity of populations. Throughout the history of population genetics, a lot of theory has been developed ignoring the effects of other organisms, the environment in which micro evolutionary processes are occurring, etc. In the last few decades, the field has moved towards more inclusive, and site-aware, approaches and in this chapter we get into some of the ways in which you can include data available to you in both Vector (@ref(vector-data)) and Raster (@ref(raster-data)) formats.</p>
+<p>Fundamental to the newer ways we are analyzing our data is the concept of resistance. While there may be many kinds of resistance, they are can all be described by a simple fundamental notion that there exists a quantitative value that can be assigned to the separation of locales on a landscape. Consider the inset images in Figure @ref(fig-legos), stylized using a Lego representation of myself and a tasty meal.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/characteristic_model.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="media/characteristic_model.png" class="img-fluid figure-img" width="424"></p>
+<figcaption>Resistance as a fundamental concept in understanding population genetic structure. Resistance, measured between spatial locations can be entirely spatial (isolation by disance), due to barriers (isolation due to barriers), a function of a complex intervening habitat (isolation by resistance), or any combination thereof (insets, clockwise from top).</figcaption></figure>
+</div>
+</div>
+</div>
+<p>These different external resistance examples represent:</p>
+<ul>
+<li>
+<em>Isolation by Distance:</em> Under this classic model (dating back almost 90 years now), the resistance value is defined by Euclidean distance between two sites. Essentially, the surface over which the individual is walking is based upon a uniform value (whatever the spatial unit being used) and is homogeneously spread across the intervening landscape. Euclidean geometry provides the shortest path.<br>
+</li>
+<li>
+<em>Isolation by Barriers:</em> This is a model in which some discrete boundary on the landscape changes the resistance value (in this case it is more difficult to cross a river). In a model like this, the shortest path between the person and the meal must cross the river and must do so in a way that minimizes the accumulated distances. However, travel on each side of the barrier would accumulated resistance identical to that found under the IBD model (above).<br>
+</li>
+<li>
+<em>Isolation by Resistance (or habitat or whatever is the latest fad):</em> Here the landscape consists of a heterogeneous mix of resistance values depending upon what features the individual must traverse. Some may be impenitrable (a very large resistance value), some may be just accumulate larger than normal resistance values.</li>
+</ul>
+<p>In all three of these cases, the underlying distance matrix (or raster in our representation) is estimated and filled with values. For IBD, it is uniform in magnitude across the matrix. Barriers have one or more spatially contiguous features with increased, or perhaps reduced if we consider them as corridors—the math is exactly the same. For the more complicated scenario, the resistance matrix has a wide range of resistance values associated with indiviudal cells. Despite the aparent differences, the underlying approahces are identical, we define a resistance matrix and then use some measure of separation to measure how far apart each of the points of interest are located. The important point is that the fundamental concept of resistance underlies all these different ‘models’. In fact, you could argue (and you would be statistically correct in doing so) that even the Island Model and Stepping Stone models are resistance models.</p>
+<p>As a demonstration of how we do the actual calculations in <code>R</code>, we will start with the venerable <code>arapat</code> data set. Only a subset of populations will be used for the following reasons:</p>
+<ol type="1">
+<li>The mainland populations are not connected, on the reduced raster, by land. As such, we cannot find an ecological path from those populations to the rest on the Baja Peninsula. It is possible to connect them across the top of the Sea of Cort'ez but that is well beyond this species natural range, making it effectively isolated.</li>
+<li>Population <code>ESan</code> is located on an island and as such has no direct connection on the rasters we will be using to the remaining populations.</li>
+<li>The population <code>165</code> is located in a place that the WorldClim rasters do not record land. The rasters used have a resolution of 30-arc seconds (~1km) and this population is located at a place where that granularity of that grid does not recognize land.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggrepel.slowkow.com/">ggrepel</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dkahle/ggmap">ggmap</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">arapat</span><span class="op">[</span> <span class="op">!</span><span class="op">(</span><span class="va">arapat</span><span class="op">$</span><span class="va">Population</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"101"</span>,<span class="st">"102"</span>,<span class="st">"32"</span>,<span class="st">"ESan"</span>,<span class="st">"165"</span><span class="op">)</span><span class="op">)</span> , <span class="op">]</span></span>
+<span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/strata_coordinates.html">strata_coordinates</a></span><span class="op">(</span> <span class="va">data</span> <span class="op">)</span></span>
+<span><span class="va">map</span> <span class="op">&lt;-</span> <span class="fu">population_map</span><span class="op">(</span><span class="va">coords</span>, zoom<span class="op">=</span><span class="fl">7</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span><span class="op">(</span> <span class="va">map</span> <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Longitude</span>,y<span class="op">=</span><span class="va">Latitude</span><span class="op">)</span>,data<span class="op">=</span><span class="va">coords</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggrepel.slowkow.com/reference/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Longitude</span>,y<span class="op">=</span><span class="va">Latitude</span>,label<span class="op">=</span><span class="va">Stratum</span><span class="op">)</span>, data<span class="op">=</span><span class="va">coords</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To start with, I will use the elevation raster and modifications thereof. The ultimate goal here is to estimate ecological separation using a variety of algorithms and as such we need to minimize the size of the background raster as much as possible. In the code below, I take the elevation raster and create the convex hull around the population locations with a smallish buffer around the points so that the outermost populations will not be on the very edge of the data. I further constrain this raster by cutting regions within which we have no evidence that the target species exist, in this case we have almost no records of it occurring above 700m.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">rgeos</span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster">raster</a></span><span class="op">)</span></span>
+<span><span class="va">alt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html">raster</a></span><span class="op">(</span><span class="st">"./spatial_data/alt.tif"</span><span class="op">)</span></span>
+<span><span class="va">baja_pts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://edzer.github.io/sp/reference/SpatialPoints.html">SpatialPoints</a></span><span class="op">(</span> <span class="va">coords</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">hull</span> <span class="op">&lt;-</span> <span class="fu">gConvexHull</span><span class="op">(</span><span class="va">baja_pts</span><span class="op">)</span></span>
+<span><span class="va">hull_plus_buffer</span> <span class="op">&lt;-</span> <span class="fu">gBuffer</span><span class="op">(</span><span class="va">hull</span>,width<span class="op">=</span><span class="fl">.2</span><span class="op">)</span></span>
+<span><span class="va">alt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/trim.html">trim</a></span><span class="op">(</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/mask.html">mask</a></span><span class="op">(</span> <span class="va">alt</span>, <span class="va">hull_plus_buffer</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">alt</span><span class="op">[</span> <span class="va">alt</span> <span class="op">&gt;</span> <span class="fl">700</span> <span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">alt</span>, xlab<span class="op">=</span><span class="st">"Longitude"</span>, ylab<span class="op">=</span><span class="st">"Latitude"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To start with, we should probably examine the distribution of the variable we are working with in the locations at which the samples are taken.</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">coords</span><span class="op">$</span><span class="va">elevation</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/extract.html">extract</a></span><span class="op">(</span> <span class="va">alt</span>, <span class="va">coords</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span> <span class="va">coords</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">elevation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span> binwidth <span class="op">=</span> <span class="fl">25</span> <span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Elevation (m)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Frequency"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can compare this against the ‘background’ values that we find across the raster, even in places where our samples were not taken. Deviations observed in the distribution of values sampled from our sites from that defined in the background suggest that our sampling was not entirely random see @ref(niche-modeling) for a more complete discussion on how to evaluate the relative importance of particular background features in the distribution of your organism.</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/values.html">values</a></span><span class="op">(</span> <span class="va">alt</span> <span class="op">)</span></span>
+<span><span class="va">s</span> <span class="op">&lt;-</span> <span class="va">s</span><span class="op">[</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">s</span><span class="op">)</span> <span class="op">]</span></span>
+<span><span class="va">Category</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Observed"</span>,<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">coords</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Background"</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">s</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">Elevation</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">coords</span><span class="op">$</span><span class="va">elevation</span>, <span class="va">s</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> <span class="va">Category</span>,<span class="va">Elevation</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span> <span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Elevation</span>,fill<span class="op">=</span><span class="va">Category</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span> alpha<span class="op">=</span><span class="fl">0.75</span> <span class="op">)</span> <span class="op">+</span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Elevation (m)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Frequency"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="the-concept-of-resistance" class="level2" data-number="33.1"><h2 data-number="33.1" class="anchored" data-anchor-id="the-concept-of-resistance">
+<span class="header-section-number">33.1</span> The Concept of Resistance</h2>
+<p>The way in which the intervening habitat may influence genetic connectivity can be both varied and complex. In R we quantify spatial data using a <code>raster</code> format. As discussed in @ref(raster-data), a raster is essentially a matrix whose entries represent some value that has both spatial location and extent.</p>
+<p><img src="media/RasterGrid.png" class="img-fluid"></p>
+<p>Several approaches are available to parameterizing a cost surface. These range from expert opinion (where someones opinion fills in the gaps), to externally defined variables, to approaches that consider entire ranges of resistance.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"./media/RasterGridParameterized.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./media/RasterGridParameterized.png" class="img-fluid figure-img" width="230"></p>
+<figcaption>Dichotomous cost surface containing two features, one four times more difficult to traverse than the other.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Independent of how the values are set (though this is a huge component which can be addressed outside the context of how this is done), the raster (as in Figure @ref(fig:parameterizedRaster)) can be considered as a component of a potential hypothesis. It is not a complete hypothesis because we must first decide how distances on that raster are estimated—the result of which will be the complete hypothesis. We return to ways in which distances can be estimated below (@ref(estimating-separation)).</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"./media/MultivariateCostRaster.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./media/MultivariateCostRaster.png" class="img-fluid figure-img" width="490"></p>
+<figcaption>Individual resistance surfaces may be combined to produce interaction (multivariate) cost distance surfaces. In this example, the categorial surface (left) is combined with a cost sufrace representing a cline (center raster) to produce via the addition operator a surface representing both (right).</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Once we have a set of cost surfaces defined, our goal is to determine if there are subsets which help to explain the observed genetic structure we find on the landscape (Figure @ref(fig:EuclVsEcol)).</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"./media/EuclideanVsEcological.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./media/EuclideanVsEcological.png" class="img-fluid figure-img" width="418"></p>
+<figcaption>Two different cost surfaces, Euclidean distance (left) and the multivariate ecological distance derived perviously (right). The extent to which each of these resistance hypotheses can explain the observed genetic distances (graphs over top</figcaption></figure>
+</div>
+</div>
+</div>
+<p>No matter how we actually measure separation, we can think of cost surfaces as belonging to one of two mutually exclusive categories; absolute resistance and relative resistance. Absolute resistance is invariant to source and destination whereas relative landscape resistance is depending upon starting location.</p>
+<section id="absolute-resistance" class="level3" data-number="33.1.1"><h3 data-number="33.1.1" class="anchored" data-anchor-id="absolute-resistance">
+<span class="header-section-number">33.1.1</span> Absolute Resistance</h3>
+<p>Absolute resistance is the condition by which landscape features provide an invariable source of resistance to movement. Examples here may include physical barriers that exert the same magnitude of resistance to movement no matter where the initial and destination locations are found. For example, in an urban environment, a building provides an absolute resistance with respect to plant pollinators—they cannot move through that object no matter which direction they are coming from.</p>
+<p>In the example below, I will use the slope of the terrain as a example under the assumption that there a level of steepness of the terrain that prevents movement of individuals between locales. It does not matter at which direction the organism approaches this steep part of the landscape (uphill, downhill, or cross slope), their movement is restricted in a uniform manner.</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">slope</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/terrain.html">terrain</a></span><span class="op">(</span><span class="va">alt</span>, unit<span class="op">=</span><span class="st">'degrees'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">slope</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">baja_pts</span>,add<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If we look at the distribution of slope values we can see the vast majority of the lower part of Baja California has a rather gentle slope.</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/rasterToPoints.html">rasterToPoints</a></span><span class="op">(</span><span class="va">slope</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span> <span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">slope</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span> binwidth<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Slope (degrees)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Frequency"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the following examples, I’m going to use the distribution of values shown in Figure @ref(fig:distribution-of-slope).</p>
+<div class="cell" type="comment_information">
+<div class="comment_information">
+<p>
+It is very important to note that the slope we are deriving here is based upon an average across a 30-arc second pixel size in the desert. We are perhaps missing a lot of sub-kilometer slop-y areas that prevent movement. However, this is an example meant more for the importance of providing the methodology of how you would do this than an expectation explaining biological relevance.
+</p>
+</div>
+</div>
+<p>For the purposes of this example, I’ll define three categories of slope. The values returned by the <code><a href="https://rspatial.github.io/terra/reference/terrain.html">terrain()</a></code> function in this case are in degrees (though radians and tangent are also possible, see <code><a href="https://rspatial.github.io/terra/reference/terrain.html">?terrain</a></code>). A new raster will be created, based slope, with the following (somewhat arbitrary but relevant as an example) categories:</p>
+<ul>
+<li>Slope &lt; 5<span class="math inline">\(^{\circ}\)</span> has no effect on movement.</li>
+<li>Slope at a location between 5<span class="math inline">\(^{\circ}\)</span> and 10<span class="math inline">\(^{\circ}\)</span> result in a movement resistance twice as difficult as the low/no slope condition.</li>
+<li>Slope in excess of 10<span class="math inline">\(^{\circ}\)</span> is categorized as four times as difficult for movement than the low/no slope areas on the map.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">slope</span></span>
+<span><span class="va">tmp</span><span class="op">[</span> <span class="va">slope</span> <span class="op">&lt;</span> <span class="fl">5</span> <span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="va">tmp</span><span class="op">[</span> <span class="va">slope</span> <span class="op">&gt;</span> <span class="fl">5</span> <span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="va">tmp</span><span class="op">[</span> <span class="va">slope</span> <span class="op">&gt;</span> <span class="fl">10</span> <span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
+<span><span class="va">cat_slope</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/factor.html">ratify</a></span><span class="op">(</span><span class="va">tmp</span>, count<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">rat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span> <span class="va">cat_slope</span> <span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">rat</span><span class="op">$</span><span class="va">Slope_Type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"None"</span>,<span class="st">"Low"</span>,<span class="st">"High"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">cat_slope</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">rat</span> </span>
+<span><span class="va">cat_slope</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For this raster, I set up the categories and define a <em>raster attribute table</em> (see @ref(categorical-rasters)) to make the output more legible. If we visualize this raster, we see the landscape partitioned into these three categories.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">cat_slope</span>, legend<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From here, we can proceed to estimating distances among points. This absolute cost surface is just one example. You could have used the raw value of slope (larger linearly becoming more difficult), a function of slope, or any variant of coming up with a metric to create the values in each pixel. The point here is that this is an absolute cost, and all estimates of distance, independent of origin and destination, use the same cost raster.</p>
+</section></section><section id="relative-resistance" class="level2" data-number="33.2"><h2 data-number="33.2" class="anchored" data-anchor-id="relative-resistance">
+<span class="header-section-number">33.2</span> Relative Resistance</h2>
+<p>The other way in which rasters may be created are are based upon relative cost distances. These cost surfaces are created, relative to some particular benchmark point on the surface. For example, if you think that phenology (e.g., the timing of reproduction) may be an important component contributing to connectivity among populations (as is the case for plant species), it is not the absolute value of elevation that is of concern across the landscape. Rather it is the similarity in elevation that is the driver—plant populations at the same elevations may tend to flower in higher synchrony than those separated across elevation gradients. As such, when we estimate cost surfaces for something like this, we would focus on on the magnitude of elevation but on the absolute difference in elevation between points. Under this <em>relative</em> cost approach, the distance from each locale would be based upon the deviance in elevation from that point to the rest of the landscape.</p>
+<p>I’ll use this concept of elevation similarity in this example, starting with the elevation of population <code>163</code>, which will be the benchmark.</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span> <span class="va">coords</span><span class="op">$</span><span class="va">Stratum</span> <span class="op">==</span> <span class="st">"163"</span><span class="op">)</span></span>
+<span><span class="va">target_elevation</span> <span class="op">&lt;-</span> <span class="va">coords</span><span class="op">$</span><span class="va">elevation</span><span class="op">[</span> <span class="va">idx</span> <span class="op">]</span></span>
+<span><span class="va">target_elevation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From this target elevation, we can create an elevation raster that is based upon the deviation between the benchmark and everyone else. Since this is a cost surface we are creating we need to perhaps include a base cost instead of having elevation clines with zero resistance. For this, I add a unit cost to the entire raster.</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">alt</span> <span class="op">-</span> <span class="va">target_elevation</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span> <span class="va">tmp</span> <span class="op">)</span> <span class="op">+</span> <span class="fl">1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="va">tmp</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For subsequent analyse, the distance between this specific locale and the remaining can be estimated using this raster. However, if we are to move to the next population, the distance between that locale and this one would need to be based on a new elevation benchmark. This means that for <span class="math inline">\(K\)</span> populations, pairwise estimates of relative distance need to be estimated from <span class="math inline">\(K\)</span> different rasters<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>!</p>
+</section><section id="estimating-separation" class="level2" data-number="33.3"><h2 data-number="33.3" class="anchored" data-anchor-id="estimating-separation">
+<span class="header-section-number">33.3</span> Estimating Separation</h2>
+<p>Once we have defined one or more rasters quantifying resistance costs, we can go and estimate the distance among points on those rasters. There are several ways available for us to estimate distance. The differences in these methods are based upon the algorithm used to estimate separation and the extent of the raster used to apply these algorithms.</p>
+<section id="least-cost-distance" class="level3" data-number="33.3.1"><h3 data-number="33.3.1" class="anchored" data-anchor-id="least-cost-distance">
+<span class="header-section-number">33.3.1</span> Least Cost Distance</h3>
+<p>A least cost path is the route between two points, say <span class="math inline">\(A \to B\)</span>, whose measured cost is minimal. This is the <em>optimal</em> route across the landscape. Organisms or vectors of gene exchange may, or may not, move across a landscape following an <em>optimal</em> path. An example shortest path is shown in Figure @ref(fig:lcp-example).</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"./media/LCP.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./media/LCP.png" class="img-fluid figure-img" width="218"></p>
+<figcaption>Estimation algorithm for least-cost path distance. The path chosen is the one with the shortest overall distance, or at least one of the paths with equally short overall distances.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>One way to estimate distances in R, is through the use of the <code>gdistance</code> library. In this approach, we define a transition object based upon:<br>
+1. The cost distance raster. By default, the <code><a href="https://AgrDataSci.github.io/gdistance/reference/transition.html">transition()</a></code> function works on conductance, which is the inverse of resistance. In these examples, we have used a single raster, though use of <em>RasterBrick</em> objects is just as appropriate. 2. The function by which we estimate the pixel-to-pixel distances.<br>
+3. The neighborhood around each pixel that we look at during each step. Options for this include:<br>
+- A von Neumann neighborhood (<code>directions=4</code>) consists of the pixels immediately above, below, and on both sides of the target pixel.<br>
+- A Moore’s neighborhood (<code>directions=8</code>) consisting of all pixels surrounding the target pixel (e.g., even the diagonal ones) - A Knight &amp; One-Cell Queen move (<code>directions=16</code>), which adds the next layer of cells outside of Moore’s neighborhood.</p>
+<p>Once estimated, the transition object <em>must</em> be corrected for if you are either using a large extent based upon Latitude and Longitude datum (e.g., they are not unit-wise consistent in area), or you have used a <code>direction</code> option other than the von Neuman Neighborhood.</p>
+<p>In the example below, I use the cost distance estimated based upon similarity in elevation, under the hypothesis that phenological synchrony may influence connectivity.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://AgrDataSci.github.io/gdistance/">gdistance</a></span><span class="op">)</span></span>
+<span><span class="va">tr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://AgrDataSci.github.io/gdistance/reference/transition.html">transition</a></span><span class="op">(</span> <span class="fl">1</span><span class="op">/</span><span class="va">tmp</span>, transitionFunction <span class="op">=</span> <span class="va">mean</span>, directions <span class="op">=</span> <span class="fl">4</span> <span class="op">)</span></span>
+<span><span class="va">tr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://AgrDataSci.github.io/gdistance/reference/geoCorrection.html">geoCorrection</a></span><span class="op">(</span> <span class="va">tr</span>, type<span class="op">=</span><span class="st">"c"</span>, multpl<span class="op">=</span><span class="cn">FALSE</span>, scl<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">tr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From this, potentially corrected, transition object we can estimate shortest path distance using the aptly named function <code><a href="https://AgrDataSci.github.io/gdistance/reference/shortestPath.html">shortestPath()</a></code>, passing it the transition object, the point from which we are starting, and the destination, and an optional parameter on how we want the output returned. In the example below, the results is returned as a <em>SpatialLines</em> object which I use to plot.</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">path.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://AgrDataSci.github.io/gdistance/reference/shortestPath.html">shortestPath</a></span><span class="op">(</span> <span class="va">tr</span>, <span class="va">baja_pts</span><span class="op">[</span><span class="fl">26</span><span class="op">]</span>, <span class="va">baja_pts</span><span class="op">[</span><span class="fl">15</span><span class="op">]</span>, output<span class="op">=</span><span class="st">"SpatialLines"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="va">tmp</span> , xlab<span class="op">=</span><span class="st">"Longitude"</span>, ylab<span class="op">=</span><span class="st">"Latitude"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span> <span class="va">path.1</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span> <span class="va">coords</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">26</span>,<span class="fl">15</span><span class="op">)</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,pch<span class="op">=</span><span class="fl">16</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As explained above, relative cost distances may create asymmetric distances. If the shortest path between the two populations is taken in the opposite direction, we get different shortest path across the landscape.</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">alt</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span> <span class="va">tmp</span> <span class="op">-</span> <span class="va">coords</span><span class="op">$</span><span class="va">elevation</span><span class="op">[</span> <span class="fl">15</span> <span class="op">]</span> <span class="op">)</span> <span class="op">+</span> <span class="fl">1</span></span>
+<span><span class="va">tr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://AgrDataSci.github.io/gdistance/reference/transition.html">transition</a></span><span class="op">(</span> <span class="fl">1</span><span class="op">/</span><span class="va">tmp</span>, transitionFunction <span class="op">=</span> <span class="va">mean</span>, directions <span class="op">=</span> <span class="fl">4</span> <span class="op">)</span></span>
+<span><span class="va">tr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://AgrDataSci.github.io/gdistance/reference/geoCorrection.html">geoCorrection</a></span><span class="op">(</span> <span class="va">tr</span>, type<span class="op">=</span><span class="st">"r"</span>, multpl<span class="op">=</span><span class="cn">FALSE</span>, scl<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">path.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://AgrDataSci.github.io/gdistance/reference/shortestPath.html">shortestPath</a></span><span class="op">(</span><span class="va">tr</span>,<span class="va">baja_pts</span><span class="op">[</span><span class="fl">15</span><span class="op">]</span>,<span class="va">baja_pts</span><span class="op">[</span><span class="fl">26</span><span class="op">]</span>,output<span class="op">=</span><span class="st">"SpatialLines"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="va">alt</span> , xlab<span class="op">=</span><span class="st">"Longitude"</span>, ylab<span class="op">=</span><span class="st">"Latitude"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span> <span class="va">path.1</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span> <span class="va">path.2</span>, col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span> <span class="va">coords</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">26</span>,<span class="fl">15</span><span class="op">)</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,pch<span class="op">=</span><span class="fl">16</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Not only is it a different path, they are also different lengths.</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="fu"><a href="https://edzer.github.io/sp/reference/SpatialLines.html">SpatialLinesLengths</a></span><span class="op">(</span> <span class="va">path.1</span> <span class="op">)</span>, <span class="fu"><a href="https://edzer.github.io/sp/reference/SpatialLines.html">SpatialLinesLengths</a></span><span class="op">(</span> <span class="va">path.2</span> <span class="op">)</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="all-paths-circuit-distance" class="level3" data-number="33.3.2"><h3 data-number="33.3.2" class="anchored" data-anchor-id="all-paths-circuit-distance">
+<span class="header-section-number">33.3.2</span> All Paths (Circuit) Distance</h3>
+<p>Organisms may not move in an <em>optimal</em> way across the landscape but may move along several different paths, most of which are <em>unoptimal</em>. The relative proportion of these alternative paths and their lengths may be combined to produce a distance between sites based upon all potential paths, <span class="math inline">\(A \Rightarrow B\)</span>. In the context of genetic connectivity, this method is referred to by the name of one of the software packages available to estimate it, <a href="http://circuitscape.org">Circuitscape</a> by McRae (2006). An example is shown in Figure @ref(fig:ct-example).</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"./media/CT.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./media/CT.png" class="img-fluid figure-img" width="266"></p>
+<figcaption>Estimation algorithm for all-paths (circuit) distance. The estimated distance between points <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is based upon the length and relative frequencies of all potential paths across the landscape, even thouse that traverse more resistant portions of the landscape (highlighted in yellow).</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Using as an example, you can apply this algorithm to the resistance surface based upon relative deviation from population 93 (as in the last example). Since this method uses <em>all</em> paths that leave the the target site and can arrive at the destination location, you cannot produce a single path example. What you do get from it is a spatial current raster from that site (e.g., the spatial flow away from it) as shown in Figure @ref(fig:circuitscape-from-93).</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html">raster</a></span><span class="op">(</span><span class="st">"media/Baja_Out_curmap_15.asc"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>, legend<span class="op">=</span><span class="cn">FALSE</span>, xlab<span class="op">=</span><span class="st">"Longitude"</span>, ylab<span class="op">=</span><span class="st">"Latitude"</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="va">baja_pts</span><span class="op">[</span><span class="fl">15</span><span class="op">]</span>, add<span class="op">=</span><span class="cn">TRUE</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="path-corridor-constraints" class="level3" data-number="33.3.3"><h3 data-number="33.3.3" class="anchored" data-anchor-id="path-corridor-constraints">
+<span class="header-section-number">33.3.3</span> Path &amp; Corridor Constraints</h3>
+<p>Both least-cost, and all-paths approaches consider the entire cost surface in the estimation of distances. This is a <em>very important</em> point that needs to be made to emphasize some of the constraints that may be imposed on your actual estimation process.</p>
+<p>These approaches use graph-theoretic algorithms to estimate the length of various paths across the cost surface. To do this, each pixel is treated as a node in a network, only after which the length of the paths may be estimated. This is why it is important to limit the potential size of your background cost raster to an area that includes your sampling sites but not regions through which connectivity will not traverse. For example, there is a very large number of paths that exist outside the convex hull displayed in Figure @ref(fig:eco-convex-hull), the overwhelming majority of which have absolutely no influence on connectivity among the sites we are interested in studying. If you do not restrict the cost raster as we did, the extra pixels are added network that needs to be constructed to estimate distance, independent of the fact that they may not be a member of the shortest (or even not longest) paths contributing to connectivity. Numerically, algorithms such as Dijkstra’a (one for finding the single shortest path), scale in time with the number of nodes as show below (Figure @ref(fig:dijkstra-time)).</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">minNodes</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="va">maxNodes</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<span><span class="va">stepNodes</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">minNodes</span>,<span class="va">maxNodes</span>,by<span class="op">=</span><span class="va">stepNodes</span><span class="op">)</span></span>
+<span><span class="va">e</span> <span class="op">&lt;-</span> <span class="va">v</span><span class="op">*</span> <span class="op">(</span><span class="va">v</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> Pixels<span class="op">=</span><span class="va">v</span>, Time<span class="op">=</span><span class="va">e</span><span class="op">+</span><span class="va">v</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Pixels</span>,<span class="va">Time</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Number of Pixels in Raster"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Time Complexity"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Computer scientists use the notion of time complexity, a measure defined as the number of steps in the code required to complete the task. This algorithm is described as <span class="math inline">\(O(|e| + |v| \log |v|\)</span>, where <span class="math inline">\(|e|\)</span> is the number of edges and <span class="math inline">\(|v|\)</span> is the number of nodes. In our example, the number of nodes, <span class="math inline">\(|v|\)</span> is how many pixels are in the landscape and the number of edges is <span class="math inline">\(|v|(|v|-1)/2\)</span>! This gets big quickly so anything you can do to limit the number of potential pixels in your landscape is important.</p>
+<p>In addition to limiting the size of the raster outside your study area, one can also limit the intervening areas by imposing some constraints on where these paths may be found. A common approach here is to define corridors between sites. These corridors have a restricted width through which these paths may traverse (or at least through which the algorithms may look for these paths). The width of these corridors may be either defined <em>a priori</em> or determined as a component of the analysis itself.</p>
+</section></section><section id="estimating-correlations-in-distance" class="level2" data-number="33.4"><h2 data-number="33.4" class="anchored" data-anchor-id="estimating-correlations-in-distance">
+<span class="header-section-number">33.4</span> Estimating Correlations in Distance</h2>
+<p>In the end, we are interested in getting to the pairwise distances among all sites, we extend the paths approaches as we outlined above. For these examples, I’ll use the categorical slope example and use both the least cost and the all-paths approaches. Here is the raster.</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">cat_slope</span>, legend<span class="op">=</span><span class="cn">FALSE</span>, xlab<span class="op">=</span><span class="st">"Longitude"</span>,ylab<span class="op">=</span><span class="st">"Latitude"</span>, </span>
+<span>     main<span class="op">=</span><span class="st">"Categorical Slope Resistance"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="va">baja_pts</span>, add<span class="op">=</span><span class="cn">TRUE</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="pairwise-least-cost-path" class="level3" data-number="33.4.1"><h3 data-number="33.4.1" class="anchored" data-anchor-id="pairwise-least-cost-path">
+<span class="header-section-number">33.4.1</span> Pairwise Least Cost Path</h3>
+<p>For the least cost approach, we need to grab the transition objects and perform a <code>geoCorrection</code> because we are using Longitude &amp; Latitude based coordinates.</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://AgrDataSci.github.io/gdistance/reference/transition.html">transition</a></span><span class="op">(</span> <span class="fl">1</span><span class="op">/</span><span class="va">cat_slope</span>, transitionFunction <span class="op">=</span> <span class="va">mean</span>, directions <span class="op">=</span> <span class="fl">4</span> <span class="op">)</span></span>
+<span><span class="va">tr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://AgrDataSci.github.io/gdistance/reference/geoCorrection.html">geoCorrection</a></span><span class="op">(</span> <span class="va">tr</span>, type<span class="op">=</span><span class="st">"c"</span>, multpl<span class="op">=</span><span class="cn">FALSE</span>, scl<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The corrected transition object can be used to estimate the shortest paths among all points using the <code><a href="https://AgrDataSci.github.io/gdistance/reference/costDistance-methods.html">costDistance()</a></code> function.</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">eDist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://AgrDataSci.github.io/gdistance/reference/costDistance-methods.html">costDistance</a></span><span class="op">(</span> <span class="va">tr</span>, <span class="va">baja_pts</span> <span class="op">)</span></span>
+<span><span class="va">eDist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span> <span class="va">eDist</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">eDist</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">eDist</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">coords</span><span class="op">$</span><span class="va">Stratum</span></span>
+<span><span class="va">eDist</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This returns a <code>dist</code> object, which I translate into a matrix and you can plot the corresponding relationship with genetic distance (I’ll use Nei’s distance as the example).</p>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gDist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_distance.html">genetic_distance</a></span><span class="op">(</span><span class="va">data</span>,stratum<span class="op">=</span><span class="st">"Population"</span>, mode<span class="op">=</span><span class="st">"nei"</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> Genetic_Distance <span class="op">=</span> <span class="va">gDist</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">lower.tri</a></span><span class="op">(</span><span class="va">gDist</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>                  Slope_Distance <span class="op">=</span> <span class="va">eDist</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">lower.tri</a></span><span class="op">(</span><span class="va">eDist</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.infinite</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Slope_Distance</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Slope_Distance</span>,y<span class="op">=</span><span class="va">Genetic_Distance</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">stat_smooth</a></span><span class="op">(</span>method<span class="op">=</span><span class="va">lm</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Least Cost Distance (Slope Categories)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Neis Distance"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From these data, we can estimate the correlation (a rough estimate).</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Genetic_Distance</span>, <span class="va">df</span><span class="op">$</span><span class="va">Slope_Distance</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As we see, it is not a very large correlation. If we were to attempt to ascertain significance for these values, we would want to use a <code>mantel()</code> approach rather than one using a normal Pearson approximation for significance due to the lack of independence. However, there is no real need to test significance here since the correlation is so small, even if this was significantly different than zero the biological consequences are minimal.</p>
+</section><section id="pairwise-all-pairs" class="level3" data-number="33.4.2"><h3 data-number="33.4.2" class="anchored" data-anchor-id="pairwise-all-pairs">
+<span class="header-section-number">33.4.2</span> Pairwise All Pairs</h3>
+<p>For an all-pairs (circuit) approach, you can do it in R or use the <a href="http://www.circuitscape.org">Circuitscape</a> software. I’ll use the latter approach and illustrate the process so that I can demonstrate how you could produce the required input file formats. The input required for Circuitscape consist of a resistance raster and the coordinates of all the sites. For the cost raster, you can write it using <code><a href="https://rspatial.github.io/terra/reference/writeRaster.html">writeRaster()</a></code>. An easy input format for both this raster and the coordinates is that of an ASCII raster. Here is how the cost distance is exported to files.</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/writeRaster.html">writeRaster</a></span><span class="op">(</span> <span class="va">cat_slope</span>, filename<span class="op">=</span><span class="st">"CategoricalSlope.asc"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And the sites can be done as well in ASCII raster format as by using the <code><a href="https://rspatial.github.io/terra/reference/rasterize.html">rasterize()</a></code> function turning a set of points into a raster with the same extent as the raster you passed.</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sites</span> <span class="op">&lt;-</span> <span class="fu">resterize</span><span class="op">(</span><span class="va">baja_pts</span>, <span class="va">cat_slope</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/writeRaster.html">writeRaster</a></span><span class="op">(</span><span class="va">sites</span>,filename<span class="op">=</span><span class="st">"sites.asc"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>These are input directly into the Circuitscape input. The output from the analysis is presented as a set of columns in a text file (row, col, resistance). Using the same input data as above produced the following:</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"media/BajaParwise_resistances_3columns"</span>,header<span class="op">=</span><span class="cn">FALSE</span>, sep<span class="op">=</span><span class="st">" "</span><span class="op">)</span></span>
+<span><span class="va">ctDist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0</span>,nrow<span class="op">=</span><span class="fl">34</span>,ncol<span class="op">=</span><span class="fl">34</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span> <span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">ctDist</span><span class="op">[</span> <span class="va">data</span><span class="op">$</span><span class="va">V1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">data</span><span class="op">$</span><span class="va">V2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">]</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">V3</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">ctDist</span> <span class="op">&lt;-</span> <span class="va">ctDist</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">ctDist</span><span class="op">)</span></span>
+<span><span class="va">ctDist</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]       [,2]      [,3]      [,4]       [,5]
+[1,]    0 -1.0000000 -1.000000 -1.000000 -1.0000000
+[2,]   -1  0.0000000  1.142579  3.709424  0.9045455
+[3,]   -1  1.1425792  0.000000  3.708067  1.4392680
+[4,]   -1  3.7094243  3.708067  0.000000  3.6733412
+[5,]   -1  0.9045455  1.439268  3.673341  0.0000000</code></pre>
+</div>
+</div>
+<p>Pairs of points that are unreachable are encoded as -1, I’ll change that to <code>NA</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ctDist</span><span class="op">[</span> <span class="va">ctDist</span> <span class="op">==</span> <span class="op">-</span><span class="fl">1</span> <span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span><span class="va">ctDist</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.infinite</a></span><span class="op">(</span><span class="va">ctDist</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span><span class="va">ctDist</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]      [,2]     [,3]     [,4]      [,5]
+[1,]    0        NA       NA       NA        NA
+[2,]   NA 0.0000000 1.142579 3.709424 0.9045455
+[3,]   NA 1.1425792 0.000000 3.708067 1.4392680
+[4,]   NA 3.7094243 3.708067 0.000000 3.6733412
+[5,]   NA 0.9045455 1.439268 3.673341 0.0000000</code></pre>
+</div>
+</div>
+<p>As before, we can plot these against each other.</p>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> Genetic_Distance <span class="op">=</span> <span class="va">gDist</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">lower.tri</a></span><span class="op">(</span><span class="va">gDist</span><span class="op">)</span> <span class="op">]</span>,</span>
+<span>                  Circuit_Distance <span class="op">=</span> <span class="va">ctDist</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">lower.tri</a></span><span class="op">(</span><span class="va">ctDist</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="va">df1</span><span class="op">[</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">df1</span><span class="op">$</span><span class="va">Circuit_Distance</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df1</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Circuit_Distance</span>,y<span class="op">=</span><span class="va">Genetic_Distance</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">stat_smooth</a></span><span class="op">(</span>method<span class="op">=</span><span class="va">lm</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Circuit Distance (Slope)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Nei's Genetic Distance"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you do these analyses in R using <code>gdistance</code>, you need to adjust the arguments to both <code>transition</code> and <code>geoCorrection</code> for using an all-paths approach (see the documentation on these functions) and you can get pairwise distances from the <code><a href="https://AgrDataSci.github.io/gdistance/reference/commuteDistance-methods.html">commuteDistance()</a></code> function.</p>
+<div class="cell">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span> <span class="va">df1</span><span class="op">$</span><span class="va">Genetic_Distance</span>, <span class="va">df1</span><span class="op">$</span><span class="va">Circuit_Distance</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="similarity-in-outcome" class="level4" data-number="33.4.2.1"><h4 data-number="33.4.2.1" class="anchored" data-anchor-id="similarity-in-outcome">
+<span class="header-section-number">33.4.2.1</span> Similarity in Outcome</h4>
+<p>A pertinent question revolves around the extent to which</p>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Slope<span class="op">=</span><span class="va">df</span><span class="op">$</span><span class="va">Slope_Distance</span>, Circuit<span class="op">=</span><span class="va">df1</span><span class="op">$</span><span class="va">Circuit_Distance</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">data</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Slope</span>,y<span class="op">=</span><span class="va">Circuit</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">stat_smooth</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Least Cost Distance"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Circuit Distance"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As a first pass, we can look at the magnitude of these distance estimates.</p>
+<div class="cell">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">Slope</span>, <span class="va">data</span><span class="op">$</span><span class="va">Circuit</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section></section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>Assuming of course that each of your <span class="math inline">\(K\)</span> locale are at a unique elevation, if some are at the same elevation then the derived rasters will be identical.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./projections.html" class="pagination-link" aria-label="Map Projections">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Map Projections</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./niche_modeling.html" class="pagination-link" aria-label="Niche Modeling">
+        <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Niche Modeling</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -74,7 +74,6 @@ if you need to perform operations that are not available to dist objects (like m
 Another geometric interpretation of inter-individual distance is that of Excoffier *et al.* (2004), dubbed AMOVA distance.  Smouse & Peakall (1999) provided the geometry of this relationship for diploid loci when discussing spatial autocorrelation.  AMOVA distance can be visualized as the distance between vertices and mid-points on an equilateral triangle.  Each segment is defined as having unit length and the distance is taken as the square of the distance between genotypes. 
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/AMOVA_Distance.png")
 ```
 
@@ -114,7 +113,6 @@ If we are collecting data in such a way as to have pre-defined (or determined ex
 Perhaps the simplest distance metric is that of Czekanowski—more commonly referred to as Manhattan distance.  It is called Manhattan distance because it is a distance metric that is analagous to how you measure city-block distances.  It is relatively difficult in a city to walk from one place to another in a straight line, rather we are forced to walk down this street, turn walk down that one, etc.  
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/Chezkanowski_Distance.png")
 ```
 
@@ -132,7 +130,6 @@ where the pipes, $|x|$, indicate taking the absolute value.
 Stepping up, slightly, in complexity, we get to Roger's distance.  This distance metric is roughly equivalent to Euclidean distance (and indeed in gstudio it is called euclidean).  
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/Rodgers_Distance.png")
 ```
 

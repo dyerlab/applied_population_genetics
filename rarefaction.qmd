@@ -116,8 +116,8 @@ coords <- merge( coords, diversity[ diversity$Locus == "AML", ] )
 Then, I grab a map from the Google server and map my populations with diversity depicted as differences in the size of the points.  Note that the `ggmap()` function provides the base map that is retrieved but when we use `geom_point()` we need to specify the `aes()` and the `data=` part as these data are from the `data.frame` we made, not from the map we grabbed from Google.
 
 ```{r}
-library(ggmap)
-map <- population_map(coords)
-ggmap(map) + geom_point( aes(x=Longitude,y=Latitude,size=Ae), data=coords)
+#library(ggmap)
+#map <- population_map(coords)
+#ggmap(map) + geom_point( aes(x=Longitude,y=Latitude,size=Ae), data=coords)
 ```
 

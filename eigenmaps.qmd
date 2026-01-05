@@ -139,7 +139,6 @@ You can see that we get as many axes as the minimum of independnet rows or colum
 
 ```{r}
 #| label: pca_rotation
-#| echo: false
 #| fig-cap: "Principal component rotation of bivariate data mapped from original axes (black X- and Y- axes) onto new coordinate axes (dotted red) that maximize the variation on each of the new axes (displayed as density insets for original and tranlated axes)."
 knitr::include_graphics("./media/PCA_Rotation.png")
 ```

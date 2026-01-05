@@ -10,7 +10,6 @@ The content of this book includes several data sets that come with the `gstudio`
 ## The Sonoran desert bark beetle, *Araptus attenuata*
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/araptus.png")
 ```
 
@@ -18,8 +17,8 @@ knitr::include_graphics("media/araptus.png")
 
 ```{r}
 #| label: fig-arapat-map
-#| echo: false
 #| fig-cap: "Sampling locales for the `arapat` data set."
+#| eval: false
 library(ggplot2)
 library(ggmap)
 library(gstudio)
@@ -45,7 +44,6 @@ column_class( arapat, "locus")
 These markers span a range of allelic diversity and richness.
 
 ```{r}
-#| echo: false
 df <- merge( genetic_diversity(arapat,mode="A"), genetic_diversity(arapat,mode="He"))
 df <- merge( df, genetic_diversity(arapat, mode="Ae"))
 knitr::kable(df,align=c("l","c","c","c"),digits=3)
@@ -63,7 +61,6 @@ In addition to codominant nuclear markers, an msAFLP analysis was performed on t
 
 ```{r}
 #| label: fig-dogwood
-#| echo: false
 #| fig-cap: "Inflorescence for flowering dogwood with conspicuous showy bracts and many small flowers in the center."
 knitr::include_graphics("media/dogwood_flower.png",)
 ```
@@ -81,7 +78,6 @@ column_class( cornus, "locus")
 of roughly equal genetic diversity.
 
 ```{r}
-#| echo: false
 df <- merge( genetic_diversity(cornus,mode="A"), genetic_diversity(cornus,mode="He"))
 df <- merge( df, genetic_diversity(cornus, mode="Ae"))
 knitr::kable(df,align=c("l","c","c","c"),digits=3)

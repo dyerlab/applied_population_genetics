@@ -177,7 +177,6 @@ for( rep in 0:9 ) {
 The variance around expectation is moderate shows that even if all expectations are met, real data is a bit messy—perhaps expectations are more of what you'd call ‘guidelines' than strict rules.
 
 ```{r}
-#| echo: false
 #| fig-cap: "Replicate simulations of inbreeding in purely selfing populations (colored lines) with theoretical expectation (black line)."
 ggplot() + geom_line(aes(T,F,color=Category),data=df[df$Category!="Expectations",]) + geom_point(aes(T,F,color=Category),data=df[df$Category!="Expectations",]) + geom_line(aes(T,F),data=df[df$Category=="Expectations",]) + geom_point(aes(T,F),data=df[df$Category=="Expectations",]) + xlab("Generation (t)") + ylab("Inbreeding (F)")
 ```

@@ -21,7 +21,6 @@ plot(rnd)
 There are also many available repositories for raster data including Open Source, Governmental, and Municipal locations.  One common source for these data is that of http://worldclim.org.  This repository contains temperature and precipitation data generalized for the entire globe.  
 
 ```{r}
-#| echo: false
 knitr::include_graphics("./media/WorldClimTiles.png")
 ```
 
@@ -33,7 +32,6 @@ These layers are encoded into 19 Bio-layers as defined in Table \@ref(tab:biocli
 
 ```{r}
 #| label: bioclim
-#| echo: false
 df <- data.frame( Layer=paste( rep("BIO",19), 1:19, sep=""))
 df$Description = c("Annual Mean Temperature", "Mean Diurnal Range (Mean of monthly (max temp - min temp))", "Isothermality (BIO2/BIO7 * 100)", "Temperature Seasonality (standard deviation * 100)", "Max Temperature of Warmest Month","Min Temperature of Coldest Month", "Temperature Annual Range (BIO5-BIO6)","Mean Temperature of Wettest Quarter","Mean Temperature of Driest Quarter","Mean Temperature of Warmest Quarter","Mean Temperature of Coldest Quarter","Annual Precipitation","Precipitation of Wettest Month","Precipitation of Driest Month","Precipitation Seasonality (Coefficient of Variation)","Precipitation of Wettest Quarter","Precipitation of Driest Quarter","Precipitation of Warmest Quarter","Precipitation of Coldest Quarter")
 knitr::kable( df, booktabs=TRUE, caption="Key to the categories of bioclim variables derived from temperature and precipitation models for current (past and future) conditions.  Rasters for these values (in GeoTiff and BIL formats) are available from http://worldclim.org.", longtable=TRUE )
@@ -93,7 +91,6 @@ plot(baja, xlab="Longitude",ylab="Latitude", legend=FALSE)
 Onto this map, we can plot our populations.  For this, we convert the raw coordinates into a `SpatialPoints` object (see \@ref(vector-data)) and then overlay onto the map.  I use two `points()` commands to make the symbol for each population.
 
 ```{r}
-#| echo: -1
 library(gstudio)
 data(arapat)
 coords <- strata_coordinates(arapat)
@@ -120,7 +117,6 @@ pts
 From these points, we construct a `SpatialPolygons` object (see \@ref{polygons} for more info on this convoluted construction) and then can overlay onto the map to make sure it in the correct vicinity (here we are eyeballing it a bit).  For more on why this next line of code looks so crazy, see \@ref(polygons).
 
 ```{r}
-#| echo: -1
 polys <- SpatialPolygons(list(Polygons(list(Polygon(pts)),"Polygon")))
 plot(baja, legend=FALSE)
 plot(polys, add=TRUE)
@@ -145,7 +141,6 @@ Cropping by a polygon like demonstrated in the previous example is a 'by hand' a
 For this example, I'm going to use the populations found along the peninsula and find the minimal area encompassing those points. 
 
 ```{r}
-#| echo: -1
 library(gstudio)
 data(arapat)
 coords <- strata_coordinates(arapat)
@@ -159,7 +154,7 @@ plot(baja_pts,add=T,col="darkred",pch=16)
 The methods for finding the hull and adding a buffer around it are found in the `rgeos` package.  These are pretty easy functions to use and are very helpful.  If you are having trouble installing the `rgeos` package from source, see \@ref(rgdal-rgeos-packages).
 
 ```{r}
-#| echo: -1
+#| eval: false 
 library(rgeos) # loads in gConvexHull & gBuffer functions
 hull <- gConvexHull(baja_pts)
 plot(baja, legend=FALSE)
@@ -171,7 +166,7 @@ plot(hull,add=T,border="red")
 The function `gConvexHull()` returns an object of type *SpatialPolygons*, just like we created before.  However, we now have a polygon that has each of our most 'outward' populations on the very edge of the polygon.  It may be beneficial for us to add a buffer around this polygon.
 
 ```{r}
-#| echo: -1
+#| eval: false 
 hull_plus_buffer <- gBuffer(hull,width=.2)
 plot(baja, legend=FALSE)
 plot(baja_pts,add=T,col="darkred")
@@ -182,7 +177,7 @@ plot(hull_plus_buffer, add=T, border="red")
 Now, we can mask and trim it to include only the area of interest.
 
 ```{r}
-#| echo: -1
+#| eval: false 
 pop_hull <- trim( mask(baja,hull_plus_buffer) )
 plot(pop_hull, legend=FALSE, xlab="Longitude", ylab="Latitude")
 plot(baja_pts,add=T,col="darkred",pch=16)
@@ -197,7 +192,7 @@ We can modify rasters just as easily as we can crop them.  They are matrices, af
 In the next example, I mask the landscape based upon elevation.  I create a copy of the original raster and then make everything whose elevation is less than 500m as missing data.  Plotting this over the top of the original raster shows only locations where elevation exceeds this cutoff.  
 
 ```{r}
-#| echo: -1
+#| eval: false 
 bc <- baja_california
 bc[ bc < 500 ] <- NA
 plot( baja_california, legend=FALSE, col="darkgrey" )
@@ -211,6 +206,7 @@ So far, rastes have been confined to representing a single static object.  Howev
 For queries of the first kind, we can use the `extract()` function.  For this I downloaded the average temperature and precipitation rasters from Worldclim.
 
 ```{r}
+#| eval: false 
 baja_temp <- raster("./spatial_data/bio1.tif")
 baja_prec <- raster("./spatial_data/bio12.tif")
 ```
@@ -218,6 +214,7 @@ baja_prec <- raster("./spatial_data/bio12.tif")
 And then extract the values from each of these layers into the `coords` data we already have set up.
 
 ```{r}
+#| eval: false 
 coords$elevation <- extract( baja_california, coords[,c(2,3)])
 coords$mean_temp <- extract( baja_temp, coords[,c(2,3)])
 coords$mean_precip <- extract( baja_prec, coords[,c(2,3)])
@@ -228,6 +225,7 @@ A note should be made on the temperature and precipitation values.  Temperature 
 
 
 ```{r}
+#| eval: false 
 library(ggrepel)
 coords <- coords[ order(coords$Latitude),]
 p <- ggplot( coords, aes(x=Latitude,y=elevation)) + geom_line(color="lightgrey") 
@@ -376,10 +374,14 @@ It is also possible to visualize rasters in 3-space.  The library `rasterVis` pr
 library(rasterVis)
 plot3D( baja_california , zfac=0.1)
 ```
-```{r}
-#| echo: false
-knitr::include_graphics("./media/Baja_Plot3D.png")
-```
+
+
+![](/media/Baja_Plot3D.png)
+
+
+
+
+
 
 The `zfac` option in the plot is the amount to scale the z-axis (elevation) in relation to the x-axis and y-axis dimensions.  It is a bit exagerated at `zfac=0.1` but you get the idea.
 

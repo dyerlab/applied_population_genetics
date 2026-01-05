@@ -22,7 +22,6 @@ You will be given a dialog (as shown here) that allows you to determine how much
 * OpenDocument Spreadsheet (*.ods) - Spreadsheet file format from OpenOffice.
 
 ```{r}
-#| echo: false
 knitr::include_graphics("./media/GoogleShare.png")
 ```
 
@@ -31,25 +30,14 @@ It is in my opinion preferable to keep your data in a format that is accessible 
 For this example, the data from the first sheet are provided as a *.csv file and can be accessed by that long URL.
 
 In R, we can access this spreadsheet directly through that URL, which allows us to have our data located in a single centralized location and accessible by a broad range of applications and uses, none of which have the ability to duplicate your data (thereby causing a fork) or make any changes to its internal structure.  Here is how it is done.
-Load in the RCurl library that allows us to grab the contents at a site programatically.
 
-```{r}
-library(RCurl)
-link <- "https://docs.google.com/spreadsheets/d/1QL9fYeKkDKphba12WLVTBJrv_d1WHTc9SrZoBeIFgj8/pub?gid=0&single=true&output=csv"
-url <- getURL( link )
-```
 
-Initiate a text connection between R and the remote server at Google.
-
-```{r}
-con <- textConnection( url )
-```
 
 Load in the gstudio library and read the data in as a normal data file.  This last part is identical to what we would do for a normal file on our computer, it is the first two steps that extend this approach to use remote files via a url.
 
 ```{r}
 library(gstudio)
-cornus <- read_population( con, type="column", locus.columns = 5:14, sep=",")
+cornus <- read_population( "data/Cornus.csv", type="column", locus.columns = 5:14, sep=",")
 summary(cornus)
 ```
 
@@ -113,7 +101,6 @@ You need to get the `api_token` and the `incoming_webhook_url` from slack itself
 Both textual output (e.g., the results of an analysis) or graphical output (such as `ggplot` objects) can be sent to your slack channels now.  Here are some examples:
 
 ```{r}
-#| echo: false
 #| eval: false
 library(slackr)
 slackr_setup()
@@ -124,7 +111,6 @@ slackr("This is an incoming piece of text from RStudio")
 Which results in the following in my #r slack channel:
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/slack_text_output.png")
 ```
 
@@ -144,7 +130,6 @@ ggslack(p)
 Which produces the following image in my channel
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/slack_ggplot_output.png")
 ```
 

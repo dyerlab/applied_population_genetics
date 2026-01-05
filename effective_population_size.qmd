@@ -72,7 +72,6 @@ There are several ways to estimate a ‘genetic effective' population size, two 
 This parameter estimates the size of an idealized population needed for changing heterozygosity across generations by some specified amount.  This change in heterozygosity is primarily attributed to inbreeding, a topic fully explored in \@ref(selfing) and \@(mixed-mating).  The inbreeding effective size, $N_e^i$ is based upon the genealogy of alleles at a locus and the change in inbreeding values across generations. 
 
 ```{r}
-#| echo: false
 #| fig-cap: "Two ways alleles at a single locus can be the same.  Either they are descended from a common ancestor (autozygosity) or are derived from different ancestors but mutation has cause them to be identical (allozygosity)."
 knitr::include_graphics("media/allele_lineages.png")
 ```

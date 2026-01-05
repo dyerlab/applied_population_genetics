@@ -11,7 +11,6 @@ The grammar of the R language was derived from another system called S-Plus.  S-
 The main repository for R is located at the [CRAN Repository](http://cran.r-project.org), which is where you can download the latest version.  It is in your best interests to make sure you update the underlying R system, changes are made continually (perhaps despite the outward appearance of the website).  
 
 ```{r}
-#| echo: false
 knitr::include_graphics("./media/CRAN.png")
 ```
 
@@ -56,7 +55,6 @@ At times, there are some packages that are not available in binary form for all 
 There are an increasing number of projects that are being developed either in the open source community or shared among a set of developers.  These projects are often hosted on http://www.github.com where you can get access to the latest code updates.  The packages that I develop are hosted on Github at (http://github.com/dyerlab) and only pushed to CRAN when I make major changes. 
 
 ```{r}
-#| echo: false
 knitr::include_graphics("./media/DyerlabGithub.png")
 ```
 
@@ -126,7 +124,7 @@ Worked like a charm.
 This work requires several libraries that you may need to get from either CRAN or GitHub. The following if you run the following code, you should be up-to-date on the necessary packages used throughout this text.
 
 ```{r}
-#| echo: false
+#| eval: false 
 files <- list.files(".",pattern=".rmd")
 libraries <- c("gstudio","popgraph","ggplot2")
 for( file in files ) {
@@ -144,6 +142,9 @@ for( file in files ) {
 pkgs <- sort( unique(libraries) )
 idx <- which( pkgs == "package_name" )
 pkgs <- pkgs[-idx]
+
+
+
 pkgs_df <- data.frame(Name = pkgs, Title = NA)
 for(i in seq_along(pkgs)){
   f = system.file(package = pkgs[i], "DESCRIPTION")
@@ -179,7 +180,6 @@ if( !("maxent.jar" %in% files) )
 By itself, R can be used in the terminal or as the basic interface the installer provides.  While both of these methods are sufficient for working in R, they are less than optimal (IMHO).  I believe one of the most important tools you can use is a good IDE as it helps you organize and work with your data in ways that focus more on the outcome and less on the implementation.  I've spent a lot of time in both Emacs and Vim and while they may be tools for the geek elite, RStudio has made me much more productive in terms of output per unit time.
 
 ```{r}
-#| echo: false
 knitr::include_graphics("./media/RStudioIDE.png")
 ```
 

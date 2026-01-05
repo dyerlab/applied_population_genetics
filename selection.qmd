@@ -17,7 +17,6 @@ As a starting point, lets consider assume that this hypothetical species has:
 For this hypothetical species, individuals differ in fertility and/or survival.  For simplicity, consider the life history represented below.
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/life_cycle.png")
 ```
 

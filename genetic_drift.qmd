@@ -112,7 +112,7 @@ Prob.20.A <- coef*prob
 Prob.20.A
 ```
 
-Which is not so good, if you are interested in stability of allele frequencies.  Only `r 100*print(Prob.20.A,digits=0)`% of the time would the allele frequency stay the same and `r 100-100*print(Prob.20.A,digits=0)`% of the time allele frequencies would change.  This change is not so much an evolutionary forces as it is a stochastic process associated with low sample sizes.  
+Which is not so good, if you are interested in stability of allele frequencies.  Only XXX% of the time would the allele frequency stay the same and XXXX% of the time allele frequencies would change.  This change is not so much an evolutionary forces as it is a stochastic process associated with low sample sizes.  
 
 So if it is not that likely that the allele frequencies will stay the same, what does the entire distribution of expected allele occurrences look like? Lets set the variable N.A equal to a sequence of potential allele counts (from 0 to 2*N) and then estimate and plot the distribution.
 
@@ -153,7 +153,6 @@ t_{fix} = \frac{-4N_e(1-p)\log{(1-p})}{p}
 which for values of $N$ for $p=c(0.01, 0.1, 0.25, 0.5)$ are
 
 ```{r}
-#| echo: false
 #| fig-cap: ""
 library(ggplot2)
 df <- data.frame()
@@ -178,7 +177,6 @@ which if examined for changes in Ne for fixed p=0.5
 
 ```{r}
 #| fig-cap: "Expected variance in allele frequencies through time for a Wright-Fisher model of genetic drift for three different effective population sizes."
-#| echo: false
 t <- 1:100
 p <- q <- 0.5
 ne <- function( t, Ne, p, q) { return( p*q*( 1 - exp( -t/(2*Ne)))) }

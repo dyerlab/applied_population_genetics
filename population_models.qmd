@@ -23,7 +23,6 @@ A network analogy will be used here to describe the connectivity, with populatio
 An island-mainland model is the simplest formulation of a population model.  Here, we have a large mainland population and a small island population.  For simplicity, define the allele frequencies of these two as $p_x$ and $p_y$.  During each discrete generation, some fraction $m$ of the individuals from the mainland arrive into the mating population of the individuals on the island.  The composition of the island is composed of the $m$ fraction of individuals that are immigrants and the $(1-m)$ fraction that were already on the island.  
 
 ```{r}
-#| echo: false
 #| fig-cap: "Basic mainland-island model of population partitions."
 knitr::include_graphics("media/Island_Mainland.png")
 ```
@@ -55,7 +54,6 @@ results$m <- factor(results$m)
 ```
 
 ```{r}
-#| echo: false
 #| fig-cap: "Allele frequencies for and island population fixed for the an allele who is getting migrants from a mainland population at various rates ($m$) that does not have the allele present in the island."
 library(ggplot2)
 ggplot(results, aes(x=Generation, y=p, color=m)) + geom_line() + xlab("Generation") + ylab("Island allele frequency (p)")
@@ -70,7 +68,6 @@ The next most complex model is one where every population is exchanging migrants
 
 ```{r}
 #| label: nislandmodel
-#| echo: false
 #| fig-cap: "An n-island model with three populations, each with its own allele frequencies, with a constant and symmetric migration rate ($m$)."
 knitr::include_graphics("media/Island_Model.png")
 ```
@@ -109,7 +106,6 @@ df <- data.frame( Generation = 1:T, Frequency = pX)
 ```
 
 ```{r}
-#| echo: false
 #| fig-cap: "Change in allele frequency for a population starting out at $p_X=0.1$ and receiving migrants from a global migrant pool of $p_m=0.5$ at a rate of $m=0.05$."
 ggplot(df, aes(x=Generation, y=Frequency)) + geom_line() + ylab("Allele Frequency")
 ```
@@ -130,7 +126,6 @@ This approach may not be the most realistic one, but it does outline a general w
 A slightly more realistic model was introduced by Kimura & Weiss (1964) who coined the term ‘stepping-stone' model to indicate one that takes into consideration the spatial arrangement of populations as it describes connectivity.  
 
 ```{r}
-#| echo: false, fig.cap="a 1-dimensional stepping stone model.  each population is connected to only two others and exchange migrants at a rate of $\\frac{m
 knitr::include_graphics("media/Stepping_Stone_Model.png")
 ```
 
@@ -162,7 +157,6 @@ p_{x,t+1} = m_{x \leftrightarrow y}p_{y,t} + m_{x \leftrightarrow z}p_{z,t} + [1
 \]
 
 ```{r}
-#| echo: false
 #| fig-cap: "Generic multi-population model for gene flow with individual migration rates."
 knitr::include_graphics("media/General_Model.png")
 ```

@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>16&nbsp; Mapping Populations – Applied Population Genetics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./population_models.html" rel="next">
+<link href="./part_subdivided_populations.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6d16390398e4ca57b3acf2d898365235.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script><link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script><script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-binding-2.2.3/leaflet.js"></script><script src="site_libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script><script src="site_libs/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script><script src="site_libs/d3-4.9.1/d3.min.js"></script><script src="site_libs/sankey-1/sankey.js"></script><script src="site_libs/sankeyNetwork-binding-0.4.1/sankeyNetwork.js"></script><link rel="stylesheet" href="media/style.css">
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mapping_populations.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping Populations</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Population Genetics</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/dyerlab/AMG" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Applied Population Genetics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_ecosystem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The R Ecosystem</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datatypes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_containers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Containers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Programming</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./graphics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Graphics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducable_research.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducable Research</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_single_population.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Single Population</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hardy_weinberg_equilibrium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Hardy-Weinberg Equilibrium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_drift.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Genetic Drift</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./effective_population_size.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Effective Population Size</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Mutation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_nonrandom_mating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Nonrandom Rating</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selfing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Selfing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mixed_mating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Mixed Mating Systems</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wahlund_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wahlund Effects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_parent_offspring.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Parent Offspring Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pedigrees.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pedigrees</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parentage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Parentage Analyses</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_subdivided_populations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Subdivided Populations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapping_populations.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping Populations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Population Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_diversity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Genetic Diversity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rarefaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Rarefaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_distance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Genetic Distances</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Genetic Structure</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_assignment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Population Assignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./admixture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Admixture</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_statistical_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Statistical Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ordination.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Ordination of Genetic Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distance_matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Distance Matrices</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Linear Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distance_networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Distance Networks</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_graphs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Population Graphs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interactive_visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Interactive Visualization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_spatial_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Spatial Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./vector_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Vector Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./raster_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Raster Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./projections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Map Projections</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ecological_distance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Ecological Distance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./niche_modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Niche Modeling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eigenmaps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Eigenvector Maps</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Selection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Classical Selection Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_backmatter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Backmatter</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Included Data Sets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the Author</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#procedure" id="toc-procedure" class="nav-link active" data-scroll-target="#procedure"><span class="header-section-number">16.1</span> Procedure</a></li>
+  <li><a href="#plotting-population-locations" id="toc-plotting-population-locations" class="nav-link" data-scroll-target="#plotting-population-locations"><span class="header-section-number">16.2</span> Plotting Population Locations</a></li>
+  <li><a href="#population-allele-frequencies" id="toc-population-allele-frequencies" class="nav-link" data-scroll-target="#population-allele-frequencies"><span class="header-section-number">16.3</span> Population Allele Frequencies</a></li>
+  <li>
+<a href="#dynamic-maps" id="toc-dynamic-maps" class="nav-link" data-scroll-target="#dynamic-maps"><span class="header-section-number">16.4</span> Dynamic maps</a>
+  <ul class="collapse">
+<li><a href="#sankey-networks" id="toc-sankey-networks" class="nav-link" data-scroll-target="#sankey-networks"><span class="header-section-number">16.4.1</span> Sankey Networks</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping Populations</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="chapter_image">
+<img src="chapter_images/ch_lake.jpg">
+</div>
+<p>Almost every data set we will work on has a spatial context. Until relatively recently, this was largely ignored and at most given as a 2-dimensional projection of sampling locations on a black and white map in our manuscripts. Here we explore methodologies to provide more intuitive approaches for plotting the spatial location of our sampling sites.</p>
+<section id="procedure" class="level2" data-number="16.1"><h2 data-number="16.1" class="anchored" data-anchor-id="procedure">
+<span class="header-section-number">16.1</span> Procedure</h2>
+<p>First, we need to load in the proper libraries. Each of the libraries are needed for:</p>
+<ul>
+<li>
+<strong>gstudio</strong> - Contains the <em>A. attenuatus</em> data set and there are built-in routines that allow you to plot populations in various formats or export the data in a format for plotting in other systems (e.g., GoogleEarth, ArcGIS, etc).</li>
+<li>
+<strong>ggmap</strong> - Allows the plotting of tiles from a googleMap.</li>
+<li>
+<strong>leaflet</strong> - Loads in the javascript leaflet library and allows the interactive visualization.</li>
+</ul></section><section id="plotting-population-locations" class="level2" data-number="16.2"><h2 data-number="16.2" class="anchored" data-anchor-id="plotting-population-locations">
+<span class="header-section-number">16.2</span> Plotting Population Locations</h2>
+<p>We will start by loading in the default data set for <code>gstudio</code> and using methods in that package for producing spatial plots.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># load in the libraries and grab the data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># pull out the coordinates - Population is the default stratums</span></span>
+<span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/strata_coordinates.html">strata_coordinates</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">)</span></span>
+<span><span class="va">coords</span><span class="op">$</span><span class="va">Stratum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span> <span class="va">coords</span><span class="op">$</span><span class="va">Stratum</span> <span class="op">)</span></span>
+<span><span class="va">coords</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Stratum Longitude Latitude
+1       88 -114.2935 29.32541
+11       9 -113.9449 29.01457
+20      84 -113.6679 28.96651
+29     175 -113.4897 28.72796
+36     177 -113.9914 28.66056</code></pre>
+</div>
+</div>
+<p>We can extend this basic plotting by adding text to the plots indicating the population names (here I offset the coordinates by 0.1 &amp; 0.12 degrees—a cheap trick but it works pretty well here).</p>
+</section><section id="population-allele-frequencies" class="level2" data-number="16.3"><h2 data-number="16.3" class="anchored" data-anchor-id="population-allele-frequencies">
+<span class="header-section-number">16.3</span> Population Allele Frequencies</h2>
+<p>It is also possible to plot the data in a spatial context. Here is an example of how to mix <code>ggplot()</code> and <code>ggmap()</code> data and I’ll plot the locations as proportional in size to the allele frequency.</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Break out allele frequencies for LTRS by population </span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/frequencies.html">frequencies</a></span><span class="op">(</span><span class="va">arapat</span>,loci<span class="op">=</span><span class="st">"LTRS"</span>,stratum<span class="op">=</span><span class="st">"Population"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># lets only use the allele 01 </span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="va">f</span><span class="op">[</span> <span class="va">f</span><span class="op">$</span><span class="va">Allele</span><span class="op">==</span><span class="st">"01"</span>,<span class="op">]</span></span>
+<span></span>
+<span><span class="co"># here are what the data look like</span></span>
+<span><span class="va">f</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Stratum Locus Allele Frequency
+1      101  LTRS     01 0.2777778
+3      102  LTRS     01 0.3125000
+5       12  LTRS     01 0.8000000
+7      153  LTRS     01 0.1500000
+11     159  LTRS     01 0.8888889
+13     160  LTRS     01 0.8000000
+15     161  LTRS     01 0.9500000
+17     162  LTRS     01 0.9500000
+19     163  LTRS     01 0.1000000
+21     164  LTRS     01 0.3500000</code></pre>
+</div>
+</div>
+<p>and then use those frequencies as image size.</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># merget the frequencies into the coordinate data.frame</span></span>
+<span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span> <span class="va">coords</span>, <span class="va">f</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>or for observed effective allele size</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># grab effect for LTRS locus</span></span>
+<span><span class="va">ae</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span><span class="va">arapat</span>, stratum <span class="op">=</span> <span class="st">"Population"</span>, mode<span class="op">=</span><span class="st">"Ae"</span><span class="op">)</span></span>
+<span><span class="va">ae</span> <span class="op">&lt;-</span> <span class="va">ae</span><span class="op">[</span> <span class="va">ae</span><span class="op">$</span><span class="va">Locus</span><span class="op">==</span><span class="st">"LTRS"</span>,<span class="op">]</span></span>
+<span></span>
+<span><span class="co"># merge in the data</span></span>
+<span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span> <span class="va">coords</span>, <span class="va">ae</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There is also the option to make use of some pie charts. I know, pie charts suck and any statistician will tell you that they should probably not be used because they can be misleading, but here they are. For exploratory data analysis, they can be very insightful at times. Here is the frequency of alleles at the <em>enolase</em> locus in <em>Araptus</em>. Any spatial structuring catch your eye?</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># pies_on_map( arapat, stratum="Population", locus="EN")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Which will open a new browser window and produce a graph like the one below.</p>
+<iframe width="640" height="480" src="media/pies_on_map.html" frameborder="0" allowfullscreen="">
+</iframe>
+<p>Note the messages about the approximation. This is because the google maps API has an integer for zoom factor and at times it is not able to get all the points into the field of view using an integer zoom. If this happens to you, you can manually specify the <em>zoom</em> as an optional argument to either function <code>pies_on_map()</code> or <code>population_map()</code>. You also need to be careful with the <code>pies_on_map()</code> function because the way it works is that the background tile is plotted and then I plot the pies ontop of it. If you reshape your plot window outside equal x- and y- coordinates (e.g., make it a non-square figure), the spatial location of the pie charts will move! This is a very frustrating thing but it has to do with the way viewports are overlain onto graphical objects in R and I have absolutely <strong>no</strong> control over it. So, the best option is to make the plot square, export it as PNG or TIFF or whaterver, then crop as necessary.</p>
+</section><section id="dynamic-maps" class="level2" data-number="16.4"><h2 data-number="16.4" class="anchored" data-anchor-id="dynamic-maps">
+<span class="header-section-number">16.4</span> Dynamic maps</h2>
+<p>We can also produce dynamic maps for viewing in html output (like ebooks or webpages). Here I produce a leaflet map and then add markers on to the file using coordinates and put the clicked popup as the population name. This is an <em>interactive</em> map, you can zoom in, etc.</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/leaflet/">leaflet</a></span><span class="op">)</span></span>
+<span><span class="va">coords</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html">leaflet</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addMarkers</a></span><span class="op">(</span> <span class="op">~</span><span class="va">Longitude</span>, <span class="op">~</span><span class="va">Latitude</span>, popup <span class="op">=</span> <span class="op">~</span><span class="va">Stratum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-a94c6e7aac0771f5f2e8" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-a94c6e7aac0771f5f2e8">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[[27.90509,26.38014,27.18232,24.13389,27.52944,27.40498,27.0367,27.2028,24.2115,24.74642,26.24905,25.91409,25.55757,26.20876,28.22308,28.40846,28.72796,28.66056,26.63783,25.34819,26.0155,25.60521,24.58843,24.87611,28.96651,29.32541,28.03661,29.01457,26.94589,23.2855,25.0247,23.08984,27.3632],[-110.57436,-109.12633,-112.66552,-110.46236,-113.31609,-112.52959,-112.986,-112.408,-110.951,-111.5441,-112.40948,-112.08062,-111.21563,-111.37833,-113.18263,-112.86985,-113.48973,-113.99141,-109.327,-111.60056,-111.35475,-111.32638,-110.74599,-110.69175,-113.66787,-114.29353,-113.39991,-113.94486,-112.04613,-110.10429,-111.675,-110.1091,-112.964],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["101","102","12","153","159","160","161","162","163","164","165","166","168","169","171","173","175","177","32","51","58","64","75","77","84","88","89","9","93","Aqu","Const","Mat","SFr"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[23.08984,29.32541],"lng":[-114.29353,-109.12633]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>You can change the underlying base map by passing on other Tiles to the construction. A list of available tile providers can be found <a href="http://leaflet-extras.github.io/leaflet-providers/preview/index.html">here</a>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">coords</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html">leaflet</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/addProviderTiles.html">addProviderTiles</a></span><span class="op">(</span><span class="st">"Esri.WorldTopoMap"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addMarkers</a></span><span class="op">(</span> <span class="op">~</span><span class="va">Longitude</span>, <span class="op">~</span><span class="va">Latitude</span>, popup<span class="op">=</span><span class="op">~</span><span class="va">Stratum</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-5dd45588f2a7bc7c3507" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-5dd45588f2a7bc7c3507">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addMarkers","args":[[27.90509,26.38014,27.18232,24.13389,27.52944,27.40498,27.0367,27.2028,24.2115,24.74642,26.24905,25.91409,25.55757,26.20876,28.22308,28.40846,28.72796,28.66056,26.63783,25.34819,26.0155,25.60521,24.58843,24.87611,28.96651,29.32541,28.03661,29.01457,26.94589,23.2855,25.0247,23.08984,27.3632],[-110.57436,-109.12633,-112.66552,-110.46236,-113.31609,-112.52959,-112.986,-112.408,-110.951,-111.5441,-112.40948,-112.08062,-111.21563,-111.37833,-113.18263,-112.86985,-113.48973,-113.99141,-109.327,-111.60056,-111.35475,-111.32638,-110.74599,-110.69175,-113.66787,-114.29353,-113.39991,-113.94486,-112.04613,-110.10429,-111.675,-110.1091,-112.964],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["101","102","12","153","159","160","161","162","163","164","165","166","168","169","171","173","175","177","32","51","58","64","75","77","84","88","89","9","93","Aqu","Const","Mat","SFr"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[23.08984,29.32541],"lng":[-114.29353,-109.12633]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Or you can add custom images for the map relative to some meaningful information.</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">coords</span><span class="op">$</span><span class="va">Size</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">coords</span><span class="op">$</span><span class="va">Ae</span><span class="op">)</span> <span class="op">*</span> <span class="fl">10</span> <span class="op">+</span> <span class="fl">1</span></span>
+<span><span class="va">coords</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html">leaflet</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/addProviderTiles.html">addProviderTiles</a></span><span class="op">(</span><span class="st">"CartoDB.DarkMatter"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addCircleMarkers</a></span><span class="op">(</span> <span class="op">~</span><span class="va">Longitude</span>, <span class="op">~</span><span class="va">Latitude</span>, popup<span class="op">=</span><span class="op">~</span><span class="va">Stratum</span>, radius<span class="op">=</span><span class="op">~</span><span class="va">Size</span>, color<span class="op">=</span><span class="st">"red"</span>, fillOpacity<span class="op">=</span><span class="fl">0.75</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-2dbf92b157d002e96434" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-2dbf92b157d002e96434">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.DarkMatter",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[27.90509,26.38014,27.18232,24.13389,27.52944,27.40498,27.0367,27.2028,24.2115,24.74642,26.24905,25.91409,25.55757,26.20876,28.22308,28.40846,28.72796,28.66056,26.63783,25.34819,26.0155,25.60521,24.58843,24.87611,28.96651,29.32541,28.03661,29.01457,26.94589,23.2855,25.0247,23.08984,27.3632],[-110.57436,-109.12633,-112.66552,-110.46236,-113.31609,-112.52959,-112.986,-112.408,-110.951,-111.5441,-112.40948,-112.08062,-111.21563,-111.37833,-113.18263,-112.86985,-113.48973,-113.99141,-109.327,-111.60056,-111.35475,-111.32638,-110.74599,-110.69175,-113.66787,-114.29353,-113.39991,-113.94486,-112.04613,-110.10429,-111.675,-110.1091,-112.964],[6.128853567290013,6.615708227712259,4.856624808119845,3.943710606025777,3.200618847768017,4.856624808119845,1.99820335282211,1.99820335282211,2.984509387238382,7.069694843188929,6.447271754416722,6.447271754416722,5.700036292457356,7.069694843188929,2.984509387238382,2.984509387238382,1,1,5.486270958961777,3.809023854664022,5.241572411203168,6.447271754416722,2.806700287554817,7.539264674066639,1,1,2.984509387238382,1,6.447271754416722,4.633938941874773,4.531392891064245,2.984509387238382,5.241572411203168],null,null,{"interactive":true,"className":"","stroke":true,"color":"red","weight":5,"opacity":0.5,"fill":true,"fillColor":"red","fillOpacity":0.75},null,null,["101","102","12","153","159","160","161","162","163","164","165","166","168","169","171","173","175","177","32","51","58","64","75","77","84","88","89","9","93","Aqu","Const","Mat","SFr"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[23.08984,29.32541],"lng":[-114.29353,-109.12633]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>In the information that pops out of the marker, you can put a bit more information that may be helpful. Here I estimate some diversity measures (H<sub>O</sub>, H<sub>E</sub>, and A<sub>E</sub>).</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span><span class="va">arapat</span>,stratum <span class="op">=</span> <span class="st">"Population"</span>,mode<span class="op">=</span><span class="st">"Ho"</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span> <span class="va">x</span><span class="op">$</span><span class="va">Locus</span> <span class="op">==</span> <span class="st">"LTRS"</span>,<span class="op">]</span></span>
+<span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span> <span class="va">coords</span>, <span class="va">x</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span><span class="va">arapat</span>,stratum <span class="op">=</span> <span class="st">"Population"</span>,mode<span class="op">=</span><span class="st">"He"</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span> <span class="va">x</span><span class="op">$</span><span class="va">Locus</span> <span class="op">==</span> <span class="st">"LTRS"</span>,<span class="op">]</span></span>
+<span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span> <span class="va">coords</span>, <span class="va">x</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span><span class="va">arapat</span>,stratum <span class="op">=</span> <span class="st">"Population"</span>,mode<span class="op">=</span><span class="st">"Ae"</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span> <span class="va">x</span><span class="op">$</span><span class="va">Locus</span> <span class="op">==</span> <span class="st">"LTRS"</span>,<span class="op">]</span></span>
+<span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span> <span class="va">coords</span>, <span class="va">x</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Make these data into a table format in html (OK it is a bit ugly but it is reasonable.)</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">coords</span><span class="op">$</span><span class="va">label</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"&lt;h2&gt;"</span>,<span class="va">coords</span><span class="op">$</span><span class="va">Stratum</span>,<span class="st">"&lt;/h2&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;Parameter&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;H&lt;sub&gt;O&lt;/sub&gt;&lt;/td&gt;&lt;td&gt;"</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">coords</span><span class="op">$</span><span class="va">Ho</span>,digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,<span class="st">"&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;H&lt;sub&gt;E&lt;/sub&gt;&lt;/td&gt;&lt;td&gt;"</span>,<span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">coords</span><span class="op">$</span><span class="va">He</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span>, <span class="st">"&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;A&lt;sub&gt;E&lt;/sub&gt;&lt;/td&gt;&lt;td&gt;"</span>,<span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">coords</span><span class="op">$</span><span class="va">Ae</span>,digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span>,<span class="st">"&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;"</span>,sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># plot it</span></span>
+<span><span class="va">coords</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html">leaflet</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addCircleMarkers</a></span><span class="op">(</span> <span class="op">~</span><span class="va">Longitude</span>, <span class="op">~</span><span class="va">Latitude</span>, popup<span class="op">=</span><span class="op">~</span><span class="va">label</span>, radius<span class="op">=</span><span class="op">~</span><span class="va">Size</span>, color<span class="op">=</span><span class="st">"red"</span>, fillOpacity<span class="op">=</span><span class="fl">0.75</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-8670e45cb9515dbc202b" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-8670e45cb9515dbc202b">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[27.90509,26.38014,27.18232,24.13389,27.52944,27.40498,27.0367,27.2028,24.2115,24.74642,26.24905,25.91409,25.55757,26.20876,28.22308,28.40846,28.72796,28.66056,26.63783,25.34819,26.0155,25.60521,24.58843,24.87611,28.96651,29.32541,28.03661,29.01457,26.94589,23.2855,25.0247,23.08984,27.3632],[-110.57436,-109.12633,-112.66552,-110.46236,-113.31609,-112.52959,-112.986,-112.408,-110.951,-111.5441,-112.40948,-112.08062,-111.21563,-111.37833,-113.18263,-112.86985,-113.48973,-113.99141,-109.327,-111.60056,-111.35475,-111.32638,-110.74599,-110.69175,-113.66787,-114.29353,-113.39991,-113.94486,-112.04613,-110.10429,-111.675,-110.1091,-112.964],[6.128853567290013,6.615708227712259,4.856624808119845,3.943710606025777,3.200618847768017,4.856624808119845,1.99820335282211,1.99820335282211,2.984509387238382,7.069694843188929,6.447271754416722,6.447271754416722,5.700036292457356,7.069694843188929,2.984509387238382,2.984509387238382,1,1,5.486270958961777,3.809023854664022,5.241572411203168,6.447271754416722,2.806700287554817,7.539264674066639,1,1,2.984509387238382,1,6.447271754416722,4.633938941874773,4.531392891064245,2.984509387238382,5.241572411203168],null,null,{"interactive":true,"className":"","stroke":true,"color":"red","weight":5,"opacity":0.5,"fill":true,"fillColor":"red","fillOpacity":0.75},null,null,["<h2>101<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.556<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.401<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.67<\/td><\/tr><\/table>","<h2>102<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.625<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.430<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.75<\/td><\/tr><\/table>","<h2>12<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.400<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.320<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.47<\/td><\/tr><\/table>","<h2>153<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.300<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.255<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.34<\/td><\/tr><\/table>","<h2>159<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.222<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.198<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.25<\/td><\/tr><\/table>","<h2>160<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.200<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.320<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.47<\/td><\/tr><\/table>","<h2>161<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.100<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.095<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.10<\/td><\/tr><\/table>","<h2>162<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.100<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.095<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.10<\/td><\/tr><\/table>","<h2>163<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.200<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.180<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.22<\/td><\/tr><\/table>","<h2>164<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.300<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.455<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.83<\/td><\/tr><\/table>","<h2>165<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.400<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.420<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.72<\/td><\/tr><\/table>","<h2>166<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.200<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.420<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.72<\/td><\/tr><\/table>","<h2>168<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.500<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.375<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.60<\/td><\/tr><\/table>","<h2>169<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.500<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.455<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.83<\/td><\/tr><\/table>","<h2>171<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.200<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.180<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.22<\/td><\/tr><\/table>","<h2>173<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.200<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.180<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.22<\/td><\/tr><\/table>","<h2>175<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.000<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.000<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.00<\/td><\/tr><\/table>","<h2>177<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.000<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.000<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.00<\/td><\/tr><\/table>","<h2>32<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.368<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.361<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.57<\/td><\/tr><\/table>","<h2>51<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.286<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.245<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.32<\/td><\/tr><\/table>","<h2>58<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.444<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.346<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.53<\/td><\/tr><\/table>","<h2>64<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.200<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.420<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.72<\/td><\/tr><\/table>","<h2>75<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.182<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.165<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.20<\/td><\/tr><\/table>","<h2>77<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.400<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.480<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.92<\/td><\/tr><\/table>","<h2>84<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.000<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.000<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.00<\/td><\/tr><\/table>","<h2>88<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.000<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.000<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.00<\/td><\/tr><\/table>","<h2>89<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.200<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.180<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.22<\/td><\/tr><\/table>","<h2>9<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.000<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.000<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.00<\/td><\/tr><\/table>","<h2>93<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.600<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.420<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.72<\/td><\/tr><\/table>","<h2>Aqu<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.375<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.305<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.44<\/td><\/tr><\/table>","<h2>Const<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.364<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.298<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.42<\/td><\/tr><\/table>","<h2>Mat<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.200<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.180<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.22<\/td><\/tr><\/table>","<h2>SFr<\/h2><table><tr><th>Parameter<\/th><th>Value<\/th><\/tr><tr><td>H<sub>O<\/sub><\/td><td>0.222<\/td><\/tr><tr><td>H<sub>E<\/sub><\/td><td>0.346<\/td><\/tr><tr><td>A<sub>E<\/sub><\/td><td>1.53<\/td><\/tr><\/table>"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[23.08984,29.32541],"lng":[-114.29353,-109.12633]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<section id="sankey-networks" class="level3" data-number="16.4.1"><h3 data-number="16.4.1" class="anchored" data-anchor-id="sankey-networks">
+<span class="header-section-number">16.4.1</span> Sankey Networks</h3>
+<p>A Sankey Diagram is a kind of flow diagram used to indicate allocation of one set of object into two other sets. This is a complicated set of interactions to display. In the following example, I’ll use the populations from the <em>A. attenuata</em> data set and then map each individual onto its STRUCTURE cluster and mtDNA clade. This plot needs a <code>data.frame</code> for nodes and one for edges created in a particular way.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://christophergandrud.github.io/networkD3/">networkD3</a></span><span class="op">)</span></span>
+<span><span class="va">pops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">$</span><span class="va">Population</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">cluster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">$</span><span class="va">Cluster</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sankey.nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="va">pops</span>, <span class="va">species</span>, <span class="va">cluster</span><span class="op">)</span>, </span>
+<span>                            stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># takes vector of values and finds out the number of times</span></span>
+<span><span class="co"># each combination is found in the pair.</span></span>
+<span><span class="va">get_sets</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span> <span class="va">source</span>, <span class="va">target</span> <span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">source</span>, <span class="va">target</span><span class="op">)</span></span>
+<span>  <span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span> <span class="va">t</span> <span class="op">&gt;</span> <span class="fl">0</span>, arr.ind <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span> <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> ind<span class="op">=</span><span class="va">m</span> <span class="op">)</span> <span class="op">)</span></span>
+<span>  <span class="va">df</span><span class="op">$</span><span class="va">source</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">ind.source</span><span class="op">]</span></span>
+<span>  <span class="va">df</span><span class="op">$</span><span class="va">target</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">ind.target</span><span class="op">]</span></span>
+<span>  <span class="va">df</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, </span>
+<span>                     <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                         <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">t</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">ind.source</span><span class="op">[</span><span class="va">x</span><span class="op">]</span>,<span class="va">df</span><span class="op">$</span><span class="va">ind.target</span><span class="op">[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>                         <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span> <span class="va">df</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># For finding the number of the name instead of the name</span></span>
+<span><span class="va">nameIndex</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">vals</span>,<span class="va">names</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">ret</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span> <span class="va">vals</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">x</span><span class="op">==</span><span class="va">names</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">}</span>, USE.NAMES <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">ret</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="va">sankey.edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span> <span class="fu">get_sets</span><span class="op">(</span><span class="va">arapat</span><span class="op">$</span><span class="va">Species</span>,<span class="va">arapat</span><span class="op">$</span><span class="va">Population</span><span class="op">)</span>,</span>
+<span>                       <span class="fu">get_sets</span><span class="op">(</span><span class="va">arapat</span><span class="op">$</span><span class="va">Population</span>, <span class="va">arapat</span><span class="op">$</span><span class="va">Cluster</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">sankey.edges</span><span class="op">$</span><span class="va">targetNum</span> <span class="op">&lt;-</span> <span class="fu">nameIndex</span><span class="op">(</span><span class="va">sankey.edges</span><span class="op">$</span><span class="va">target</span>, <span class="va">sankey.nodes</span><span class="op">$</span><span class="va">name</span><span class="op">)</span></span>
+<span><span class="va">sankey.edges</span><span class="op">$</span><span class="va">sourceNum</span> <span class="op">&lt;-</span> <span class="fu">nameIndex</span><span class="op">(</span><span class="va">sankey.edges</span><span class="op">$</span><span class="va">source</span>, <span class="va">sankey.nodes</span><span class="op">$</span><span class="va">name</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What it does produce is a very cool and dynamic plot. The colored boxes represeent the groups–Species &amp; STRUCTURE Cluster on the outside, population on the inside. Connecting lines indicate individuals who are in each of these partially overlapping groups. For example, if you grab the population <em>Mat</em>, you will see it has samples in it who are identified as either mtDNA type <em>Peninsual</em> or <em>Cape</em> as well as belonging to STRUCTURE groups <em>CBP-C</em> and <em>SCBP-A</em>. If you have difficult data such as these, this kind of plot may be very helpful.</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/networkD3/man/sankeyNetwork.html">sankeyNetwork</a></span><span class="op">(</span> Links<span class="op">=</span><span class="va">sankey.edges</span>, Nodes<span class="op">=</span><span class="va">sankey.nodes</span>,</span>
+<span>               Source <span class="op">=</span> <span class="st">"sourceNum"</span>, Target <span class="op">=</span> <span class="st">"targetNum"</span>,</span>
+<span>               Value <span class="op">=</span> <span class="st">"value"</span>, NodeID <span class="op">=</span> <span class="st">"name"</span>,</span>
+<span>               width <span class="op">=</span> <span class="fl">700</span>, fontSize <span class="op">=</span> <span class="fl">12</span>, nodeWidth <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="htmlwidget-b637b201faa6800aa0d6" style="width:100%;height:445px;" class="sankeyNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b637b201faa6800aa0d6">{"x":{"links":{"source":[41,41,39,39,40,40,39,39,39,39,39,40,39,40,39,39,40,39,39,39,39,39,39,39,41,40,39,39,39,40,39,40,39,40,39,39,39,39,39,39,40,39,40,39,40,39,40,39,40,39,39,12,28,10,13,11,24,15,18,20,16,21,17,19,23,14,33,22,34,9,8,6,5,3,4,2,0,7,1,31,26,32,25,35,33,27,30,31,26,24,18,29,32,25,23,35,33,22,27,34,36,38,37],"target":[36,38,12,28,30,31,31,8,10,13,11,26,26,24,24,15,18,18,20,16,6,5,3,4,37,29,21,17,19,32,32,25,25,23,23,2,0,7,1,14,35,35,33,33,22,22,27,27,34,34,9,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,42,42,42,42,42,42,42,42,42,45,45,45,45,45,45,45,44,44,44,44,44,44,44,44,44,44,44,44,44,44,46,46,46],"value":[9,8,10,10,6,8,2,9,10,10,10,3,7,2,8,10,2,8,10,10,10,10,7,10,19,10,7,9,5,8,2,10,1,1,9,9,10,10,9,10,3,1,4,4,8,3,6,2,4,1,9,10,10,10,10,10,8,10,8,10,10,7,9,5,9,10,1,3,1,9,9,10,10,7,10,9,10,10,9,2,7,2,1,1,3,2,6,8,3,2,2,10,8,10,1,3,4,8,6,4,9,8,19]},"nodes":{"name":["88","9","84","175","177","173","171","89","159","SFr","160","162","12","161","93","165","169","58","166","64","168","51","Const","77","164","75","163","ESan","153","48","156","157","73","Aqu","Mat","98","101","32","102","Peninsula","Cape","Mainland","NBP-C","CBP-C","SCBP-A","SBP-C","SON-B"],"group":["88","9","84","175","177","173","171","89","159","SFr","160","162","12","161","93","165","169","58","166","64","168","51","Const","77","164","75","163","ESan","153","48","156","157","73","Aqu","Mat","98","101","32","102","Peninsula","Cape","Mainland","NBP-C","CBP-C","SCBP-A","SBP-C","SON-B"]},"options":{"NodeID":"name","NodeGroup":"name","LinkGroup":null,"colourScale":"d3.scaleOrdinal(d3.schemeCategory20);","fontSize":12,"fontFamily":null,"nodeWidth":30,"nodePadding":10,"units":"","margin":{"top":null,"right":null,"bottom":null,"left":null},"iterations":32,"sinksRight":true}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./part_subdivided_populations.html" class="pagination-link" aria-label="(PART) Subdivided Populations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">(PART) Subdivided Populations</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./population_models.html" class="pagination-link" aria-label="Population Models">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Population Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

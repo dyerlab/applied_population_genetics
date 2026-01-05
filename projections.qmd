@@ -132,6 +132,7 @@ baja_california
 We can now project it to another projection, lets say Lambert Conic Conformal.
 
 ```{r}
+#| eval: false 
 library(rgdal)
 projection(baja_california)
 baja_lcc <- projectRaster( baja_california, crs="+proj=lcc +lat_1=48 +lat_2=33 +lon_0=-100 +ellps=WGS84")
@@ -141,7 +142,7 @@ baja_lcc
 These two projections influence the region as shown below.
 
 ```{r}
-#| echo: false
+#| eval: false 
 par(mfrow=c(1,2))
 plot(baja_california, legend=FALSE, xlab="Longitude",ylab="Latitude")
 plot(baja_lcc, legend=FALSE )
@@ -215,7 +216,6 @@ You can see the tranformations in the coordinate system by comparing the plots b
 
 ```{r}
 #| eval: true
-#| echo: false
 par(mfcol=c(1,2))
 plot( pts, axes=TRUE, xlab="Longitude", ylab="Latitude" )
 plot( pts.utm, axes=TRUE, xlab="Easting",ylab="Northing" )

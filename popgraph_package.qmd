@@ -9,7 +9,6 @@ The **popgraph** package is designed to take multivariate data and construct a P
 These routines were originally in the **gstudio** package but were excised out for simplicity. This analysis is *not* limited solely to genetic data and can be used generally for many types of analyses.  As such, I pulled this out of the genetic package and allow it to remain on its own.  To get your data using **gstudio** with genotypes and such into a format for this package, translate the genotypes into their multivariate format as:
 
 ```{r}
-#| echo: true
 #| eval: false
 data <- as.matrix( my_genetic_data )
 ```
@@ -203,7 +202,6 @@ The online versions of Population Graphs provides a *.pgraph file for visualizat
 
 ```{r}
 #| eval: false
-#| echo: true
 graph <- read.popgraph( "thegraph.pgraph" )
 ```
 
@@ -224,7 +222,6 @@ graph <- read.popgraph( "thegraph.pgraph" )
 A **popgraph** object is a normal R object and can be saved using the normal R mechanisms.
 
 ```{r}
-#| echo: true
 #| eval: false
 save( lopho, file="MyLophoGraph.rda")
 ```
@@ -233,7 +230,6 @@ save( lopho, file="MyLophoGraph.rda")
 For interoperability, **popgraph** objects can also be saved in other formats. These are accessed through the `write.popgraph()` function.  
 
 ```{r}
-#| echo: true
 #| eval: false
 write.popgraph(lopho,file="~/Desktop/Cactus.pgraph", format="pgraph")
 ```

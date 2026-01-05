@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>10&nbsp; Mutation – Applied Population Genetics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./part_nonrandom_mating.html" rel="next">
+<link href="./effective_population_size.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6d16390398e4ca57b3acf2d898365235.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="media/style.css">
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mutation.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Mutation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Population Genetics</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/dyerlab/AMG" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Applied Population Genetics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_ecosystem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The R Ecosystem</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datatypes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_containers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Containers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Programming</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./graphics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Graphics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducable_research.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducable Research</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_single_population.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Single Population</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hardy_weinberg_equilibrium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Hardy-Weinberg Equilibrium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_drift.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Genetic Drift</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./effective_population_size.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Effective Population Size</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mutation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Mutation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_nonrandom_mating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Nonrandom Rating</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selfing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Selfing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mixed_mating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Mixed Mating Systems</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wahlund_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wahlund Effects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_parent_offspring.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Parent Offspring Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pedigrees.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pedigrees</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parentage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Parentage Analyses</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_subdivided_populations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Subdivided Populations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapping_populations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping Populations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Population Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_diversity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Genetic Diversity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rarefaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Rarefaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_distance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Genetic Distances</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Genetic Structure</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_assignment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Population Assignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./admixture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Admixture</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_statistical_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Statistical Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ordination.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Ordination of Genetic Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distance_matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Distance Matrices</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Linear Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distance_networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Distance Networks</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_graphs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Population Graphs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interactive_visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Interactive Visualization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_spatial_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Spatial Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./vector_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Vector Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./raster_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Raster Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./projections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Map Projections</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ecological_distance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Ecological Distance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./niche_modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Niche Modeling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eigenmaps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Eigenvector Maps</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Selection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Classical Selection Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_backmatter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Backmatter</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Included Data Sets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the Author</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#mutation-models" id="toc-mutation-models" class="nav-link active" data-scroll-target="#mutation-models"><span class="header-section-number">10.1</span> Mutation Models</a>
+  <ul class="collapse">
+<li><a href="#fixed-allele-model" id="toc-fixed-allele-model" class="nav-link" data-scroll-target="#fixed-allele-model"><span class="header-section-number">10.1.1</span> Fixed Allele Model</a></li>
+  <li><a href="#infinite-allele-model" id="toc-infinite-allele-model" class="nav-link" data-scroll-target="#infinite-allele-model"><span class="header-section-number">10.1.2</span> Infinite Allele Model</a></li>
+  <li><a href="#stepwise-mutation-model" id="toc-stepwise-mutation-model" class="nav-link" data-scroll-target="#stepwise-mutation-model"><span class="header-section-number">10.1.3</span> Stepwise Mutation Model</a></li>
+  </ul>
+</li>
+  <li><a href="#mutation-and-inbreeding" id="toc-mutation-and-inbreeding" class="nav-link" data-scroll-target="#mutation-and-inbreeding"><span class="header-section-number">10.2</span> Mutation and Inbreeding</a></li>
+  <li>
+<a href="#estimating-mutation" id="toc-estimating-mutation" class="nav-link" data-scroll-target="#estimating-mutation"><span class="header-section-number">10.3</span> Estimating Mutation</a>
+  <ul class="collapse">
+<li><a href="#phenotypes" id="toc-phenotypes" class="nav-link" data-scroll-target="#phenotypes"><span class="header-section-number">10.3.1</span> Phenotypes</a></li>
+  <li><a href="#genotypes" id="toc-genotypes" class="nav-link" data-scroll-target="#genotypes"><span class="header-section-number">10.3.2</span> Genotypes</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Mutation</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="chapter_image">
+<img src="chapter_images/ch_red_newt.jpg">
+</div>
+<p>Mutation is the ultimate source of genetic variation. If mutation never existed, all our loci would be the same homozygote and all of you would look like me!</p>
+<p>Mutation is the process whereby changes are induced into genetic encodings. Without mutation as a process, there would be no genetic variation (and no evolution). In basic terms, we can break mutations into two categories.</p>
+<p><em>Somatic Mutation:</em> A mutation that occurs outside the germline and will not be passed to subsequent generations. Somatic mutations may influence the fitness (survival and reproductive output) of individuals but do not have an effect on the genetic information being passed to offspring.</p>
+<p><em>Germ Line Mutation:</em> A mutation that can be passed to a gamete, resulting in an overall change in population genetic structure. There are several mechanisms that can result in mutations. Mutation as a process occupies a special place in the public vernacular—just look at all the science fiction movies where mutation is the initial arbiter of conflict. Fortunately, these scenarios do not reflect reality.</p>
+<p>There are many types of mutations that we can encounter in our data. Much of what we teach about mutations at the undergraduate level has to do with DNA sequences that encode for amino acids, though much of population genetics focuses on genetic markers outside of coding regions. It is illogical to talk about missense, nonsense, or synonymous mutations at a microsatellite locus. For the purposes of this text, we will focus on nucleotides and other common markers.</p>
+<section id="mutation-models" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="mutation-models">
+<span class="header-section-number">10.1</span> Mutation Models</h2>
+<p>Mutation models are conceptual characterizations of how the process of mutation results in the development of new allelic states. At this stage, I’m going to focus only on the change of the underlying genetic material (e.g., a transition mutation or altering allele A to become allele a) and not consider the fitness consequences of these changes.</p>
+<p>No matter how large the population is, with increasing <span class="math inline">\(\mu\)</span>, the presence of newly mutated alleles are almost always observed in heterozygotic state.</p>
+<p>From a sampling perspective, it is difficult to get a good estimate of the allele frequencies for these rare alleles. Depending upon your research question, this may be a good thing or a bad one. For example, if you are looking at demographic processes, the presence of a rare allele may indicate that historical (or ongoing) gene flow may be an important factor. Conversely, rare alleles (by definition) are not commonly observed, so if there is a ‘marker’ like this, it may be difficult to actually sample without large sampling effort.</p>
+<p>Small allele frequencies of newly mutated allele, pi, are more likely to be lost due to genetic drift as the they are more likely to be found as heterozygotes. Only half the offspring are expected to have them and the probability of persistence is proportional to its current allele frequency.</p>
+<p>At a two-allele locus, we can model the frequencies for a particular set of data as falling along a line defined by <span class="math inline">\(p+q=1.0\)</span>. Consider the three populations in the next figure, who have allele frequencies of f(A) = c(0.15, 0.42, 0.59).</p>
+<p>By definition, the allele frequencies define a coordinate in 2-dimensional space for each population. This coordinate space has as many dimensions as there are alleles at the locus, each of them being orthogonal to all the others. For a 2-allele system, they can be represented by a x &amp; y coordinate.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> p<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Pop-1"</span>,<span class="st">"Pop-2"</span>,<span class="st">"Pop-3"</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">-</span><span class="va">df</span><span class="op">$</span><span class="va">p</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggrepel.slowkow.com/">ggrepel</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">p</span>,<span class="va">q</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span> slope<span class="op">=</span><span class="op">-</span><span class="fl">1</span>, intercept<span class="op">=</span><span class="fl">1</span>, linetype<span class="op">=</span><span class="fl">2</span>, color<span class="op">=</span><span class="st">"red"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggrepel.slowkow.com/reference/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label<span class="op">=</span><span class="va">label</span><span class="op">)</span>, nudge_x<span class="op">=</span><span class="fl">0.025</span>, nudge_y<span class="op">=</span><span class="fl">0.025</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="mutation_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Allele frequencies depicted for three different populations. All population frequency spectra must fall on the dotted line.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Three allele loci can be plot in 3-space (<span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, and <span class="math inline">\(z\)</span> coordinates). Higher number of allele per locus are more problematic to depict on a 2-dimensional image, but the analogy holds.</p>
+<p>With an <span class="math inline">\(\ell\)</span>-allele locus, we have <span class="math inline">\(\ell-1\)</span> statistically independent alleles. We loose one degree of freedom because the frequencies are under the constraint of <span class="math inline">\(\sum_{i=1}^\ell p_i = 1.0\)</span>—all frequencies must sum to unity. Statistically, this approach allows us to consider our individual genotypes as well, as being describe as a matrix with <span class="math inline">\(\ell-1\)</span> statistically independent columns. So, for example, consider the genotypes <span class="math inline">\(AA\)</span>, <span class="math inline">\(AB\)</span>, <span class="math inline">\(AC\)</span>, <span class="math inline">\(BB\)</span>, <span class="math inline">\(BC\)</span>, <span class="math inline">\(CC\)</span>. These genotypes can be encoded in a matrix with 6 rows (one for each individual) and 3 columns (one for each allele). The values inserted into each are the frequency (or alternatively the count) of the alleles in each locus.</p>
+[ X =
+<span class="math display">\[\begin{bmatrix}
+    1 &amp; 0 &amp; 0 \\
+    0.5 &amp; 0.5 &amp; 0 \\
+    0.5 &amp; 0 &amp; 0.5 \\
+    0 &amp; 1 &amp; 0 \\
+    0 &amp; 0.5 &amp; 0.5 \\
+    0 &amp; 0 &amp; 1 \\
+\end{bmatrix}\]</span>
+<p>]</p>
+<p>In R, we can encode loci</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
+<span><span class="va">loci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/locus.html">locus</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"A"</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/locus.html">locus</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"B"</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/locus.html">locus</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"C"</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/locus.html">locus</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B"</span>,<span class="st">"B"</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/locus.html">locus</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B"</span>,<span class="st">"C"</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/locus.html">locus</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"C"</span>,<span class="st">"C"</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">loci</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "A:A" "A:B" "A:C" "B:B" "B:C" "C:C"</code></pre>
+</div>
+</div>
+<p>and translate them into multivariate encoded data in the same way.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mv.genos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/to_mv.html">to_mv</a></span><span class="op">(</span> <span class="va">loci</span> <span class="op">)</span></span>
+<span><span class="va">mv.genos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       A   B   C
+[1,] 1.0 0.0 0.0
+[2,] 0.5 0.5 0.0
+[3,] 0.5 0.0 0.5
+[4,] 0.0 1.0 0.0
+[5,] 0.0 0.5 0.5
+[6,] 0.0 0.0 1.0</code></pre>
+</div>
+</div>
+<p>If you are going to use this as a data matrix for multivariate analyses, you need to drop one of the columns since each column sums to unity. If you do not, you will not be able to invert the matrix because it is singular and essentially the entire universe will cease to exist—ok maybe I’m exaggerating a bit here but inverting singular matrices is not something you want to try. It does not matter which of the columns you drop, some like to drop the most rare allele or the most common one, but it is irrelevant.</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/to_mv.html">to_mv</a></span><span class="op">(</span> <span class="va">loci</span>, drop.allele <span class="op">=</span> <span class="cn">TRUE</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       A   B
+[1,] 1.0 0.0
+[2,] 0.5 0.5
+[3,] 0.5 0.0
+[4,] 0.0 1.0
+[5,] 0.0 0.5
+[6,] 0.0 0.0</code></pre>
+</div>
+</div>
+<p>The reason that I think this is important, in the context of mutation, is that a mutation event can move entries from one column to another (if an allele mutates to anther existing allele) or add additional columns to the matrix (if the mutation produces an allele that was not previously in the data). The dimensionality of the data, for a locus and across loci, is simply the number of independently assorting alleles in the system. Mutation as a process can add additional dimensions (e.g., degrees of freedom in a statistical sense) to the data itself. In the following mutation models, consider the consequences to how these models influence the way in which we denote genotypes and population allele frequencies in a multivariate context.</p>
+<section id="fixed-allele-model" class="level3" data-number="10.1.1"><h3 data-number="10.1.1" class="anchored" data-anchor-id="fixed-allele-model">
+<span class="header-section-number">10.1.1</span> Fixed Allele Model</h3>
+<p>The fixed allele model is one where there are a finite number of allelic states. The frequency of the allele, say <span class="math inline">\(f(A) = p\)</span>, can estimated across generations if we know the rate at which say the A is mutated to become the other state, say the a allele. For simplicity, lets define this rate as <span class="math inline">\(\mu\)</span>, on a per generation basis. Across generations then, it is pretty easy to predict what the frequency of both alleles will be each generation by iterating each generation and estimating the frequencies based upon the previous generation. An example of this is given in the table below, where a locus fixed for the A allele is experiencing mutation at a rate of <span class="math inline">\(\mu=0.001\)</span>.</p>
+<p>With each successive generation, a fraction of the A alleles are being mutated. Under a fixed allele model, these mutations result in the identity of that allele being one of a fixed number of other alleles. If this were a dual fixed allele model, the mutation rate, <span class="math inline">\(\mu\)</span>, would represent the rate of change from <span class="math inline">\(A \to a\)</span>. There would also be a corresponding rate in the opposite direction, say <span class="math inline">\(a \to A\)</span> at a per generation rate of <span class="math inline">\(\nu\)</span>. The presence of these two alleles (or at least a finite set of defined alleles), who change state due to mutation is the definition of the fixed allele model.</p>
+<p><span class="math inline">\(AA\)</span>, <span class="math inline">\(AB\)</span>, <span class="math inline">\(AC\)</span>, <span class="math inline">\(BB\)</span>, <span class="math inline">\(BC\)</span>, <span class="math inline">\(CC\)</span>.</p>
+<p>Once defined, there is a pretty easy set of algebra associated with predicting what the next and subsequent generations of allele frequencies may be based upon mutation rates. Later when we examine migration, we will see a similar approach to estimating allele frequencies so pay attention to both the specifics of the this as well as how we are formulating the equation conceptually.</p>
+<p>Assuming a 2-allele system, the frequency of the <span class="math inline">\(A\)</span> allele, denoted as say <span class="math inline">\(p\)</span>, in the next <span class="math inline">\((t+1)\)</span> generation is:</p>
+<ol type="1">
+<li><p>The frequency of the allele at this generation, <span class="math inline">\(p_t\)</span>, multiplied by the fraction of individuals who did not mutate from <span class="math inline">\(A \to a\)</span>. This can be written as <span class="math inline">\(p_t(1-\mu)\)</span>. To this we also add,</p></li>
+<li><p>The fraction of alleles that were not <span class="math inline">\(A\)</span> at this generation <span class="math inline">\((1-p_t)\)</span> but who were mutated to the <span class="math inline">\(A\)</span> state during the transition from <span class="math inline">\(t\)</span> to <span class="math inline">\(t+1\)</span>. This is written as <span class="math inline">\((1-p_t)\nu\)</span>.</p></li>
+</ol>
+<p>So the frequency at <span class="math inline">\(p_{t+t}\)</span> is:</p>
+<p>[ p_{t+1} = p_t(1-) + (1-p_t) ]</p>
+<p>We can plot this relationship through time to visualize how allele frequencies change. Here I start with a relatively high mutation rate of <span class="math inline">\(\mu=0.0075\)</span> (<span class="math inline">\(A \to a\)</span>) and <span class="math inline">\(\nu = 0.01\)</span> (<span class="math inline">\(a \to A\)</span>) and a starting allele frequency of <span class="math inline">\(p=0.75\)</span>. We can set up a ‘simulation’ on these parameters as:</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">0.75</span></span>
+<span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fl">0.75e-2</span></span>
+<span><span class="va">nu</span> <span class="op">&lt;-</span> <span class="fl">1e-2</span></span>
+<span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3000000</span>,by<span class="op">=</span><span class="fl">5000</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span> <span class="va">p</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span> <span class="va">i</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">pt</span> <span class="op">&lt;-</span> <span class="va">p</span><span class="op">[</span><span class="va">i</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="va">p</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">mu</span><span class="op">)</span><span class="op">*</span><span class="va">pt</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">pt</span><span class="op">)</span><span class="op">*</span><span class="va">nu</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Where I create two vectors, one for time, <span class="math inline">\(T\)</span>, and the other for the current allele frequency. I then iterate across generations (the <code>for(i in 1:length(t))</code> ) and for each generation I grab the allele frequencies of the previous generation and use them to estimate the frequency for next generation. After we iterate across all the generations, we can plot the expected allele frequencies through time as:</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> <span class="cn">T</span>, <span class="va">p</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span> <span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="cn">T</span>,<span class="va">p</span><span class="op">)</span> <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Generation (t)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Allele Frequency (p)"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="mutation_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Expected allele frequencies for a single 2-allele locus with mutation rates of <span class="math inline">\(\mu=0.0075\)</span> and <span class="math inline">\(\nu=0.01\)</span> and a starting allele frequency of <span class="math inline">\(p_0 = 0.75\)</span>.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>There are two things that are of interest in this figure.</p>
+<ol type="1">
+<li><p>Given the values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> the final frequency will change through time tending towards some equilibrium frequency, <span class="math inline">\(\hat{p}\)</span>. The rate of change, <span class="math inline">\(\delta p\)</span>, is dependent upon how far away the initial allele frequency is from <span class="math inline">\(\hat{p}\)</span> and the difference in the mutation rates, <span class="math inline">\(|\mu - \nu|\)</span>.</p></li>
+<li><p>The consequences of mutation are significantly though exceedingly slow. If you look at the figure, notice the number of generations on the x-axis. It takes somewhere in the vicinity of 500,000 generations for the allele frequency to go from <span class="math inline">\(p=0.75\)</span> to <span class="math inline">\(p=0.60\)</span>!</p></li>
+</ol>
+<p>If we set <span class="math inline">\(p_{t+1} = p_t\)</span> (e.g., when there is no change in allele frequencies) and solve for <span class="math inline">\(p\)</span>, the previous equation be rearranged to give the equilibrium allele frequencies for the <span class="math inline">\(A\)</span> allele, <span class="math inline">\(\hat{p}\)</span>, given the relative values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> as:</p>
+<p>[ = ]</p>
+<p>Independent of the starting frequencies, all populations will tend towards this equilibrium state (assuming nothing else is happening to the population during all those generations).</p>
+<p>The rate of change and the distance away from the equilibrium frequency, <span class="math inline">\(\hat{p}\)</span>, can be used to derive an estimate of allele frequencies with mutation at any arbitrary generation. This expectation is:</p>
+<p>[ p_t = + (p_0 - )(1 - - )^t ]</p>
+<p>If you look at the components of this relationship, it can be decomposed into the following parts.</p>
+<ol type="1">
+<li>The destination allele frequency where the population will eventually stabilize at, <span class="math inline">\(\frac{\nu}{\mu + \nu}\)</span>,<br>
+</li>
+<li>The distance the starting generation is away from this destination, <span class="math inline">\(\left(p_0 - \frac{\nu}{\mu+\nu} \right)\)</span>,<br>
+</li>
+<li>The rate at which the both mutation directions change this frequency, <span class="math inline">\((1 - \mu - \nu)\)</span>,<br>
+</li>
+<li>And the length of time (in generations) that has elapsed since starting at <span class="math inline">\(p_0\)</span>, <span class="math inline">\(t\)</span>.</li>
+</ol>
+<p>This is a pretty standardized construction and we will see a very similar approach when dealing with allele frequency changes due to migration.</p>
+</section><section id="infinite-allele-model" class="level3" data-number="10.1.2"><h3 data-number="10.1.2" class="anchored" data-anchor-id="infinite-allele-model">
+<span class="header-section-number">10.1.2</span> Infinite Allele Model</h3>
+<p>For many genetic components, there is more than just two different states, A and a (despite what we use in teaching population genetics). Kimura &amp; Crow (1964) defined the infinite alleles model. Here, instead of having only two alleles with mutation flipping states of the alleles, the infinite alleles model adds new alleles to the locus with each mutation.</p>
+<p>Both the fixed allele model and the infinite allele model can be easily configured in R using the multivariate encoding ‘allele space’ paradigm outlined previously.</p>
+</section><section id="stepwise-mutation-model" class="level3" data-number="10.1.3"><h3 data-number="10.1.3" class="anchored" data-anchor-id="stepwise-mutation-model">
+<span class="header-section-number">10.1.3</span> Stepwise Mutation Model</h3>
+<p>Markers such as microsatellite require slightly different mutation models. A microsatellite locus is one where nucleotide motifs are repeated and the length of the fragment containing the repeats (plus some flanking primer sequences) is used as the definition of the allele. Mutation at microsatellite loci is due to the gain or loss of motifs during replication. Mutation models for these kinds of loci incorporate the probability of gain/loss of one or more motifs. Usually, the likelihood of single motif changes are considered more common than events resulting in changing fragment lengths by several motifs at once. This kind of mutation model can be summarized as shown below for changes in allelic state across generations. Later when we examine genetic distance measures, we will return to this metric.</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/mutation_cascade.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="media/mutation_cascade.png" class="img-fluid figure-img" width="958"></p>
+<figcaption>Schematic of stepwise mutation model across three generations, commonly used in describing changes at microsatellite loci with a repeat motif length of <span class="math inline">\(\delta\)</span> deviating from a mean fragment size.</figcaption></figure>
+</div>
+</div>
+</div>
+</section></section><section id="mutation-and-inbreeding" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="mutation-and-inbreeding">
+<span class="header-section-number">10.2</span> Mutation and Inbreeding</h2>
+<p>Inbreeding, the relative decrease in heterozygosity (or increase in heterozygosity) is influenced by mutation rates because of the way that mutation influences the level of autozygosity.</p>
+<p>[ F_{t+1} = + ( 1 - )F_t ]</p>
+<p>where the next generation level of autozygosity is made up of:</p>
+<ul>
+<li>
+<span class="math inline">\(\frac{1}{2N_e}\)</span> is the likelihood that two alleles at a locus are autozygous this generation, and<br>
+</li>
+<li>
+<span class="math inline">\(\left( 1 - \frac{1}{2N_e} \right)F_t\)</span> is the fraction of homozygous individuals in the previous generation that were autozygous.</li>
+</ul>
+<p>From this relationship, we see that <span class="math inline">\(F\)</span> increases most rapidly towards its eventual asymptote with smaller effective population sizes (see Chapter @ref(effective-population-size)).</p>
+<p>The presence of mutation in this model breaks up the symmetry by changing the state of alleles delivered to the next generation. For diploid individuals, mutation can occur as depicted in the following table.</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th style="text-align: center;">Mutant Allele</th>
+<th style="text-align: center;">Frequency</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\((1-\mu)^2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="math inline">\(2\mu(1-\mu)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;"><span class="math inline">\(\mu^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>For any particular locus, a mutation either not occur, occur once, or occur twice. If an individual is <span class="math inline">\(AA\)</span> a mutation changes this genotype to be heterozygous, and by definition, incapable of being autozygous (or even allozygous). A genotype of <span class="math inline">\(AB\)</span>, while heterozygous and neither auto- or allozygous, cannot mutate to an autozygous state as they alleles cannot be descended from the same individual. As a consequence, only genotypes that have 0 mutation events (at a rate of <span class="math inline">\((1-\mu)^2\)</span>) contribute to increases in <span class="math inline">\(F\)</span>.</p>
+<p>This leads to a reformulation of the expected inbreeding function as:</p>
+<p>[ F_{t+1} = (1-)^2 ]</p>
+<p>We can see the effects of having mutation with a small simulation.</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span></span>
+<span><span class="cn">F</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">16</span></span>
+<span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">1000</span></span>
+<span><span class="va">Ne</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span><span class="va">F0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">F1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">inc</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">Ne</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span> <span class="va">t</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">F0</span><span class="op">[</span><span class="va">t</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">inc</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">inc</span><span class="op">)</span><span class="op">*</span><span class="va">F0</span><span class="op">[</span><span class="va">t</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="va">F1</span><span class="op">[</span><span class="va">t</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">inc</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">inc</span><span class="op">)</span><span class="op">*</span><span class="va">F1</span><span class="op">[</span><span class="va">t</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">mu</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>which if we plot both of these trajectories, produces the plot below.</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Generation<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">T</span>,<span class="cn">T</span><span class="op">)</span>, F<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">F0</span>,<span class="va">F1</span><span class="op">)</span>, Mutation<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Yes"</span>,<span class="st">"No"</span><span class="op">)</span>, each<span class="op">=</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Generation</span>,y<span class="op">=</span><span class="cn">F</span>,color<span class="op">=</span><span class="va">Mutation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="mutation_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Expected values for inbreeding F through time for a locus without mutation and one with mutation at a rate of <span class="math inline">\(\mu=0.001\)</span>.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>In these data, the overall effect on inbreeding is to modulate autozygosity through time by removing alleles that are identical by descent in the previous generation. The functional consequence here are that while mutation can influence inbreeding to a large degree, it does so with a relatively small impact. If you look back at the changes in allele frequency due to drift, the potential for changing allele frequencies was much greater than we see here. After 100 generations in the code above, even with a <span class="math inline">\(N_e = 10\)</span>, there is only a net difference in allele frequencies of <span class="math inline">\(\delta p = 0.0372\)</span>! Overall, mutation is the ultimate source of diversity, though has a small (though perceptible) per-generation influence on inbreeding.</p>
+<p>As was the case in other situations, there is an expectation for equilibrium with respect to inbreeding based upon both effective population size (<span class="math inline">\(N_e\)</span>) and mutation rate (<span class="math inline">\(\mu\)</span>). If we set <span class="math inline">\(F_{t+1} = F_t\)</span> and solve, we find the equilibrium inbreeding level to be:</p>
+[
+<span class="math display">\[\begin{aligned}
+\hat{F} &amp;= \frac{1-2\mu}{4N_e\mu + 1 - 2\mu} \\
+&amp;\approx \frac{1}{4N_e\mu+1}
+\end{aligned}\]</span>
+<p>]</p>
+<p>with the approximation for small values of <span class="math inline">\(\mu\)</span> (small, as in what we usually see in our data).</p>
+</section><section id="estimating-mutation" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="estimating-mutation">
+<span class="header-section-number">10.3</span> Estimating Mutation</h2>
+<p>Mutation rates can be estimated from several kinds of data. Here are some simple examples using phenotype and genotype. The end result here is to use observation to uncover an estimate of the rate of mutation, <span class="math inline">\(\mu\)</span>, from either or samples or our genetic data.</p>
+<section id="phenotypes" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="phenotypes">
+<span class="header-section-number">10.3.1</span> Phenotypes</h3>
+<p>Outside some biochemical changes observed in model systems, there are few traits that we can examine directly that are the result of a single mutation event at a single location. While we provide a lot of verbiage to single-gene traits in undergraduate curriculum when introducing Mendelian genetics, there are very few traits that actually respond in that fashion.</p>
+<ul>
+<li><p><em>The mutation must have a distinctive phenotype.</em> To identify the presence of a mutation, you must have the ability to clearly, and without error, cleanly identify when a mutation arises. This trait must be distinctive in that it has to have a categorical condition. Quantitative traits cannot be used since the contribution of an individual mutation may be minuscule in the trait value. Moreover, several different mutation events, potentially spread throughout the genome, may contribute to the same incremental change in the observed phenotype.</p></li>
+<li><p><em>The trait must be fully expressed.</em> Epistatic effects that mask mutants prevent accurate estimation of mutation rates. For example, in the labrador retriever, the locus that controls coat color (brown is recessive to black) can be masked by a second locus that determines if the coat color pigment is put onto the hair shaft (if not the dog is yellow). The presence of this second locus that influences the observed phenotype can prevent the estimation of mutation rates for the first.</p></li>
+<li><p><em>The observed phenotype must only be the result of the mutation.</em> If the phenotype is subjected to variation due to environmental effects, this can also cause problems with estimating the mutation rate.</p></li>
+</ul>
+<p>Given these caveats, it is possible to gain mutation estimates from phenotype, it is just difficult in most systems.</p>
+<p>As an example, consider the case where a phenotype is governed by the normal dominant/recessive alleles as characterized by Mendel. Mutation rates for the dominant allele can be estimated by examining the number of individuals in the next generation (<span class="math inline">\(x\)</span>) that were produced by parents who did not carry the dominant trait (e.g., they were recessive homozygotes). Here the mutation rate is estimated by:</p>
+<p>[ = ]</p>
+<p>Estimation of mutation in recessive alleles can be accomplished in the same way. Here though, offspring are only considered from mating events between individuals known to be homozygous dominant those whose genotype produces the recessive trait. The offspring whose phenotype is recessive (<span class="math inline">\(x\)</span>) are those that the dominant allele given by one parent had mutated. As such, since only one parent is contributing, the mutation rate here is estimated as:</p>
+<p>[ = ]</p>
+</section><section id="genotypes" class="level3" data-number="10.3.2"><h3 data-number="10.3.2" class="anchored" data-anchor-id="genotypes">
+<span class="header-section-number">10.3.2</span> Genotypes</h3>
+<p>Looking at the genotypes directly can also provide an estimate of mutation rate. I’ll give two quick examples below, as both are relatively straight forward in their implementation. First, if one can maintain lineages of individuals across generations, it becomes relatively easy to monitor the rate at which novel mutations occur. Perhaps the most elegant examples of this approach is that from Lynch <em>et al.</em> (2008) who propagated parallel yeast cell lines across roughly 4,800 divisions. Subsequent sequencing of original and progenitor samples provided an estimated rate of <span class="math inline">\(\mu=0.00000000033\)</span> per generation (much smaller than we have been playing with in this section). They also examined differences in transition and transversion mutations as well as those in the mitochondria. This paper is a tour-de-force and should be read by everyone interested in mutations.</p>
+<p>Not everyones study organism fits into a 4000 generation propagation program! That said, there have been some pretty good estimates of mutation rate based upon reconstruction of relatedness among historically separated lineages. If you have a good reconstruction of genetic divergence (as in a phylogeny) and events that have been verified to have specific dates ascribed to them (such as fossil records), you can also estimate mutation rates from these. By far, mtDNA has been used as it has is assumed to be ‘clock-like’ (though see Galtier <em>et al.</em> 2009), though other targets have been used as well. At present, we have several lines of evidence suggesting rates of mutation in various taxonomic groups, each of which may differ substantially. Since rates differ across groups and across regions in the genome, it is important that you consider the consequences that particular values of <span class="math inline">\(\mu\)</span> have on your biological inferences. It is much more common to need an estimate of mutation as an input to another analysis, such as a coalescent model, than to need to estimate it directly from your data. In these common situations, it is good practice for you examine the consequences variation in <span class="math inline">\(\mu\)</span> have on your downstream biological inferences—in some situations a magnitude or more change in mutation may have no appreciable effect whereas in others it may.</p>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./effective_population_size.html" class="pagination-link" aria-label="Effective Population Size">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Effective Population Size</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./part_nonrandom_mating.html" class="pagination-link" aria-label="(PART) Nonrandom Rating">
+        <span class="nav-page-text">(PART) Nonrandom Rating</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

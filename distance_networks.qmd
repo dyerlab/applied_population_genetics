@@ -415,11 +415,11 @@ Then overlay this onto a map using the `overlay_popgraph()` function.    Here is
 #| label: fig-mapped-graph
 #| fig-cap: "Map of graph stetched onto continential US map."
 library(maps)
- library(popgraph)
+library(popgraph)
 pg <- as.popgraph( g )
 
 map( "state" )
-overlay_popgraph( pg )
+# overlay_popgraph( pg )
 ```
 
 This function **requires** that you already have a plot available (it uses the `lines()` and `points()` routines).  If you try to just overlay this with no existing plot, it will not work (and should throw an error).

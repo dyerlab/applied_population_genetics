@@ -30,7 +30,6 @@ At a two-allele locus, we can model the frequencies for a particular set of data
 By definition, the allele frequencies define a coordinate in 2-dimensional space for each population.  This coordinate space has as many dimensions as there are alleles at the locus, each of them being orthogonal to all the others.  For a 2-allele system, they can be represented by a x & y coordinate.  
 
 ```{r}
-#| echo: false
 #| fig-cap: "Allele frequencies depicted for three different populations.  All population frequency spectra must fall on the dotted line."
 df <- data.frame( p=runif(3), label=c("Pop-1","Pop-2","Pop-3") )
 df$q <- 1-df$p
@@ -118,7 +117,6 @@ for( i in 2:length(T)){
 Where I create two vectors, one for time, $T$, and the other for the current allele frequency.  I then iterate across generations (the `for(i in 1:length(t))` ) and for each generation I grab the allele frequencies of the previous generation and use them to estimate the frequency for next generation.  After we iterate across all the generations, we can plot the expected allele frequencies through time as:
 
 ```{r}
-#| echo: false
 #| fig-cap: "Expected allele frequencies for a single 2-allele locus with mutation rates of $\\mu=0.0075$ and $\\nu=0.01$ and a starting allele frequency of $p_0 = 0.75$."
 library(ggplot2)
 df <- data.frame( T, p )
@@ -166,7 +164,6 @@ Both the fixed allele model and the infinite allele model can be easily configur
 Markers such as microsatellite require slightly different mutation models.  A microsatellite locus is one where nucleotide motifs are repeated and the length of the fragment containing the repeats (plus some flanking primer sequences) is used as the definition of the allele.  Mutation at microsatellite loci is due to the gain or loss of motifs during replication.  Mutation models for these kinds of loci incorporate the probability of gain/loss of one or more motifs.  Usually, the likelihood of single motif changes are considered more common than events resulting in changing fragment lengths by several motifs at once.   This kind of mutation model can be summarized as shown below for changes in allelic state across generations.  Later when we examine genetic distance measures, we will return to this metric.
 
 ```{r}
-#| echo: false
 #| fig-cap: "Schematic of stepwise mutation model across three generations, commonly used in describing changes at microsatellite loci with a repeat motif length of $\\delta$ deviating from a mean fragment size."
 knitr::include_graphics("media/mutation_cascade.png")
 ```
@@ -223,7 +220,6 @@ for( t in 2:max(T)){
 which if we plot both of these trajectories, produces the plot below.  
 
 ```{r}
-#| echo: false
 #| fig-cap: "Expected values for inbreeding F through time for a locus without mutation and one with mutation at a rate of $\\mu=0.001$. "
 df <- data.frame(Generation=c(T,T), F=c(F0,F1), Mutation=rep( c("Yes","No"), each=100))
 ggplot(df,aes(x=Generation,y=F,color=Mutation)) + geom_line()

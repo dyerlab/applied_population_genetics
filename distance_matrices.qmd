@@ -110,8 +110,8 @@ plot_side <- ggplot( df, aes(x=Euclidean, fill=Status)) + geom_density(alpha=0.5
 I also need an empty plot to since we are going to make a 2x2 grid of plots but the upper right one will have nothing in it (the popgraph library has a nice invisible theme called `theme_empty()`).
 
 ```{r}
- library(popgraph)
-empty <- ggplot() + theme_empty()
+library(popgraph)
+empty <- ggplot() + theme_minimal()
 ```
 
 Finally, we can stitch this all together and produce a single plot with these four subcomponents.
@@ -120,7 +120,7 @@ Finally, we can stitch this all together and produce a single plot with these fo
 ```{r}
 #| label: fig-distance-marginal
 #| fig-cap: "Pairwise genetic distance measured using Nei's distance and Euclidean distance based upon allele frequencies for populations of Araptus attenuatus.  Each comparison is classified as being between the same species group or between mixed groups and marginal probability densities are shown for each measure."
- library(gridExtra)
+library(gridExtra)
 grid.arrange(plot_top, empty, scatter, plot_side, ncol=2, nrow=2, widths=c(4,1), heights=c(1,4))
 ```
 

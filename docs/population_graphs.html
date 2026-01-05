@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>28&nbsp; Population Graphs – Applied Population Genetics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./interactive_visualization.html" rel="next">
+<link href="./distance_networks.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6d16390398e4ca57b3acf2d898365235.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="media/style.css">
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./population_graphs.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Population Graphs</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Population Genetics</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/dyerlab/AMG" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Applied Population Genetics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_ecosystem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The R Ecosystem</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datatypes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_containers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Containers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Programming</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./graphics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Graphics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducable_research.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducable Research</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_single_population.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Single Population</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hardy_weinberg_equilibrium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Hardy-Weinberg Equilibrium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_drift.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Genetic Drift</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./effective_population_size.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Effective Population Size</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Mutation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_nonrandom_mating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Nonrandom Rating</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selfing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Selfing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mixed_mating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Mixed Mating Systems</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wahlund_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wahlund Effects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_parent_offspring.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Parent Offspring Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pedigrees.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pedigrees</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parentage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Parentage Analyses</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_subdivided_populations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Subdivided Populations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapping_populations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping Populations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Population Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_diversity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Genetic Diversity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rarefaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Rarefaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_distance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Genetic Distances</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Genetic Structure</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_assignment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Population Assignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./admixture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Admixture</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_statistical_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Statistical Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ordination.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Ordination of Genetic Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distance_matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Distance Matrices</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Linear Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distance_networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Distance Networks</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_graphs.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Population Graphs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interactive_visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Interactive Visualization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_spatial_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Spatial Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./vector_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Vector Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./raster_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Raster Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./projections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Map Projections</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ecological_distance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Ecological Distance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./niche_modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Niche Modeling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eigenmaps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Eigenvector Maps</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Selection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Classical Selection Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_backmatter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Backmatter</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Included Data Sets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the Author</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#adding-data-to-a-graph" id="toc-adding-data-to-a-graph" class="nav-link active" data-scroll-target="#adding-data-to-a-graph"><span class="header-section-number">28.1</span> Adding data to a graph</a>
+  <ul class="collapse">
+<li><a href="#plotting-a-graph-using-ggplot2-routines" id="toc-plotting-a-graph-using-ggplot2-routines" class="nav-link" data-scroll-target="#plotting-a-graph-using-ggplot2-routines"><span class="header-section-number">28.1.1</span> Plotting a graph using <strong>ggplot2</strong> routines</a></li>
+  <li><a href="#reading-existing-popgraph-files" id="toc-reading-existing-popgraph-files" class="nav-link" data-scroll-target="#reading-existing-popgraph-files"><span class="header-section-number">28.1.2</span> Reading Existing <strong>popgraph</strong> Files</a></li>
+  <li><a href="#saving-population-graph-objects" id="toc-saving-population-graph-objects" class="nav-link" data-scroll-target="#saving-population-graph-objects"><span class="header-section-number">28.1.3</span> Saving Population Graph Objects</a></li>
+  </ul>
+</li>
+  <li><a href="#interactive-networks" id="toc-interactive-networks" class="nav-link" data-scroll-target="#interactive-networks"><span class="header-section-number">28.2</span> Interactive Networks</a></li>
+  <li>
+<a href="#spatial-population-graphs" id="toc-spatial-population-graphs" class="nav-link" data-scroll-target="#spatial-population-graphs"><span class="header-section-number">28.3</span> Spatial Population Graphs</a>
+  <ul class="collapse">
+<li><a href="#integrating-google-and-ggplot2-for-plotting" id="toc-integrating-google-and-ggplot2-for-plotting" class="nav-link" data-scroll-target="#integrating-google-and-ggplot2-for-plotting"><span class="header-section-number">28.3.1</span> Integrating Google and <strong>ggplot2</strong> for Plotting</a></li>
+  <li><a href="#integrating-raster-maps" id="toc-integrating-raster-maps" class="nav-link" data-scroll-target="#integrating-raster-maps"><span class="header-section-number">28.3.2</span> Integrating Raster Maps</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#extracting-spatial-data-using-population-graphs" id="toc-extracting-spatial-data-using-population-graphs" class="nav-link" data-scroll-target="#extracting-spatial-data-using-population-graphs"><span class="header-section-number">28.4</span> Extracting Spatial Data Using Population Graphs</a>
+  <ul class="collapse">
+<li><a href="#node-specific-data" id="toc-node-specific-data" class="nav-link" data-scroll-target="#node-specific-data"><span class="header-section-number">28.4.1</span> Node Specific Data</a></li>
+  <li><a href="#extracting-data-along-popgraph-edges" id="toc-extracting-data-along-popgraph-edges" class="nav-link" data-scroll-target="#extracting-data-along-popgraph-edges"><span class="header-section-number">28.4.2</span> Extracting Data Along Popgraph Edges</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#extracting-graph-theoretic-parameters" id="toc-extracting-graph-theoretic-parameters" class="nav-link" data-scroll-target="#extracting-graph-theoretic-parameters"><span class="header-section-number">28.5</span> Extracting Graph-Theoretic Parameters</a>
+  <ul class="collapse">
+<li><a href="#matrix-representations-of-population-graph-objects" id="toc-matrix-representations-of-population-graph-objects" class="nav-link" data-scroll-target="#matrix-representations-of-population-graph-objects"><span class="header-section-number">28.5.1</span> Matrix Representations of Population Graph Objects</a></li>
+  <li><a href="#node-specific-parameters" id="toc-node-specific-parameters" class="nav-link" data-scroll-target="#node-specific-parameters"><span class="header-section-number">28.5.2</span> Node Specific Parameters</a></li>
+  <li><a href="#edge-specific-parameters" id="toc-edge-specific-parameters" class="nav-link" data-scroll-target="#edge-specific-parameters"><span class="header-section-number">28.5.3</span> Edge Specific Parameters</a></li>
+  </ul>
+</li>
+  <li><a href="#testing-for-topological-congruence" id="toc-testing-for-topological-congruence" class="nav-link" data-scroll-target="#testing-for-topological-congruence"><span class="header-section-number">28.6</span> Testing for Topological Congruence</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Population Graphs</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="chapter_image">
+<img src="chapter_images/ch_euphorbia.jpg">
+</div>
+<p>Population Graphs are a statistical representation of among population genetic variance, <span class="math inline">\(\sigma^2_A\)</span>, as viewed through a network (Dyer &amp; Nason 2004). A population graph is a graph-theoretic interpretation of genetic covariance and serves as a tool for understanding underlying evolutionary history for a set of populations.</p>
+<p>These structures are estimated in R using the <strong>popgraphs</strong> library.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">popgraph</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As other networks, a population graph is a graph-theoretic structure that can be represetendHere we will focus on the former approach as it is native to this package. If you use the latter one, it will produce a *.pgraph file and you can read it in using the <code><a href="https://rdrr.io/pkg/popgraph/man/read_popgraph.html">read_popgraph()</a></code> function.</p>
+<section id="adding-data-to-a-graph" class="level2" data-number="28.1"><h2 data-number="28.1" class="anchored" data-anchor-id="adding-data-to-a-graph">
+<span class="header-section-number">28.1</span> Adding data to a graph</h2>
+<p>A population graph is made more informative if you can associate some data with topology. External data may be spatial or ecolgoical data associated with each node. Edge data may be a bit more complicated as it is traversing both spatial and ecolgoical gradients and below we’ll see how to extract particular from rasters using edge crossings.</p>
+<p>Included in the <em>popgraph</em> package are some build-in data sets to illustrate some of the utility. Included is the cactus topology that was originally used to develop this approach (from Dyer &amp; Nason 2004).</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "popgraph" "igraph"  </code></pre>
+</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lopho</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>IGRAPH 6af7beb UNW- 21 52 -- 
++ attr: name (v/c), size (v/n), color (v/c), Region (v/c), weight (e/n)
++ edges from 6af7beb (vertex names):
+ [1] BaC--LaV    BaC--Lig    BaC--PtC    BaC--PtP    BaC--SnE    BaC--SnI   
+ [7] BaC--StR    Ctv--PtP    Ctv--SLG    Ctv--SnF    Ctv--SenBas LaV--Lig   
+[13] LaV--PtC    LaV--SnE    LaV--SnF    LaV--TsS    Lig--PtC    Lig--SnI   
+[19] Lig--StR    Lig--TsS    PtC--SnE    PtC--StR    PtC--TsS    PtC--SenBas
+[25] PtP--SnF    PtP--SnI    PtP--SenBas SLG--SnF    SLG--SnI    SnE--StR   
+[31] SnE--TsS    SnF--SnI    SnI--StR    StR--TsS    StR--SenBas CP --Seri  
+[37] CP --SG     CP --SN     CP --TS     LF --PL     LF --SG     LF --SI    
+[43] PL --SenBas PL --SG     PL --SI     PL --SN    
++ ... omitted several edges</code></pre>
+</div>
+</div>
+<p>We can associate data with the nodes using the <code><a href="https://rdrr.io/pkg/popgraph/man/decorate_graph.html">decorate_graph()</a></code> function. This takes a <code>data.frame</code> object and tries to match up the columns of data in the data.frame to the nodes. Here is an example with some addition built-in data. The option <code>stratum</code> indicates the name of the column that has the node labels in it (which are stored as <code>V(graph)$name</code>).</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">baja</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">baja</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Region     Population    Latitude       Longitude     
+ Baja  :16   BaC    : 1   Min.   :22.93   Min.   :-114.7  
+ Sonora:13   Cabo   : 1   1st Qu.:24.45   1st Qu.:-112.6  
+             CP     : 1   Median :27.95   Median :-111.8  
+             Ctv    : 1   Mean   :27.33   Mean   :-111.8  
+             ELR    : 1   3rd Qu.:29.59   3rd Qu.:-110.7  
+             IC     : 1   Max.   :31.95   Max.   :-109.5  
+             (Other):23                                   </code></pre>
+</div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lopho</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/decorate_graph.html">decorate_graph</a></span><span class="op">(</span> <span class="va">lopho</span>, <span class="va">baja</span>, stratum<span class="op">=</span><span class="st">"Population"</span><span class="op">)</span></span>
+<span><span class="va">lopho</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>IGRAPH 6af7beb UNW- 21 52 -- 
++ attr: name (v/c), size (v/n), color (v/c), Region (v/n), Latitude
+| (v/n), Longitude (v/n), weight (e/n)
++ edges from 6af7beb (vertex names):
+ [1] BaC--LaV    BaC--Lig    BaC--PtC    BaC--PtP    BaC--SnE    BaC--SnI   
+ [7] BaC--StR    Ctv--PtP    Ctv--SLG    Ctv--SnF    Ctv--SenBas LaV--Lig   
+[13] LaV--PtC    LaV--SnE    LaV--SnF    LaV--TsS    Lig--PtC    Lig--SnI   
+[19] Lig--StR    Lig--TsS    PtC--SnE    PtC--StR    PtC--TsS    PtC--SenBas
+[25] PtP--SnF    PtP--SnI    PtP--SenBas SLG--SnF    SLG--SnI    SnE--StR   
+[31] SnE--TsS    SnF--SnI    SnI--StR    StR--TsS    StR--SenBas CP --Seri  
+[37] CP --SG     CP --SN     CP --TS     LF --PL     LF --SG     LF --SI    
++ ... omitted several edges</code></pre>
+</div>
+</div>
+<p>Each vertex now has seveal different types of data associated with it now. We will use this below.</p>
+<section id="plotting-a-graph-using-ggplot2-routines" class="level3" data-number="28.1.1"><h3 data-number="28.1.1" class="anchored" data-anchor-id="plotting-a-graph-using-ggplot2-routines">
+<span class="header-section-number">28.1.1</span> Plotting a graph using <strong>ggplot2</strong> routines</h3>
+<p>The <strong>ggplot2</strong> package provides a spectacular plotting environment in an intuitive context and there are now some functions to support the Population Graphs in this context.</p>
+<p>If you haven’t used <strong>ggplot2</strong> before, it may at first be a bit odd because it deviates from normal plotting approaches where you just shove a bunch of arguments into a single plotting function. In <strong>ggplot</strong>, you build a graphic in the same way you build a regression equation. A regression equation has an intercept and potentially a bunch of independent terms. This is exactly how <strong>ggplot</strong> builds plots, by adding togther components.</p>
+<p>To specifiy how things look in a plot, you need to specify an aesthetic using the <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> funciton. Here is where you supply the variable names you use for coordinate, coloring, shape, etc. For both of the <code>geom_*set</code> funcitons, these names <strong>must</strong> be attributes of either the node or edge sets in the graph itself.</p>
+<p>Here is an example using the <em>Lopohcereus</em> graph. We begin by making a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> object and then adding to it a <code>geom_</code> object. The 5<strong>popgraph</strong> package comes with two funcitons, one for edges and one for nodes.</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/geom_edgeset.html">geom_edgeset</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Longitude</span>,y<span class="op">=</span><span class="va">Latitude</span><span class="op">)</span>, <span class="va">lopho</span> <span class="op">)</span> </span>
+<span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I broke up the plotting into several lines to improve readability, it is not necessary to to this in practice though. The addition of additional <code>geom_</code> objects to the plot will layer them on top (n.b., I also passed the <em>size=4</em> option to the plot as the default point size is a bit too small and this is how you could change that).</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span>  <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/geom_nodeset.html">geom_nodeset</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Longitude</span>, y<span class="op">=</span><span class="va">Latitude</span><span class="op">)</span>, <span class="va">lopho</span>, size<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>And then you can add additional options to the plot, like axis labels and a less exciting background theme (the <code>theme_empty()</code> provided by <strong>popgraph</strong> is actually transparent so you can save the image and throw it into a presentation as necessary).</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/geom_edgeset.html">geom_edgeset</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Longitude</span>,y<span class="op">=</span><span class="va">Latitude</span><span class="op">)</span>, <span class="va">lopho</span>, color<span class="op">=</span><span class="st">"darkgrey"</span> <span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/geom_nodeset.html">geom_nodeset</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Longitude</span>, y<span class="op">=</span><span class="va">Latitude</span>, color<span class="op">=</span><span class="va">Region</span>, size<span class="op">=</span><span class="va">size</span><span class="op">)</span>, <span class="va">lopho</span><span class="op">)</span> </span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Longitude"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Latitude"</span><span class="op">)</span> </span>
+<span><span class="va">p</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can also use the default layout routines in <em>igraph</em> for visualization. Here is an example using Fruchterman-Reingold algorithm.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/">igraph</a></span><span class="op">)</span></span>
+<span><span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/layout.fruchterman.reingold.html">layout.fruchterman.reingold</a></span><span class="op">(</span> <span class="va">lopho</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">c</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">c</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/geom_edgeset.html">geom_edgeset</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span>, <span class="va">lopho</span>, color<span class="op">=</span><span class="st">"darkgrey"</span> <span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/geom_nodeset.html">geom_nodeset</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, color<span class="op">=</span><span class="va">Region</span>, size<span class="op">=</span><span class="va">size</span><span class="op">)</span>, <span class="va">lopho</span><span class="op">)</span> </span>
+<span><span class="va">p</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="reading-existing-popgraph-files" class="level3" data-number="28.1.2"><h3 data-number="28.1.2" class="anchored" data-anchor-id="reading-existing-popgraph-files">
+<span class="header-section-number">28.1.2</span> Reading Existing <strong>popgraph</strong> Files</h3>
+<p>The online versions of Population Graphs provides a *.pgraph file for visualization. These files are visualized in several different software platforms including GeneticStudio (Dyer 2009), a OpenGL visualization application (Dyer &amp; Nason 2004), an online visualization framework at http://dyerlab.org, and of course, in R. We shall focus on this last one. Reading in files to R</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu">read.popgraph</span><span class="op">(</span> <span class="st">"thegraph.pgraph"</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="saving-population-graph-objects" class="level3" data-number="28.1.3"><h3 data-number="28.1.3" class="anchored" data-anchor-id="saving-population-graph-objects">
+<span class="header-section-number">28.1.3</span> Saving Population Graph Objects</h3>
+<p>A <strong>popgraph</strong> object is a normal R object and can be saved using the normal R mechanisms.</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span> <span class="va">lopho</span>, file<span class="op">=</span><span class="st">"MyLophoGraph.rda"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For interoperability, <strong>popgraph</strong> objects can also be saved in other formats. These are accessed through the <code>write.popgraph()</code> function.</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">write.popgraph</span><span class="op">(</span><span class="va">lopho</span>,file<span class="op">=</span><span class="st">"~/Desktop/Cactus.pgraph"</span>, format<span class="op">=</span><span class="st">"pgraph"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are several other options available for outputing your graph. Currently the other formats that have been implemented are:</p>
+<ol type="1">
+<li>
+<code>json</code> A format for html javascript data processing.<br>
+</li>
+</ol>
+<ul>
+<li>
+<code>kml</code> The Keyhole Markup Language which is read by GoogleEarth. This requires <code>Latitude</code> and <code>Longtitude</code> vertex properties.</li>
+<li>
+<code>graphml</code> The graph markup language.</li>
+<li>
+<code>html</code> Export as an interactive html document you can manipulate on your desktop (uses javascript d3.js library so you need an internet connection).</li>
+<li>
+<code>pajek</code> Export to a format that works with the software Pajek (http://pajek.imfm.si/doku.php?id=pajek)</li>
+<li>
+<code>pgraph</code> The format used in GeneticStudio and the original popgraph 3D viewer (this is the default).</li>
+<li>
+<code>adjacency</code> Saves the adjacency matrix of the graph (binary) as a CSV file</li>
+<li>
+<code>paths</code> Saves the shortest paths matrix as a CSV file</li>
+<li>
+<code>weights</code> Saves the adjacency matrix with edge weights.</li>
+</ul></section></section><section id="interactive-networks" class="level2" data-number="28.2"><h2 data-number="28.2" class="anchored" data-anchor-id="interactive-networks">
+<span class="header-section-number">28.2</span> Interactive Networks</h2>
+<p>To create a popgraph, you need to pass the <code><a href="https://rdrr.io/pkg/popgraph/man/popgraph.html">popgraph()</a></code> function genotypes as multivariate variables—the function <code><a href="https://rdrr.io/pkg/gstudio/man/to_mv.html">to_mv()</a></code> does this behind the scene—and a vector of variables that allocate each row of data to a node. Here we use the ‘Population’ vector from the arapat <code>data.frame</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">popgraph</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">)</span></span>
+<span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/popgraph.html">popgraph</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/to_mv.html">to_mv</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">)</span>,groups <span class="op">=</span> <span class="va">arapat</span><span class="op">$</span><span class="va">Population</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>IGRAPH 0e03647 UNW- 39 71 -- 
++ attr: name (v/c), size (v/n), weight (e/n)
++ edges from 0e03647 (vertex names):
+ [1] 101--102   101--32    102--32    12 --161   12 --165   12 --93   
+ [7] 153--165   153--58    156--157   156--48    156--73    156--75   
+[13] 157--48    157--Aqu   157--ESan  159--171   159--173   159--89   
+[19] 160--168   160--169   160--93    160--SFr   161--162   161--165  
+[25] 161--93    161--SFr   162--64    162--77    162--93    163--75   
+[31] 163--Const 163--ESan  164--165   164--169   164--51    164--Const
+[37] 164--SFr   165--168   165--169   165--77    166--168   168--51   
+[43] 168--58    168--64    168--77    169--58    169--93    169--SFr  
++ ... omitted several edges</code></pre>
+</div>
+</div>
+<p>The <code><a href="https://rdrr.io/pkg/networkD3/man/forceNetwork.html">forceNetwork()</a></code> function is what does the plotting and it needs some data that are in a specific format. Essentially, there needs to be two <code>data.frame</code> objects with the following attributes:</p>
+<ul>
+<li>
+<strong>nodes</strong> - A <code>data.frame</code> with each row representing the name of the node to be displayed, the group the node belongs to (if there are groupings of nodes to be displayed by alternative colors), and a vector of node sizes.<br>
+</li>
+<li>
+<strong>edges</strong> - A <code>data.frame</code> representing the edge connecting the nodes, labeled as ‘from’ and ‘to’ and a vector of weights.</li>
+</ul>
+<p>The ‘from’ and ‘to’ vectors need to be numeric values of the nodes in the other data frame <strong>and</strong> need to be 0-indexed (e.g., the first node name it is going to look up is indexed as ‘0’ in the javascript instead of ‘1’ as is common in R).</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_data.frame.html">to_data.frame</a></span><span class="op">(</span> <span class="va">graph</span>, mode<span class="op">=</span><span class="st">"nodes"</span>, as.named<span class="op">=</span><span class="cn">FALSE</span> <span class="op">)</span></span>
+<span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_data.frame.html">to_data.frame</a></span><span class="op">(</span> <span class="va">graph</span>, mode<span class="op">=</span><span class="st">"edges"</span>, as.named<span class="op">=</span><span class="cn">FALSE</span> <span class="op">)</span></span>
+<span><span class="va">edges</span><span class="op">$</span><span class="va">source</span> <span class="op">&lt;-</span> <span class="va">edges</span><span class="op">$</span><span class="va">source</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span><span class="va">edges</span><span class="op">$</span><span class="va">target</span> <span class="op">&lt;-</span> <span class="va">edges</span><span class="op">$</span><span class="va">target</span> <span class="op">-</span> <span class="fl">1</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The only last thing to do is to define a grouping of populations. This will be represented in the network as a coloring. For this one, I’m going to use the hypothesized STRUCTURE clustering (see @ref(admixture) for how this was done). In the <code>arapat</code> data set, there is a designation for each individual on which cluster they belong. Some populations are ‘pure’ in their groupings but others (in spatial regions of sympatry) they are mixed. Below I determine the estimated STRUCTURE groups for each population and collapse those who have more than one into a single string.</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">grps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/by.html">by</a></span><span class="op">(</span> <span class="va">arapat</span><span class="op">$</span><span class="va">Cluster</span>, <span class="va">arapat</span><span class="op">$</span><span class="va">Population</span>, <span class="va">unique</span> <span class="op">)</span></span>
+<span><span class="va">l</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span> <span class="va">grps</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">"/"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> name<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">l</span><span class="op">)</span>, group<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">l</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span> <span class="va">nodes</span>, <span class="va">df</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once defined, we can then call the function to make the <code>data.frame</code> objects and then do the plot. These graphics are <em>interactive</em>, grab a node and drag it around!</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://christophergandrud.github.io/networkD3/">networkD3</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/networkD3/man/forceNetwork.html">forceNetwork</a></span><span class="op">(</span>Links <span class="op">=</span> <span class="va">edges</span>, Nodes <span class="op">=</span> <span class="va">nodes</span>,</span>
+<span>            Source <span class="op">=</span> <span class="st">"source"</span>, Target <span class="op">=</span> <span class="st">"target"</span>,</span>
+<span>            Value <span class="op">=</span> <span class="st">"value"</span>, NodeID <span class="op">=</span> <span class="st">"name"</span>,</span>
+<span>            Group <span class="op">=</span> <span class="st">"group"</span>, opacity<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span>            legend<span class="op">=</span><span class="cn">TRUE</span>, fontSize <span class="op">=</span> <span class="fl">16</span>,</span>
+<span>            zoom<span class="op">=</span><span class="cn">TRUE</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="spatial-population-graphs" class="level2" data-number="28.3"><h2 data-number="28.3" class="anchored" data-anchor-id="spatial-population-graphs">
+<span class="header-section-number">28.3</span> Spatial Population Graphs</h2>
+<p>Mapping the nodes and edges onto real space is a key task in the understanding of how covariance is partitioned on the landscape. There are several approaches that can be used in R since it is such a flexible platform. In what follows I will use a series of techniques that I find useful ordered from the simplest to the more complicated.</p>
+<section id="integrating-google-and-ggplot2-for-plotting" class="level3" data-number="28.3.1"><h3 data-number="28.3.1" class="anchored" data-anchor-id="integrating-google-and-ggplot2-for-plotting">
+<span class="header-section-number">28.3.1</span> Integrating Google and <strong>ggplot2</strong> for Plotting</h3>
+<p>R has some pretty good facilities for using spatial assests from Google and OpenStreetMaps and is a very easy way to get quick plots from Population Graphs, particularly if you can integrate it into the <strong>ggplot2</strong> framework.</p>
+<p>Using the <strong>ggmap</strong> package, you can request map tiles and use as backgrounds onto which you can plot specific objects. To do so, you must first get:</p>
+<ul>
+<li>Either the centroid of the location you are interested in finding and a value of zoom (just like in google maps), or</li>
+<li>A bounding box with left, bottom, right, top coordinates. This is a bit of an experimental thing and does not always get you what you want.</li>
+</ul>
+<p>Some fiddling is required with either way you go. The map you get from <code><a href="https://rdrr.io/pkg/ggmap/man/get_map.html">get_map()</a></code> is essentially a huge matrix of hex colors as shown above.</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dkahle/ggmap">ggmap</a></span><span class="op">)</span></span>
+<span><span class="va">location</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">Longitude</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">Latitude</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">location</span></span>
+<span><span class="va">map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/get_map.html">get_map</a></span><span class="op">(</span><span class="va">location</span>,maptype<span class="op">=</span><span class="st">"satellite"</span>, zoom<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">map</span><span class="op">)</span></span>
+<span><span class="va">map</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This map object can be passed on to <code><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap()</a></code>, which replaces the traditional <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> funciton and sets up the bounding box in terms of Latitude and Longtidue. Onto this, you can plot the graph topologoy using:</p>
+<ul>
+<li>
+<code><a href="https://rdrr.io/pkg/popgraph/man/geom_edgeset.html">geom_edgeset()</a></code> This takes the graph and plots out the edges.<br>
+</li>
+<li>
+<code><a href="https://rdrr.io/pkg/popgraph/man/geom_nodeset.html">geom_nodeset()</a></code> This plots out the nodes. You could probably use a regular <em>data.frame</em> and <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> as well. Here is an example:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span><span class="op">(</span> <span class="va">map</span> <span class="op">)</span> </span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/geom_edgeset.html">geom_edgeset</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Longitude</span>,y<span class="op">=</span><span class="va">Latitude</span><span class="op">)</span>, <span class="va">lopho</span>, color<span class="op">=</span><span class="st">"white"</span> <span class="op">)</span> </span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/geom_nodeset.html">geom_nodeset</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Longitude</span>, y<span class="op">=</span><span class="va">Latitude</span>, color<span class="op">=</span><span class="va">Region</span>, size<span class="op">=</span><span class="va">size</span><span class="op">)</span>, <span class="va">lopho</span><span class="op">)</span> </span>
+<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Longitude"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Latitude"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="integrating-raster-maps" class="level3" data-number="28.3.2"><h3 data-number="28.3.2" class="anchored" data-anchor-id="integrating-raster-maps">
+<span class="header-section-number">28.3.2</span> Integrating Raster Maps</h3>
+<p>At times we have raster data upon we can plot a population graph. Here is an example from Baja California. The underlying raster image is croped from a WorldClim tile and represents elevation.</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster">raster</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">alt</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">alt</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Since it is a <strong>raster</strong> object, it knows how to plot itself relatively well. There are a ton of good references for showing you how to play with raster data (e.g., Bivand <em>et al.</em> 2008)</p>
+<p>To plot our graph onto this topology, we export the spatial components of the graph into objects that interact with rasters. The packages provides simple extraction of features into <code>SpatialLines</code> and <code>SpatialPoints</code> objects.</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lopho.nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_SpatialPoints.html">to_SpatialPoints</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span></span>
+<span><span class="va">lopho.nodes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatialPoints 
+features    : 21 
+extent      : -114.73, -109.99, 23.58, 31.95  (xmin, xmax, ymin, ymax)
+crs         : NA </code></pre>
+</div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lopho.edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_SpatialLines.html">to_SpatialLines</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lopho.edges</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatialLines 
+features    : 1 
+extent      : -111.79, -109.99, 24.04, 26.59  (xmin, xmax, ymin, ymax)
+crs         : NA </code></pre>
+</div>
+</div>
+<p>Once we have them extracted into the right format, we can add them to the raster plot. I plot the nodes twice to overlay a circular icon (<code>pch=16</code>) onto the default cross marker and make them 50 % larger (<code>cex=1.5</code>).</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="va">alt</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="va">lopho.edges</span>, add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="st">"#555555"</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="va">lopho.nodes</span>, add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="st">"black"</span>, cex<span class="op">=</span><span class="fl">1.5</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="va">lopho.nodes</span>, add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">color</span>, pch<span class="op">=</span><span class="fl">16</span>, cex<span class="op">=</span><span class="fl">1.5</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="extracting-spatial-data-using-population-graphs" class="level2" data-number="28.4"><h2 data-number="28.4" class="anchored" data-anchor-id="extracting-spatial-data-using-population-graphs">
+<span class="header-section-number">28.4</span> Extracting Spatial Data Using Population Graphs</h2>
+<p>Since we are dealing with the spatial stuff right now, it makes sense to look into how we can use the topological features of the graph to extract spatial data.</p>
+<section id="node-specific-data" class="level3" data-number="28.4.1"><h3 data-number="28.4.1" class="anchored" data-anchor-id="node-specific-data">
+<span class="header-section-number">28.4.1</span> Node Specific Data</h3>
+<p>The node data <code>nodes</code> is a <code>SpatialPoints</code> object and can be used to pull data from raster sources. I’ll start by creating a <code>data.frame</code> with some existing data in it.</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df.nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Pop<span class="op">=</span><span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">name</span>, Latitude<span class="op">=</span><span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">Latitude</span>, Longitude<span class="op">=</span><span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">Longitude</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then we can extract the elevation from the <code>alt</code> raster as:</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster">raster</a></span><span class="op">)</span></span>
+<span><span class="va">df.nodes</span><span class="op">$</span><span class="va">Elevation</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/extract.html">extract</a></span><span class="op">(</span> <span class="va">alt</span>, <span class="va">lopho.nodes</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df.nodes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Pop               Latitude       Longitude        Elevation    
+ Length:21          Min.   :23.58   Min.   :-114.7   Min.   :  5.0  
+ Class :character   1st Qu.:25.73   1st Qu.:-112.9   1st Qu.: 14.0  
+ Mode  :character   Median :28.82   Median :-112.0   Median : 66.0  
+                    Mean   :27.91   Mean   :-112.2   Mean   :159.2  
+                    3rd Qu.:29.73   3rd Qu.:-111.3   3rd Qu.:259.0  
+                    Max.   :31.95   Max.   :-110.0   Max.   :667.0  </code></pre>
+</div>
+</div>
+<p>Additional data could be extracted from other rasters. See http://worldclim.org for some example data that may prove useful.</p>
+</section><section id="extracting-data-along-popgraph-edges" class="level3" data-number="28.4.2"><h3 data-number="28.4.2" class="anchored" data-anchor-id="extracting-data-along-popgraph-edges">
+<span class="header-section-number">28.4.2</span> Extracting Data Along Popgraph Edges</h3>
+<p>It is also possible to extract data along vectors, or other <em>SpatialLines</em> objects, which the edges in a popgraph can be tranformed into. This is a particularly helpful approach if you are trying to quantify the value of characteristics of the environment between your sampling locations. In the following example, I estimate the popualtion graph from the <code>arapat</code> data set</p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/popgraph.html">popgraph</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/to_mv.html">to_mv</a></span><span class="op">(</span> <span class="va">arapat</span> <span class="op">)</span>, <span class="va">arapat</span><span class="op">$</span><span class="va">Population</span> <span class="op">)</span></span>
+<span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/strata_coordinates.html">strata_coordinates</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">)</span></span>
+<span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/decorate_graph.html">decorate_graph</a></span><span class="op">(</span> <span class="va">graph</span>, <span class="va">coords</span> <span class="op">)</span></span>
+<span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_SpatialLines.html">to_SpatialLines</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://edzer.github.io/sp/reference/is.projected.html">proj4string</a></span><span class="op">(</span><span class="va">edges</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://edzer.github.io/sp/reference/CRS-class.html">CRS</a></span><span class="op">(</span> <span class="fu"><a href="https://edzer.github.io/sp/reference/is.projected.html">proj4string</a></span><span class="op">(</span> <span class="va">alt</span> <span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="va">alt</span>, legend<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">edges</span>,add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>and determine which of the edges has the longest length.</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">edge_lengths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://edzer.github.io/sp/reference/SpatialLines.html">SpatialLinesLengths</a></span><span class="op">(</span> <span class="va">edges</span> <span class="op">)</span></span>
+<span><span class="va">longest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span> <span class="va">edge_lengths</span>,decreasing <span class="op">=</span> <span class="cn">TRUE</span> <span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">longest</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Edge 164 SFr 
+    322.8491 </code></pre>
+</div>
+</div>
+<p>This edge is found at:</p>
+<div class="cell">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span> <span class="va">edge_lengths</span> <span class="op">==</span> <span class="va">longest</span> <span class="op">)</span></span>
+<span><span class="va">idx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Edge 164 SFr 
+          37 </code></pre>
+</div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">edge</span> <span class="op">&lt;-</span> <span class="va">edges</span><span class="op">[</span> <span class="fl">37</span> <span class="op">]</span></span>
+<span><span class="va">edge</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatialLines 
+features    : 1 
+extent      : -112.964, -111.5441, 24.74642, 27.3632  (xmin, xmax, ymin, ymax)
+crs         : +proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs </code></pre>
+</div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span> <span class="va">alt</span>, legend<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">edge</span>,add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From this edge object (or a collection of edge objects) we can again extract values from a raster. Here I pull out the elevation profile of this edge. To plot it, I need to make a sequence of latitude values equal in length to that of the observed elevation values I extracted.</p>
+<div class="cell">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">elev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/extract.html">extract</a></span><span class="op">(</span> <span class="va">alt</span>, <span class="va">edge</span> <span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">from_lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span><span class="op">$</span><span class="va">Latitude</span><span class="op">[</span><span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span><span class="op">$</span><span class="va">name</span> <span class="op">==</span> <span class="st">"SFr"</span><span class="op">]</span></span>
+<span><span class="va">to_lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span><span class="op">$</span><span class="va">Latitude</span><span class="op">[</span> <span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span><span class="op">$</span><span class="va">name</span> <span class="op">==</span> <span class="st">"164"</span><span class="op">]</span></span>
+<span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span> from<span class="op">=</span><span class="va">from_lat</span>, to<span class="op">=</span><span class="va">to_lat</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> Latitude<span class="op">=</span><span class="va">lat</span>, Elevation<span class="op">=</span><span class="va">elev</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span> <span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Latitude</span>,<span class="va">Elevation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">"lightgrey"</span><span class="op">)</span> </span>
+<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Elevation (m)"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Population Graphs have been used to determine if there is an preference (or avoidance) of a specific raster value for the location of individual edges on the landscape. For example, Dyer <em>et al.</em> (2012) were interested in determining if there the edge in the pollination graph (e.g., a population graph constructed from male pollen haplotypes) preferentially traverse (or avoid) specific intervening habitat features. To do this, they permuted the edge set among nodes in the graph and recorded the prevalence (mean and variance) of specific features extracted from specific categorical rasters representing both canopy and understory features. The permutation of a network should be done such that you preserve aspects of the spatial heterogeneity and spatial arrangement of the nodes on the landscape. You probably do not want to permute all edges randomly in the graph (though this option is available in the code), but would probably be better served by permuting the network while maintaining both the node coordinates (e.g., where they exist on the landscape) as well as the degree distribution of the overall network. This second criteria holds constant higher network structure. The general idea is to:</p>
+<ol type="1">
+<li>Create a saturated graph and extract ecological features for all potential connections. This gives us a <code>data.frame</code> within which we can pull out ecological values for each permutation. This is the most computationally intensive process and doing it once and then extracting values from the <code>data.frame</code> for each permutation is a more efficient approach.</li>
+<li>Once you have all the potential values of your features, you can permute the observed matrix, while holding both the connection probability (e.g., the number of edges) and the degree distribution (e.g., the amount of edges connected to nodes) constant using the <code>randomize_graph</code> function included in the <code>popgraph</code> library. For each permutation, you then compile the permuted environmental factor as a null distribution and then compare those to the observed.</li>
+</ol>
+<p>This may sound a bit convoluted, but this example may help. Consider the hypothetical case where we think that the edges in the population graph from Figure @ref(fig:popgraphInBaja), are restricted in elevation because we believe that dispersing insects fly around high elevation mountains rather than over them.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> If this is true, then we should expect that the average (or max) elevation along any of the observed edges in the Population Graph would be less than what would be expected if we permuted the edges among nodes and measured elevation along edges from permuted graphs.</p>
+<p>First, we need to set up the network and extract values of elevation along all potential edges. I make a saturated graph from all potential</p>
+<div class="cell">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">baja</span><span class="op">)</span></span>
+<span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/popgraph.html">popgraph</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/to_mv.html">to_mv</a></span><span class="op">(</span> <span class="va">arapat</span> <span class="op">)</span>, <span class="va">arapat</span><span class="op">$</span><span class="va">Population</span> <span class="op">)</span></span>
+<span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/decorate_graph.html">decorate_graph</a></span><span class="op">(</span> <span class="va">graph</span>, <span class="va">coords</span> <span class="op">)</span></span>
+<span><span class="va">allpops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span><span class="op">$</span><span class="va">name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I then can make an adjacency matrix connecting all pairs of populations</p>
+<div class="cell">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span>,nrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">allpops</span><span class="op">)</span>,ncol<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">allpops</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">allpops</span></span>
+<span><span class="va">saturated_graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/graph.adjacency.html">graph.adjacency</a></span><span class="op">(</span><span class="va">A</span>, mode <span class="op">=</span> <span class="st">"undirected"</span><span class="op">)</span></span>
+<span><span class="va">saturated_graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/as.popgraph.html">as.popgraph</a></span><span class="op">(</span> <span class="va">saturated_graph</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From which I can pull all the edges (all 741 of them) as <code>SpatialLines</code> objects</p>
+<div class="cell">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">saturated_graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/decorate_graph.html">decorate_graph</a></span><span class="op">(</span> <span class="va">saturated_graph</span>, <span class="va">coords</span> <span class="op">)</span></span>
+<span><span class="va">all_edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_SpatialLines.html">to_SpatialLines</a></span><span class="op">(</span> <span class="va">saturated_graph</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From these 741 <code>SpatialLines</code> objects, we can extract data from the elevation raster.</p>
+<div class="cell">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">edge_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/extract.html">extract</a></span><span class="op">(</span> <span class="va">alt</span>, <span class="va">all_edges</span>, fun<span class="op">=</span><span class="va">max</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span>, df<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will take a bit of time to complete. The options that I provided were:<br>
+- <code>fun=max</code> - The function used is the max function. - <code>na.rm=TRUE</code> - Ignore all missing data (e.g., when an edge crosses water on the <code>alt</code> raster, the extracted values are <code>NA</code>) - <code>df=TRUE</code> - Return the answer as a <code>data.frame</code> object instead of just a vector.</p>
+<div class="cell">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"./spatial_data/edge_values.rmd"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This <code>data.frame</code> has two columns, one for edge number and the other for value. I’m going to put an additional pair of columns with the names of the nodes the edges are connected to into this <code>data.frame</code></p>
+<div class="cell">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">edge_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as_edgelist.html">as_edgelist</a></span><span class="op">(</span> <span class="va">saturated_graph</span> <span class="op">)</span></span>
+<span><span class="va">edge_values</span><span class="op">$</span><span class="va">Nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span> <span class="va">edge_names</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">edge_names</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">"-"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">edge_values</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ID alt_22   Nodes
+1  1     25 101-102
+2  2    906  101-12
+3  3     31 101-153
+4  4     72 101-156
+5  5   1079 101-157
+6  6   1361 101-159</code></pre>
+</div>
+</div>
+<p>This constitutes <em>all potential</em> connections across the landscape. From this we can extract the edges that we observed in the original Population Graph</p>
+<div class="cell">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as_edgelist.html">as_edgelist</a></span><span class="op">(</span> <span class="va">graph</span> <span class="op">)</span></span>
+<span><span class="va">obs</span> <span class="op">&lt;-</span> <span class="va">edge_values</span><span class="op">$</span><span class="va">alt_22</span><span class="op">[</span> <span class="va">edge_values</span><span class="op">$</span><span class="va">Nodes</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span> <span class="va">e</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">e</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">"-"</span><span class="op">)</span> <span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">obs</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 744.5634</code></pre>
+</div>
+</div>
+<p>We can now permute the network a moderate number of times and take the values of permuted elevation to see if our observed are smaller than all potential elevations for this specific network.</p>
+<div class="cell">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">perm_elev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">999</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span> <span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">perm_elev</span><span class="op">)</span> <span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">perm_graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/randomize_graph.html">randomize_graph</a></span><span class="op">(</span> <span class="va">graph</span> <span class="op">)</span></span>
+<span>  <span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as_edgelist.html">as_edgelist</a></span><span class="op">(</span> <span class="va">perm_graph</span> <span class="op">)</span></span>
+<span>  <span class="va">perm_val</span> <span class="op">&lt;-</span> <span class="va">edge_values</span><span class="op">$</span><span class="va">alt_22</span><span class="op">[</span> <span class="va">edge_values</span><span class="op">$</span><span class="va">Nodes</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span> <span class="va">e</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">e</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, sep<span class="op">=</span><span class="st">"-"</span><span class="op">)</span> <span class="op">]</span></span>
+<span>  <span class="va">perm_elev</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">perm_val</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we can see where the observed value occurs in the distribution of elevations created under the null hypothesis of no difference in elevation across edges.</p>
+<div class="cell">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> Elevation<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">obs</span><span class="op">)</span>,<span class="va">perm_elev</span><span class="op">)</span>, Category<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Observed"</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Permuted"</span>,<span class="fl">999</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span> <span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Elevation</span>,fill<span class="op">=</span><span class="va">Category</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>stat<span class="op">=</span><span class="st">"bin"</span>, bins<span class="op">=</span><span class="fl">40</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Elevation (m)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Distribution of Permuted Elevations"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In fact, we can estimate the probablity as:</p>
+<div class="cell">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">obs</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="va">perm_elev</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>As it turns out, the observed edges do in fact appear to be traversing lower elevations than the potential set of edges that could be present (while controlling for spatial location of populations and graph structure).</p>
+<!-------------  XXXXXXX   ---------------->
+</section></section><section id="extracting-graph-theoretic-parameters" class="level2" data-number="28.5"><h2 data-number="28.5" class="anchored" data-anchor-id="extracting-graph-theoretic-parameters">
+<span class="header-section-number">28.5</span> Extracting Graph-Theoretic Parameters</h2>
+<p>The underlying structure of a <strong>popgraph</strong> object is based upon the <strong>igraph</strong> package from Gabor Csardi. A population graph is essentially a specific kind of <strong>igraph</strong>object and can be decorated with metadata that is useful for spatial population genetic analyses. As such, there is a wealth of existing analyses from both the <strong>igraph</strong> as well as the <strong>sna</strong> packages that can be used on <strong>popgraph</strong> objects. Here are some examples.</p>
+<section id="matrix-representations-of-population-graph-objects" class="level3" data-number="28.5.1"><h3 data-number="28.5.1" class="anchored" data-anchor-id="matrix-representations-of-population-graph-objects">
+<span class="header-section-number">28.5.1</span> Matrix Representations of Population Graph Objects</h3>
+<p>A graph topology is a graphical representation of a matrix and there are several reasons why you may want to use these matrices. The function <code><a href="https://rdrr.io/pkg/popgraph/man/to_matrix.html">to_matrix()</a></code> is an easy front-end to several kinds of matrices. Matrix structure itself can be defined by adjacency matrics, either binary (the default) or weighed by the edge weight. Several graph-theoretic parameters are derived from the adjacency matrix. Here is an example from our little graph that started this document.</p>
+<div class="cell">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_matrix.html">to_matrix</a></span><span class="op">(</span> <span class="va">lopho</span>, mode<span class="op">=</span><span class="st">"adjacency"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    BaC Ctv LaV Lig PtC
+BaC   0   0   1   1   1
+Ctv   0   0   0   0   0
+LaV   1   0   0   1   1
+Lig   1   0   1   0   1
+PtC   1   0   1   1   0</code></pre>
+</div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_matrix.html">to_matrix</a></span><span class="op">(</span> <span class="va">lopho</span>, mode<span class="op">=</span><span class="st">"edge weight"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          BaC Ctv       LaV      Lig      PtC
+BaC  0.000000   0  9.052676  9.71615 12.38248
+Ctv  0.000000   0  0.000000  0.00000  0.00000
+LaV  9.052676   0  0.000000 12.07282 12.80017
+Lig  9.716150   0 12.072820  0.00000 14.22483
+PtC 12.382480   0 12.800170 14.22483  0.00000</code></pre>
+</div>
+</div>
+<p>In addition to who each node is connected to, it is often of interest to know the length of the shortest path through the matrix connecting nodes. Here is a slightly larger example, using the cactus data so we can look at isolation by graph distance.</p>
+<div class="cell">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cGD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_matrix.html">to_matrix</a></span><span class="op">(</span> <span class="va">lopho</span>, mode<span class="op">=</span><span class="st">"shortest path"</span><span class="op">)</span></span>
+<span><span class="va">cGD</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          BaC       Ctv       LaV      Lig      PtC
+BaC  0.000000  9.195038  9.052676  9.71615 12.38248
+Ctv  9.195038  0.000000 13.083311 15.23302 20.49099
+LaV  9.052676 13.083311  0.000000 12.07282 12.80017
+Lig  9.716150 15.233023 12.072820  0.00000 14.22483
+PtC 12.382480 20.490990 12.800170 14.22483  0.00000</code></pre>
+</div>
+</div>
+<p>It should be noted that the shortest distance through a population graph is defined as the parameter <span class="math inline">\(cGD\)</span>, conditional graph distance (see Dyer <em>et al.</em> 2010 for more information on this parameter).</p>
+<p>Now, we need the physical distance between the nodes. If the physical size of the sampling area is small we could just use the Pythagorean equation. However, here the distance is relatively large and the curvature of the earth may be of interest to take into account. There are seveal functions that will calculate ‘great circle distance’ but the easiest is <code>rdist.earth()</code> from the <strong>fields</strong> funtion.</p>
+<div class="cell">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> Stratum <span class="op">=</span> <span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">name</span>, </span>
+<span>                  Longitude  <span class="op">=</span><span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">Longitude</span>, </span>
+<span>                  Latitude <span class="op">=</span> <span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">Latitude</span> <span class="op">)</span> </span>
+<span><span class="va">pDist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/strata_distance.html">strata_distance</a></span><span class="op">(</span> <span class="va">df</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we can plot these values against each other to see if there is a pattern of ‘isolation by distance’ captured in the graph topology. To do this, I extract only the upper triangle (e.g., the values above the diagonal of each matrix) because they are symmetric matrices and we do not want to look at each datum twice.</p>
+<div class="cell">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> cGD<span class="op">=</span><span class="va">cGD</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri</a></span><span class="op">(</span><span class="va">cGD</span><span class="op">)</span><span class="op">]</span>, Phys<span class="op">=</span><span class="va">pDist</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri</a></span><span class="op">(</span><span class="va">pDist</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">Phys</span>, <span class="va">df</span><span class="op">$</span><span class="va">cGD</span>, method<span class="op">=</span><span class="st">"spearman"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Spearman's rank correlation rho
+
+data:  df$Phys and df$cGD
+S = 729992, p-value &lt; 2.2e-16
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.5270434 </code></pre>
+</div>
+</div>
+<p>We can plot these values and make a trendline pretty easily. Here is a plot using <strong>ggplot2</strong> (a very nice plotting library; you could use <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> to do the normal plotting but I think <strong>ggplot2</strong> does such a nice job I encourage its use).</p>
+<div class="cell">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/qplot.html">qplot</a></span><span class="op">(</span> <span class="va">Phys</span>, <span class="va">cGD</span>, geom<span class="op">=</span><span class="st">"point"</span>, data<span class="op">=</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">stat_smooth</a></span><span class="op">(</span>method<span class="op">=</span><span class="st">"loess"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Physical Distance"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Conditional Genetic Distance"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The trendline is the loess predicted line with confidence interval.</p>
+</section><section id="node-specific-parameters" class="level3" data-number="28.5.2"><h3 data-number="28.5.2" class="anchored" data-anchor-id="node-specific-parameters">
+<span class="header-section-number">28.5.2</span> Node Specific Parameters</h3>
+<p>Features of the topology can be extracted as either properties of the nodes or the edges. Node properties may provide insights into localized processes (e.g., a ‘sink’ population). There are a lot of different parameters that can be derived and several packages in R that help out. Here are some basic ones.</p>
+<div class="cell">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df.nodes</span><span class="op">$</span><span class="va">closeness</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/closeness.html">closeness</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span></span>
+<span><span class="va">df.nodes</span><span class="op">$</span><span class="va">betweenness</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/betweenness.html">betweenness</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span></span>
+<span><span class="va">df.nodes</span><span class="op">$</span><span class="va">degree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/degree.html">degree</a></span><span class="op">(</span> <span class="va">lopho</span> <span class="op">)</span></span>
+<span><span class="va">df.nodes</span><span class="op">$</span><span class="va">eigenCent</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/evcent.html">evcent</a></span><span class="op">(</span> <span class="va">lopho</span> <span class="op">)</span><span class="op">$</span><span class="va">vector</span></span>
+<span><span class="va">df.nodes</span><span class="op">$</span><span class="va">Region</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/V.html">V</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">Region</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df.nodes</span>,color<span class="op">=</span><span class="st">"Region"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Pop               Latitude       Longitude        Elevation    
+ Length:21          Min.   :23.58   Min.   :-114.7   Min.   :  5.0  
+ Class :character   1st Qu.:25.73   1st Qu.:-112.9   1st Qu.: 14.0  
+ Mode  :character   Median :28.82   Median :-112.0   Median : 66.0  
+                    Mean   :27.91   Mean   :-112.2   Mean   :159.2  
+                    3rd Qu.:29.73   3rd Qu.:-111.3   3rd Qu.:259.0  
+                    Max.   :31.95   Max.   :-110.0   Max.   :667.0  
+   closeness         betweenness        degree        eigenCent         Region
+ Min.   :0.002202   Min.   : 0.00   Min.   :3.000   Min.   :0.0005975   1:12  
+ 1st Qu.:0.002466   1st Qu.: 0.00   1st Qu.:4.000   1st Qu.:0.0040621   2: 9  
+ Median :0.002919   Median : 4.00   Median :5.000   Median :0.1514601         
+ Mean   :0.002891   Mean   :17.43   Mean   :4.952   Mean   :0.3043499         
+ 3rd Qu.:0.003227   3rd Qu.:25.00   3rd Qu.:6.000   3rd Qu.:0.6687298         
+ Max.   :0.003844   Max.   :98.00   Max.   :7.000   Max.   :1.0000000         </code></pre>
+</div>
+</div>
+<p>The relationship betwwen the node variables can be evaluated in a pair plot.</p>
+<div class="cell">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/">GGally</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html">ggpairs</a></span><span class="op">(</span><span class="va">df.nodes</span>,columns<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">9</span>, color<span class="op">=</span><span class="st">'Region'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="edge-specific-parameters" class="level3" data-number="28.5.3"><h3 data-number="28.5.3" class="anchored" data-anchor-id="edge-specific-parameters">
+<span class="header-section-number">28.5.3</span> Edge Specific Parameters</h3>
+<p>Edges may have specific properties as well. Here are some examples using betweeness centrality, community, and regionality (if the edge connects within Baja or Sonora or crosses the Sea of Cortéz).</p>
+<div class="cell">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df.edge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> Weight<span class="op">=</span><span class="fu"><a href="https://r.igraph.org/reference/E.html">E</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span><span class="op">$</span><span class="va">weight</span> <span class="op">)</span></span>
+<span><span class="va">df.edge</span><span class="op">$</span><span class="va">betweenness</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/edge.betweenness.html">edge.betweenness</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span></span>
+<span><span class="va">df.edge</span><span class="op">$</span><span class="va">Region</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Baja"</span>,<span class="fl">52</span><span class="op">)</span></span>
+<span><span class="va">df.edge</span><span class="op">$</span><span class="va">Region</span><span class="op">[</span><span class="fl">36</span><span class="op">:</span><span class="fl">52</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Sonora"</span></span>
+<span><span class="va">df.edge</span><span class="op">$</span><span class="va">Region</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">11</span>,<span class="fl">24</span>,<span class="fl">27</span>,<span class="fl">35</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Cortez"</span></span>
+<span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html">ggpairs</a></span><span class="op">(</span><span class="va">df.edge</span>, color<span class="op">=</span><span class="st">"Region"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="testing-for-topological-congruence" class="level2" data-number="28.6"><h2 data-number="28.6" class="anchored" data-anchor-id="testing-for-topological-congruence">
+<span class="header-section-number">28.6</span> Testing for Topological Congruence</h2>
+<p>If you have more than one topology and the node sets overlap sufficiently, you can test for the topological congruence of the two. There are several specific reasons why population graph topologies may be congruent. In this section we use the spatial genetic structure of the Senita cactus (<em>Lophocereus schottii</em>) and its obligate pollinator, <em>Upiga virescens</em> as an example. This is an obligate pollination mutualism and as such we should expect there to be some degree of spatial genetic congruence between the species due to this co-evolution.</p>
+<div class="cell">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">upiga</span><span class="op">)</span></span>
+<span><span class="va">upiga</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/decorate_graph.html">decorate_graph</a></span><span class="op">(</span><span class="va">upiga</span>,<span class="va">baja</span>,stratum<span class="op">=</span><span class="st">"Population"</span><span class="op">)</span></span>
+<span><span class="va">upiga.nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_SpatialPoints.html">to_SpatialPoints</a></span><span class="op">(</span><span class="va">upiga</span><span class="op">)</span></span>
+<span><span class="va">upiga.edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_SpatialLines.html">to_SpatialLines</a></span><span class="op">(</span><span class="va">upiga</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>These two data sets were ‘mostly’ collected in the same physical locations. Here is a comparison of the two topologies.</p>
+<div class="cell">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">lopho</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">upiga</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can clearly see some differences in both the node and edge sets. However, given the relationship between these organisms, there is an expectation that they should share some spatial structure. The function <code><a href="https://rdrr.io/pkg/popgraph/man/congruence_topology.html">congruence_topology()</a></code> is designed to extract the congruence graph that is the intersection of both node and edge sets. If the node sets are not completely overlapping (in this case they are not), it will give you a warning. If you want to compare topologies, you must start with identical node sets because the topology in a Population Graph is based upon the entire structure, not just pairwise differences. See the writeup about the <strong>gstudio</strong> package for more information on this.</p>
+<div class="cell">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cong</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/congruence_topology.html">congruence_topology</a></span><span class="op">(</span><span class="va">lopho</span>,<span class="va">upiga</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">cong</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can then take the congruence graph and plot it or work with it in the normal fashion.</p>
+<div class="cell">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cong</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/decorate_graph.html">decorate_graph</a></span><span class="op">(</span> <span class="va">cong</span>, <span class="va">baja</span> <span class="op">)</span></span>
+<span><span class="va">cong.nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_SpatialPoints.html">to_SpatialPoints</a></span><span class="op">(</span><span class="va">cong</span><span class="op">)</span></span>
+<span><span class="va">cong.edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/to_SpatialLines.html">to_SpatialLines</a></span><span class="op">(</span><span class="va">cong</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">alt</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">cong.edges</span>,add<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">cong.nodes</span>,add<span class="op">=</span><span class="cn">T</span>, pch<span class="op">=</span><span class="fl">16</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_graphs_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There are several ways to examine ‘congruence’ in graph topologies, of which I show two. The first method is based upon the correlation of pair-wise distance through the graph for each. That is to say, are proximate nodes in <code>lopho</code> similarily close in <code>upiga</code>? This is called “Distance Congruence” and is based upon a non-parametric correlation of path distances.</p>
+<div class="cell">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/test_congruence.html">test_congruence</a></span><span class="op">(</span><span class="va">lopho</span>,<span class="va">upiga</span>,method<span class="op">=</span><span class="st">"distance"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  distances.graph1 and distances.graph2
+t = 7.3025, df = 118, p-value = 3.6e-11
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.4207347 0.6701315
+sample estimates:
+      cor 
+0.5579029 </code></pre>
+</div>
+</div>
+<p>Another way is to ask about the pattern of connectivity. Based upon the number of nodes and edges in <code>lopho</code> and <code>upiga</code>, are there more in the congruence graph than could be expected if the two graph were just randomly associated? This is called “Structural Congruence” and is determined combinatorially. What is returned by this is the probability having as many edges as observed in the congruence graph given the size of the edge sets in the predictor graphs. You can think of this as the fraction of the area under the line as large or larger than the observed.</p>
+<div class="cell">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/popgraph/man/test_congruence.html">test_congruence</a></span><span class="op">(</span><span class="va">lopho</span>,<span class="va">upiga</span>, method<span class="op">=</span><span class="st">"combinatorial"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       CDF 
+0.03625037 </code></pre>
+</div>
+</div>
+<p>Hope this provides enough of an overview of the <strong>popgraph</strong> package to get you started. If you have any questions feel free to email [mailto://rjdyer@vcu.edu].</p>
+
+
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>This is a truly hypothetical and contrived example to show how you would do this in the code and is not motivated by any biologically motivated reasons. Ya’ gotta make up examples sometimes…<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./distance_networks.html" class="pagination-link" aria-label="Distance Networks">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Distance Networks</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./interactive_visualization.html" class="pagination-link" aria-label="Interactive Visualization">
+        <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Interactive Visualization</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

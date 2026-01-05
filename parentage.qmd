@@ -4,7 +4,6 @@
 
 
 ```{r}
-#| echo: false
 library(knitr)
 library(ggplot2)
 library(gstudio)
@@ -28,7 +27,6 @@ Parentage analyses are used in a broad range of studies:
 * Identifying the source of unknown tissues (e.g., gettin' perps)
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/paternity.png")
 ```
 
@@ -485,7 +483,6 @@ Estimating the Disperal Distribution
 Once a collection of paternity estimates have been determined, you can use them to estimate a *dispersal kernel*, describing the probability of paternity as a function of distance from the maternal individual.
 
 ```{r}
-#| echo: false
 dist <- data.frame( Distance=rchisq(10000,df = 3))
 ggplot(dist, aes(x=Distance)) + geom_density(fill="#99d8c9") + xlab("Physical Distance") + ylab("Probability of Paternity") 
 ```

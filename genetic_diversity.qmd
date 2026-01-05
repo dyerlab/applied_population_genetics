@@ -168,7 +168,6 @@ The front part is a small sample size correction factor.  Its importance in your
 
 ```{r}
 #| label: biasCorrection
-#| echo: false
 #| fig-cap: "Magnitude of the correction factor for small sample size estimations as a function of N."
  library(ggplot2)
 N <- 1:100
@@ -198,7 +197,6 @@ df
 ```
 
 ```{r}
-#| echo: false
 df <- df[ !is.na(df$Hes),]
 p <- format(round(cor(df$He,df$Hes),2),nsmall=3)
 ```

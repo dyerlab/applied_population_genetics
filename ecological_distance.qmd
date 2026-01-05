@@ -6,7 +6,6 @@
 Previously we have been focused on population separation in Euclidean space (e.g., physical distance).  However, populations may be functionally separated by features of the intervening landscape.  It is entirely possible that features existing between populations may influence the ability of gene flow to maintain connectivity between sites.  
 
 ```{r}
-#| echo: false
 #| fig-cap: "Schematics showing consequences of intervening habitat effects on connectivity.  A. Populations A and B separated in Euclidean space (black arrow) have constant resistance to connectivity (red line).  B. Populations separated by similar spatial separation (black arrow) have increased overall resistance to connectivity (red line) due to the presence of the intervening forest."
 knitr::include_graphics("./media/LandscapeResistance.png")
 ```
@@ -17,7 +16,6 @@ Fundamental to the newer ways we are analyzing our data is the concept of resist
 
 ```{r}
 #| label: legos
-#| echo: false
 #| fig-cap: "Resistance as a fundamental concept in understanding population genetic structure.  Resistance, measured between spatial locations can be entirely spatial (isolation by disance), due to barriers (isolation due to barriers), a function of a complex intervening habitat (isolation by resistance), or any combination thereof (insets, clockwise from top)."
 knitr::include_graphics("media/characteristic_model.png")
 ```
@@ -37,6 +35,7 @@ As a demonstration of how we do the actual calculations in `R`, we will start wi
 3. The population `165` is located in a place that the WorldClim rasters do not record land.  The rasters used have a resolution of 30-arc seconds (~1km) and this population is located at a place where that granularity of that grid does not recognize land.
 
 ```{r}
+#| eval: false 
 library(gstudio)
 library(ggrepel)
 library(ggmap)
@@ -51,6 +50,7 @@ ggmap( map ) + geom_point( aes(x=Longitude,y=Latitude),data=coords) +
 To start with, I will use the elevation raster and modifications thereof.  The ultimate goal here is to estimate ecological separation using a variety of algorithms and as such we need to minimize the size of the background raster as much as possible.  In the code below, I take the elevation raster and create the convex hull around the population locations with a smallish buffer around the points so that the outermost populations will not be on the very edge of the data. I further constrain this raster by cutting regions within which we have no evidence that the target species exist, in this case we have almost no records of it occurring above 700m.
 
 ```{r}
+#| eval: false 
 library(rgeos) 
 library(raster)
 alt <- raster("./spatial_data/alt.tif")
@@ -65,6 +65,7 @@ plot(alt, xlab="Longitude", ylab="Latitude")
 To start with, we should probably examine the distribution of the variable we are working with in the locations at which the samples are taken.
 
 ```{r}
+#| eval: false 
 coords$elevation <- extract( alt, coords[,2:3])
 ggplot( coords, aes(x=elevation)) + geom_histogram( binwidth = 25 ) + 
   xlab("Elevation (m)") + ylab("Frequency")
@@ -73,6 +74,7 @@ ggplot( coords, aes(x=elevation)) + geom_histogram( binwidth = 25 ) +
 We can compare this against the 'background' values that we find across the raster, even in places where our samples were not taken.  Deviations observed in the distribution of values sampled from our sites from that defined in the background suggest that our sampling was not entirely random see \@ref(niche-modeling) for a more complete discussion on how to evaluate the relative importance of particular background features in the distribution of your organism.
 
 ```{r}
+#| eval: false 
 s <- values( alt )
 s <- s[ !is.na(s) ]
 Category <- c(rep("Observed",nrow(coords)), rep("Background",length(s)))
@@ -88,17 +90,13 @@ ggplot( df, aes(x=Elevation,fill=Category)) + geom_density( alpha=0.75 ) +
 
 The way in which the intervening habitat may influence genetic connectivity can be both varied and complex.  In R we quantify spatial data using a `raster` format.  As discussed in \@ref(raster-data), a raster is essentially a matrix whose entries represent some value that has both spatial location and extent. 
 
-```{r}
-#| echo: false
-#| fig-cap: "Example raster representing a landscape with two different habitat types on it (light and dark)."
-knitr::include_graphics("./media/RasterGrid.png")
-```
+![](media/RasterGrid.png)
+
 
 Several approaches are available to parameterizing a cost surface.  These range from expert opinion (where someones opinion fills in the gaps), to externally defined variables, to approaches that consider entire ranges of resistance.
 
 ```{r}
 #| label: parameterizedRaster
-#| echo: false
 #| fig-cap: "Dichotomous cost surface containing two features, one four times more difficult to traverse than the other."
 knitr::include_graphics("./media/RasterGridParameterized.png")
 ```
@@ -106,7 +104,6 @@ knitr::include_graphics("./media/RasterGridParameterized.png")
 Independent of how the values are set (though this is a huge component which can be addressed outside the context of how this is done), the raster (as in Figure \@ref(fig:parameterizedRaster)) can be considered as a component of a potential hypothesis.  It is not a complete hypothesis because we must first decide how distances on that raster are estimated---the result of which will be the complete hypothesis.  We return to ways in which distances can be estimated below (\@ref(estimating-separation)).
 
 ```{r}
-#| echo: false
 #| fig-cap: "Individual resistance surfaces may be combined to produce interaction (multivariate) cost distance surfaces.  In this example, the categorial surface (left) is combined with a cost sufrace representing a cline (center raster) to produce via the addition operator a surface representing both (right)."
 knitr::include_graphics("./media/MultivariateCostRaster.png")
 ```
@@ -116,7 +113,6 @@ Once we have a set of cost surfaces defined, our goal is to determine if there a
 
 ```{r}
 #| label: EuclVsEcol
-#| echo: false
 #| fig-cap: "Two different cost surfaces, Euclidean distance (left) and the multivariate ecological distance derived perviously (right).  The extent to which each of these resistance hypotheses can explain the observed genetic distances (graphs over top"
 knitr::include_graphics("./media/EuclideanVsEcological.png")
 ```
@@ -131,7 +127,7 @@ Absolute resistance is the condition by which landscape features provide an inva
 In the example below, I will use the slope of the terrain as a example under the assumption that there a level of steepness of the terrain that prevents movement of individuals between locales. It does not matter at which direction the organism approaches this steep part of the landscape (uphill, downhill, or cross slope), their movement is restricted in a uniform manner. 
 
 ```{r}
-#| echo: -1
+#| eval: false 
 slope <- terrain(alt, unit='degrees')
 plot(slope)
 plot(baja_pts,add=T)
@@ -142,6 +138,7 @@ If we look at the distribution of slope values we can see the vast majority of t
 ```{r}
 #| label: distribution-of-slope
 #| fig-cap: "Distribution of estimates for slope (in degrees) across all pixels in the altitude raster."
+#| eval: false 
 df <- data.frame( rasterToPoints(slope))
 ggplot( df, aes(x=slope)) + geom_histogram( binwidth=0.1) + 
   xlab("Slope (degrees)") + ylab("Frequency")
@@ -163,6 +160,7 @@ For the purposes of this example, I'll define three categories of slope.  The va
 
 
 ```{r}
+#| eval: false 
 tmp <- slope
 tmp[ slope < 5 ] <- 1
 tmp[ slope > 5 ] <- 2
@@ -177,6 +175,7 @@ cat_slope
 For this raster, I set up the categories and define a *raster attribute table* (see \@ref(categorical-rasters)) to make the output more legible.  If we visualize this raster, we see the landscape partitioned into these three categories. 
 
 ```{r}
+#| eval: false 
 plot(cat_slope, legend=FALSE)
 ```
 
@@ -190,6 +189,7 @@ The other way in which rasters may be created are are based upon relative cost d
 I'll use this concept of elevation similarity in this example, starting with the elevation of population `163`, which will be the benchmark.
 
 ```{r}
+#| eval: false 
 idx <- which( coords$Stratum == "163")
 target_elevation <- coords$elevation[ idx ]
 target_elevation
@@ -198,6 +198,7 @@ target_elevation
 From this target elevation, we can create an elevation raster that is based upon the deviation between the benchmark and everyone else.  Since this is a cost surface we are creating we need to perhaps include a base cost instead of having elevation clines with zero resistance.  For this, I add a unit cost to the entire raster.
 
 ```{r}
+#| eval: false 
 tmp <- alt - target_elevation
 tmp <- abs( tmp ) + 1
 plot( tmp )
@@ -216,7 +217,6 @@ A least cost path is the route between two points, say $A \to B$, whose measured
 
 ```{r}
 #| label: lcp-example
-#| echo: false
 #| fig-cap: "Estimation algorithm for least-cost path distance.  The path chosen is the one with the shortest overall distance, or at least one of the paths with equally short overall distances."
 knitr::include_graphics("./media/LCP.png")
 ```
@@ -234,6 +234,7 @@ Once estimated, the transition object *must* be corrected for if you are either 
 In the example below, I use the cost distance estimated based upon similarity in elevation, under the hypothesis that phenological synchrony may influence connectivity.
 
 ```{r}
+#| eval: false 
 library(gdistance)
 tr <- transition( 1/tmp, transitionFunction = mean, directions = 4 )
 tr <- geoCorrection( tr, type="c", multpl=FALSE, scl=FALSE)
@@ -243,6 +244,7 @@ tr
 From this, potentially corrected, transition object we can estimate shortest path distance using the aptly named function `shortestPath()`, passing it the transition object, the point from which we are starting, and the destination, and an optional parameter on how we want the output returned.  In the example below, the results is returned as a *SpatialLines* object which I use to plot.
 
 ```{r}
+#| eval: false 
 path.1 <- shortestPath( tr, baja_pts[26], baja_pts[15], output="SpatialLines")
 plot( tmp , xlab="Longitude", ylab="Latitude")
 lines( path.1, col="red")
@@ -252,6 +254,7 @@ points( coords[c(26,15),2:3],pch=16, col="red")
 As explained above, relative cost distances may create asymmetric distances.  If the shortest path between the two populations is taken in the opposite direction, we get different shortest path across the landscape.
 
 ```{r}
+#| eval: false 
 tmp <- alt
 tmp <- abs( tmp - coords$elevation[ 15 ] ) + 1
 tr <- transition( 1/tmp, transitionFunction = mean, directions = 4 )
@@ -266,6 +269,7 @@ points( coords[c(26,15),2:3],pch=16, col="red")
 Not only is it a different path, they are also different lengths.
 
 ```{r}
+#| eval: false 
 c( SpatialLinesLengths( path.1 ), SpatialLinesLengths( path.2 ) )
 ```
 
@@ -276,7 +280,6 @@ Organisms may not move in an *optimal* way across the landscape but may move alo
 
 ```{r}
 #| label: ct-example
-#| echo: false
 #| fig-cap: "Estimation algorithm for all-paths (circuit) distance.  The estimated distance between points $A$ and $B$ is based upon the length and relative frequencies of all potential paths across the landscape, even thouse that traverse more resistant portions of the landscape (highlighted in yellow)."
 knitr::include_graphics("./media/CT.png")
 ```
@@ -285,9 +288,8 @@ Using as an example, you can apply this algorithm to the resistance surface base
 
 ```{r}
 #| label: circuitscape-from-93
-#| echo: false
 #| fig-cap: "Estimation of current map based upon relative cost distance from conditions observed at site 93."
-#| echo: -(2:3)
+#| eval: false 
 r <- raster("media/Baja_Out_curmap_15.asc")
 plot( log10(r), legend=FALSE, xlab="Longitude", ylab="Latitude" )
 plot( baja_pts[15], add=TRUE )
@@ -301,7 +303,7 @@ Both least-cost, and all-paths approaches consider the entire cost surface in th
 These approaches use graph-theoretic algorithms to estimate the length of various paths across the cost surface.  To do this, each pixel is treated as a node in a network, only after which the length of the paths may be estimated.  This is why it is important to limit the potential size of your background cost raster to an area that includes your sampling sites but not regions through which connectivity will not traverse.  For example, there is a very large number of paths that exist outside the convex hull displayed in Figure \@ref(fig:eco-convex-hull), the overwhelming majority of which have absolutely no influence on connectivity among the sites we are interested in studying.  If you do not restrict the cost raster as we did, the extra pixels are added network that needs to be constructed to estimate distance, independent of the fact that they may not be a member of the shortest (or even not longest) paths contributing to connectivity.  Numerically, algorithms such as Dijkstra'a (one for finding the single shortest path), scale in time with the number of nodes as show below (Figure \@ref(fig:dijkstra-time)).  
 
 ```{r}
-#| echo: false
+#| eval: false 
 minNodes <- 2
 maxNodes <- 100
 stepNodes <- 2
@@ -322,7 +324,7 @@ In the end, we are interested in getting to the pairwise distances among all sit
 
 ```{r}
 #| fig-cap: "Cost raster for elevation based upon slope categories across regions for all peninsular Baja California populations."
-#| echo: false
+#| eval: false 
 plot(cat_slope, legend=FALSE, xlab="Longitude",ylab="Latitude", 
      main="Categorical Slope Resistance")
 plot( baja_pts, add=TRUE )
@@ -334,6 +336,7 @@ plot( baja_pts, add=TRUE )
 For the least cost approach, we need to grab the transition objects and perform a `geoCorrection` because we are using Longitude & Latitude based coordinates.
 
 ```{r}
+#| eval: false 
 tr <- transition( 1/cat_slope, transitionFunction = mean, directions = 4 )
 tr <- geoCorrection( tr, type="c", multpl=FALSE, scl=FALSE)
 ```
@@ -341,6 +344,7 @@ tr <- geoCorrection( tr, type="c", multpl=FALSE, scl=FALSE)
 The corrected transition object can be used to estimate the shortest paths among all points using the `costDistance()` function.
 
 ```{r}
+#| eval: false 
 eDist <- costDistance( tr, baja_pts )
 eDist <- as.matrix( eDist )
 rownames(eDist) <- colnames(eDist) <- coords$Stratum
@@ -350,6 +354,7 @@ eDist[1:10,1:10]
 This returns a `dist` object, which I translate into a matrix and you can plot the corresponding relationship with genetic distance (I'll use Nei's distance as the example).
 
 ```{r}
+#| eval: false 
 gDist <- genetic_distance(data,stratum="Population", mode="nei")
 df <- data.frame( Genetic_Distance = gDist[lower.tri(gDist)],
                   Slope_Distance = eDist[ lower.tri(eDist)])
@@ -362,6 +367,7 @@ ggplot(df,aes(x=Slope_Distance,y=Genetic_Distance)) + geom_point() +
 From these data, we can estimate the correlation (a rough estimate).
 
 ```{r}
+#| eval: false 
 cor(df$Genetic_Distance, df$Slope_Distance)
 ```
 
@@ -408,6 +414,7 @@ ctDist[1:5,1:5]
 As before, we can plot these against each other.
 
 ```{r}
+#| eval: false 
 df1 <- data.frame( Genetic_Distance = gDist[ lower.tri(gDist) ],
                   Circuit_Distance = ctDist[ lower.tri(ctDist)])
 df1 <- df1[ !is.na(df1$Circuit_Distance),]
@@ -418,6 +425,7 @@ ggplot(df1,aes(x=Circuit_Distance,y=Genetic_Distance)) + geom_point() +
 If you do these analyses in R using `gdistance`, you need to adjust the arguments to both `transition` and `geoCorrection` for using an all-paths approach (see the documentation on these functions) and you can get pairwise distances from the `commuteDistance()` function.
 
 ```{r}
+#| eval: false 
 cor( df1$Genetic_Distance, df1$Circuit_Distance )
 ```
 
@@ -426,6 +434,7 @@ cor( df1$Genetic_Distance, df1$Circuit_Distance )
 A pertinent question revolves around the extent to which 
 
 ```{r}
+#| eval: false 
 data <- data.frame(Slope=df$Slope_Distance, Circuit=df1$Circuit_Distance )
 ggplot(data,aes(x=Slope,y=Circuit)) + geom_point() + 
   stat_smooth() + xlab("Least Cost Distance") + ylab("Circuit Distance")
@@ -435,6 +444,7 @@ ggplot(data,aes(x=Slope,y=Circuit)) + geom_point() +
 As a first pass, we can look at the magnitude of these distance estimates.
 
 ```{r}
+#| eval: false 
 cor.test(data$Slope, data$Circuit, method = "spearman")
 ```
 

@@ -10,7 +10,6 @@ This package requires several other packages for installation.  By default, the 
 
 ```{r}
 #| eval: false
-#| echo: true
 install.packages("gstudio")
 ```
 
@@ -279,7 +278,6 @@ data(arapat)
 Which looks like the following:
 
 ```{r}
-#| echo: false
 DT::datatable(arapat, options = list(scrollX = TRUE))
 ```
 

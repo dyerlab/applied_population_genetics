@@ -7,14 +7,12 @@ Inbreeding may be indicated in the parameter $F$ due to selfing (the most direct
 Consider two populations, both of which are at Hardy-Weinberg Equilibrium.  The first population has allele frequencies at a two allele locus of $p_A= 0.7;\;q_A=0.3$ and the second population has allele frequencies of $p_B=0.4;\;q_B=0.6$.  For simplicity, assume that both populations are completely isolated and have $N=100$ individuals each.  As such, we find the following genotypes in each population, each of which is exactly what is expected under HWE.
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/wahlundTwoPop.png")
 ```
 
 If you did not know, *a priori*, these were isolated populations and artificially combined them, you would have a single composite populations created from two individual populations, both of which are in HWE.  It would look like this.
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/wahlundOnePop.png")
 ```
 
@@ -118,7 +116,6 @@ ggtern(df,aes(x=aa,y=Aa,z=AA)) + geom_line() +
 When your sampling design combines both of these populations into a synthetic population, you change the allele frequencies to $\bar{p}$ and $\bar{q}$.  However, since the change in expected genotype frequencies is not a linear change (notice how the expectation line in the figure curves) then the average allele frequencies produce an expectation of $2\bar{p}\bar{q}$ greater than the average of the observed heterozygosities.  This is demonstrated in the following image, the observed level of heterozygosity in the synthetic population, being the average of the two (where the dashed line intersects the expectation given for $\bar{q}$), is always going to be less than then the expected heterozygosity because the product of an average is always going to be less than the average of a product.
 
 ```{r}
-#| echo: false
 knitr::include_graphics("media/wahlundTernary.png")
 ```
 

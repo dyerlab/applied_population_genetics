@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>17&nbsp; Population Models – Applied Population Genetics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./genetic_diversity.html" rel="next">
+<link href="./mapping_populations.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6d16390398e4ca57b3acf2d898365235.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="media/style.css">
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./population_models.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Population Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Applied Population Genetics</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/dyerlab/AMG" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Applied Population Genetics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_ecosystem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The R Ecosystem</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datatypes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_containers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Containers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Programming</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./graphics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Graphics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducable_research.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducable Research</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_single_population.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Single Population</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hardy_weinberg_equilibrium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Hardy-Weinberg Equilibrium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_drift.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Genetic Drift</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./effective_population_size.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Effective Population Size</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Mutation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_nonrandom_mating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Nonrandom Rating</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selfing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Selfing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mixed_mating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Mixed Mating Systems</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wahlund_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wahlund Effects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_parent_offspring.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Parent Offspring Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pedigrees.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pedigrees</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parentage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Parentage Analyses</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_subdivided_populations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Subdivided Populations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapping_populations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping Populations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_models.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Population Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_diversity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Genetic Diversity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rarefaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Rarefaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_distance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Genetic Distances</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./genetic_structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Genetic Structure</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_assignment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Population Assignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./admixture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Admixture</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_statistical_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Statistical Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ordination.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Ordination of Genetic Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distance_matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Distance Matrices</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Linear Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distance_networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Distance Networks</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./population_graphs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Population Graphs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interactive_visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Interactive Visualization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_spatial_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Spatial Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./vector_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Vector Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./raster_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Raster Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./projections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Map Projections</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ecological_distance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Ecological Distance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./niche_modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Niche Modeling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eigenmaps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Eigenvector Maps</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Selection</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Classical Selection Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_backmatter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Backmatter</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Included Data Sets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the Author</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#models-of-partition" id="toc-models-of-partition" class="nav-link active" data-scroll-target="#models-of-partition"><span class="header-section-number">17.1</span> Models of Partition</a></li>
+  <li><a href="#island-mainland-model" id="toc-island-mainland-model" class="nav-link" data-scroll-target="#island-mainland-model"><span class="header-section-number">17.2</span> Island Mainland Model</a></li>
+  <li><a href="#the-island-model" id="toc-the-island-model" class="nav-link" data-scroll-target="#the-island-model"><span class="header-section-number">17.3</span> The Island Model</a></li>
+  <li><a href="#stepping-stone-models" id="toc-stepping-stone-models" class="nav-link" data-scroll-target="#stepping-stone-models"><span class="header-section-number">17.4</span> Stepping Stone Models</a></li>
+  <li><a href="#the-general-model" id="toc-the-general-model" class="nav-link" data-scroll-target="#the-general-model"><span class="header-section-number">17.5</span> The General Model</a></li>
+  <li><a href="#general-strategies" id="toc-general-strategies" class="nav-link" data-scroll-target="#general-strategies"><span class="header-section-number">17.6</span> General Strategies</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Population Models</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="chapter_image">
+<img src="chapter_images/ch_baja_south_of_loreto.jpg">
+</div>
+<p>Subdivision occurs when individuals are spatially, ecologically, or temporally separated causing the relative probability of mating among individuals to be non-uniformly spread across all individuals. This is the natural state for most species—they are not completely randomly mating—and as such this causes changes in how genetic variation is partitioned. In this Chapter we examine subdivision and how we quantify its strength.</p>
+<p>Before we descend into discussions on models describing population subdivision, we should probably clarify some jargon that is used commonly in describing these systems.</p>
+<p><em>Migration:</em> Migration is the movement of individuals among spatial locations. It does not, strictly speaking, denote any relation to mating. Bird, mammals, and even insects migrate in response to annual seasonality, though the process of movement towards the equator or more reasonable habitat for the particular season does not necessarily influence population genetic structure.</p>
+<p><em>Gene Flow:</em> Gene flow is a process of genetic material moving between locales or populations that results in modification of standing genetic variation. Gene flow is commonly denoted as a rate (e.g., a fraction bound between 0 and 1) and has direct influence on the allelic and/or genotypic composition of the population.</p>
+<p>That is not to say that migration may result in subsequent mating, contributing to the population structure, it just does not necessarily require it.</p>
+<section id="models-of-partition" class="level2" data-number="17.1"><h2 data-number="17.1" class="anchored" data-anchor-id="models-of-partition">
+<span class="header-section-number">17.1</span> Models of Partition</h2>
+<p>If individuals are partitioned into different groups, the expectations for allele and genotype frequencies depend upon the way in which populations are connected through gene flow. There are some classic models associated with population connectivity that we will cover in this section, though in reality the ways in which populations are actually connected most likely fall outside the strict conventions for these simple models. What these models do, however, is provide us a with a framework on which to examine observed distributions of genetic variation and to make predictions on future structure given a few assumptions.</p>
+<p>A network analogy will be used here to describe the connectivity, with populations acting as nodes in the network and gene flow being indicated by edges connecting these nodes. Strictly speaking, this is a weighed graph as the edges have associated with them particular numerical values representing the migration rate between the connected edges. Each population can have its own allele frequency spectra and through time, allele frequencies can change in response to immigration into the population but is not expected to change due to emigration from it, as we are assuming migration likelihood of any individual is statistically independent of allele frequencies.</p>
+</section><section id="island-mainland-model" class="level2" data-number="17.2"><h2 data-number="17.2" class="anchored" data-anchor-id="island-mainland-model">
+<span class="header-section-number">17.2</span> Island Mainland Model</h2>
+<p>An island-mainland model is the simplest formulation of a population model. Here, we have a large mainland population and a small island population. For simplicity, define the allele frequencies of these two as <span class="math inline">\(p_x\)</span> and <span class="math inline">\(p_y\)</span>. During each discrete generation, some fraction <span class="math inline">\(m\)</span> of the individuals from the mainland arrive into the mating population of the individuals on the island. The composition of the island is composed of the <span class="math inline">\(m\)</span> fraction of individuals that are immigrants and the <span class="math inline">\((1-m)\)</span> fraction that were already on the island.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/Island_Mainland.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="media/Island_Mainland.png" class="img-fluid figure-img" width="839"></p>
+<figcaption>Basic mainland-island model of population partitions.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>At the next generation, the allele frequencies of the mainland population remain the same (we are assuming it is large enough such that a loss of migrants does not influence allelic or genotypic frequencies), whereas the island population is comprised of <span class="math inline">\(m\)</span> percent of immigrants, whose frequencies are <span class="math inline">\(p_x\)</span>, and <span class="math inline">\((1-m)\)</span> fraction of residents whose frequency was in the last generation <span class="math inline">\(p_y\)</span>. Taken together, their frequencies are:</p>
+<p>[ p_{y,t+1} = (1-m)p_{y,t} + mp_{x,t} ]</p>
+<p>From this formulation, it is easy to deduce that after a sufficient number of generations, the allele frequencies of both mainland and island will be the same. The island will eventually have the same frequencies as the mainland, though the amount of time it takes depends upon the difference in allele frequencies, <span class="math inline">\(\delta p = p_x - p_y\)</span>, and the migration rate, <span class="math inline">\(m\)</span>, to the island population. Since there is no migration from the island to the mainland, the equilibrium frequency will be <span class="math inline">\(p_x\)</span>. Here is a bit of code that shows the effects that different migration rates may have.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">migration_rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.01</span>,<span class="fl">.05</span>,<span class="fl">.10</span>,<span class="fl">.15</span><span class="op">)</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>m<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">migration_rates</span>,each<span class="op">=</span><span class="fl">100</span><span class="op">)</span>, </span>
+<span>                      Generation<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,times<span class="op">=</span><span class="fl">4</span><span class="op">)</span>,</span>
+<span>                      p<span class="op">=</span><span class="cn">NA</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span> <span class="va">m</span> <span class="kw">in</span> <span class="va">migration_rates</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">px</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span>  <span class="va">py</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>  <span class="va">results</span><span class="op">$</span><span class="va">p</span><span class="op">[</span> <span class="va">results</span><span class="op">$</span><span class="va">m</span><span class="op">==</span><span class="va">m</span> <span class="op">]</span> <span class="op">&lt;-</span> <span class="va">py</span></span>
+<span>  <span class="kw">for</span><span class="op">(</span> <span class="va">t</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">p.0</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">p</span><span class="op">[</span> <span class="va">results</span><span class="op">$</span><span class="va">m</span><span class="op">==</span><span class="va">m</span> <span class="op">&amp;</span> <span class="va">results</span><span class="op">$</span><span class="va">Generation</span> <span class="op">==</span> <span class="op">(</span><span class="va">t</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">]</span></span>
+<span>    <span class="va">p.1</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">m</span><span class="op">)</span><span class="op">*</span><span class="va">p.0</span> <span class="op">+</span> <span class="va">px</span><span class="op">*</span><span class="va">m</span></span>
+<span>    <span class="va">results</span><span class="op">$</span><span class="va">p</span><span class="op">[</span> <span class="va">results</span><span class="op">$</span><span class="va">m</span><span class="op">==</span><span class="va">m</span> <span class="op">&amp;</span> <span class="va">results</span><span class="op">$</span><span class="va">Generation</span> <span class="op">==</span> <span class="va">t</span> <span class="op">]</span> <span class="op">&lt;-</span> <span class="va">p.1</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">results</span><span class="op">$</span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">results</span><span class="op">$</span><span class="va">m</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Generation</span>, y<span class="op">=</span><span class="va">p</span>, color<span class="op">=</span><span class="va">m</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Generation"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Island allele frequency (p)"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="population_models_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Allele frequencies for and island population fixed for the an allele who is getting migrants from a mainland population at various rates (<span class="math inline">\(m\)</span>) that does not have the allele present in the island.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>So for even low migration, say <span class="math inline">\(m=0.01\)</span>, allele frequencies may change rather quickly due to immigration.</p>
+</section><section id="the-island-model" class="level2" data-number="17.3"><h2 data-number="17.3" class="anchored" data-anchor-id="the-island-model">
+<span class="header-section-number">17.3</span> The Island Model</h2>
+<p>The next most complex model is one where every population is exchanging migrants. This n-island model was first introduced by Sewell Wright (1931). In this one, all populations are connected via a constant migration rate. An allele that arrises in one population through mutation can potentially be dispersed to any other population in a single generation, the likelihood of which is determined by the migration rate.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/Island_Model.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="media/Island_Model.png" class="img-fluid figure-img" width="825"></p>
+<figcaption>An n-island model with three populations, each with its own allele frequencies, with a constant and symmetric migration rate (<span class="math inline">\(m\)</span>).</figcaption></figure>
+</div>
+</div>
+</div>
+<p>The stability of this system is quite high. All populations are sharing migrants and as a consequence, all populations will thus converge on a unified allele frequency, one defined by the global average allele frequency, <span class="math inline">\(\bar{p}\)</span>. The length of time it takes to get to that equilibrium point is determined by how far away from the global mean the population is and the rate at which migrants are distributed.</p>
+<p>There are two ways to model this kind of system, one more simple than the other. The simplest way is to consider that the migrants are a giant migrant pool and from that they are distributed to the populations. For example, if <span class="math inline">\(\bar{p}\)</span> is the global average allele frequency, the migrant pool could be considered to also have this allele frequency. If you believe this is a reasonable approximation, then the allele frequencies at the next generation, say for population <span class="math inline">\(X\)</span> in Figure @ref(fig:nislandmodel), are:</p>
+<p>[ p_{x,t+1} = (1-m)p_{x,t} + m{p} ]</p>
+<p>In a general context, we can estimate what the allele frequencies will be for an arbitrary time in the future if we know:<br>
+- The starting allele frequencies, <span class="math inline">\(p_0\)</span> - The migration rate, <span class="math inline">\(m_{i,j}\)</span> - How many generations migration has been happening, <span class="math inline">\(t\)</span>.</p>
+<p>This is estimated, following the a similar format that we found in both mutation and inbreeding, as:</p>
+<p>[ p_t = {p} + (p_0 - {p})(1-m)^t ]</p>
+<p>We can examine the change in allele frequencies through time numerically. Consider a population that starts out at <span class="math inline">\(p_X = 0.1\)</span> but is receiving migrants at a rate of <span class="math inline">\(m=0.05\)</span> each generation. With these parameters, we can set up an expectation of allele frequencies for, say, <span class="math inline">\(100\)</span> generations, as:</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<span><span class="va">pX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">pX</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.1</span></span>
+<span><span class="va">pbar</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fl">0.05</span></span>
+<span><span class="kw">for</span><span class="op">(</span> <span class="va">t</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="cn">T</span><span class="op">)</span></span>
+<span>  <span class="va">pX</span><span class="op">[</span><span class="va">t</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pbar</span> <span class="op">+</span> <span class="op">(</span><span class="va">pX</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">-</span><span class="va">pbar</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">m</span><span class="op">)</span><span class="op">^</span><span class="va">t</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> Generation <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="cn">T</span>, Frequency <span class="op">=</span> <span class="va">pX</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Generation</span>, y<span class="op">=</span><span class="va">Frequency</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Allele Frequency"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="population_models_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Change in allele frequency for a population starting out at <span class="math inline">\(p_X=0.1\)</span> and receiving migrants from a global migrant pool of <span class="math inline">\(p_m=0.5\)</span> at a rate of <span class="math inline">\(m=0.05\)</span>.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Through time, the allele frequencies change systematically, tending towards the global allele frequency defined by all populations.<br>
+Some salient assumptions for this model include:</p>
+<ul>
+<li>Generations do not overlap so that we can use a difference equation approach for understanding connectivity.</li>
+<li>Populations are discrete in that there are breaks between populations.</li>
+<li>Migration rates are constant through both space and time.</li>
+<li>Migration is symmetric in both directions.</li>
+</ul>
+<p>This approach may not be the most realistic one, but it does outline a general way in which we can predict allele frequencies through time.</p>
+</section><section id="stepping-stone-models" class="level2" data-number="17.4"><h2 data-number="17.4" class="anchored" data-anchor-id="stepping-stone-models">
+<span class="header-section-number">17.4</span> Stepping Stone Models</h2>
+<p>A slightly more realistic model was introduced by Kimura &amp; Weiss (1964) who coined the term ‘stepping-stone’ model to indicate one that takes into consideration the spatial arrangement of populations as it describes connectivity.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/Stepping_Stone_Model.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="media/Stepping_Stone_Model.png" class="img-fluid figure-img" width="862"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Their model consisted of an infinite length of populations, all connected with a unified migration rate, <span class="math inline">\(m\)</span>. For any population along this continuum, the frequency of alleles at the next generation was dependent upon the following:</p>
+<ul>
+<li>The frequency at the current generation for that population, <span class="math inline">\(p_i\)</span>.</li>
+<li>The rate at which migrants were arriving at the population from each side. The assumed that the total migration rate was <span class="math inline">\(m\)</span> and as such they were receiving migrants at a rate of <span class="math inline">\(\frac{m}{2}\)</span> each generation, from each neighbor.</li>
+<li>Each neighbor may have its own initial allele frequency and would change through time with continued exchange of migrants.</li>
+<li>There is some ‘background’ level of migration that is going on, consisting of some rate of migrants, <span class="math inline">\(m_{\infty}\)</span>, whose allele frequencies are denoted as <span class="math inline">\(p_{\infty}\)</span>. This part of the equation may be a bit difficult to parameterize (or said another way, it may be a nice ‘buffer’ to have in your model to help explain things you can’t directly explain).</li>
+<li>Each population has some stochastic change in allele frequencies each generation, denoted as <span class="math inline">\(\eta_i\)</span>, which may be due to genetic drift and other local processes. The expectation for this ‘error’ term is <span class="math inline">\(E[\eta_i] = 0\)</span> and its variance is <span class="math inline">\(E[\eta_i^2] = \frac{p_i(1-p_i)}{2N_e}\)</span>, which is consistent with what we’ve seen for drift already.</li>
+</ul>
+<p>Taken as a whole, their formulation is:</p>
+<p>[ p_{i,t+1} = (1-m_1-m_)*p_i + (p_{i-1,t} + p_{i+1,t}) + m_{p} + _i ]</p>
+<p>Extending on this basic model, they also derived the expectations for a 2-dimensional connectivity model where populations were arrayed on a grid with rows and columns. They also briefly entertained a 3-dimensional model as well.</p>
+<p>For each of these models, the estimated the expectation of the decrease in genetic correlation between pairs of populations with increases in distance between populations. Perhaps not surprisingly, the correlation is higher in 1-dimensional than in 2-dimensional arrangements. It is also higher in 2-dimensional than in 3-dimensional ones. Their paper is an excellent introduction to the mathematics underlying connectivity in discrete space and should be examined in detail by those who are interested in modeling this in a more complete fashion. However, for completeness here, we will look to a more general approach to understanding connectivity and changes in allele frequencies based upon a specified ‘network’ of connectivity.</p>
+</section><section id="the-general-model" class="level2" data-number="17.5"><h2 data-number="17.5" class="anchored" data-anchor-id="the-general-model">
+<span class="header-section-number">17.5</span> The General Model</h2>
+<p>A more broad approach that can be applied to all types of connectivity models is one that allows one to specify the underlying connectivity model and then estimate allele frequency changes on that model. Instead of having a single migration rate for all populations or a rigid arrangement of populations, if you can specify the topology of a connectivity network, you can use the following approach to estimate allele frequency changes. We will start with the simple case of three populations, each with their own frequencies and connected by individual migration rates. In this system, we can consider the frequencies for population X as being derived by the frequencies of all populations with which it exchanges migrants as well as their individual rates. Here is an example from the diagram below.</p>
+<p>[ p_{x,t+1} = m_{x y}p_{y,t} + m_{x z}p_{z,t} + [1 - (m_{x y} + m_{x z})]p_x ]</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/General_Model.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="media/General_Model.png" class="img-fluid figure-img" width="912"></p>
+<figcaption>Generic multi-population model for gene flow with individual migration rates.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>The current frequency is determined by the frequencies of all connected populations (both <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span> in this case) at the previous generation and their individual migration rates (these are the immigrants) and the residents (<span class="math inline">\(1 - m_{all\;migration\;to\;this\;population}\)</span>) and its previous allele frequency. In a similar fashion, the other populations are:</p>
+<p>[ p_{y,t+1} = m_{x y}p_{x,t} + m_{y z}p_{z,t} + [1 - (m_{x y} + m_{y z})]p_y ]</p>
+<p>and</p>
+<p>[ p_{z,t+1} = m_{x z}p_{x,t} + m_{y z}p_{y,t} + [1 - (m_{x z} + m_{y z})]p_z ]</p>
+<p>In R, we can iterate through this and see these behaviors. Here we look at three populations, each starting with different allele frequencies and estimate allele frequencies for a period of T = 75 generations.</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fl">75</span></span>
+<span><span class="va">pX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">pY</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">pZ</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">pX</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.1</span></span>
+<span><span class="va">pY</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span>
+<span><span class="va">pZ</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>These populations exchange migrants with different basal rates. For this example, we will assume the exchange of migrants is symmetric, though it is not necessary to do so, and you can see how the following code is extended to account for asymmetry.</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mXY</span> <span class="op">&lt;-</span> <span class="fl">0.04</span></span>
+<span><span class="va">mXZ</span> <span class="op">&lt;-</span> <span class="fl">0.02</span></span>
+<span><span class="va">mYZ</span> <span class="op">&lt;-</span> <span class="fl">0.08</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then, the simulation is run across the T generations and at each iteration, the frequencies of each population is updated based upon these migration rates and the frequencies of the populations from which the immigrants come.</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span> <span class="va">gen</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="cn">T</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">pX</span><span class="op">[</span><span class="va">gen</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">mXY</span><span class="op">*</span><span class="va">pY</span><span class="op">[</span><span class="va">gen</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">mXZ</span><span class="op">*</span><span class="va">pZ</span><span class="op">[</span><span class="va">gen</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="op">(</span> <span class="fl">1</span> <span class="op">-</span> <span class="op">(</span><span class="va">mXY</span><span class="op">+</span><span class="va">mXZ</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="va">pX</span><span class="op">[</span><span class="va">gen</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="va">pY</span><span class="op">[</span><span class="va">gen</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">mXY</span><span class="op">*</span><span class="va">pX</span><span class="op">[</span><span class="va">gen</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">mYZ</span><span class="op">*</span><span class="va">pZ</span><span class="op">[</span><span class="va">gen</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="op">(</span> <span class="fl">1</span> <span class="op">-</span> <span class="op">(</span><span class="va">mXY</span><span class="op">+</span><span class="va">mYZ</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="va">pY</span><span class="op">[</span><span class="va">gen</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="va">pZ</span><span class="op">[</span><span class="va">gen</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">mXZ</span><span class="op">*</span><span class="va">pX</span><span class="op">[</span><span class="va">gen</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">mYZ</span><span class="op">*</span><span class="va">pY</span><span class="op">[</span><span class="va">gen</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="op">(</span> <span class="fl">1</span> <span class="op">-</span> <span class="op">(</span><span class="va">mYZ</span><span class="op">+</span><span class="va">mXZ</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="va">pZ</span><span class="op">[</span><span class="va">gen</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> Generation<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="cn">T</span>,times<span class="op">=</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">Frequency</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">pX</span>,<span class="va">pY</span>,<span class="va">pZ</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">Population</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"X"</span>,<span class="st">"Y"</span>,<span class="st">"Z"</span><span class="op">)</span>, each<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Through time, we see that the allele frequencies all converge on the global allele frequency</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">pX</span>,<span class="va">pY</span>,<span class="va">pZ</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Generation</span>, y<span class="op">=</span><span class="va">Frequency</span>, color<span class="op">=</span><span class="va">Population</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Population Allele Frequency"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="population_models_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There are a couple of points here to be made.</p>
+<ul>
+<li>The rate at which allele frequencies change depends upon the <span class="math inline">\(\delta p = p_i - \bar{p}\)</span> and the migration rate. The approach to <span class="math inline">\(\bar{p}\)</span> was faster for population <span class="math inline">\(Z\)</span> than population <span class="math inline">\(X\)</span> as the migration rates to and from <span class="math inline">\(X\)</span> are overall lower than from <span class="math inline">\(Z\)</span>.<br>
+</li>
+<li>Some situations, depending upon the configuration of the connectivity ‘network,’ can result in reversals of direction in allele frequency change. Look at the population <span class="math inline">\(Y\)</span>. Its allele frequencies started out at <span class="math inline">\(\bar{p}\)</span> and initially increased towards those of population <span class="math inline">\(Z\)</span>. This is because the relative rate of migration between <span class="math inline">\(Y\)</span> &amp; <span class="math inline">\(Z\)</span> is greater than between <span class="math inline">\(Y\)</span> &amp; <span class="math inline">\(X\)</span>.</li>
+</ul>
+<p>These observations suggest that when you are doing simulations, you need to wait a bit to allow the dynamics of the system to ‘burn in’ a bit. The equilibrium point we are interested in seeing is only attainable after the entire system has gone through many generations and the idiosyncrasies have been thoroughly iterated through.</p>
+</section><section id="general-strategies" class="level2" data-number="17.6"><h2 data-number="17.6" class="anchored" data-anchor-id="general-strategies">
+<span class="header-section-number">17.6</span> General Strategies</h2>
+<p>In dealing with these kinds of dynamical systems, there are some important things that you need to consider when attempting to understand the underlying dynamics. These are general rules, though there are always exceptions. However, if you follow them, you will probably have a much easier time with the calculations.</p>
+<ol type="1">
+<li>Draw out the network if you can. If it is too complicated, then at least try to capture the main flows through the network, graphically. Visualization of network structure is very helpful for understanding where you think things should be going.</li>
+<li>In most systems, allele frequencies will tend towards <span class="math inline">\(\bar{p}\)</span> for all populations given enough time. In cases where populations are isolated (e.g., <span class="math inline">\(m=0\)</span>), or migration is unidirectional (as in the mainland/island model), you may have components of the overall topology that will never stabilize on <span class="math inline">\(\bar{p}\)</span>.<br>
+</li>
+<li>Once specified, iterate through each generation slowly, checking to see if you are parameterizing the system correctly. There are an infinite number of ways for you to not get it correct via a typo or other programatic error. Always ‘sanity check’ your results.</li>
+</ol>
+<p>With these strategies in mind, you should be able to attack any population arrangement.</p>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./mapping_populations.html" class="pagination-link" aria-label="Mapping Populations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping Populations</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./genetic_diversity.html" class="pagination-link" aria-label="Genetic Diversity">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Genetic Diversity</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

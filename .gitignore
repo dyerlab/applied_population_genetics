@@ -16,3 +16,8 @@ papers
 
 Graphics.key
 docs/placeholder*
+.claude
+
+/.quarto/
+*_cache/*
+*_files/*

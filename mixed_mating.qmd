@@ -62,7 +62,6 @@ for(i in 2:10){
 ```
 
 ```{r}
-#| echo: false
 #| fig-cap: "Figure 4.3 Expectation for genotype frequencies for a 2-allele locus where $p=0.25$ and the selfing rate $s=0.5$."
 library(ggplot2)
 df <- data.frame( F=c(fAA,fAB,fBB), T=rep( 1:10, times=3), Genotype=rep(c("AA","AB","BB"), each=length(fAA)))
@@ -76,7 +75,6 @@ The resulting frequencies look to come to equilibrium at a reasonable speed.  Th
 Here is an interactive widget you can play with to see how initial allele frequency and selfing rate interact in shaping genotype frequencies.
 
 ```{r}
-#| echo: false
 knitr::include_app("http://popgen.bio.vcu.edu/shiny/apg/mixed_mating/", height="750")
 ```
 
@@ -178,7 +176,6 @@ depending upon only the selfing rate, the starting inbreeding level, and the cur
 Here is a little gadget to play with that allows you to manipulate $F_0$, $s$ and the number of generations ($T$).
 
 ```{r}
-#| echo: false
 knitr::include_app("http://popgen.bio.vcu.edu/shiny/apg/selfing_F/", height="850")
 ```
 
@@ -194,7 +191,6 @@ As with most things in population genetics, these expectations provide nice desc
 In some cases, this approximation would make sense—cases such as a study of plants where selfing is a potential outcome of mating (e.g., Schemske & Lande 1985)—but may be somewhat meaningless (in a direct sense) to species whose mating system does not allow selfing (e.g., most non-plant species).  That said, the estimate $\hat{s}$ is an idealized parameter and because it is based solely upon inbreeding, $F$, it is an integrative parameter incorporating mating patterns not just during a single round of mating but as an accumulation across many mating events as well as other forms of non-random mating such as consanguinity.
 
 ```{r}
-#| echo: false
 #| fig-cap: "Expected equilibrium for inbreeding parameter, F, across potential values for the selfing rate, s."
 df <- data.frame( s=seq(0,1,by=0.02))
 df$F <- df$s/(2-df$s)

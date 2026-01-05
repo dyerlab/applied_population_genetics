@@ -6,7 +6,6 @@ Admixture is the mixing of two or more populations whose frequency spectra may d
 
 ```{r}
 #| label: admixture
-#| echo: false
 #| fig-cap: "Hypothetical pedigree of an individual whose parents come from two separate populations.  Stretches of chromosome are depicted in differing colors to highlight parentage as well as demonstrate admixture in the offspring."
 knitr::include_graphics("media/Admixture.png")
 ```
@@ -73,7 +72,6 @@ This figure is based upon 363 columns of admixture information, one column for e
 
 ```{r}
 #| label: structureByQ
-#| echo: false
 #| fig-cap: "Output from STRUCTURE using the *Araptus attenuatus* when setting $K=3$."
 knitr::include_graphics("media/structure_by_q.png")
 ```
@@ -87,7 +85,6 @@ The data below depict some runs of the data for $K$ assuming values ranging from
 
 ```{r}
 #| label: fig-structure-prob
-#| echo: false
 #| fig-cap: "Probability of the observed data for the numbers of clusters ($K$) ranging from 2 to 6 using STRUCTURE.  A total of 10 replicates were run for each level of $K$."
 library(ggplot2)
 K <- c(2,2,2,3,3,3,4,4,4,5,5,5,6,6,6)
@@ -106,7 +103,6 @@ If I go back to STRUCTURE and plot examine the barplot of individuals from the $
 
 ```{r}
 #| label: structureByPop
-#| echo: false
 #| fig-cap: "STRUCTURE output for *Araptus attenuatus* for $K=4$ sorted by population."
 knitr::include_graphics("media/structure_by_pop.png")
 ```
@@ -126,7 +122,6 @@ One way that is commonly used to get an idea of the magnitude of $K$ is by looki
 
 ```{r}
 #| label: deltaK
-#| echo: false
 #| fig-cap: "Estimates of $\\delta K$ for the STRUCTURE output run on *Araptus attenuatus*."
 mean.K <- as.numeric(by( df$Prob, df$K, mean))
 delta.K <- mean.K[2:5] - mean.K[1:4]

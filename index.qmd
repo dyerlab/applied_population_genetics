@@ -2,7 +2,6 @@
 
 <a href="http://dyerlab.org">
 ```{r}
-#| echo: false
 #| label: fig-title
 knitr::include_graphics("media/APG-Title-Wide.png")
 ```
@@ -13,7 +12,6 @@ Build Date: **`r date()`**
 The content of this text is modified, added to, and changed continually.  You are welcome to use the content of this book in its present form and you can provide feedback, comments, or suggestions for additions by contacting me at [rjdyer@vcu.edu](mailto://rjdyer@vcu.edu).  This work will continue to be hosted online and continually updated as new approaches and applications become available.
 
 ```{r}
-#| echo: false
 library(ggplot2)
 library(knitr)
 theme_set( theme_bw(base_size=14) )

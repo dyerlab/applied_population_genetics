@@ -75,7 +75,7 @@ And then you can add additional options to the plot, like axis labels and a less
 p <- ggplot() + geom_edgeset( aes(x=Longitude,y=Latitude), lopho, color="darkgrey" )
 p <- p + geom_nodeset( aes(x=Longitude, y=Latitude, color=Region, size=size), lopho) 
 p <- p + xlab("Longitude") + ylab("Latitude") 
-p + theme_empty()
+p 
 ```
 
 You can also use the default layout routines in *igraph* for visualization.  Here is an example using Fruchterman-Reingold algorithm.
@@ -87,7 +87,7 @@ V(lopho)$x <- c[,1]
 V(lopho)$y <- c[,2]
 p <- ggplot() + geom_edgeset( aes(x,y), lopho, color="darkgrey" )
 p <- p + geom_nodeset( aes(x, y, color=Region, size=size), lopho) 
-p + theme_empty()
+p 
 ```
 
 
@@ -99,7 +99,6 @@ The online versions of Population Graphs provides a *.pgraph file for visualizat
 
 ```{r}
 #| eval: false
-#| echo: true
 graph <- read.popgraph( "thegraph.pgraph" )
 ```
 
@@ -110,7 +109,6 @@ graph <- read.popgraph( "thegraph.pgraph" )
 A **popgraph** object is a normal R object and can be saved using the normal R mechanisms.
 
 ```{r}
-#| echo: true
 #| eval: false
 save( lopho, file="MyLophoGraph.rda")
 ```
@@ -119,7 +117,6 @@ save( lopho, file="MyLophoGraph.rda")
 For interoperability, **popgraph** objects can also be saved in other formats. These are accessed through the `write.popgraph()` function.  
 
 ```{r}
-#| echo: true
 #| eval: false
 write.popgraph(lopho,file="~/Desktop/Cactus.pgraph", format="pgraph")
 ```
@@ -159,6 +156,7 @@ The 'from' and 'to' vectors need to be numeric values of the nodes in the other 
 
 
 ```{r}
+#| eval: false 
 nodes <- to_data.frame( graph, mode="nodes", as.named=FALSE )
 edges <- to_data.frame( graph, mode="edges", as.named=FALSE )
 edges$source <- edges$source - 1
@@ -169,6 +167,7 @@ The only last thing to do is to define a grouping of populations.  This will be 
 
 
 ```{r}
+#| eval: false 
 grps <- by( arapat$Cluster, arapat$Population, unique )
 l <- lapply( grps, function(x) { g <- paste(sort(x),collapse="/") })
 df <- data.frame( name=names(l), group=as.character(l))
@@ -180,6 +179,7 @@ nodes <- merge( nodes, df )
 Once defined, we can then call the function to make the `data.frame` objects and then do the plot.  These graphics are *interactive*, grab a node and drag it around!
 
 ```{r}
+#| eval: false 
 library(networkD3)
 forceNetwork(Links = edges, Nodes = nodes,
             Source = "source", Target = "target",
@@ -211,6 +211,7 @@ Using the **ggmap** package, you can request map tiles and use as backgrounds on
 Some fiddling is required with either way you go.  The map you get from `get_map()` is essentially a huge matrix of hex colors as shown above.
 
 ```{r}
+#| eval: false 
 library(ggmap)
 location <- c( mean(V(lopho)$Longitude), mean(V(lopho)$Latitude))
 location
@@ -225,6 +226,7 @@ This map object can be passed on to `ggmap()`, which replaces the traditional `g
 - `geom_nodeset()` This plots out the nodes.  You could probably use a regular *data.frame* and `geom_point()` as well. Here is an example:
 
 ```{r}
+#| eval: false 
 p <- ggmap( map ) 
 p <- p + geom_edgeset( aes(x=Longitude,y=Latitude), lopho, color="white" ) 
 p <- p + geom_nodeset( aes(x=Longitude, y=Latitude, color=Region, size=size), lopho) 
@@ -238,6 +240,7 @@ p + xlab("Longitude") + ylab("Latitude")
 At times we have raster data upon we can plot a population graph. Here is an example from Baja California. The underlying raster image is croped from a WorldClim tile and represents elevation.  
 
 ```{r}
+
 library(raster)
 data(alt)
 plot(alt)
@@ -295,7 +298,6 @@ Additional data could be extracted from other rasters.  See http://worldclim.org
 It is also possible to extract data along vectors, or other *SpatialLines* objects, which the edges in a popgraph can be tranformed into.  This is a particularly helpful approach if you are trying to quantify the value of characteristics of the environment between your sampling locations.  In the following example, I estimate the popualtion graph from the `arapat` data set 
 
 ```{r}
-#| echo: -1
 graph <- popgraph( to_mv( arapat ), arapat$Population )
 coords <- strata_coordinates(arapat)
 graph <- decorate_graph( graph, coords )
@@ -316,7 +318,6 @@ longest
 This edge is found at:
 
 ```{r}
-#| echo: -1
 idx <- which( edge_lengths == longest )
 idx
 edge <- edges[ 37 ]
@@ -374,7 +375,6 @@ all_edges <- to_SpatialLines( saturated_graph )
 From these `r length(all_edges)` `SpatialLines` objects, we can extract data from the elevation raster.  
 
 ```{r}
-#| echo: true
 #| eval: false
 edge_values <- extract( alt, all_edges, fun=max, na.rm=TRUE, df=TRUE)
 ```
@@ -386,7 +386,6 @@ This will take a bit of time to complete.  The options that I provided were:
 
 ```{r}
 #| eval: true
-#| echo: false
 load("./spatial_data/edge_values.rmd")
 ```
 
