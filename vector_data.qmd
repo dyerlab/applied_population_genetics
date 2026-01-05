@@ -1,0 +1,157 @@
+# Vector Data  {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_newt2.jpg"></div>
+
+For the purposes of this chapter, I will consider vector data as consisting of a finite set of points that may or may not be connected.  In `R`, these points can be used directly, as a numeric data type, or as a Spatial* class object.  The `sp` library contains a lot of functions that help deal with points, lines, and polygons and this is going to be a short overview of how they can be derived and manipulated in the pursuit of population genetic studies.
+
+The construction of Spatial* objects is a bit convoluted.  I don't appreciate why that is, it is just the way it was constructed.  Here is a set series of examples to get you going.  I will wait until subsequent chapters for us to use these structures in analyses and data extraction, this is mostly a quick tutorial on how to create these objects.
+
+## Points
+
+Points are defined by *SpatialPoints* objects.  A collection of points may have additional data associated with each location and would make a *SpatialPointsDataFrame*.  This is a bit different than the normal `data.frame` objects we've been using with coordinates in them already---in fact it is the opposite of that.  It is a set of points within which is located a `data.frame` rather than `data.frame` that has within it a set of points.  
+
+Confused yet?  Lets get to the point and make some coordinates.  Here is the way we've extracted points from the *Arapatus attenuatus* data set thus far.
+
+```{r}
+library(gstudio)
+data(arapat)
+coords <- strata_coordinates(arapat)
+summary(coords)
+```
+
+However, we can also derive these points directly as a *SpatialPoints* object defined in the *sp* library by setting the optional flag `as.SpatialPoints=TRUE`.
+
+```{r}
+library(sp)
+library(raster)
+pts <- strata_coordinates( arapat, as.SpatialPoints = TRUE )
+pts
+```
+
+Notice that there is no coordinate reference system in the default extraction.  This is because you can pass a wide array of coordinates to this function and it only takes the centroid.  It is up to you to define the projection and datum for the data.  If it is Long/Lat data as in the example, it can be defined as:
+
+```{r}
+proj4string(pts) <- CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
+pts
+```
+
+Any set of x- and y- coordinates can be turned into a *SpatialPoints* object. If we are to associate data with those points, the data has to have the same number of observations as there are coordinates.  In our case here, we have 39 populations and as an example I'll determine the number of individuals genotyped in each population as a 
+
+```{r}
+df <- data.frame( table(arapat$Population) )
+names(df) <- c("Population","N")
+pts.df <- SpatialPointsDataFrame(pts,df)
+pts.df
+```
+
+You can translate it back into a `data.frame` object as:
+
+```{r}
+as.data.frame( pts.df )[1:5,]
+```
+
+or access the data within the `data.frame` directly (thereby not needing to make a new object) using the attribute `@` operator
+
+```{r}
+pts.df@data[1:5,]
+```
+
+Since it is a *SpatialPoints* object, you can get information about it such as the bounding box (e.g., the coordinates of a box that encloses all the points).
+
+```{r}
+bbox(pts.df)
+```
+
+
+## Lines
+
+Lines are created by pairs of points.  A single *Line* object 
+
+```{r}
+c1 <- cbind(coords$Longitude[1:2], coords$Latitude[1:2])
+c2 <- cbind(coords$Longitude[2:3], coords$Latitude[2:3])
+L1 <- Line(c1)
+L2 <- Line(c2)
+L1
+coordinates(L1)
+```
+
+A collection of *Line* objects can be put into a *Lines* object.
+
+```{r}
+Ls1 <- Lines( list(L1), ID="88 to 9")
+Ls2 <- Lines( list(L2), ID="9 to 84")
+Ls1
+```
+ 
+And if they are spatial in context (e.g., if we need to plot them in any way, shape, or form), we need to put them into a *SpatialLines* object, which is also constructed from a `list` of *Lines* objects.
+
+```{r}
+SLs <- SpatialLines( list(Ls1,Ls2))
+proj4string(SLs) <- CRS(proj4string(pts))
+SLs
+```
+
+If we want to add data to the set of lines, we can associate a `data.frame` with each of them with internal data.
+
+```{r}
+df <- data.frame( Sequence = c("First","Second"), Like_It= c(TRUE,FALSE), row.names = c("88 to 9","9 to 84"))
+SLDF <- SpatialLinesDataFrame( SLs, df )
+SLDF
+```
+
+```{r}
+as.data.frame(SLDF)
+```
+
+We can also extract the line lengths of each line.
+
+```{r}
+SpatialLinesLengths(SLs, longlat = TRUE)
+```
+
+## Polygons 
+
+A polygon is simply a collection of line segments that closes in on itself.  We can use polygons to identify habitat, define boundaries, etc.  In the short description to follow, we will create a set Polygon* objects, culminating in a *SpatialPolygonsDataFrame* object.
+
+We will start with the first 5 coordinates in the `arapat` data set. To make the polygon, we **must** close the coordinates, which means take the first one we put in and append it to the end of the list of coordinates, such that in this case `c[1,] == c[6,]`.
+
+```{r}
+c <- cbind( coords$Longitude[1:5], coords$Latitude[1:5])
+c <- rbind( c, c[1,])
+P <- Polygon( c )
+P
+```
+
+As you can see, there is some additional information provided in the default layout.  A few points to be made:  
+- The `area` parameter is not georeferenced as the polygon itself has no projection.  
+- The `labpt` is the coordinate where a label would be plot.
+- The `hole` and `ringDir` determine if the polygon represent a hole in some other polygon (e.g., the doughnut hole and the direction it is plot).
+
+Similar to how we constructed *SpatialLines*, a *Polygon* must be in inserted into a set of *Polygons*
+
+```{r}
+Ps <- Polygons( list(P), ID="Bob")
+```
+
+From which a list of can be created to make a *SpatialPolygons* object
+
+```{r}
+SPs <- SpatialPolygons( list(Ps))
+proj4string(SPs) <- CRS(proj4string(pts))
+SPs
+```
+
+And data can be added to it making a *SpatialPolygonsDataFrame* (n.b., The `row.names` of the `data.frame` *must* match the `ID` we set for making the *Polygons* objects).  If they do not, there will be an error thrown.
+
+```{r}
+df <- data.frame(Populations=paste(coords$Stratum[1:5],collapse=", "), row.names = "Bob")
+SPDF <- SpatialPolygonsDataFrame( SPs, df)
+SPDF
+```
+
+
+## Saving Vector Objects
+
+As all of these objects are R objects, they can be saved to disk using the `save()` function, which makes them a *.rda object.  If you have objects that take a bit of time to create, it is in your best interests to save them after creation and on subsequent analyses, just use the saved versions.
+

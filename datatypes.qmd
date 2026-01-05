@@ -1,0 +1,326 @@
+# Data Types {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_milipedes.jpg"></div>
+
+> The data we work with comes in many forms—integers, stratum, categories, genotypes, etc.—all of which we need to be able to work with in our analyses. In this chapter, the basic data types we will commonly use in population genetic analyses.  This section covers some of the basic types of data we will use in R.  These include numbers, character, factors, and logical data types.  We will also introduce the locus object from the gstudio library and see how it is just another data type that we can manipulate in R.
+
+The very first hurdle you need to get over is the oddness in the way in which R assigns values to variables.
+
+```{r}
+#| eval: false
+variable <- value
+```
+
+Yes that is a less-than and dash character.  This is the assignment operator that historically has been used and it is the one that I will stick with.  In some cases you can use the '=' to assign variables instead but then it takes away the R-ness of R itself.  For decision making, the equality operator (e.g., is this equal to that) is the double equals sign '=='.  We will get into that below where we talk about logical types and later in decision making.
+
+If you are unaware of what type a particular variable may be, you can always use the `type()` function and R will tell you.
+
+```{r}
+#| eval: false
+class( variable )
+```
+
+R also has a pretty good help system built into itself.  You can get help for any function by typing a question mark in front of the function name.  This is a particularly awesome features because at the end of the help file, there is often examples of its usage, which are priceless.  Here is the documentation for the 'help' function as given by:
+
+```{r}
+#| eval: false
+?help
+```
+
+There are also package vignettes available (for most packages you download) that provide additional information on the routines, data sets, and other items included in these packages. You can get a list of vignettes currently installed on your machine by:
+
+```{r}
+#| eval: false
+vignette()
+```
+
+and vignettes for a particular package by passing the package name as an argument to the function itself.
+
+## Numeric Data Types
+
+The quantitative measurements we make are often numeric, in that they can be represented as as a number with a decimal component (think weight, height, latitude, soil moisture, ear wax viscosity, etc.).  The most basic type of data in R, is the numeric type and represents both integers and floating point numbers (n.b., there is a strict integer data type but it is often only needed when interfacing with other C libraries and can for what we are doing be disregarded).
+
+Assigning a value to a variable is easy
+
+```{r}
+x <- 3
+x
+```
+
+By default, R automatically outputs whole numbers numbers within decimal values appropriately.
+
+```{r}
+y <- 22/7
+y
+```
+
+If there is a mix of whole numbers and numbers with decimals together in a container such as
+
+```{r}
+c(x,y)
+```
+
+then both are shown with decimals. The `c()` part here is a function that combines several data objects together into a vector and is very useful.  In fact, the use of vectors are are central to working in R and functions almost all the functions we use on individual variables can also be applied to vectors.
+
+A word of caution should be made about numeric data types on any computer.  Consider the following example.
+
+```{r}
+x <- .3 / 3
+x
+```
+
+which is exactly what we'd expect.  However, the way in which computers store decimal numbers plays off our notion of significant digits pretty well.  Look what happens when I print out x but carry out the number of decimal places.
+
+```{r}
+print(x, digits=20)
+```
+
+Not quite 0.1 is it?  Not that far away from it but not exact.  That is a general problem, not one that R has any more claim to than any other language and/or implementation.  Does this matter much, probably not in the realm of the kinds of things we do in population genetics, it is just something that you should be aware of.
+You can make random sets of numeric data by using using functions describing various distributions.  For example, some random numbers from the normal distribution are:
+
+```{r}
+rnorm(10)
+```
+
+from the normal distribution with designated mean and standard deviation:
+
+```{r}
+rnorm(10,mean=42,sd=12)
+```
+
+A poisson distribution with mean 2:
+
+```{r}
+rpois(10,lambda = 2)
+```
+
+and the $\chi^2$ distribution with 1 degree of freedom:
+
+```{r}
+rchisq(10, df=1)
+```
+
+There are several more distributions that if you need to access random numbers, quantiles, probability densities, and cumulative density values are available.
+
+### Coercion to Numeric
+
+All data types have the potential ability to take another variable and coerce it into their type.  Some combinations make sense, and some do not.  For example, if you load in a CSV data file using read_csv(), and at some point a stray non-numeric character was inserted into one of the cells on your spreadsheet, R will interpret the entire column as a character type rather than as a numeric type.  This can be a very frustrating thing, spreadsheets should generally be considered evil as they do all kinds of stuff behind the scenes and make your life less awesome.
+
+Here is an example of coercion of some data that is initially defined as a set of characters
+
+```{r}
+x <- c("42","99")
+x
+```
+
+and is coerced into a numeric type using the as.numeric() function.
+
+```{r}
+y <- as.numeric( x )
+y
+```
+
+
+It is a built-in feature of the data types in R that they all have (or should have if someone is producing a new data type and is being courteous to their users) an `as.X()` function.  This is where the data type decides if the values asked to be coerced are reasonable or if you need to be reminded that what you are asking is not possible.  Here is an example where I try to coerce a non-numeric variable into a number.
+
+```{r}
+x <- "The night is dark and full of terrors..."
+as.numeric( x )
+```
+
+
+By default, the result should be NA (missing data/non-applicable) if you ask for things that are not possible.
+
+## Characters
+
+A collection of letters, number, and or punctuation is represented as a character data type.  These are enclosed in either single or double quotes and are considered a single entity.  For example, my name can be represented as:
+
+```{r}
+prof <- "Rodney J. Dyer"
+prof
+
+```
+
+In R, character variables are considered to be a single entity, that is the entire prof variable is a single unit, not a collection of characters.  This is in part due to the way in which vectors of variables are constructed in the language.  For example, if you are looking at the length of the variable I assigned my name to you see
+
+```{r}
+length(prof)
+```
+
+which shows that there is only one 'character' variable.  If, as is often the case, you are interested in knowing how many characters are in the variable prof, then you use the
+
+```{r}
+nchar(prof)
+```
+
+
+function instead.  This returns the number of characters (even the non-printing ones like tabs and spaces.
+
+```{r}
+nchar(" \t ")
+```
+
+As all other data types, you can define a vector of character values using the `c()` function.
+
+```{r}
+x <- "I am"
+y <- "not"
+z <- 'a looser'
+terms <- c(x,y,z)
+terms
+```
+
+And looking at the `length()` and `nchar()` of this you can see how these operations differ.
+```{r}
+length(terms)
+nchar(terms)
+```
+
+
+### Concatenation of Characters
+
+Another common use of characters is concatenating them into single sequences.  Here we use the function `paste()` and can set the separators (or characters that are inserted between entities when we collapse vectors).  Here is an example, entirely fictional and only provided for instructional purposes only.
+
+```{r}
+paste(terms, collapse=" ")
+```
+
+
+```{r}
+paste(x,z)
+```
+
+
+```{r}
+paste(x,z,sep=" not ")
+```
+
+### Coercion to Characters
+
+A character data type is often the most basal type of data you can work with.  For example, consider the case where you have named sample locations.  These can be kept as a character data type or as a factor (see below).  There are benefits and drawbacks to each representation of the same data (see below).  By default (as of the version of R I am currently using when writing this book), if you use a function like read_table() to load in an external file, columns of character data will be treated as factors.  This can be good behavior if all you are doing is loading in data and running an analysis, or it can be a total pain in the backside if you are doing more manipulative analyses.
+
+Here is an example of coercing a numeric type into a character type using the `as.character()` function.
+
+```{r}
+x <- 42
+x
+```
+
+```{r}
+y <- as.character(x)
+y
+```
+
+## Factors
+
+A factor is a categorical data type.  If you are coming from SAS, these are class variables.  If you are not, then perhaps you can think of them as mutually exclusive classifications.  For example, an sample may be assigned to one particular locale, one particular region, and one particular species.  Across all the data you may have several species, regions, and locales.  These are finite, and defined, sets of categories. One of the more common headaches encountered by people new to R is working with factor types and trying to add categories that are not already defined.
+
+Since factors are categorical, it is in your best interest to make sure you label them in as descriptive as a fashion as possible.  You are not saving space or cutting down on computational time to take shortcuts and label the locale for Rancho Santa Maria as RSN or pop3d or 5.  Our computers are fast and large enough, and our programmers are cleaver enough, to not have to rename our populations in numeric format to make them work (hello STRUCTURE I'm calling you out here).  The only thing you have to loose by adopting a reasonable naming scheme is confusion in your output.
+
+To define a factor type, you use the function `factor()` and pass it a vector of values.
+
+```{r}
+region <- c("North","North","South","East","East","South","West","West","West")
+region <- factor( region )
+region
+```
+
+
+When you print out the values, it shows you all the levels present for the factor.  If you have levels that are not present in your data set, when you define it, you can tell R to consider additional levels of this factor by passing the optional levels= argument as:
+
+```{r}
+region <- factor( region, levels=c("North","South","East","West","Central"))
+region
+```
+
+If you try to add a data point to a factor list that does not have the factor that you are adding, it will give you an error (or 'barf' as I like to say).
+
+```{r}
+region[1] <- "Bob"
+```
+
+Now, I have to admit that the Error message in its entirety, with its `"[<-.factor`(`*tmp*`, 1, value = "Bob")"` part is, perhaps, not the most informative.  Agreed.  However, the "invalid factor level" does tell you something useful.  Unfortunately, the programmers that put in the error handling system in R did not quite adhere to the spirit of the "fail loudly" mantra.  It is something you will have to get good at.  Google is your friend, and if you post a questions to (http://stackoverflow.org) or the R user list without doing serious homework, put on your asbestos shorts!
+
+Unfortunately, the error above changed the first element of the region vector to NA (missing data). I'll turn it back before we move too much further.
+
+```{r}
+region[1] <- "North"
+```
+
+Factors in R can be either unordered (as say locale may be since locale A is not `>`, `=`, or `<` locale B) or they may be ordered categories as in `Small < Medium < Large < X-Large`.  When you create the factor, you need to indicate if it is an ordered type (by default it is not).   If the factors are ordered in some way, you can also create an ordination on the data.  If you do not pass a levels= option to the `factors()` function, it will take the order in which they occur in data you pass to it.  If you want to specify an order for the factors specifically, pass the optional `levels=` and they will be ordinated in the order given there.
+
+```{r}
+region <- factor( region, ordered=TRUE, levels = c("West", "North", "South", "East") )
+region
+```
+
+### Missing Levels in Factors
+
+There are times when you have a subset of data that do not have all the potential categories.
+
+```{r}
+subregion <- region[ 3:9 ]
+subregion
+```
+
+```{r}
+table( subregion )
+```
+
+
+
+## Logical Types
+
+A logical type is either TRUE or FALSE, there is no in-between.  It is common to use these types in making decisions (see if-else decisions) to check a specific condition being satisfied.  To define logical variables you can either use the TRUE or FALSE directly
+
+```{r}
+canThrow <- c(FALSE, TRUE, FALSE, FALSE, FALSE)
+canThrow
+```
+
+or can implement some logical condition
+
+```{r}
+stable <- c( "RGIII" == 0, nchar("Marshawn") == 8)
+stable
+```
+
+on the variables.  Notice here how each of the items is actually evaluated as to determine the truth of each expression.  In the first case, the character is not equal to zero and in the second, the number of characters (what `nchar()` does) is indeed equal to 8 for the character string "Marshawn".
+
+It is common to use logical types to serve as indices for vectors.  Say for example, you have a vector of data that you want to select some subset from.
+
+```{r}
+data <- rnorm(20)
+data
+```
+
+
+Perhaps you are on interested in the non-negative values
+
+```{r}
+data[ data > 0 ]
+```
+
+If you look at the condition being passed to as the index
+
+```{r}
+data > 0
+```
+
+you see that individually, each value in the data vector is being evaluated as a logical value, satisfying the condition that it is strictly greater than zero.  When you pass that as indices to a vector it only shows the indices that are `TRUE`.
+
+You can coerce a value into a logical if you understand the rules.  Numeric types that equal 0 (zero) are `FALSE`, always.  Any non-zero value is considered `TRUE`.  Here I use the modulus operator, `%%`, which provides the remainder of a division.
+
+```{r}
+1:20 %% 2
+```
+
+which used as indices give us
+
+```{r}
+data[ (1:20 %% 2) > 0 ]
+```
+
+You can get as complicated in the creation of indices as you like, even using logical operators such as OR and AND. I leave that as an example for you to play with.
+
+

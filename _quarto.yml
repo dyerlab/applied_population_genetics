@@ -1,0 +1,80 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Applied Population Genetics"
+  author: "Rodney J. Dyer"
+  cover-image: "media/TitlePage_small.png"
+  repo-url: "https://github.com/dyerlab/AMG"
+  search: true
+
+  chapters:
+    - index.qmd
+    - r_ecosystem.qmd
+    - datatypes.qmd
+    - r_containers.qmd
+    - r_programming.qmd
+    - graphics.qmd
+    - reproducable_research.qmd
+    - part_single_population.qmd
+    - hardy_weinberg_equilibrium.qmd
+    - genetic_drift.qmd
+    - effective_population_size.qmd
+    - mutation.qmd
+    - part_nonrandom_mating.qmd
+    - selfing.qmd
+    - mixed_mating.qmd
+    - wahlund_effects.qmd
+    - part_parent_offspring.qmd
+    - pedigrees.qmd
+    - parentage.qmd
+    - part_subdivided_populations.qmd
+    - mapping_populations.qmd
+    - population_models.qmd
+    - genetic_diversity.qmd
+    - rarefaction.qmd
+    - genetic_distance.qmd
+    - genetic_structure.qmd
+    - population_assignment.qmd
+    - admixture.qmd
+    - part_statistical_models.qmd
+    - ordination.qmd
+    - distance_matrices.qmd
+    - linear_models.qmd
+    - distance_networks.qmd
+    - population_graphs.qmd
+    - interactive_visualization.qmd
+    - part_spatial_data.qmd
+    - vector_data.qmd
+    - raster_data.qmd
+    - projections.qmd
+    - ecological_distance.qmd
+    - niche_modeling.qmd
+    - eigenmaps.qmd
+    - part_selection.qmd
+    - selection.qmd
+    - part_backmatter.qmd
+    - references.qmd
+    - data_sets.qmd
+    - about_the_author.qmd
+
+bibliography: packages.bib
+
+format:
+  html:
+    theme: default
+    css: media/style.css
+    toc: true
+    toc-depth: 3
+    code-link: true
+    code-fold: false
+    highlight-style: tango
+    fig-cap-location: bottom
+    link-external-newwindow: true
+
+execute:
+  warning: false
+  message: false
+  error: false
+  echo: true

@@ -1,0 +1,364 @@
+# Pedigrees  {.imageChapter}
+
+<div class="chapter_image"><img src="chapter_images/ch_trees.jpg"></div>
+
+Pedigrees are visual representations of genetic relations.  They are extremely important for estimating inbreeding and following traits or diseases in lineages.  In this lecture, we will learn:
+
+1. Symbology used in pedigrees
+2. Estimation of inbreeding *F* from a given pedigree
+3. Approaches for plotting pedigrees
+
+In the analysis of pedigrees, we often use the following terminology:
+
+- **Consanguineous mating** (*lit.* "Of the same blood").  The condition where individuals who are related produce offspring.
+- **Biparental Inbreeding** (see consanguineous mating).
+
+A pedigree is simply a graphical representation characterizing the relationship amongst ancestral individuals.  This tool is very helpful for understanding the process of inbreeding when it occurs during a handful of generations.
+
+Perhaps the most studied pedigree is that of the Hapsburg Dynasty, dating from 1516-1700, which controlled most of what we call modern Europe.  Some of the European Royalty were interbred to maintain familial relationships and consolidate power.  Examples include:
+
+King                   | Queen                        |  Consanguineous Marriage
+-----------------------|------------------------------|----------------------------
+Philip I (1478-1506)   | Joanna I of Castile & Aragon | Third cousins 
+Charles I (1500-1558)  | Isabella of Portugal          | First cousins
+Philip II (1527-1598)  | Mary of Portugal             | Double first cousins
+$\;$                   | Mary I of England            | First cousins once removed
+$\;$                   | Anna of Austria              | Uncle-Niece
+Philip III (1578-1621) | Margaret of Austria          | First cousins once removed
+Philip IV (1605-1665)  | Elizabeth of Bourbon         | Third cousins
+$\;$                   | Mariana of Austria           | Uncle-Niece
+Charles II (1661-1700) | Marie Louise d'Orleans       | Second cousins
+
+
+
+
+![Hapsburg Dynasty | Piliip I ($F=0.025$) $\to$ Charles II ($F=0.254$)](media/HapsburgPedigree.png)
+```{r}
+#| echo: false
+#| fig-cap: "A pedigree of the Hapsburg Dynasty.  This pattern of mating resulted in individual inbreeding going from $F=0.025$ for Philip I to $F=0.254$ for Charles II."
+knitr::include_graphics("./media/HapsburgPedigree.png")
+```
+
+In this lineage, there were two genetic disorders that became paramount:  
+
+1. Pituitary hormone deficiency  
+2. Distal renal tubular acidosis
+
+
+Pedigree Symbology
+
+```{r}
+#| echo: false
+knitr::include_graphics("media/pedigree1.png")
+```
+
+
+1. Each row is a generation.
+2. Lines within a generation represent mating events that result in offspring.
+3. Lines between generations represent descent.
+4. Individuals are labeled uniquely.
+5. Sex is indicated by shape (square=male, circle=female, diamond=unknown).
+6. Traits can be mapped onto the pedigree using additional colors & symbols
+
+
+```{r}
+#| echo: false
+knitr::include_graphics("./media/pedigree0.png")
+```
+
+
+
+
+Extraneous individuals may be removed from the depiction.  Why is it that **C** and **F** are not shown on the pedigree on the right side?
+
+
+Estimating Inbreeding From Pedigrees
+
+The inbreeding coefficient, *F*, of an **individual** is determined by the probability that a pair of alleles carried by gametes are IBD from a recent common ancestor.
+
+```{r}
+#| echo: false
+knitr::include_graphics("./media/pedigree2.png")
+```
+
+
+- **F** has same grandfather on both sides.   
+- **D** and **E** are half-sibs sharing father **B**.   
+- **B** passed one of his alleles, say $A_1$, to both **D** and **B**.
+- **D** passed allele $A_1$ to **F** and **E** passed allele $A_1$ to **F**, which means
+- **F** has some non-zero probability of being autozygous
+
+
+
+
+Expectations for $F$ in a pedigree.
+
+
+```{r}
+#| echo: false
+knitr::include_graphics("./media/pedigree2.png")
+```
+
+
+- Label alleles in **B** as $\alpha$ and $\beta$.   
+- The alleles **B** gives to **D** & **E** are $\{\alpha, \alpha\}$, $\{\alpha, \beta\}$, $\{\beta, \alpha\}$, or $\{\beta, \beta\}$   
+- Each potential allele pair occurs at: $\left(\frac{1}{2}\right)^2 = \frac{1}{4}$   
+- If **B** gives $\{\alpha,\alpha\}$ or $\{\beta, \beta\}$ then the two alleles in the children of **B** are autozygous (by definition).   
+- If **B** gives $\{\alpha,\beta\}$ or $\{\beta, \alpha\}$ then the two alleles in the children of **B** are autozygous *only if* the alleles $\alpha$ and $\beta$ are autozygous.   
+- The probability of $\alpha$ and $\beta$ being autozygous in **B** is given by the inbreeding coefficient $F$ for **B** (denoted $F_B$).
+
+
+## Expectations for F in a pedigree.
+
+```{r}
+#| echo: false
+knitr::include_graphics("./media/pedigree2.png")
+```
+
+
+Transition probabilities for all cases of alleles within the children of **B** are:    
+
+- $P({\alpha,\alpha}|\mathbf{B}) = \frac{1}{4}$   
+- $P({\alpha,\beta}|\mathbf{B}) = \frac{1}{4}F_A$   
+- $P({\beta,\alpha}|\mathbf{B}) = \frac{1}{4}F_A$   
+- $P({\alpha,\alpha}|\mathbf{B}) = \frac{1}{4}$ 
+
+
+```{r}
+#| echo: false
+knitr::include_graphics("./media/pedigree2.png")
+```
+
+
+![pedigree2](media/pedigree2.png)
+
+
+Total probability for **B** donating autozygous alleles to his offspring are then:   
+\[
+ = \frac{1}{4} + \frac{1}{4}F_A + \frac{1}{4}F_A + \frac{1}{4} \\
+ = \frac{1}{2} + \frac{1}{2}F_A \\
+ = \frac{1}{2}(1.0 + F_A) \\
+\]
+
+
+Expectations for $F$ in a pedigree.
+
+```{r}
+#| echo: false
+knitr::include_graphics("./media/pedigree2.png")
+```
+
+
+- The transition probabilities for the alleles that **D** & **E** received from **B** and passes on to **F** are $\frac{1}{2}$ for each.   
+- The total probability that the two alleles in **F** are autozygous (Identical By Decent; IBD) is:   
+\[
+F = \frac{1}{2}(1.0 + F_A) \frac{1}{2} \frac{1}{2} \\
+   = \left( \frac{1}{2} \right)^3 (1.0 + F_A)
+\]
+
+
+Generalized Formula for Inbreeding | Chain Counting Method
+
+```{r}
+#| echo: false
+knitr::include_graphics("./media/pedigree2.png")
+```
+
+\[
+F  = \left( \frac{1}{2} \right)^i (1.0 + F_A)
+\]
+where the exponent $i$ is the length of the *ancestral loop* (e.g., the number of steps starting at **F** and going trough the common ancestor and back to **F**) which in this case is **D<u>B</u>E** (the common ancestor is underlined).
+
+
+Several Ancestral Loops
+
+```{r}
+#| echo: false
+knitr::include_graphics("./media/pedigree4.png")
+```
+
+
+
+If there is more than one ancestral loop, then the final inbreeding coefficient, *F*, is the sum of the *F* estimated across each loop (assuming there are $K$ different loops in the pedigree).  In this example you would use both **GD<u>A</u>EH** and **GD<u>B</u>EH**.   
+\[
+F  = \sum_{k=1}^{K} \left[ \left( \frac{1}{2} \right)^{i_k} (1.0 + F_k) \right]
+\]
+
+N.B. Each ancestor may have different $F_k$ values.  
+
+
+Strategies for Pedigrees
+ 
+Here is a basic strategy for solving pedigree questions. 
+ 
+1. Draw the pedigree    
+2. Identify common ancestor(s)    
+3. Trace ancestral loop(s)    
+4. Annotate all ancestral loops indicating the common ancestor    
+5. The length of each ancestral loop is $i$    
+6. Plug into the equation for inbreeding statistic *F* for each loop.    
+7. Final *F* is sum of all estimated *F* from each loop.
+
+
+Easy Example, F=?
+
+```{r}
+library(kinship2)
+id    <- LETTERS[1:6]
+dadid <- c(NA,NA,NA,"B","B","D")
+momid <- c(NA,NA,NA,"A","C","E")
+sex   <- c("female","male","female","male","female","female")
+ped <- pedigree( id, dadid, momid, sex)
+ped
+plot(ped)
+```
+
+- Ancestral loop: **D<u>B</u>E**, 
+- $i = 3$, 
+- $F_F = \left( \frac{1}{2} \right)^3(1+F_A)$.
+
+
+Easy Example, <font class="alert">F=?</font>
+
+```{r}
+library(kinship2)
+id    <- LETTERS[1:9]
+momid <- c(NA,NA,NA,"B","B",NA,"C","E","H")
+dadid <- c(NA,NA,NA,"A","A",NA,"D","F","G")
+sex   <- c("male","female","female","male","female","male","male","female","female")
+ped <- pedigree( id, dadid, momid, sex)
+plot(ped)
+```
+
+- Ancestral loop: **GD<u>A</u>EH**, **GD<u>B</u>EH**, $F_I = \left[ \left( \frac{1}{2} \right)^5(1+F_A) \right] + \left[ \left( \frac{1}{2} \right)^5(1+F_B) \right]$.
+
+
+
+
+Medium Example, <font class="alert">F=?</font>
+
+```{r}
+id    <- LETTERS[1:8]
+dadid <- c(NA,NA,"A","A",NA,"D","D","F")
+momid <- c(NA,NA,"B","B",NA,"C","E","G")
+sex   <- c("male","female","female","male","female","male","female","unknown")
+ped <- pedigree( id, dadid, momid, sex)
+suppressWarnings(plot(ped))
+```
+
+- Ancestral loop: **GD<u>A</u>EH**, **GD<u>B</u>EH**, $F_I = \left[ \left( \frac{1}{2} \right)^5(1+F_A) \right] + \left[ \left( \frac{1}{2} \right)^5(1+F_B) \right]$.
+
+
+
+
+
+
+## Drawing Pedigrees
+
+
+Example Pedigree
+
+```{r}
+library(kinship2)
+id    <- LETTERS[1:5]
+dadid <- c(NA,NA,"A","A","A")
+momid <- c(NA,NA,"B","B","B")
+sex   <- c("male","female","male","female","female")
+data <- data.frame( id, dadid,momid,sex)
+data
+```
+
+
+Example Pedigree 
+
+```{r}
+ped <- pedigree(data$id, data$dadid, data$momid, data$sex)
+ped
+summary(ped)
+```
+
+
+Example Pedigree
+
+```{r}
+plot.pedigree(ped)
+```
+
+
+
+![Pedigree3](media/pedigree3.png)
+
+
+Decay of $F$, The effects of size in the ancestral loop
+
+```{r}
+library(ggplot2)
+df <- data.frame( i=seq(4,20,by=2) )
+df$F <- 0.5^df$i
+ggplot( df, aes(x=i,y=F) ) + geom_line(color="red") 
+```
+
+
+
+
+## Skills
+  
+This lecture covered the creation and analysis of pedigree data.  At the end of this lecture you should be able to:
+
+1. first skill
+2. second skill
+
+
+
+
+```{r}
+id    <- LETTERS[1:9]
+momid <- c(NA,NA,NA,"B","B",NA,"C","E","H")
+dadid <- c(NA,NA,NA,"A","A",NA,"D","F","G")
+sex   <- c("male","female","female","male","female","male","male","female","female")
+brown_eyes <- c(1,0,0,1,1,NA,1,1,0)
+college <- c(0,1,0,0,0,0,1,1,1)
+likes_asparagus <- c(0,1,0,0,1,1,0,1,1)
+traits <- cbind( brown_eyes, college, likes_asparagus)
+
+ped <- pedigree( id, dadid, momid, sex, affected = traits)
+plot(ped)
+pedigree.legend( ped, location="bottomleft",radius=.2)
+```
+
+
+
+
+```{r}
+library(gstudio)
+p1 <- c("Ai","Aj")
+p2 <- c("Ak","Al")
+offs <- c(  locus( c(p1[1],p2[1]) ), 
+            locus( c(p1[2],p2[1]) ), 
+            locus( c(p1[1],p2[2]) ),
+            locus( c(p1[2],p2[2]) ) )
+offs
+```
+
+
+Relationship     | $k_0$ | $k_1$ | $k_2$ | $r$ 
+-----------------|-------|-------|-------|-----
+Identical Twins  | 0     | 0     | 1     | 1   
+Full Sibs        | 0.25  | 0.5   | 0.25  | 0.5 
+Parent Offspring | 0     | 1     | 0     | 0.5 
+Half Sib         | 0.5   | 0.5   | 0     | 0.25 
+Aunt-nephew      | 0.5   | 0.5   | 0     | 0.25 
+First Cousin     | 0.75  | 0.25  | 0     | 0.125 
+Unrelated        | 1     | 0     | 0     | 0 
+
+sdf
+
+
+
+```{r}
+ped <- pedigree( id, dadid, momid, sex, affected = traits)
+plot(ped)
+pedigree.legend( ped, location="bottomleft",radius=.2)
+kinship(ped)
+```
+
