@@ -1,2 +1,20 @@
 # Data Sets
 
+
+
+## Example Taxa 
+
+### Sonoran Desert Bark Beetle
+
+![](media/ch_araptus.jpg)
+
+
+### Flowering Dogwood
+
+![](media/ch_dogwood.jpg)
+
+
+## Simulated Data
+
+
+

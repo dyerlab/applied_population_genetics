@@ -1,0 +1,58 @@
+# Factor Data
+
+## Factors
+
+A factor is a categorical data type.  If you are coming from SAS, these are class variables.  If you are not, then perhaps you can think of them as mutually exclusive classifications.  For example, an sample may be assigned to one particular locale, one particular region, and one particular species.  Across all the data you may have several species, regions, and locales.  These are finite, and defined, sets of categories. One of the more common headaches encountered by people new to R is working with factor types and trying to add categories that are not already defined.
+
+Since factors are categorical, it is in your best interest to make sure you label them in as descriptive as a fashion as possible.  You are not saving space or cutting down on computational time to take shortcuts and label the locale for Rancho Santa Maria as RSN or pop3d or 5.  Our computers are fast and large enough, and our programmers are cleaver enough, to not have to rename our populations in numeric format to make them work (hello STRUCTURE I'm calling you out here).  The only thing you have to loose by adopting a reasonable naming scheme is confusion in your output.
+
+To define a factor type, you use the function `factor()` and pass it a vector of values.
+
+```{r}
+region <- c("North","North","South","East","East","South","West","West","West")
+region <- factor( region )
+region
+```
+
+
+When you print out the values, it shows you all the levels present for the factor.  If you have levels that are not present in your data set, when you define it, you can tell R to consider additional levels of this factor by passing the optional levels= argument as:
+
+```{r}
+region <- factor( region, levels=c("North","South","East","West","Central"))
+region
+```
+
+If you try to add a data point to a factor list that does not have the factor that you are adding, it will give you an error (or 'barf' as I like to say).
+
+```{r}
+region[1] <- "Bob"
+```
+
+Now, I have to admit that the Error message in its entirety, with its `"[<-.factor`(`*tmp*`, 1, value = "Bob")"` part is, perhaps, not the most informative.  Agreed.  However, the "invalid factor level" does tell you something useful.  Unfortunately, the programmers that put in the error handling system in R did not quite adhere to the spirit of the "fail loudly" mantra.  It is something you will have to get good at.  Google is your friend, and if you post a questions to (http://stackoverflow.org) or the R user list without doing serious homework, put on your asbestos shorts!
+
+Unfortunately, the error above changed the first element of the region vector to NA (missing data). I'll turn it back before we move too much further.
+
+```{r}
+region[1] <- "North"
+```
+
+Factors in R can be either unordered (as say locale may be since locale A is not `>`, `=`, or `<` locale B) or they may be ordered categories as in `Small < Medium < Large < X-Large`.  When you create the factor, you need to indicate if it is an ordered type (by default it is not).   If the factors are ordered in some way, you can also create an ordination on the data.  If you do not pass a levels= option to the `factors()` function, it will take the order in which they occur in data you pass to it.  If you want to specify an order for the factors specifically, pass the optional `levels=` and they will be ordinated in the order given there.
+
+```{r}
+region <- factor( region, ordered=TRUE, levels = c("West", "North", "South", "East") )
+region
+```
+
+### Missing Levels in Factors
+
+There are times when you have a subset of data that do not have all the potential categories.
+
+```{r}
+subregion <- region[ 3:9 ]
+subregion
+```
+
+```{r}
+table( subregion )
+```
+

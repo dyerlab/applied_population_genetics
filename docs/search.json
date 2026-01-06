@@ -40,6 +40,16 @@
     ]
   },
   {
+    "objectID": "Introduction.html#course-level-bloom-spread-progression",
+    "href": "Introduction.html#course-level-bloom-spread-progression",
+    "title": "Introduction",
+    "section": "Course-Level Bloom Spread Progression",
+    "text": "Course-Level Bloom Spread Progression\n\n\n\n\n\n\n\n\n\n\nModule\nContent Focus\nBloom Spread\nWeight\nPattern Type\n\n\n\n\n1\nR Ecosystem (Tools)\n3.8-4.0\n17.5%\nSequential Mastery (within)\n\n\n2\nSingle Population\n4.2-4.5\n17.5%\nSequential Mastery (within)\n\n\n3\nSubdivision\n4.7-5.0\n17.5%\nSequential Mastery (within)\n\n\n4\nSelection & Integration\n5.3-5.6\n25.0%\nSequential Mastery (within)\n\n\nAll\nAll Processes\n3.8 → 5.6\n100%\nConvergent Integration\n\n\n\n\nFractal Pedagogical Structure\nThe content within and across learning modules share a similar fractal structure.\n\nWithin each module: Type 1 Sequential Mastery (quizzes → activities → paper)\nAcross modules: Type 4 Convergent Integration (all developmental arcs converge at Module 4)\nGrade weighting: Ensures papers drive cognitive demand while activities provide scaffolding",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
     "objectID": "Introduction.html#footnotes",
     "href": "Introduction.html#footnotes",
     "title": "Introduction",
@@ -70,14 +80,113 @@
     ]
   },
   {
+    "objectID": "R.html",
+    "href": "R.html",
+    "title": "1  R Language",
+    "section": "",
+    "text": "Getting R Configured\nThe grammar of the R language was derived from another system called S-Plus. S-Plus was a proprietary analysis platform developed by AT&T and licenses were sold for its use, mostly in industry and education. Given the closed nature of the S-Plus platform, R was developed with the goal of creating an interpreter that could read grammar similar to S-Plus but be available to the larger research community. The use of R has increased dramatically due to its open nature and the ability of people to share code solutions with relatively little barriers.\nThe main repository for R is located at the CRAN Repository, which is where you can download the latest version. It is in your best interests to make sure you update the underlying R system, changes are made continually (perhaps despite the outward appearance of the website).\nThe current version of this book uses version R version 4.5.2 (2025-10-31). To get the correct version, open the page and there should be a link at the top for your particular computing platform. Download the appropriate version and install it following the instructions appropriate for your computer.\nIf you are updating your version of R from an older version, you may want to carry over the current set of libraries you have already installed to the new version. R creates a new library folder structure when you update the subversion (e.g., going from 4.3 to 4.4, the libraries are kept separate). So, before you upgrade, do the following\n# grab and save all your current packages.\npkgs &lt;- installed.packages()\npkgs &lt;- names( is.na(pkgs[,4]))\nsave(pkgs,file='~/Desktop/pkgs.rda')\nThen install the latest version of R and instruct it to look at the differences between what the default install has and what you previously had (and install the missing parts).\nnew_pkgs &lt;- installed.packages()\nnew_pkgs &lt;- names( is.na(new_pkgs[,4]))\nload('~/Desktop/pkgs.rda')\nto_install &lt;- setdiff( pkgs, new_pkgs )\ninstall.packages( to_install )\nupdate.packages()\nThis should get you up-to-date on the newest version of R.",
+    "crumbs": [
+      "R Ecosystem",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>R Language</span>"
+    ]
+  },
+  {
+    "objectID": "R.html#packages",
+    "href": "R.html#packages",
+    "title": "1  R Language",
+    "section": "Packages",
+    "text": "Packages\nThe base R system comes with enough functionality to get you going. By default, there is only a limited amount of functionality in R, which is a great thing. You only load and use the packages that you intend to use. There are just too many packages to have them all loaded into memory at all times and there is such a broad range of packages, it is not likely you’d need more than a small fraction of the packages during the course of all your analyses. Once you have a package, you can tell R that you intend to use it by either\n\nlibrary(package_name)\n\nor\n\nrequire(package_name)\n\nThey are approximately equivalent, differing in only that the second one actually returns a TRUE or FALSE indicating the presence of that library on you machine. If you do not want to be mocked by other users of R, I would recommend the library version—there are situations where require will not do what you think you want it to do (even though it is a verb and should probably be the correct one to use grammatically).\nThere are, at present, a few different places you can get packages. The packages can either be downloaded from these online repositories and installed into R or you can install them from within R itself. Again, I’ll prefer the latter as it is a bit more straightforward.\n\nCRAN\nThe main repository for packages is hosted by the r-project page itself. There are packages with solutions to analyses ranging from Approximate Bayesian Computation to Zhang & Pilon’s approaches to characterizing climatic trends. The list of these packages is large and ever growing. It can be found on CRAN under the packages menu. To install a package from this repository, you use the function\n\ninstall.packages(\"thePackageName\") \n\nYou can see that R went to the CRAN mirror site (I use the rstudio one), downloaded the package, look for particular dependencies that that package may have and download them as well for you. It should install these packages for you and give you an affirmative message indicating it had done so.\nAt times, there are some packages that are not available in binary form for all computer systems (the rgdal package is one that comes to mind for which we will provide a work around later) and the packages need to be compiled. This means that you need to have some additional tools and/or libraries on your machine to take the code, compile it, and link it together to make the package. In these cases, the internet and the documentation that the developer provide are key to your sanity.\n\n\nGitHub\nThere are an increasing number of projects that are being developed either in the open source community or shared among a set of developers. These projects are often hosted on http://www.github.com where you can get access to the latest code updates. The packages that I develop are hosted on Github at (http://github.com/dyerlab) and only pushed to CRAN when I make major changes.\nTo install packages from Github you need to install the remotes library from CRAN first\n\nremotes::install_github(\"GITHUB_USER_NAME/GITHUB_REPOSITORY_NAME\")",
+    "crumbs": [
+      "R Ecosystem",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>R Language</span>"
+    ]
+  },
+  {
+    "objectID": "R.html#libraries-used-in-text",
+    "href": "R.html#libraries-used-in-text",
+    "title": "1  R Language",
+    "section": "Libraries Used in Text",
+    "text": "Libraries Used in Text\nThis work requires several libraries that you may need to get from either CRAN or GitHub. The following if you run the following code, you should be up-to-date on the necessary packages used throughout this text.\n\nfiles &lt;- list.files(\".\",pattern=\".qmd\")\nlibraries &lt;- c(\"gstudio\",\"popgraph\",\"ggplot2\")\nfor( file in files ) {\n  suppressWarnings(s &lt;- system( paste(\"grep -E -o 'library\\\\(\\\\w+\\\\)'\",file), intern=TRUE))\n  if( length(s) &gt; 0 ) {\n    s &lt;- strsplit(s,\"(\",fixed=TRUE)\n    for( item in s ){\n      if( length(item) == 2){\n        library &lt;- strsplit(item[2],\")\",fixed=TRUE)[[1]]\n        libraries &lt;- c(libraries,library)\n      }\n    }\n  }\n}\n\npkgs &lt;- sort( unique(libraries) )\nidx &lt;- which( pkgs == \"package_name\" )\npkgs &lt;- pkgs[-idx]\n\nif( FALSE ) { \n    pkgs_df &lt;- data.frame(Name = pkgs, Title = NA)\n    pkgs_df &lt;- data.frame(Name = pkgs, Title = NA)\n    for(i in seq_along(pkgs)){\n        f = system.file(package = pkgs[i], \"DESCRIPTION\")\n        if( nchar(f)&gt; 1) {\n            # Title is always on 3rd line\n            title = readLines(f)\n            title = title[grep(\"Title: \", title)]\n            pkgs_df$Title[i] = gsub(\"Title: \", \"\", title)    \n        }\n    }\n\n    knitr::kable(pkgs_df,caption = \"R packages used in the examples shown in this book.\")\n}\n\n\n# make sure these libraries are already installed on this machine\n\n# inst_pkgs &lt;- installed.packages()\n# to_install &lt;- setdiff( pkgs, inst_pkgs )\n# if( length(to_install))\n#   install.packages(to_install, repos=\"https://cran.rstudio.org\")",
+    "crumbs": [
+      "R Ecosystem",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>R Language</span>"
+    ]
+  },
+  {
+    "objectID": "DataTypes.html",
+    "href": "DataTypes.html",
+    "title": "4  Data Types",
+    "section": "",
+    "text": "Numeric Data Types\nThe very first hurdle you need to get over is the oddness in the way in which R assigns values to variables.\nYes that is a less-than and dash character. This is the assignment operator that historically has been used and it is the one that I will stick with. In some cases you can use the ‘=’ to assign variables instead but then it takes away the R-ness of R itself. For decision making, the equality operator (e.g., is this equal to that) is the double equals sign ‘==’. We will get into that below where we talk about logical types and later in decision making.\nIf you are unaware of what type a particular variable may be, you can always use the type() function and R will tell you.\nR also has a pretty good help system built into itself. You can get help for any function by typing a question mark in front of the function name. This is a particularly awesome features because at the end of the help file, there is often examples of its usage, which are priceless. Here is the documentation for the ‘help’ function as given by:\nThere are also package vignettes available (for most packages you download) that provide additional information on the routines, data sets, and other items included in these packages. You can get a list of vignettes currently installed on your machine by:\nand vignettes for a particular package by passing the package name as an argument to the function itself.\nThe quantitative measurements we make are often numeric, in that they can be represented as as a number with a decimal component (think weight, height, latitude, soil moisture, ear wax viscosity, etc.). The most basic type of data in R, is the numeric type and represents both integers and floating point numbers (n.b., there is a strict integer data type but it is often only needed when interfacing with other C libraries and can for what we are doing be disregarded).\nAssigning a value to a variable is easy\nx &lt;- 3\nx\n\n[1] 3\nBy default, R automatically outputs whole numbers numbers within decimal values appropriately.\ny &lt;- 22/7\ny\n\n[1] 3.142857\nIf there is a mix of whole numbers and numbers with decimals together in a container such as\nc(x,y)\n\n[1] 3.000000 3.142857\nthen both are shown with decimals. The c() part here is a function that combines several data objects together into a vector and is very useful. In fact, the use of vectors are are central to working in R and functions almost all the functions we use on individual variables can also be applied to vectors.\nA word of caution should be made about numeric data types on any computer. Consider the following example.\nx &lt;- .3 / 3\nx\n\n[1] 0.1\nwhich is exactly what we’d expect. However, the way in which computers store decimal numbers plays off our notion of significant digits pretty well. Look what happens when I print out x but carry out the number of decimal places.\nprint(x, digits=20)\n\n[1] 0.099999999999999991673\nNot quite 0.1 is it? Not that far away from it but not exact. That is a general problem, not one that R has any more claim to than any other language and/or implementation. Does this matter much, probably not in the realm of the kinds of things we do in population genetics, it is just something that you should be aware of. You can make random sets of numeric data by using using functions describing various distributions. For example, some random numbers from the normal distribution are:\nrnorm(10)\n\n [1]  1.1986033  0.9622868  0.4817572  1.1840362  0.3075965 -0.6129430\n [7] -0.8376870 -0.3147793  1.3616952  0.7582906\nfrom the normal distribution with designated mean and standard deviation:\nrnorm(10,mean=42,sd=12)\n\n [1] 36.42172 33.83305 46.55612 63.00495 61.23703 35.63111 36.85864 29.60351\n [9] 34.82064 28.65490\nA poisson distribution with mean 2:\nrpois(10,lambda = 2)\n\n [1] 0 3 1 2 2 2 2 5 2 6\nand the \\(\\chi^2\\) distribution with 1 degree of freedom:\nrchisq(10, df=1)\n\n [1] 0.47745273 0.10883143 0.21057793 0.04400604 1.98712937 0.20192578\n [7] 0.42243174 6.00655602 3.01265467 0.52868058\nThere are several more distributions that if you need to access random numbers, quantiles, probability densities, and cumulative density values are available.",
+    "crumbs": [
+      "R Ecosystem",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Types</span>"
+    ]
+  },
+  {
+    "objectID": "DataTypes.html#numeric-data-types",
+    "href": "DataTypes.html#numeric-data-types",
+    "title": "4  Data Types",
+    "section": "",
+    "text": "Coercion to Numeric\nAll data types have the potential ability to take another variable and coerce it into their type. Some combinations make sense, and some do not. For example, if you load in a CSV data file using read_csv(), and at some point a stray non-numeric character was inserted into one of the cells on your spreadsheet, R will interpret the entire column as a character type rather than as a numeric type. This can be a very frustrating thing, spreadsheets should generally be considered evil as they do all kinds of stuff behind the scenes and make your life less awesome.\nHere is an example of coercion of some data that is initially defined as a set of characters\n\nx &lt;- c(\"42\",\"99\")\nx\n\n[1] \"42\" \"99\"\n\n\nand is coerced into a numeric type using the as.numeric() function.\n\ny &lt;- as.numeric( x )\ny\n\n[1] 42 99\n\n\nIt is a built-in feature of the data types in R that they all have (or should have if someone is producing a new data type and is being courteous to their users) an as.X() function. This is where the data type decides if the values asked to be coerced are reasonable or if you need to be reminded that what you are asking is not possible. Here is an example where I try to coerce a non-numeric variable into a number.\n\nx &lt;- \"The night is dark and full of terrors...\"\nas.numeric( x )\n\nWarning: NAs introduced by coercion\n\n\n[1] NA\n\n\nBy default, the result should be NA (missing data/non-applicable) if you ask for things that are not possible.",
+    "crumbs": [
+      "R Ecosystem",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Types</span>"
+    ]
+  },
+  {
+    "objectID": "DataTypes.html#character-data",
+    "href": "DataTypes.html#character-data",
+    "title": "4  Data Types",
+    "section": "Character Data",
+    "text": "Character Data\nA collection of letters, number, and or punctuation is represented as a character data type. These are enclosed in either single or double quotes and are considered a single entity. For example, my name can be represented as:\n\nprof &lt;- \"Rodney J. Dyer\"\nprof\n\n[1] \"Rodney J. Dyer\"\n\n\nIn R, character variables are considered to be a single entity, that is the entire prof variable is a single unit, not a collection of characters. This is in part due to the way in which vectors of variables are constructed in the language. For example, if you are looking at the length of the variable I assigned my name to you see\n\nlength(prof)\n\n[1] 1\n\n\nwhich shows that there is only one ‘character’ variable. If, as is often the case, you are interested in knowing how many characters are in the variable prof, then you use the\n\nnchar(prof)\n\n[1] 14\n\n\nfunction instead. This returns the number of characters (even the non-printing ones like tabs and spaces.\n\nnchar(\" \\t \")\n\n[1] 3\n\n\nAs all other data types, you can define a vector of character values using the c() function.\n\nx &lt;- \"I am\"\ny &lt;- \"not\"\nz &lt;- 'a looser'\nterms &lt;- c(x,y,z)\nterms\n\n[1] \"I am\"     \"not\"      \"a looser\"\n\n\nAnd looking at the length() and nchar() of this you can see how these operations differ.\n\nlength(terms)\n\n[1] 3\n\nnchar(terms)\n\n[1] 4 3 8\n\n\n\nConcatenation of Characters\nAnother common use of characters is concatenating them into single sequences. Here we use the function paste() and can set the separators (or characters that are inserted between entities when we collapse vectors). Here is an example, entirely fictional and only provided for instructional purposes only.\n\npaste(terms, collapse=\" \")\n\n[1] \"I am not a looser\"\n\n\n\npaste(x,z)\n\n[1] \"I am a looser\"\n\n\n\npaste(x,z,sep=\" not \")\n\n[1] \"I am not a looser\"\n\n\n\n\nCoercion to Characters\nA character data type is often the most basal type of data you can work with. For example, consider the case where you have named sample locations. These can be kept as a character data type or as a factor (see below). There are benefits and drawbacks to each representation of the same data (see below). By default (as of the version of R I am currently using when writing this book), if you use a function like read_table() to load in an external file, columns of character data will be treated as factors. This can be good behavior if all you are doing is loading in data and running an analysis, or it can be a total pain in the backside if you are doing more manipulative analyses.\nHere is an example of coercing a numeric type into a character type using the as.character() function.\n\nx &lt;- 42\nx\n\n[1] 42\n\n\n\ny &lt;- as.character(x)\ny\n\n[1] \"42\"",
+    "crumbs": [
+      "R Ecosystem",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Types</span>"
+    ]
+  },
+  {
+    "objectID": "DataTypes.html#logical-types",
+    "href": "DataTypes.html#logical-types",
+    "title": "4  Data Types",
+    "section": "Logical Types",
+    "text": "Logical Types\nA logical type is either TRUE or FALSE, there is no in-between. It is common to use these types in making decisions (see if-else decisions) to check a specific condition being satisfied. To define logical variables you can either use the TRUE or FALSE directly\n\ncanThrow &lt;- c(FALSE, TRUE, FALSE, FALSE, FALSE)\ncanThrow\n\n[1] FALSE  TRUE FALSE FALSE FALSE\n\n\nor can implement some logical condition\n\nstable &lt;- c( \"RGIII\" == 0, nchar(\"Marshawn\") == 8)\nstable\n\n[1] FALSE  TRUE\n\n\non the variables. Notice here how each of the items is actually evaluated as to determine the truth of each expression. In the first case, the character is not equal to zero and in the second, the number of characters (what nchar() does) is indeed equal to 8 for the character string “Marshawn”.\nIt is common to use logical types to serve as indices for vectors. Say for example, you have a vector of data that you want to select some subset from.\n\ndata &lt;- rnorm(20)\ndata\n\n [1] -0.1938137 -0.8822694  0.3264208  0.9503469  0.1067894 -1.3603158\n [7]  0.3456918  1.1389503  0.4323083 -0.8093313 -0.2968339  0.4930676\n[13]  0.4695398 -0.4246004  0.8634220 -0.4695553 -0.8200834  0.9042916\n[19]  0.0129408  0.5601540\n\n\nPerhaps you are on interested in the non-negative values\n\ndata[ data &gt; 0 ]\n\n [1] 0.3264208 0.9503469 0.1067894 0.3456918 1.1389503 0.4323083 0.4930676\n [8] 0.4695398 0.8634220 0.9042916 0.0129408 0.5601540\n\n\nIf you look at the condition being passed to as the index\n\ndata &gt; 0\n\n [1] FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE\n[13]  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE\n\n\nyou see that individually, each value in the data vector is being evaluated as a logical value, satisfying the condition that it is strictly greater than zero. When you pass that as indices to a vector it only shows the indices that are TRUE.\nYou can coerce a value into a logical if you understand the rules. Numeric types that equal 0 (zero) are FALSE, always. Any non-zero value is considered TRUE. Here I use the modulus operator, %%, which provides the remainder of a division.\n\n1:20 %% 2\n\n [1] 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0\n\n\nwhich used as indices give us\n\ndata[ (1:20 %% 2) &gt; 0 ]\n\n [1] -0.1938137  0.3264208  0.1067894  0.3456918  0.4323083 -0.2968339\n [7]  0.4695398  0.8634220 -0.8200834  0.0129408\n\n\nYou can get as complicated in the creation of indices as you like, even using logical operators such as OR and AND. I leave that as an example for you to play with.",
+    "crumbs": [
+      "R Ecosystem",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Types</span>"
+    ]
+  },
+  {
+    "objectID": "FactorData.html",
+    "href": "FactorData.html",
+    "title": "6  Factor Data",
+    "section": "",
+    "text": "Factors\nA factor is a categorical data type. If you are coming from SAS, these are class variables. If you are not, then perhaps you can think of them as mutually exclusive classifications. For example, an sample may be assigned to one particular locale, one particular region, and one particular species. Across all the data you may have several species, regions, and locales. These are finite, and defined, sets of categories. One of the more common headaches encountered by people new to R is working with factor types and trying to add categories that are not already defined.\nSince factors are categorical, it is in your best interest to make sure you label them in as descriptive as a fashion as possible. You are not saving space or cutting down on computational time to take shortcuts and label the locale for Rancho Santa Maria as RSN or pop3d or 5. Our computers are fast and large enough, and our programmers are cleaver enough, to not have to rename our populations in numeric format to make them work (hello STRUCTURE I’m calling you out here). The only thing you have to loose by adopting a reasonable naming scheme is confusion in your output.\nTo define a factor type, you use the function factor() and pass it a vector of values.\nregion &lt;- c(\"North\",\"North\",\"South\",\"East\",\"East\",\"South\",\"West\",\"West\",\"West\")\nregion &lt;- factor( region )\nregion\n\n[1] North North South East  East  South West  West  West \nLevels: East North South West\nWhen you print out the values, it shows you all the levels present for the factor. If you have levels that are not present in your data set, when you define it, you can tell R to consider additional levels of this factor by passing the optional levels= argument as:\nregion &lt;- factor( region, levels=c(\"North\",\"South\",\"East\",\"West\",\"Central\"))\nregion\n\n[1] North North South East  East  South West  West  West \nLevels: North South East West Central\nIf you try to add a data point to a factor list that does not have the factor that you are adding, it will give you an error (or ‘barf’ as I like to say).\nregion[1] &lt;- \"Bob\"\n\nWarning in `[&lt;-.factor`(`*tmp*`, 1, value = \"Bob\"): invalid factor level, NA\ngenerated\nNow, I have to admit that the Error message in its entirety, with its \"[&lt;-.factor(*tmp*, 1, value = “Bob”)“` part is, perhaps, not the most informative. Agreed. However, the”invalid factor level” does tell you something useful. Unfortunately, the programmers that put in the error handling system in R did not quite adhere to the spirit of the “fail loudly” mantra. It is something you will have to get good at. Google is your friend, and if you post a questions to (http://stackoverflow.org) or the R user list without doing serious homework, put on your asbestos shorts!\nUnfortunately, the error above changed the first element of the region vector to NA (missing data). I’ll turn it back before we move too much further.\nregion[1] &lt;- \"North\"\nFactors in R can be either unordered (as say locale may be since locale A is not &gt;, =, or &lt; locale B) or they may be ordered categories as in Small &lt; Medium &lt; Large &lt; X-Large. When you create the factor, you need to indicate if it is an ordered type (by default it is not). If the factors are ordered in some way, you can also create an ordination on the data. If you do not pass a levels= option to the factors() function, it will take the order in which they occur in data you pass to it. If you want to specify an order for the factors specifically, pass the optional levels= and they will be ordinated in the order given there.\nregion &lt;- factor( region, ordered=TRUE, levels = c(\"West\", \"North\", \"South\", \"East\") )\nregion\n\n[1] North North South East  East  South West  West  West \nLevels: West &lt; North &lt; South &lt; East",
+    "crumbs": [
+      "R Ecosystem",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Factor Data</span>"
+    ]
+  },
+  {
+    "objectID": "FactorData.html#factors",
+    "href": "FactorData.html#factors",
+    "title": "6  Factor Data",
+    "section": "",
+    "text": "Missing Levels in Factors\nThere are times when you have a subset of data that do not have all the potential categories.\n\nsubregion &lt;- region[ 3:9 ]\nsubregion\n\n[1] South East  East  South West  West  West \nLevels: West &lt; North &lt; South &lt; East\n\n\n\ntable( subregion )\n\nsubregion\n West North South  East \n    3     0     2     2",
+    "crumbs": [
+      "R Ecosystem",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Factor Data</span>"
+    ]
+  },
+  {
     "objectID": "Summary.html",
     "href": "Summary.html",
-    "title": "4  Summary",
+    "title": "12  Summary",
     "section": "",
     "text": "In summary, this book has no content whatsoever.",
     "crumbs": [
       "Backmatter",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Summary</span>"
     ]
   },
   {
@@ -89,6 +198,39 @@
     "crumbs": [
       "Backmatter",
       "References"
+    ]
+  },
+  {
+    "objectID": "DataSets.html",
+    "href": "DataSets.html",
+    "title": "Appendix A — Data Sets",
+    "section": "",
+    "text": "Example Taxa",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Data Sets</span>"
+    ]
+  },
+  {
+    "objectID": "DataSets.html#example-taxa",
+    "href": "DataSets.html#example-taxa",
+    "title": "Appendix A — Data Sets",
+    "section": "",
+    "text": "Sonoran Desert Bark Beetle\n\n\n\nFlowering Dogwood",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Data Sets</span>"
+    ]
+  },
+  {
+    "objectID": "DataSets.html#simulated-data",
+    "href": "DataSets.html#simulated-data",
+    "title": "Appendix A — Data Sets",
+    "section": "Simulated Data",
+    "text": "Simulated Data",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Data Sets</span>"
     ]
   },
   {
@@ -122,16 +264,6 @@
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>B</span>  <span class='chapter-title'>Bloom Spread</span>"
-    ]
-  },
-  {
-    "objectID": "Introduction.html#course-level-bloom-spread-progression",
-    "href": "Introduction.html#course-level-bloom-spread-progression",
-    "title": "Introduction",
-    "section": "Course-Level Bloom Spread Progression",
-    "text": "Course-Level Bloom Spread Progression\n\n\n\n\n\n\n\n\n\n\nModule\nContent Focus\nBloom Spread\nWeight\nPattern Type\n\n\n\n\n1\nR Ecosystem (Tools)\n3.8-4.0\n17.5%\nSequential Mastery (within)\n\n\n2\nSingle Population\n4.2-4.5\n17.5%\nSequential Mastery (within)\n\n\n3\nSubdivision\n4.7-5.0\n17.5%\nSequential Mastery (within)\n\n\n4\nSelection & Integration\n5.3-5.6\n25.0%\nSequential Mastery (within)\n\n\nAll\nAll Processes\n3.8 → 5.6\n100%\nConvergent Integration\n\n\n\n\nFractal Pedagogical Structure\nThe content within and across learning modules share a similar fractal structure.\n\nWithin each module: Type 1 Sequential Mastery (quizzes → activities → paper)\nAcross modules: Type 4 Convergent Integration (all developmental arcs converge at Module 4)\nGrade weighting: Ensures papers drive cognitive demand while activities provide scaffolding",
-    "crumbs": [
-      "Introduction"
     ]
   }
 ]

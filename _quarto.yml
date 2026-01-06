@@ -14,6 +14,14 @@ book:
         - R.qmd
         - Positron.qmd
         - Markdown.qmd
+        - DataTypes.qmd
+        - DataContainers.qmd
+        - FactorData.qmd
+        - Tidyverse.qmd
+        - TabularData.qmd
+        - Graphics.qmd
+        - Functions.qmd
+        - Publishing.qmd
     - part: Backmatter.qmd
       chapters:
       - Summary.qmd
@@ -27,7 +35,7 @@ bibliography: references.bib
 format:
   html:
     number-depth: 1
-    toc-depth: 1 
+    toc-depth: 2 
     respect-user-color-scheme: true
     freeze: auto
     theme:

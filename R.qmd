@@ -1,7 +1,7 @@
-# R 
+# R Language
 
 
-![](medias/ch_farm.jpg)
+![](media/ch_farm.jpg)
 
 > R is an open-source, community driven platform available for a wide variety of computer operating systems and is becoming a de facto standard in modern biological analyses.  It is not a point-and-click interface, rather it is a rich analytical ecosystem that will make your research and scientific life more pleasurable.
 
@@ -20,7 +20,7 @@ If you are updating your version of `R` from an older version, you may want to c
 # grab and save all your current packages.
 pkgs <- installed.packages()
 pkgs <- names( is.na(pkgs[,4]))
-save(pkgs,file=’~/Desktop/pkgs.rda’)
+save(pkgs,file='~/Desktop/pkgs.rda')
 ```
 
 Then install the latest version of R and instruct it to look at the differences between what the default install has and what you previously had (and install the missing parts).
@@ -29,7 +29,7 @@ Then install the latest version of R and instruct it to look at the differences 
 #| eval: false
 new_pkgs <- installed.packages()
 new_pkgs <- names( is.na(new_pkgs[,4]))
-load(“~/Desktop/pkgs.rda”)
+load('~/Desktop/pkgs.rda')
 to_install <- setdiff( pkgs, new_pkgs )
 install.packages( to_install )
 update.packages()
@@ -137,18 +137,5 @@ if( FALSE ) {
 ```
 
 
-
-
-## The RStudio Environment
-
-By itself, R can be used in the terminal or as the basic interface the installer provides.  While both of these methods are sufficient for working in R, they are less than optimal (IMHO).  I believe one of the most important tools you can use is a good IDE as it helps you organize and work with your data in ways that focus more on the outcome and less on the implementation.  I've spent a lot of time in both Emacs and Vim and while they may be tools for the geek elite, RStudio has made me much more productive in terms of output per unit time.
-
-```{r}
-knitr::include_graphics("./media/RStudioIDE.png")
-```
-
-The RStudio IDE can be can be downloaded directly from (http://rstudio.org) and comes in varieties for desktops and servers.  The packages are easy to install and contain all the instructions you need.  If you run your own server, you can install it and do your analyses via a web interface that looks identical to the desktop client (in fact it is more similar than you perhaps know).  
-
-The interface has four panes, two of which (the source code editor and the terminal output) you will work with the most often.  The other panes have information on the history of your project, plot output, packages, help, and a file browser.  You can type in R commands in the terminal window and receive responses directly, just as normal.  However, you can also type in your code into a script file (files ending in *.R) and run them directly.  You can also create Markdown and LaTeX documents embedding your code in with the verbiage, which is evaluated any time you make a html, rtf, docx, or pdf output.  All the code from R for this book was written in RMarkdown and parsed as an html document.  If you are a serious user of R, you can use LaTeX or RMarkdown to make documents, slides, presentations, posters, etc.  It is a versatile tool and one worth looking into, especially as it pertains to reproducible research (something we all need to strive for).
 
 
