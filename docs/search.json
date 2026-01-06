@@ -1,0 +1,137 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Applied Population Genetics",
+    "section": "",
+    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "Introduction.html",
+    "href": "Introduction.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "Population Genetics Course Structure\nPopulation genetics is the study of microevolutionary processes (both neutral and adaptive) and how they impact allele and genotype frequencies. This course is designed help you master the application of quantitative population genetic analysis techniques as they are applied to real-world data sets.\nThis course has three main learning objectives (see below) and will be divided into self-contained learning modules that will reinforce one or more of these objectives.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "Introduction.html#course-learning-outcomes-clos",
+    "href": "Introduction.html#course-learning-outcomes-clos",
+    "title": "Introduction",
+    "section": "Course Learning Outcomes (CLOs)",
+    "text": "Course Learning Outcomes (CLOs)\nLearning objectives may be applied at several heirarchical levels within this course. Overall, the course has specific objectives that are a de facto statement of what you should expect to get from the content of this class. If you look to your individual degree Program Learning Outcomes, you should see how these course-level objectives map directly onto those outcomes.\nLet’s start with a definition. In this text, all definitions will be styled as follows:\n\n\n\n\n\n\nLearning Objective\n\n\n\nLearning Objectives are explicit statements that define the knowledge, skills, and abilities you will demonstrate upon successful completion of this course. All assessments are designed to directly measure your achievement of these objectives, ensuring alignment between what you practice, what you’re evaluated on, and what you ultimately master.\n\n\nThis course has the following CLOs:\nCLO1: Evolutionary Consequences of Population Genetic Processes (Bloom ~2.5):\n* Primary verb: Explain/Predict   \n* Assessment vehicle: Pre-class quizzes (10% of course grade)   \n* Description: Maintained throughout course with exponentially increasing content sophistication but consistent cognitive operation   \nCLO2: Applied Population Genetic Analysis (Bloom ~4.0-5.0):\n* Primary verb: Execute/Interpret  \n* Assessment vehicle: In-class activities (20% of course grade)  \n* Description: R skills applied to progressively complex genetic phenomena through simulation and data analysis  \nCLO3: Evidence-Based Communication (Bloom ~5.5-6.0):\n* Primary verb: Generate/Highlight  \n* Assessment vehicle: Methods & Results papers (70% of course grade: 17.5% × 3 + 25%)  \n* Description: Progressive technical development culminating in integrated publication-quality scientific arguments",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "Introduction.html#course-modules",
+    "href": "Introduction.html#course-modules",
+    "title": "Introduction",
+    "section": "Course Modules",
+    "text": "Course Modules\nThis course is partitioned into the following four self-contained, though sequential, learning modules.\n\nModule 1: The R Ecosystem\n\nEstablishing the technical foundation for quantitative analysis in population genetics. Students will master R programming fundamentals, data visualization using the grammar of graphics, and reproducible scientific documentation. These skills are prerequisite for all subsequent evolutionary analyses.\n\nModule Bloom Spread1: ~3.8-4.0\n\nAnalogy Summary:\n\nThe process of learning these foundational skills is like learning to prepare a sophisticated meal. MLO1 teaches you ingredient preparation—correctly identifying your ingredients (data types), organizing them into appropriate containers (data frames/lists), and cleaning or transforming them (Tidyverse verbs) before cooking can begin. MLO2 focuses on presentation—using the “Grammar of Graphics” (rules of plating) to ensure the final dish is attractive and conveys information effectively. MLO3 combines everything into the recipe and plating—documenting every step (code chunks) and integrating narrative (text), results (inline R output), tables, and presentation (visualizations) into a final, shareable, verifiable format (Quarto document). Just as a chef must master ingredients, presentation, and documentation to create reproducible haute cuisine, you must master these three objectives to produce professional, reproducible data analysis.\n\n\n\n\nModule 2: Single Population Processes\n\nMicroevolutionary processes occurring within a single population: genetic drift, mutation, inbreeding, pedigrees, and paternity analysis. CLO1 (Evolutionary Consequences) enters here as students begin analyzing genetic phenomena.\n\nModule Bloom Spread: ~4.2-4.5\n\nAnalogy Summary\n\nLearning these three objectives is like becoming a complete aviation professional. MLO1 teaches you to read your instruments—checking whether the plane is in equilibrium (Hardy-Weinberg) and diagnosing deviations (inbreeding coefficient F). MLO2 teaches you to pilot through changing weather conditions, using simulations to model how quickly drift, mutation, and mating systems change your trajectory and predict where you’ll be 100 generations from now. MLO3 makes you the expert crash investigator who reconstructs flight paths backward through generations (pedigree analysis) and determines causation from evidence (forensic paternity assessment using likelihood ratios). Just as pilots must master static instruments, dynamic modeling, and accident investigation, population geneticists must master equilibrium testing, evolutionary simulation, and forensic analysis.\n\n\n\n\nModule 3: Population Subdivision\n\nMicroevolutionary processes occurring across subdivided populations: genetic diversity, F-statistics, population structure, migration dynamics, and the Wahlund Effect. Increased methodological sophistication with emphasis on distinguishing real patterns from sampling artifacts.\n\nModule Bloom Spread: ~4.7-5.0\n\nAnalogy Summary\n\nThe progression across these three MLOs is like learning professional cartography. MLO1 teaches you to partition total topographic variation into hierarchical components—local hills and valleys (within-population variation, FIS) versus mountain ranges (among-population variation, FST)—while applying appropriate surveying corrections for unequal sampling (rarefaction). MLO2 develops your ability to distinguish real landscape features from surveying artifacts: Is that apparent cliff genuine population structure, or a methodological illusion from merging incompatible datasets (Wahlund Effect)? You model how migration acts like rivers connecting regions over time. MLO3 makes you the professional cartographer who measures distances using appropriate metrics (Euclidean vs. evolutionary distance), decomposes spatial variation (AMOVA), and selects effective visualizations to communicate complex spatial genetic relationships. Just as accurate maps require understanding terrain, detecting artifacts, and choosing appropriate projections, accurate population genetics requires hierarchical thinking, artifact detection, and thoughtful visualization.\n\n\n\n\nModule 4: Selection\n\nNatural selection and quantitative genetics as capstone integration. Students synthesize selection with all non-selective forces (drift, mutation, migration, inbreeding), evaluate evolutionary potential through heritability, and compare foundational evolutionary frameworks. Highest cognitive demand and integration requirement.\n\nModule Bloom Spread: ~5.3-5.6\n\nAnalogy Summary\n\nThe progression across these three MLOs is like learning engineering design under real-world constraints. MLO1 teaches you to model force dynamics—understanding how selection shapes populations over time with different possible outcomes (stable equilibria like heterosis, unstable equilibria like heterozygote disadvantage, or deterministic fixation), similar to how engineers model structural responses to different load patterns. MLO2 requires you to evaluate design feasibility by partitioning material properties (phenotypic variance) into usable components (additive genetic variance = heritability) and calculating whether your materials can achieve required performance (breeder’s equation: R = h²S). This is where you integrate all course content to evaluate real-world evolutionary potential. MLO3 completes your training by requiring you to engineer under complexity—integrating multiple simultaneous forces (selection interacting with drift, mutation, migration, inbreeding), evaluating empirical evidence from multiple data modalities, and comparing competing design philosophies (Fisher vs. Wright). Just as engineers must understand forces, evaluate materials, and design under multiple constraints, evolutionary biologists must model selection, assess heritability, and integrate multiple processes to predict adaptation.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "Introduction.html#footnotes",
+    "href": "Introduction.html#footnotes",
+    "title": "Introduction",
+    "section": "",
+    "text": "Bloom spread is metric that quantifies cognitive complexity in course design by aggregating Bloom’s taxonomy classifications from individual assessments through learning objectives to course outcomes. This framework enables temporal analysis of cognitive demand progression across a semester, revealing developmental arcs rather than simple linear progression. See here for an overview of this metric.↩︎",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "R_Ecosystem.html",
+    "href": "R_Ecosystem.html",
+    "title": "R Ecosystem",
+    "section": "",
+    "text": "Module Learing Objectives\nModule Bloom Spread: ~3.8-4.0\nAnalogy Summary: The process of learning these foundational skills is like learning to prepare a sophisticated meal.\nJust as a chef must master ingredients, presentation, and documentation to create reproducible haute cuisine, you must master these three objectives to produce professional, reproducible data analysis.\nThe content of this module will map onto the following sepecific module-level learning objectives (MLOs).",
+    "crumbs": [
+      "R Ecosystem"
+    ]
+  },
+  {
+    "objectID": "R_Ecosystem.html#module-learing-objectives",
+    "href": "R_Ecosystem.html#module-learing-objectives",
+    "title": "R Ecosystem",
+    "section": "",
+    "text": "MLO1: Foundational Data Handling & Transformation\n\nApply fundamental R data types (e.g., character, numeric, logical) and containers (e.g., vectors, lists, data frames) to load, inspect, and transform raw biological, ecological, and spatial data into structured formats using multi-step Tidyverse workflows (e.g., select, filter, mutate, summarize).\n\nContent Coverage: Understanding and applying R data types (character, numeric, logical, factor); working with data containers (vectors, lists, data frames); loading data from various formats; inspecting data structure and content; implementing Tidyverse transformation workflows; and preparing raw data for downstream analysis.\n\nMapping to CLO2 (Execute/Interpret)\n\nEstablishes the procedural skill set necessary to “manipulate datasets” and prepare data for analysis. Students must apply R functions and Tidyverse verbs to handle different data representations and convert raw input into structured formats required for population genetic analysis. This is the foundational “Execute” component—students cannot analyze genetic data without first being able to load, inspect, and transform it appropriately.\n\nMapping to CLO3 (Generate/Highlight)\n\nData transformation is the first step in generating scientific outputs. Students must understand that how data is structured affects what analyses are possible and how results can be communicated. Proper data handling enables subsequent generation of tables, figures, and integrated documents.\n\n\nBloom Level: ~3 (Apply - using R functions and Tidyverse workflows on new datasets)\n\n\nMLO2: Publication Quality Data Presentation\n\nImplement methods for creating publication-ready tabular and graphical data representations using knitr and ggplot2. Students will be introduced to evaluating presentation approaches (e.g., tables vs. figures, chart types) to effectively communicate analytical findings, with this rhetorical decision-making reinforced throughout subsequent modules.\n\nContent Coverage: Creating tables using knitr::kable() and related functions; implementing the grammar of graphics framework using ggplot2; mapping data variables to aesthetic elements; constructing multi-layered visualizations; customizing themes and formatting; understanding when tables vs. figures are most appropriate; and meeting technical specifications for publication (DPI, file formats).\n\nMapping to CLO2 (Execute/Interpret)\n\nRequires implementing established visualization and tabulation workflows using professional tools. Students execute ggplot2 code to create figures and knitr functions to format tables, interpreting which aesthetic mappings best represent their data structure.\n\nMapping to CLO3 (Generate/Highlight)\n\nEstablishes the technical foundation for CLO3 (Evidence-Based Communication) by introducing students to the concept that presentation choices are analytical decisions that shape scientific narrative. Module 1 focuses on tool mastery; later modules increasingly emphasize the justification of presentation choices. Students learn to generate visually compelling representations that highlight key patterns in data.\n\n\nBloom Level: ~3-4 (Implement/Execute with introduction to evaluative thinking about presentation choices)\n\n\nMLO3: Reproducible Analysis and Reporting\n\nProduce professional, reproducible Methods and Results documents using Quarto/Markdown by integrating narrative text, executable code chunks, numerical output, tables, and figures. Students will be introduced to publication conventions (text markup, citations, cross-references, figure legends) and code chunk options, with proficiency developing throughout subsequent modules.\n\nContent Coverage: Quarto/Markdown syntax for text formatting; integrating R code chunks with narrative text; controlling code chunk behavior (echo, eval, include); generating inline R output; formatting citations and references; creating cross-references to figures and tables; producing figure legends and captions; and rendering complete Methods and Results documents.\n\nMapping to CLO2 (Execute/Interpret)\n\nLinks technical execution (running code, troubleshooting) with required output (Methods & Results documents). Students must execute Quarto rendering workflows and interpret how code chunk options affect the final document. This establishes the connection between analysis execution and professional documentation.\n\nMapping to CLO3 (Generate/Highlight)\n\nEstablishes the technical and organizational foundation for CLO3 (Evidence-Based Communication) by linking code execution with professional documentation. Module 1 introduces the Quarto workflow and manuscript conventions; later modules increasingly emphasize the coherence and sophistication of integrated scientific arguments. Students learn to produce documents where code, results, and narrative are seamlessly integrated.\n\n\nBloom Level: ~3-4 (Produce/Implement workflows with introduction to document integration concepts)",
+    "crumbs": [
+      "R Ecosystem"
+    ]
+  },
+  {
+    "objectID": "Summary.html",
+    "href": "Summary.html",
+    "title": "4  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.",
+    "crumbs": [
+      "Backmatter",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Summary</span>"
+    ]
+  },
+  {
+    "objectID": "References.html",
+    "href": "References.html",
+    "title": "References",
+    "section": "",
+    "text": "Anderson, Lorin W, and David R Krathwohl. 2001. A Taxonomy for\nLearning, Teaching and Assessing: A Revision of Bloom’s Taxonomy of\nEducational Objectives: Complete Edition. Longman.",
+    "crumbs": [
+      "Backmatter",
+      "References"
+    ]
+  },
+  {
+    "objectID": "BloomSpread.html",
+    "href": "BloomSpread.html",
+    "title": "Appendix B — Bloom Spread",
+    "section": "",
+    "text": "Core Framework Components",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Bloom Spread</span>"
+    ]
+  },
+  {
+    "objectID": "BloomSpread.html#core-framework-components",
+    "href": "BloomSpread.html#core-framework-components",
+    "title": "Appendix B — Bloom Spread",
+    "section": "",
+    "text": "Bloom’s Revised Taxonomy Levels\nThe revised taxonomy (Anderson and Krathwohl 2001).\nThis classic taxonomy:\n\nRemembering: Recalling or recognizing information\nUnderstanding: Explaining ideas or concepts\nApplying: Using information in familiar situations\nAnalyzing: Breaking information into parts to explore relationships\nEvaluating: Justifying a decision or course of action\nCreating: Generating new ideas, products, or ways of viewing things",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Bloom Spread</span>"
+    ]
+  },
+  {
+    "objectID": "BloomSpread.html#knowledge-dimensions",
+    "href": "BloomSpread.html#knowledge-dimensions",
+    "title": "Appendix B — Bloom Spread",
+    "section": "Knowledge Dimensions",
+    "text": "Knowledge Dimensions\n\nFactual Knowledge\n\nKnowledge that is basic to specific disciplines. This dimension refers to essential facts, terminology, details or elements students must know or be familiar with in order to understand a discipline or solve a problem in it.\n\nConceptual Knowledge\n\nKnowledge of classifications, principles, generalizations, theories, models, or structures pertinent to a particular disciplinary area.\n\nProcedural Knowledge\n\nInformation or knowledge that helps students to do something specific to a discipline, subject, or area of study. It also refers to methods of inquiry, very specific or finite skills, algorithms, techniques, and particular methodologies.\n\nMetacognitive Knowledge\n\nThe awareness of one’s own cognition and particular cognitive processes. It is strategic or reflective knowledge about how to go about solving problems, cognitive tasks, to include contextual and conditional knowledge and knowledge of self.\n\n\n\n\n\n\nAnderson, Lorin W, and David R Krathwohl. 2001. A Taxonomy for Learning, Teaching and Assessing: A Revision of Bloom’s Taxonomy of Educational Objectives: Complete Edition. Longman.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Bloom Spread</span>"
+    ]
+  },
+  {
+    "objectID": "Introduction.html#course-level-bloom-spread-progression",
+    "href": "Introduction.html#course-level-bloom-spread-progression",
+    "title": "Introduction",
+    "section": "Course-Level Bloom Spread Progression",
+    "text": "Course-Level Bloom Spread Progression\n\n\n\n\n\n\n\n\n\n\nModule\nContent Focus\nBloom Spread\nWeight\nPattern Type\n\n\n\n\n1\nR Ecosystem (Tools)\n3.8-4.0\n17.5%\nSequential Mastery (within)\n\n\n2\nSingle Population\n4.2-4.5\n17.5%\nSequential Mastery (within)\n\n\n3\nSubdivision\n4.7-5.0\n17.5%\nSequential Mastery (within)\n\n\n4\nSelection & Integration\n5.3-5.6\n25.0%\nSequential Mastery (within)\n\n\nAll\nAll Processes\n3.8 → 5.6\n100%\nConvergent Integration\n\n\n\n\nFractal Pedagogical Structure\nThe content within and across learning modules share a similar fractal structure.\n\nWithin each module: Type 1 Sequential Mastery (quizzes → activities → paper)\nAcross modules: Type 4 Convergent Integration (all developmental arcs converge at Module 4)\nGrade weighting: Ensures papers drive cognitive demand while activities provide scaffolding",
+    "crumbs": [
+      "Introduction"
+    ]
+  }
+]

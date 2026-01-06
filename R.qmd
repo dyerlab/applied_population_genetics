@@ -1,0 +1,154 @@
+# R 
+
+
+![](medias/ch_farm.jpg)
+
+> R is an open-source, community driven platform available for a wide variety of computer operating systems and is becoming a de facto standard in modern biological analyses.  It is not a point-and-click interface, rather it is a rich analytical ecosystem that will make your research and scientific life more pleasurable.
+
+## Getting R Configured
+
+The grammar of the R language was derived from another system called S-Plus.  S-Plus was a proprietary analysis platform developed by AT&T and licenses were sold for its use, mostly in industry and education.  Given the closed nature of the S-Plus platform, R was developed with the goal of creating an interpreter that could read grammar similar to S-Plus but be available to the larger research community.   The use of R has increased dramatically due to its open nature and the ability of people to share code solutions with relatively little barriers.
+
+The main repository for R is located at the [CRAN Repository](http://cran.r-project.org), which is where you can download the latest version.  It is in your best interests to make sure you update the underlying R system, changes are made continually (perhaps despite the outward appearance of the website).  
+
+The current version of this book uses version `r version$version.string`.  To get the correct version, open the page and there should be a link at the top for your particular computing platform. Download the appropriate version and install it following the instructions appropriate for your computer.
+
+If you are updating your version of `R` from an older version, you may want to carry over the current set of libraries you have already installed to the new version.  R creates a new library folder structure when you update the subversion (e.g., going from 4.3 to 4.4, the libraries are kept separate).  So, before you upgrade, do the following
+
+```{r}
+#| eval: false 
+# grab and save all your current packages.
+pkgs <- installed.packages()
+pkgs <- names( is.na(pkgs[,4]))
+save(pkgs,file=’~/Desktop/pkgs.rda’)
+```
+
+Then install the latest version of R and instruct it to look at the differences between what the default install has and what you previously had (and install the missing parts).
+
+```{r}
+#| eval: false
+new_pkgs <- installed.packages()
+new_pkgs <- names( is.na(new_pkgs[,4]))
+load(“~/Desktop/pkgs.rda”)
+to_install <- setdiff( pkgs, new_pkgs )
+install.packages( to_install )
+update.packages()
+```
+
+This should get you up-to-date on the newest version of `R`.
+
+## Packages
+
+The base R system comes with enough functionality to get you going.  By default, there is only a limited amount of functionality in R, which is a great thing.  You only load and use the packages that you intend to use.  There are just too many packages to have them all loaded into memory at all times and there is such a broad range of packages, it is not likely you'd need more than a small fraction of the packages during the course of all your analyses.
+Once you have a package, you can tell R that you intend to use it by either
+
+```{r}
+#| eval: false
+library(package_name)
+```
+
+or
+
+```{r}
+#| eval: false
+require(package_name)
+```
+
+They are approximately equivalent, differing in only that the second one actually returns a TRUE or FALSE indicating the presence of that library on you machine.  If you do not want to be mocked by other users of `R`, I would recommend the `library` version---there are situations where `require` will not do what you think you want it to do (even though it is a verb and should probably be the correct one to use grammatically).  
+
+There are, at present, a few different places you can get packages. The packages can either be downloaded from these online repositories and installed into R or you can install them from within R itself.  Again, I'll prefer the latter as it is a bit more straightforward.   
+
+### CRAN
+
+The main repository for packages is hosted by the r-project page itself.  There are packages with solutions to analyses ranging from Approximate Bayesian Computation to Zhang & Pilon's approaches to characterizing climatic trends.  The list of these packages is large and ever growing.  It can be found on CRAN under the packages menu. To install a package from this repository, you use the function 
+
+```{r}
+#| eval: false
+install.packages("thePackageName") 
+```
+
+You can see that R went to the CRAN mirror site (I use the rstudio one), downloaded the package, look for particular dependencies that that package may have and download them as well for you.  It should install these packages for you and give you an affirmative message indicating it had done so.  
+
+At times, there are some packages that are not available in binary form for all computer systems (the rgdal package is one that comes to mind for which we will provide a work around later) and the packages need to be compiled.  This means that you need to have some additional tools and/or libraries on your machine to take the code, compile it, and link it together to make the package.  In these cases, the internet and the documentation that the developer provide are key to your sanity.
+
+### GitHub
+
+There are an increasing number of projects that are being developed either in the open source community or shared among a set of developers.  These projects are often hosted on http://www.github.com where you can get access to the latest code updates.  The packages that I develop are hosted on Github at (http://github.com/dyerlab) and only pushed to CRAN when I make major changes. 
+
+To install packages from Github you need to install the `remotes` library from CRAN first
+
+```{r}
+#| eval: false
+remotes::install_github("GITHUB_USER_NAME/GITHUB_REPOSITORY_NAME")
+```
+
+
+
+
+## Libraries Used in Text
+
+This work requires several libraries that you may need to get from either CRAN or GitHub. The following if you run the following code, you should be up-to-date on the necessary packages used throughout this text.
+
+```{r}
+files <- list.files(".",pattern=".qmd")
+libraries <- c("gstudio","popgraph","ggplot2")
+for( file in files ) {
+  suppressWarnings(s <- system( paste("grep -E -o 'library\\(\\w+\\)'",file), intern=TRUE))
+  if( length(s) > 0 ) {
+    s <- strsplit(s,"(",fixed=TRUE)
+    for( item in s ){
+      if( length(item) == 2){
+        library <- strsplit(item[2],")",fixed=TRUE)[[1]]
+        libraries <- c(libraries,library)
+      }
+    }
+  }
+}
+
+pkgs <- sort( unique(libraries) )
+idx <- which( pkgs == "package_name" )
+pkgs <- pkgs[-idx]
+
+if( FALSE ) { 
+    pkgs_df <- data.frame(Name = pkgs, Title = NA)
+    pkgs_df <- data.frame(Name = pkgs, Title = NA)
+    for(i in seq_along(pkgs)){
+        f = system.file(package = pkgs[i], "DESCRIPTION")
+        if( nchar(f)> 1) {
+            # Title is always on 3rd line
+            title = readLines(f)
+            title = title[grep("Title: ", title)]
+            pkgs_df$Title[i] = gsub("Title: ", "", title)    
+        }
+    }
+
+    knitr::kable(pkgs_df,caption = "R packages used in the examples shown in this book.")
+}
+
+
+# make sure these libraries are already installed on this machine
+
+# inst_pkgs <- installed.packages()
+# to_install <- setdiff( pkgs, inst_pkgs )
+# if( length(to_install))
+#   install.packages(to_install, repos="https://cran.rstudio.org")
+
+
+```
+
+
+
+
+## The RStudio Environment
+
+By itself, R can be used in the terminal or as the basic interface the installer provides.  While both of these methods are sufficient for working in R, they are less than optimal (IMHO).  I believe one of the most important tools you can use is a good IDE as it helps you organize and work with your data in ways that focus more on the outcome and less on the implementation.  I've spent a lot of time in both Emacs and Vim and while they may be tools for the geek elite, RStudio has made me much more productive in terms of output per unit time.
+
+```{r}
+knitr::include_graphics("./media/RStudioIDE.png")
+```
+
+The RStudio IDE can be can be downloaded directly from (http://rstudio.org) and comes in varieties for desktops and servers.  The packages are easy to install and contain all the instructions you need.  If you run your own server, you can install it and do your analyses via a web interface that looks identical to the desktop client (in fact it is more similar than you perhaps know).  
+
+The interface has four panes, two of which (the source code editor and the terminal output) you will work with the most often.  The other panes have information on the history of your project, plot output, packages, help, and a file browser.  You can type in R commands in the terminal window and receive responses directly, just as normal.  However, you can also type in your code into a script file (files ending in *.R) and run them directly.  You can also create Markdown and LaTeX documents embedding your code in with the verbiage, which is evaluated any time you make a html, rtf, docx, or pdf output.  All the code from R for this book was written in RMarkdown and parsed as an html document.  If you are a serious user of R, you can use LaTeX or RMarkdown to make documents, slides, presentations, posters, etc.  It is a versatile tool and one worth looking into, especially as it pertains to reproducible research (something we all need to strive for).
+
+

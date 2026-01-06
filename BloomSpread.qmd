@@ -1,0 +1,36 @@
+# Bloom Spread 
+
+> Bloom spread is a metric that quantifies the cognitive complexity in course content by aggregating Bloom's revised taxonomy classification from individual assessments through learning objectives onto course outcomes.  This framework enables temporal analysis of cognitive demand progression, in a learning module, a course, or an academic program, revealing developmental arc rahter than simple linear projections.
+
+## Core Framework Components
+
+### Bloom's Revised Taxonomy Levels
+
+The revised taxonomy [@Anderson2001].
+
+This classic taxonomy:   
+
+1. *Remembering:* Recalling or recognizing information
+2. *Understanding:* Explaining ideas or concepts
+3. *Applying:* Using information in familiar situations
+4. *Analyzing:* Breaking information into parts to explore relationships
+5. *Evaluating:* Justifying a decision or course of action
+6. *Creating:* Generating new ideas, products, or ways of viewing things
+
+
+## Knowledge Dimensions
+
+
+Factual Knowledge
+: Knowledge that is basic to specific disciplines. This dimension refers to essential facts, terminology, details or elements students must know or be familiar with in order to understand a discipline or solve a problem in it.
+
+Conceptual Knowledge
+: Knowledge of classifications, principles, generalizations, theories, models, or structures pertinent to a particular disciplinary area.
+
+Procedural Knowledge
+: Information or knowledge that helps students to do something specific to a discipline, subject, or area of study. It also refers to methods of inquiry, very specific or finite skills, algorithms, techniques, and particular methodologies.
+
+Metacognitive Knowledge
+: The awareness of one’s own cognition and particular cognitive processes. It is strategic or reflective knowledge about how to go about solving problems, cognitive tasks, to include contextual and conditional knowledge and knowledge of self.
+
+

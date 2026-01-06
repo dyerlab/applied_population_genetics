@@ -1,0 +1,37 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Applied Population Genetics"
+  author: "Rodney J. Dyer"
+  date: "1/6/2026"
+  chapters:
+    - index.qmd
+    - Introduction.qmd
+    - part: R_Ecosystem.qmd
+      chapters:
+        - R.qmd
+        - Positron.qmd
+        - Markdown.qmd
+    - part: Backmatter.qmd
+      chapters:
+      - Summary.qmd
+      - References.qmd
+  appendices: 
+    - DataSets.qmd
+    - BloomSpread.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    number-depth: 1
+    toc-depth: 1 
+    respect-user-color-scheme: true
+    freeze: auto
+    theme:
+      - cosmo
+      - brand
+
+

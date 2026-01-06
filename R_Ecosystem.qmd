@@ -1,0 +1,72 @@
+# R Ecosystem {.unnumbered}
+
+::: {.callout-note appearance="minimal"}
+# Purpose
+
+Establishing the technical foundation for quantitative analysis in population genetics. Students will master R programming fundamentals, data visualization using the grammar of graphics, and reproducible scientific documentation. These skills are prerequisite for all subsequent evolutionary analyses.
+:::
+
+
+*Module Bloom Spread:* ~3.8-4.0
+
+*Analogy Summary:* The process of learning these foundational skills is like learning to prepare a sophisticated meal.   
+
+* MLO1 teaches you ingredient preparation—correctly identifying your ingredients (data types), organizing them into appropriate containers (data frames/lists), and cleaning or transforming them (Tidyverse verbs) before cooking can begin.  
+
+* MLO2 focuses on presentation—using the "Grammar of Graphics" (rules of plating) to ensure the final dish is attractive and conveys information effectively.  
+
+* MLO3 combines everything into the recipe and plating—documenting every step (code chunks) and integrating narrative (text), results (inline R output), tables, and presentation (visualizations) into a final, shareable, verifiable format (Quarto document). 
+
+Just as a chef must master ingredients, presentation, and documentation to create reproducible haute cuisine, you must master these three objectives to produce professional, reproducible data analysis.
+
+
+## Module Learing Objectives
+
+The content of this module will map onto the following sepecific module-level learning objectives (MLOs).
+
+### MLO1: Foundational Data Handling & Transformation
+
+> Apply fundamental R data types (e.g., character, numeric, logical) and containers (e.g., vectors, lists, data frames) to load, inspect, and transform raw biological, ecological, and spatial data into structured formats using multi-step Tidyverse workflows (e.g., select, filter, mutate, summarize).
+
+*Content Coverage:*  Understanding and applying R data types (character, numeric, logical, factor); working with data containers (vectors, lists, data frames); loading data from various formats; inspecting data structure and content; implementing Tidyverse transformation workflows; and preparing raw data for downstream analysis.
+
+Mapping to CLO2 (Execute/Interpret)
+: Establishes the procedural skill set necessary to "manipulate datasets" and prepare data for analysis. Students must apply R functions and Tidyverse verbs to handle different data representations and convert raw input into structured formats required for population genetic analysis. This is the foundational "Execute" component—students cannot analyze genetic data without first being able to load, inspect, and transform it appropriately.
+
+Mapping to CLO3 (Generate/Highlight)
+: Data transformation is the first step in generating scientific outputs. Students must understand that how data is structured affects what analyses are possible and how results can be communicated. Proper data handling enables subsequent generation of tables, figures, and integrated documents.
+
+*Bloom Level:* ~3 (Apply - using R functions and Tidyverse workflows on new datasets)
+
+
+
+### MLO2: Publication Quality Data Presentation
+
+> Implement methods for creating publication-ready tabular and graphical data representations using knitr and ggplot2. Students will be introduced to evaluating presentation approaches (e.g., tables vs. figures, chart types) to effectively communicate analytical findings, with this rhetorical decision-making reinforced throughout subsequent modules.
+
+*Content Coverage:* Creating tables using `knitr::kable()` and related functions; implementing the grammar of graphics framework using `ggplot2`; mapping data variables to aesthetic elements; constructing multi-layered visualizations; customizing themes and formatting; understanding when tables vs. figures are most appropriate; and meeting technical specifications for publication (DPI, file formats).
+
+Mapping to CLO2 (Execute/Interpret)
+: Requires implementing established visualization and tabulation workflows using professional tools. Students execute `ggplot2` code to create figures and knitr functions to format tables, interpreting which aesthetic mappings best represent their data structure.
+
+Mapping to CLO3 (Generate/Highlight)
+: Establishes the technical foundation for CLO3 (Evidence-Based Communication) by introducing students to the concept that presentation choices are analytical decisions that shape scientific narrative. Module 1 focuses on tool mastery; later modules increasingly emphasize the justification of presentation choices. Students learn to generate visually compelling representations that highlight key patterns in data.
+
+*Bloom Level:* ~3-4 (Implement/Execute with introduction to evaluative thinking about presentation choices)
+
+
+
+
+### MLO3: Reproducible Analysis and Reporting
+
+> Produce professional, reproducible Methods and Results documents using Quarto/Markdown by integrating narrative text, executable code chunks, numerical output, tables, and figures. Students will be introduced to publication conventions (text markup, citations, cross-references, figure legends) and code chunk options, with proficiency developing throughout subsequent modules.
+
+*Content Coverage:* Quarto/Markdown syntax for text formatting; integrating R code chunks with narrative text; controlling code chunk behavior (`echo`, `eval`, `include`); generating inline R output; formatting citations and references; creating cross-references to figures and tables; producing figure legends and captions; and rendering complete Methods and Results documents.
+
+Mapping to CLO2 (Execute/Interpret)
+: Links technical execution (running code, troubleshooting) with required output (Methods & Results documents). Students must execute Quarto rendering workflows and interpret how code chunk options affect the final document. This establishes the connection between analysis execution and professional documentation.
+
+Mapping to CLO3 (Generate/Highlight)
+: Establishes the technical and organizational foundation for CLO3 (Evidence-Based Communication) by linking code execution with professional documentation. Module 1 introduces the Quarto workflow and manuscript conventions; later modules increasingly emphasize the coherence and sophistication of integrated scientific arguments. Students learn to produce documents where code, results, and narrative are seamlessly integrated.
+
+*Bloom Level:* ~3-4 (Produce/Implement workflows with introduction to document integration concepts)

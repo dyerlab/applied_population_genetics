@@ -16,3 +16,7 @@ papers
 
 Graphics.key
 docs/placeholder*
+
+/.quarto/
+index_files/*
+_freeze/*
