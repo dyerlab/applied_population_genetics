@@ -1,0 +1,18 @@
+# cd Library/Mobile\ Documents/com~apple~CloudDocs/Books/AMG/
+# rsync -zvhre ssh --progress --delete _book/ rodney@popgen.bio.vcu.edu:/var/www/
+
+# RStudio related stuff
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+
+# folders
+_bookdown_files
+images
+scripts
+papers
+
+Graphics.key
+docs/placeholder*
