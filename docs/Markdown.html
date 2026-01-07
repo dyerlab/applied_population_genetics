@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -70,11 +105,40 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles/captions.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating slimcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -251,11 +315,23 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#pandoc-supported-conversions" id="toc-pandoc-supported-conversions" class="nav-link active" data-scroll-target="#pandoc-supported-conversions">Pandoc Supported Conversions</a></li>
+  <li><a href="#installing-quarto" id="toc-installing-quarto" class="nav-link" data-scroll-target="#installing-quarto">Installing Quarto</a></li>
+  <li><a href="#markdown-document" id="toc-markdown-document" class="nav-link" data-scroll-target="#markdown-document">Markdown Document</a></li>
+  <li><a href="#markdown-syntax" id="toc-markdown-syntax" class="nav-link" data-scroll-target="#markdown-syntax">Markdown Syntax</a></li>
+  <li><a href="#code-text" id="toc-code-text" class="nav-link" data-scroll-target="#code-text">Code &amp; Text</a></li>
+  <li><a href="#tables-figures" id="toc-tables-figures" class="nav-link" data-scroll-target="#tables-figures">Tables &amp; Figures</a></li>
+  <li><a href="#margin-content" id="toc-margin-content" class="nav-link" data-scroll-target="#margin-content">Margin Content</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./R_Ecosystem.html">R Language Ecosystem</a></li><li class="breadcrumb-item"><a href="./Markdown.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Markdown</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -276,8 +352,337 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p><img src="media/ch_bird.jpg" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>The closer we keep our data, analyses, inferences, and interpretations, the more reliable our research becomes.</p>
+</blockquote>
+<p>In current data analytics and communication, there are a wide variety of platforms on which we can provide summaries and insights regarding our work. Each of these end points requires a non-insignificant amount of effort to learn these systems. Moreover, they all are <em>cul de sacs</em> in that all the effort you exert to learn one will not allow you to get the benefits of any other platform than the one you just learned.</p>
+<p>Enter <a href="https://pandoc.org">Pandoc</a>, the universal document converter. It is essentially the <em>Rosetta Stone</em> of file types. Some really smart programmers have put together a set of software that allows you to convert from or to (and hence between) different document types given that most documents are regularly structured. With Pandoc, it does not matter if you do or do not have Word or PowerPoint or EPub or LaTeX or whatever, as long as you can create one of the supported types, you can convert that input into a huge variety of output types.</p>
+<section id="pandoc-supported-conversions" class="level2">
+<h2 class="anchored" data-anchor-id="pandoc-supported-conversions">Pandoc Supported Conversions</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://live.staticflickr.com/65535/50159170006_45b8ed35a0_c_d.jpg" class="img-fluid figure-img"></p>
+<figcaption>Conversion Formats</figcaption>
+</figure>
+</div>
+<p>This is critical for us because Code is just text. Once it is evaluated, it can replaced with:</p>
+<ul>
+<li>Numerical values from one or more calculations,</li>
+<li>Textual content from analyses or manipulation, or</li>
+<li>Graphical content from plots.</li>
+</ul>
+<p>As such, we can embed <code>R</code> code within raw text to create our analyses and documents.</p>
+</section>
+<section id="installing-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="installing-quarto">Installing Quarto</h2>
+<p>The first step is to go to <a href="https://quarto.org">quarto</a> and download the quarto engine for your particular computer. If you are using <a href="https://positron.posit.co">Positron</a> as your IDE, it does come stock with a version of quarto already.</p>
+<p>Quarto will serve as your interface between the text, code, analyses, graphics, tables, citations, and other items in your data analysis workflow. When we start on a analysis that has some kind of graphical output (tabular or charts or maps), more often than not, you’ll be creating a Quarto Document. In fact, this entire book is written as a sequence of Quarto Documents (as is the website it is being hosted from).</p>
+<p>Quarto is your friend.</p>
+</section>
+<section id="markdown-document" class="level2">
+<h2 class="anchored" data-anchor-id="markdown-document">Markdown Document</h2>
+<p>A quarto document is simply a text file. Since it is text, it is easily shared and <em>future proofed</em> against vendor lock-in and other problems. It is also a great candidate for using version control (like <a href="https://github.com/">GitHub</a> and similar repositories for collaboration).</p>
+<p>A document has two parts: the meta data (known as the YAML), and the body.</p>
+<p><img src="media/quarto_doc.png" class="img-fluid"></p>
+<p>The YAML is the part at the top and contains metadata relative to the whole document as well as instructions to what is going to happen when it gets turned into another document. By default, it has a <code>title</code> and a <code>format</code> saying that when this is rendered (by hitting that preview button above it), it will make a HTML document that is titled “Untitled”. For most purposes, html output is sufficient and in some cases (e.g., when deploying dynamical graphical output like maps or dashboards) preferred. You can create docx, pdf, ppt, dashboards, blogs, websites, and a host of other output from this document. Here are some rules about the YAML</p>
+<ol type="1">
+<li>It <em>must</em> be at the top of the document.</li>
+<li>It <em>must</em> be enclosed by three dashes (and only three dashes) on their own line.</li>
+<li>Items are added as <code>key: value</code> and if it is textual content, enclose it in quotes.</li>
+</ol>
+<p>Here is a YAML from a reserach manuscript I’m working on so you can see the extra stuff that can be added.</p>
+<pre>‐‐‐
+title: |
+&nbsp;Directional Gene Flow: Uncovering Directionality
+&nbsp;in Population Graph Topologies
+format: html
+author:
+&nbsp;- name: Rodney J. Dyer
+&nbsp;&nbsp;&nbsp;orcid: 0000-0003-4707-3453
+&nbsp;&nbsp;&nbsp;corresponding: true 
+&nbsp;&nbsp;&nbsp;email: rjdyer@vcu.edu
+&nbsp;&nbsp;&nbsp;affiliation:
+&nbsp;&nbsp;- name: Virginia Commonwealth University
+&nbsp;&nbsp;&nbsp;department: School of Life Sciences and Sustainability
+&nbsp;&nbsp;&nbsp;city: Richmond
+&nbsp;&nbsp;&nbsp;state: VA
+&nbsp;&nbsp;&nbsp;url: https://slss.vcu.edu
+keywords: |
+&nbsp;&nbsp;&nbsp;- Asymmetric Gene Flow
+&nbsp;&nbsp;&nbsp;- Population Graphs
+&nbsp;&nbsp;&nbsp;- Directionality
+&nbsp;&nbsp;&nbsp;- Genetic Connectivity
+copyright: 
+&nbsp;&nbsp;holder: Rodney J. Dyer
+&nbsp;&nbsp;year: 2026
+bibliography: export.bib
+funding: |
+&nbsp;&nbsp;&nbsp;The author received no specific funding for this work.
+abstract: |
+&nbsp;&nbsp;&nbsp;This manuscript develops a novel approch to estimating 
+&nbsp;&nbsp;&nbsp;relative directionality in genetic connetivity using a 
+&nbsp;&nbsp;&nbsp;Gaussian kernel approach. Stochastic individual-based 
+&nbsp;&nbsp;&nbsp;simulation models are used to determine the sensitivity 
+&nbsp;&nbsp;&nbsp;of this approach to identify asymmetry in gene flow amongst
+&nbsp;&nbsp;&nbsp;a set of discrete populations showing...  The methodology
+&nbsp;&nbsp;&nbsp;is applied to two case studies, one evaluating the 
+&nbsp;&nbsp;&nbsp;distribution of genetic variance among spatially separated 
+&nbsp;&nbsp;&nbsp;populations of X and another is applied to an analysis of 
+&nbsp;&nbsp;&nbsp;pollen pool structure. Extensions of this model to answer 
+&nbsp;&nbsp;&nbsp;questions in landscape and conservation genetics are 
+&nbsp;&nbsp;&nbsp;discussed at the end.
+‐‐‐
+</pre>
+<p>Notice for some things, you may need to have a list of responses and they are indented underneath the main key. See the <a href="https://quarto.org">documentation</a>. Also, for long lines, you can use the pipe character (<code>|</code>) right after the key and then indent one or more lines of text underneath—I did this here for the title, keywords, fundin, and abstract so it all displayed properly on the page without needing to scroll left/right to see it all. It is not needed in your document unless you like it to not run off the side of your editor. For specifics—for most documents, you’ll only need <code>title</code>, <code>name</code>, and <code>format</code>.</p>
+<p>After the YAML part, this is where your text and code goes that will be rendered and turned into the finalized document.</p>
+</section>
+<section id="markdown-syntax" class="level2">
+<h2 class="anchored" data-anchor-id="markdown-syntax">Markdown Syntax</h2>
+<p>For maximum usability, the document that we embed our code into should be as widely available as possible—unhindered by the necessity of having a particular program just to view the content. For this, R uses <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>, created by John Gruber &amp; Aaron Swartz in 2004. Markdown was created so that people are enabled “…to write using an easy-to-read and easy-to-write plain text format…”</p>
+<p>Because everything is text, it is easy share and collaborate using Markdown, and for <code>R</code>, it is how we can make a wide array of output document types including (but not limited to):</p>
+<ul>
+<li>Conventional documents (PDF, Word, RTF, etc.)</li>
+<li>HTML pages with interactive elements (this document here is an interactive html document).</li>
+<li>Presentations (LaTeX, PowerPoint, JavaScript, etc.)</li>
+<li>Dashboards with interactive content.</li>
+</ul>
+<p>When we make a document, presentation, or any other output, there are only a finite set of different text components we put into the document. The document itself does not need to be heavy or bloated, it is just text (though surprisingly, a blank Word document on my laptop with nothing in the document itself is still 12KB in size!). Common elements include:</p>
+<ul>
+<li>Headers &amp; Titles</li>
+<li>Typography such as italic, bold, underline, strike through</li>
+<li>Lists (numbered or as bullets)</li>
+<li>Pictures and links</li>
+<li>Page numbers, tables of contents, etc.</li>
+</ul>
+<p>What Markdown does is allows you to type these components and use ‘marking’ around the elements to make them different from regular text. It is really, amazingly simple.</p>
+<section id="headings" class="level3">
+<h3 class="anchored" data-anchor-id="headings">Headings</h3>
+<p>Title and headers are created by prepending a hashtag</p>
+<p># Header 1<br>
+## Header 2<br>
+### Header 3<br>
+#### Header 4</p>
+<p>are converted into the following headers styles (in docx, html, pdf, etc.).</p>
+<div id="fig-headings" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-headings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="media/headings.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-headings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Example heading formats based on the styles used in this document.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="text-styles" class="level3">
+<h3 class="anchored" data-anchor-id="text-styles">Text Styles</h3>
+<p>The actual appearance of the headers are determined by where it is being presented (e.g., in Word it will take the default typography and font attributes, etc.). You are more than welcome to customize these settings using style sheets in a variety of formats (see <a href="https://quarto.org/docs/extensions/formats.html">documentation</a>).</p>
+<p>Individual paragraphs are delimited by either a blank line between them or two spaces at the end of the sentence. I find it much easier to just put the</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Markdown</th>
+<th>Rendered As</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>plain text</td>
+<td>plain text</td>
+</tr>
+<tr class="even">
+<td>*italic*</td>
+<td><em>italic</em></td>
+</tr>
+<tr class="odd">
+<td>**bold**</td>
+<td><strong>bold</strong></td>
+</tr>
+<tr class="even">
+<td>~~strike through~~</td>
+<td><del>strike through</del></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="embedded-content" class="level3">
+<h3 class="anchored" data-anchor-id="embedded-content">Embedded Content</h3>
+<p>You can also embed links and images. Both of these are configured in two parts. For links, you need to specify the text that can be clicked upon and it <em>must</em> be surrounded in <em>square brackets</em>. The link to the web or file or image is right next to the square brackets and is contained within <em>parentheses</em>. So the markdown.</p>
+<p>[rodneydyer.com](https://rodneydyer.com)</p>
+<p>becomes (when rendered)</p>
+<p><a href="https://rodneydyer.com">rodneydyer.com</a></p>
+<p>Images are the same except that the whole thing is prepended by an exclamation mark. The stuff you put into the square brackets are either the alt-text or in the case of this document, the figure legend.</p>
+<p>So,</p>
+<p>![This is the goat.](https://www.flickr.com/photo_download.gne?id=55027807032&amp;secret=9a6f698983&amp;size=o)</p>
+<p>is rendered as:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.flickr.com/photo_download.gne?id=55027807032&amp;secret=9a6f698983&amp;size=o" class="img-fluid figure-img"></p>
+<figcaption>This is the goat.</figcaption>
+</figure>
+</div>
+</section>
+<section id="lists" class="level3">
+<h3 class="anchored" data-anchor-id="lists">Lists</h3>
+<p>Lists (both numbered and unordered) are created using dashes or asterisks.</p>
+<p><img src="media/unordered_list.png" class="img-fluid"></p>
+<p>Will be turned into an unordered list as:</p>
+<ul>
+<li>Bullet 1<br>
+</li>
+<li>Bullet 2<br>
+</li>
+<li>Bullet 3</li>
+</ul>
+<p>Whereas the following raw text.</p>
+<p><img src="media/ordered_list.png" class="img-fluid"></p>
+<p>Will be rendered in list format as:</p>
+<ol type="1">
+<li>First<br>
+</li>
+<li>Second<br>
+</li>
+<li>Third</li>
+</ol>
+<p>Actually, you <em>can</em> just use <code>1.</code> in front of every line if you like, it will auto-number them for you when it makes a list. I tend to do this because it makes it a bit easier in case I want to reorder the list later and I don’t have to go back and change the numbers.</p>
+</section>
+<section id="footnotes" class="level3">
+<h3 class="anchored" data-anchor-id="footnotes">FootNotes</h3>
+<p>You can add a footnote using two components. First, you need to insert the location where you want the footnote to annotate. You do this by enclosing square brackets and a carat symbol (^) where you want to put the footnote in the text and an identifier number (e.g., [^1]). This will designate a link in the text that will allow you to jumpt to the bottom of the page.</p>
+<p>The next part, the text or content you are going to display needs to be indicated as well. This can be right after the identifying item or at the very end of the text itself. I typically localize the text content near where the superscript is located so they are linked. To indicate to Quarto that this is to be rendered as a footnote, you use the same number that you used for the superscript and enclose it in square brackets and a carat, <em>followed by a colon</em>.</p>
+<p>[^1]:. This is the content of the footnote I made above.</p>
+<p>This will set up the content that is put into the end of the page (and provide a link back to the location in the document that you jumped from).</p>
+<p>Here is an example<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+</section>
+</section>
+<section id="code-text" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="code-text">Code &amp; Text</h2>
+<p>On of the strengths of Quarto and its integration of <code>R</code> and markdown is the ability to mix code and text together in one place. This allows us to bring all of our analyses <em>and</em> data as close to one another as possible, helping with reproducibility and error reduction. You do not have to do your analysis in one program, copy-and-paste the results to your word processor, then copy and paste to your presentation software, then go to your graphics program and make a figure and copy-and-paste it togehter, etc. It all lives in one place.</p>
+<section id="code-chunks" class="level3">
+<h3 class="anchored" data-anchor-id="code-chunks">Code Chunks</h3>
+<p>Quarto supports <em>code chunks</em> (or <em>code cells</em> in Positron), which can be one or many lines of raw <code>R</code> code. This code is executed and the results are merged into the markdown in the document (text, graphical, interactive widgets, whatever) before knitting. You can think of this as a little bit of an R script that you can insert into your document.</p>
+<p>Each chunk is enclosed within boundary rows, the top row <strong>must</strong> contain three acute accents (back ticks - `) followed by the letter r in curly brackets ```{r}. This back tick is the grave (`) character and <strong>not a single quote</strong> (on the US English keyboard it is the key in the top left corner).</p>
+<p>The end of the chunk is indicated by three back ticks ``` on their own line. Everything between these two enclosing lines is treated as <code>R</code> code and is subject to evaluation when you re-knit the document.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you mess up the leading and trailing lines of a chunck, the rendering process will get totally hosed in both the IDE (it does not know what to style as text versus code parts) and the rendering (same reasons).</p>
+</div>
+</div>
+<p>Here is what a chunk looks like in markdown that prints out a simple message.</p>
+<pre>```{r}
+print("This is text from a chunk")
+```
+</pre>
+<p>When it is evaluated, the <code>R</code> interpreter removes the first and last rows, and executes the code within them. By default, the code is presented as a box (gray background in this example) in the document as well as any output that is produced from the code itself.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"This is text from a chunk"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "This is text from a chunk"</code></pre>
+</div>
+</div>
+<p>Notice, the output from the chunk is shown in the line <code>[1]</code> right after the chunk. Anything you print or show in a chunk will be displayed directly below the chunk itself.</p>
+<section id="chunk-options" class="level4">
+<h4 class="anchored" data-anchor-id="chunk-options">Chunk Options</h4>
+<p>There are several options we can apply to a chunk. These can be set at the top of the document, in the YAML, which will impact all the chuncks in the document, or on a per-chunk basis. Here some options you will commonly use.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 88%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>echo</code></td>
+<td>Shows the chunk in the final document (<code>T/F</code>).</td>
+</tr>
+<tr class="even">
+<td><code>eval</code></td>
+<td>Execute the code in the chunk (<code>T/F</code>).</td>
+</tr>
+<tr class="odd">
+<td><code>warning</code></td>
+<td>Show any code warnings in the output (<code>T/F</code>).</td>
+</tr>
+<tr class="even">
+<td><code>error</code></td>
+<td>Show any code errors in the output (<code>T/F</code>).</td>
+</tr>
+</tbody>
+</table>
+<p>To put these in an individual chunk, place them <em>at the top of the chunk</em> (this is important, they should be the first lines of text) preceded by <code>#|</code>. For example, the following chunk will show its contentws, not evaluate the code, and suppress any warnings or errors when it does execute.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>( i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100000000000000</span>) { </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"hello world!"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It should be noted that some libraries produce copious amounts of junk when you load them in. For these, <code>warning: false</code> is not sufficient and you’ll have to wrap them inside a <code>suppressPackageStartupMessages()</code> call.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>( <span class="fu">library</span>( tidyverse ) ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In my workflow, I typically develop the document with all my chunks showing</p>
+</section>
+</section>
+<section id="inline-code" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="inline-code">Inline Code</h3>
+<p>You can easily integrate code, into the text, either to be displayed <em>OR</em> to be evaluated. For example, in <code>R</code> you get the value of <span class="math inline">\(\pi\)</span> by the constant <code>pi</code>. Type that into the console and it will return 3.1415927.</p>
+<p>If you look at the RMarkdown for that paragraph above, it looks like the following before knitting:</p>
+<pre><code>You can easily integrate code, into the text, either to 
+be displayed *OR* to be evaluated. For example, in `R` 
+you get the value of $\pi$ by the constant `pi`. 
+Type that into the console and it will return 3.1415927.</code></pre>
+<p>Notice the following parts:</p>
+<ul>
+<li>Symbols: The <span class="math inline">\(\pi\)</span> symbol is created by the name of the symbol surrounded by dollar signs. $ $. There are a ton of symbols and equations you can use, all borrowed from LaTeX, so if you need complicated equations or symbols, this is not a problem.</li>
+<li>Text rendered as code (in typography) but not evaluated: Both the `R` and the `pi` are examples here. Nothing is evaluated, but it <em>looks</em> like code.</li>
+<li>Evaluated R Code: Any code between <code>r</code> and the ending ` will be evaluated as R code within the text. When you render/preview the document the document, it will be run and the contents between these symbols and replaced the content by the output of the <code>R</code> code itself.. So, the markdown <tt>`r pi`</tt> will be replaced in the text as 3.1415927 as if you actually wrote out the digits of <span class="math inline">\(pi\)</span>.</li>
+</ul>
+<div class="no-row-height column-margin column-container"><span class="margin-aside">This is HUGE! Think of this as how you will <strong>never</strong> have to update numerical values in your manuscripts again if they come from your anlayses.</span></div><div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You will never have to change numerical values in your text that are derived from statistical analyses again since you can link the variables (and associated values) in your <code>R</code> code to be displayed in the text <em>as if</em> you typed them yourself. If your analysis changes… your text is changed. Magically.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="tables-figures" class="level2">
+<h2 class="anchored" data-anchor-id="tables-figures">Tables &amp; Figures</h2>
+</section>
+<section id="margin-content" class="level2">
+<h2 class="anchored" data-anchor-id="margin-content">Margin Content</h2>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>This is the content of the footnote I made above.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

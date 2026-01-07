@@ -70,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles/captions.css">
 </head>
@@ -251,8 +280,14 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#integrated-development-environment" id="toc-integrated-development-environment" class="nav-link active" data-scroll-target="#integrated-development-environment">Integrated Development Environment</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -276,8 +311,57 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p><img src="media/ch_beach_donkey.jpg" class="img-fluid"></p>
+<p>Writing code in R, Python, Julia, or other languges benefit from an interface and ecosystem that helps you accomplish your data analysis tasks. By default, R comes with an interface that you could use to do all your work.</p>
+<div id="fig-stockR" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-stockR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="media/R.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stockR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: The stock R application, bundled with each distribution.
+</figcaption>
+</figure>
+</div>
+<p>It is also possible to use <code>R</code> directly from a terminal app. If you use linux or mac, you can access <code>R</code> from your local terminal application. On Windows, there is a more complicated way of doing it but—I do not undersand Windows so I cannot help with this one.</p>
+<div id="fig-terminalR" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-terminalR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="media/R_Terminal.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-terminalR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: Running R in a terminal locally.
+</figcaption>
+</figure>
+</div>
+<section id="integrated-development-environment" class="level2">
+<h2 class="anchored" data-anchor-id="integrated-development-environment">Integrated Development Environment</h2>
+<p>There are several GUI environments that you can use to interface with R beyond the built-in interface. Since February 2011, the <a href="https://posit.co/products/open-source/rstudio/?sid=1">RStudio</a> IDE has been a popular interface for R and its development has gone hand-in-hand with the rise of the <em>modern R reproducible reserach</em> stack (e.g., <code>knitr</code> <span class="math inline">\(\to\)</span> <code>R Markdown</code> <span class="math inline">\(\to\)</span> <code>tidyverse</code> <span class="math inline">\(\to\)</span> <code>Quarto</code>). One of the benefits of this interface is that it made it much easier to integrate data, analysis, interpretation, and distribution into a single interface and framework—enhancing reproducibility.</p>
+<div id="fig-rstudio" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rstudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="media/RStudio.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rstudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.3: The main interface for RStudio.
+</figcaption>
+</figure>
+</div>
+<p>In 2023, the next generation of IDE, named <a href="https://positron.posit.co">Positron</a> focusing specifically on R, Python, Julia, and Quarto was released. This IDE is a fork of the very popular <a href="https://code.visualstudio.com">VSCode</a> interface and is designed to support data science workflows across several languages (e.g., you can mix R, Python, Julia, SQL, etc.).</p>
+<div id="fig-positron" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-positron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="media/Positron.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-positron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.4: The Positron integrated development environment showing this very page!
+</figcaption>
+</figure>
+</div>
+<p>This text was written entirely using the Positron IDE, as a way to help me switch from RStudio in my own workflows and teaching. This book does not require you to use any specific interface—though I will have been known to give 10,000 bonus points if you are using <code>emacs</code> or <code>vi</code> in my class… 😏</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
