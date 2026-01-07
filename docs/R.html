@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./R_Ecosystem.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -330,19 +331,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The current version of this book uses version R version 4.5.2 (2025-10-31). To get the correct version, open the page and there should be a link at the top for your particular computing platform. Download the appropriate version and install it following the instructions appropriate for your computer.</p>
 <p>If you are updating your version of <code>R</code> from an older version, you may want to carry over the current set of libraries you have already installed to the new version. R creates a new library folder structure when you update the subversion (e.g., going from 4.3 to 4.4, the libraries are kept separate). So, before you upgrade, do the following</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># grab and save all your current packages.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># grab and save all your current packages.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">names</span>( <span class="fu">is.na</span>(pkgs[,<span class="dv">4</span>]))</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(pkgs,<span class="at">file=</span><span class="st">'~/Desktop/pkgs.rda'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(pkgs,<span class="at">file=</span><span class="st">'~/Desktop/pkgs.rda'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then install the latest version of R and instruct it to look at the differences between what the default install has and what you previously had (and install the missing parts).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>new_pkgs <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>new_pkgs <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>new_pkgs <span class="ot">&lt;-</span> <span class="fu">names</span>( <span class="fu">is.na</span>(new_pkgs[,<span class="dv">4</span>]))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">'~/Desktop/pkgs.rda'</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>to_install <span class="ot">&lt;-</span> <span class="fu">setdiff</span>( pkgs, new_pkgs )</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>( to_install )</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This should get you up-to-date on the newest version of <code>R</code>.</p>
 </section>
@@ -350,11 +351,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="packages">Packages</h2>
 <p>The base R system comes with enough functionality to get you going. By default, there is only a limited amount of functionality in R, which is a great thing. You only load and use the packages that you intend to use. There are just too many packages to have them all loaded into memory at all times and there is such a broad range of packages, it is not likely you’d need more than a small fraction of the packages during the course of all your analyses. Once you have a package, you can tell R that you intend to use it by either</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(package_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(package_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>or</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(package_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(package_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>They are approximately equivalent, differing in only that the second one actually returns a TRUE or FALSE indicating the presence of that library on you machine. If you do not want to be mocked by other users of <code>R</code>, I would recommend the <code>library</code> version—there are situations where <code>require</code> will not do what you think you want it to do (even though it is a verb and should probably be the correct one to use grammatically).</p>
 <p>There are, at present, a few different places you can get packages. The packages can either be downloaded from these online repositories and installed into R or you can install them from within R itself. Again, I’ll prefer the latter as it is a bit more straightforward.</p>
@@ -362,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="cran">CRAN</h3>
 <p>The main repository for packages is hosted by the r-project page itself. There are packages with solutions to analyses ranging from Approximate Bayesian Computation to Zhang &amp; Pilon’s approaches to characterizing climatic trends. The list of these packages is large and ever growing. It can be found on CRAN under the packages menu. To install a package from this repository, you use the function</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"thePackageName"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"thePackageName"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You can see that R went to the CRAN mirror site (I use the rstudio one), downloaded the package, look for particular dependencies that that package may have and download them as well for you. It should install these packages for you and give you an affirmative message indicating it had done so.</p>
 <p>At times, there are some packages that are not available in binary form for all computer systems (the rgdal package is one that comes to mind for which we will provide a work around later) and the packages need to be compiled. This means that you need to have some additional tools and/or libraries on your machine to take the code, compile it, and link it together to make the package. In these cases, the internet and the documentation that the developer provide are key to your sanity.</p>
@@ -372,7 +373,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>There are an increasing number of projects that are being developed either in the open source community or shared among a set of developers. These projects are often hosted on http://www.github.com where you can get access to the latest code updates. The packages that I develop are hosted on Github at (http://github.com/dyerlab) and only pushed to CRAN when I make major changes.</p>
 <p>To install packages from Github you need to install the <code>remotes</code> library from CRAN first</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"USER_NAME/REPOSITORY"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"USER_NAME/REPOSITORY"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -380,65 +381,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="libraries-used-in-text">Libraries Used in Text</h2>
 <p>This work requires several libraries that you may need to get from either CRAN or GitHub. The following if you run the following code, you should be up-to-date on the necessary packages used throughout this text.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"."</span>,<span class="at">pattern=</span><span class="st">".qmd"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"."</span>,<span class="at">pattern=</span><span class="st">".qmd"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>libraries <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"gstudio"</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">"popgraph"</span>,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">"ggplot2"</span>, </span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">"tidyverse"</span>, </span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                <span class="st">"sf"</span>, </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                <span class="st">"terra"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>( file <span class="cf">in</span> files ) {</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressWarnings</span>( s <span class="ot">&lt;-</span> <span class="fu">system</span>( <span class="fu">paste</span>(<span class="st">"grep -E -o 'library</span><span class="sc">\\</span><span class="st">(</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">)'"</span>,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                                       file), </span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">intern=</span><span class="cn">TRUE</span>))</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>( <span class="fu">length</span>(s) <span class="sc">&gt;</span> <span class="dv">0</span> ) {</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    s <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(s,<span class="st">"("</span>,<span class="at">fixed=</span><span class="cn">TRUE</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>( item <span class="cf">in</span> s ){</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>( <span class="fu">length</span>(item) <span class="sc">==</span> <span class="dv">2</span>){</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        library <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(item[<span class="dv">2</span>],<span class="st">")"</span>,<span class="at">fixed=</span><span class="cn">TRUE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        libraries <span class="ot">&lt;-</span> <span class="fu">c</span>(libraries,library)</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort names</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">sort</span>( <span class="fu">unique</span>(libraries) )</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">which</span>( pkgs <span class="sc">==</span> <span class="st">"package_name"</span> )</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> pkgs[<span class="sc">-</span>idx]</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Install personal packages from GitHub</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co"># popgraph</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="sc">!</span><span class="fu">require</span>(popgraph) ) { </span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"dyerlab/popgraph"</span>)</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  idx <span class="ot">&lt;-</span> <span class="fu">which</span>( pkgs <span class="sc">==</span> <span class="st">"popgraph"</span> ) </span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  pkgs[ <span class="sc">-</span>idx ]</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co"># gstudio</span></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="sc">!</span><span class="fu">require</span>(gstudio) ) { </span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"dyerlab/gstudio"</span>)</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>  idx <span class="ot">&lt;-</span> <span class="fu">which</span>( pkgs <span class="sc">==</span> <span class="st">"popgraph"</span> ) </span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  pkgs[ <span class="sc">-</span>idx ]</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>pkgs_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Name =</span> pkgs, <span class="at">Title =</span> <span class="cn">NA</span>)</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(pkgs)){</span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    f <span class="ot">=</span> <span class="fu">system.file</span>(<span class="at">package =</span> pkgs[i], <span class="st">"DESCRIPTION"</span>)</span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>( <span class="fu">nchar</span>(f)<span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Title is always on 3rd line</span></span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>        title <span class="ot">=</span> <span class="fu">readLines</span>(f)</span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>        title <span class="ot">=</span> title[<span class="fu">grep</span>(<span class="st">"Title: "</span>, title)]</span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>        pkgs_df<span class="sc">$</span>Title[i] <span class="ot">=</span> <span class="fu">gsub</span>(<span class="st">"Title: "</span>, <span class="st">""</span>, title)    </span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>pkgs_df <span class="sc">|&gt;</span> </span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>( <span class="at">Source =</span> <span class="fu">ifelse</span>( Name <span class="sc">%in%</span> <span class="fu">c</span>( <span class="st">"popgraph"</span>,</span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>                                                <span class="st">"gstudio"</span>), </span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"GitHub"</span>, </span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"CRAN"</span> )) <span class="sc">|&gt;</span></span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                <span class="st">"gt"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">"terra"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>( file <span class="cf">in</span> files ) {</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressWarnings</span>( s <span class="ot">&lt;-</span> <span class="fu">system</span>( <span class="fu">paste</span>(<span class="st">"grep -E -o 'library</span><span class="sc">\\</span><span class="st">(</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">)'"</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                                       file), </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">intern=</span><span class="cn">TRUE</span>))</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>( <span class="fu">length</span>(s) <span class="sc">&gt;</span> <span class="dv">0</span> ) {</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    s <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(s,<span class="st">"("</span>,<span class="at">fixed=</span><span class="cn">TRUE</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>( item <span class="cf">in</span> s ){</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>( <span class="fu">length</span>(item) <span class="sc">==</span> <span class="dv">2</span>){</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        library <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(item[<span class="dv">2</span>],<span class="st">")"</span>,<span class="at">fixed=</span><span class="cn">TRUE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        libraries <span class="ot">&lt;-</span> <span class="fu">c</span>(libraries,library)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort names</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">sort</span>( <span class="fu">unique</span>(libraries) )</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">which</span>( pkgs <span class="sc">==</span> <span class="st">"package_name"</span> )</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> pkgs[<span class="sc">-</span>idx]</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Install personal packages from GitHub</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co"># popgraph</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="sc">!</span><span class="fu">require</span>(popgraph) ) { </span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"dyerlab/popgraph"</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  idx <span class="ot">&lt;-</span> <span class="fu">which</span>( pkgs <span class="sc">==</span> <span class="st">"popgraph"</span> ) </span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  pkgs[ <span class="sc">-</span>idx ]</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="co"># gstudio</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="sc">!</span><span class="fu">require</span>(gstudio) ) { </span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>  remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"dyerlab/gstudio"</span>)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  idx <span class="ot">&lt;-</span> <span class="fu">which</span>( pkgs <span class="sc">==</span> <span class="st">"popgraph"</span> ) </span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>  pkgs[ <span class="sc">-</span>idx ]</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>pkgs_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Name =</span> pkgs, <span class="at">Title =</span> <span class="cn">NA</span>)</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(pkgs)){</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    f <span class="ot">=</span> <span class="fu">system.file</span>(<span class="at">package =</span> pkgs[i], <span class="st">"DESCRIPTION"</span>)</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>( <span class="fu">nchar</span>(f)<span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Title is always on 3rd line</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>        title <span class="ot">=</span> <span class="fu">readLines</span>(f)</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>        title <span class="ot">=</span> title[<span class="fu">grep</span>(<span class="st">"Title: "</span>, title)]</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>        pkgs_df<span class="sc">$</span>Title[i] <span class="ot">=</span> <span class="fu">gsub</span>(<span class="st">"Title: "</span>, <span class="st">""</span>, title)    </span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>pkgs_df <span class="sc">|&gt;</span> </span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>( <span class="at">Source =</span> <span class="fu">ifelse</span>( Name <span class="sc">%in%</span> <span class="fu">c</span>( <span class="st">"popgraph"</span>,</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>                                                <span class="st">"gstudio"</span>), </span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"GitHub"</span>, </span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"CRAN"</span> )) <span class="sc">|&gt;</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="tbl-rPackages" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rPackages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -471,21 +473,26 @@ Table&nbsp;1.1: Packages that are used in the text of this book with their offic
 <td style="text-align: left;">GitHub</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">gt</td>
+<td style="text-align: left;">Easily Create Presentation-Ready Display Tables</td>
+<td style="text-align: left;">CRAN</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">popgraph</td>
 <td style="text-align: left;">This is an R package that constructs and manipulates population</td>
 <td style="text-align: left;">GitHub</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">sf</td>
 <td style="text-align: left;">Simple Features for R</td>
 <td style="text-align: left;">CRAN</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">terra</td>
 <td style="text-align: left;">Spatial Data Analysis</td>
 <td style="text-align: left;">CRAN</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">tidyverse</td>
 <td style="text-align: left;">Easily Install and Load the ‘Tidyverse’</td>
 <td style="text-align: left;">CRAN</td>
@@ -499,11 +506,11 @@ Table&nbsp;1.1: Packages that are used in the text of this book with their offic
 </div>
 <p>If you are rendering this book, the snippet below will install any libraries used (from CRAN) onto your local machine.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>inst_pkgs <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>inst_pkgs <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>to_install <span class="ot">&lt;-</span> <span class="fu">setdiff</span>( pkgs, inst_pkgs )</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">length</span>(to_install)) {</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(to_install, <span class="at">repos=</span><span class="st">"https://cran.rstudio.org"</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
@@ -561,13 +568,14 @@ Table&nbsp;1.1: Packages that are used in the text of this book with their offic
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

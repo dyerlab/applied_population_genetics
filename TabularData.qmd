@@ -1,3 +1,122 @@
 # Tabular Data
 
+There are several ways to make tabular output in your files: manual and from code.  
 
+## Markdown Tables
+
+When I say manual, I mean that the table is written specifically in markdown and rendered as a table.  For basic tables, we use the pipe character (|) and dashes (&dash;) to outline the table. We designate the header row by having a table row underneath it with dashes in it.  The 'columns' do not need to be the same size, but for me, it always looks better if they are.  If you would like to have a caption on the table and a reference to it, put that right under the table where the row of text starts with a colon and the reference is in curley brackets and it will put the caption on the top (proper place for tables) and add a numbered table prefix to it (n.b., a table reference must start with `\#tbl-` to be recognized as a table reference).
+
+<pre>
+| Header | Description     | Time  | Cost  |
+|--------|-----------------|-------|-------|
+| First  | The stuff       |  1    | 3.32  |
+| Second | The other stuff |  3    | 12.32 |
+: This is the header for the table. {#tbl-example}
+</pre>
+
+Which will produce the table:
+
+| Header | Description     | Time  | Cost  |
+|--------|-----------------|-------|-------|
+| First  | The stuff       |  1    | 3.32  |
+| Second | The other stuff |  3    | 12.32 |
+: This is the header for the table. {#tbl-example}
+
+Then we can reference the table in the text using the @- citation format, here that would be `@tbl-example`, and would be rendered as @tbl-example in the final document. 
+
+You can stylize the contents of the table cells using normal markdown but there is not a lot of customization that can be applied to structure of the tables beyond specify the justification of the contents within each table. By default, it center justifies a column but we can use a colon (:) *inside the row that has the dashes* to make it left, center, or right justified as well.  Here is how that works.   
+
+- A single colon on the left side justifies to the left, 
+- Two colons, on on the left and one on the right produces center justifcation, and  
+- A single colon on the right side of the column justifies the contents to the right.
+
+Here is an example using the table from above.
+
+<pre>
+| Header | Description     | Time  | Cost  |
+|:-------|:----------------|:-----:|------:|
+| First  | The stuff       |  1    | 3.32  |
+| Second | The other stuff |  3    | 12.32 |
+: This is tabel with left, center, and right justification. {#tbl-example2}
+</pre>
+
+Which will left-justify the first two columns, center justify the *Time* column, and right justify the *Cost* column.
+
+| Header | Description     | Time  | Cost  |
+|:-------|:----------------|:-----:|------:|
+| First  | The stuff       |  1    | 3.32  |
+| Second | The other stuff |  3    | 12.32 |
+: This is tabel with left, center, and right justification. {#tbl-example2}
+
+Compare @tbl-example and @tbl-example2 to see how we can customize justifications.
+
+
+
+## Rendered Tables
+
+Most of the tabular output we see will be derived from data.  The key here is to make the `data.frame` object represent the columns and rows of data that you want displayed and then hand that off to one of several libraries that can make a table for you.  Here I am going to use the `gt` library, but feel free to check out the [knitr & kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) libraries for a similarly awesome approach.
+
+Here is a `data.frame` as an example that takes the mean petal length and width from the built-in `iris` data set.  I've set up the `data.frame` to look exactly like I would like to show up in the output using some common `dplyr` actions.
+
+```{r}
+library( tidyverse )
+
+iris |>
+    group_by( Species ) |>
+    summarize( Length = mean( Petal.Length),
+                Width = mean( Petal.Width) ) |> 
+    mutate( Species = paste( "I.", Species )) |>
+    rename( `Iris Species` = Species) -> data
+
+data 
+```
+
+To make a table from this data frame, just pipe it to the `gt()` function.
+
+```{r}
+#| label: tbl-irisSpeciesTable1
+#| tbl-cap: "The mean lenght and with of Fishers classic three *Iris* species."
+library( gt )
+data |>
+    gt() 
+```
+
+By default, it shows an alternating row colors and left justifies all the numerical data with a reasonable number of digits.
+
+There is a ton of customizations available and I encourage you to go look at the [documentation](https://gt.rstudio.com/index.html).  Here I italicize the species column and identify specific cells and rows of the table based on the values inside.  
+
+```{r}
+#| label: tbl-irisSpeciesTable2
+#| tbl-cap: "The mean lenght and with of Fishers classic three *Iris* species with some customization in the text columns and highlights in the numerical data.  The length entry that is the smallest is in bold with a cyan cell fill color and the species row with the largest leaf area is shown with red text."
+data |>
+    gt() |>
+    tab_style(
+        style = list(
+            cell_text(style = "italic")
+        ),
+        locations = cells_body(
+            columns = `Iris Species`
+        )
+    ) |>
+    tab_style( 
+        style = list( 
+            cell_fill( color = "lightcyan"),
+            cell_text( weight = "bold")
+        ),
+        locations = cells_body(
+            column = Length,
+            rows = Length == min(Length)
+        )
+    ) |>
+    tab_style( 
+        style = list( 
+            cell_text( color = "red")
+        ),
+        locations = cells_body(
+            rows = (Length*Width) == max(Length*Width)
+        )
+    )
+```
+
+
+This output can be exported to html, docx, rtf, $\LaTeX$, etc.

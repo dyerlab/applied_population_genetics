@@ -94,6 +94,7 @@ libraries <- c( "gstudio",
                 "ggplot2", 
                 "tidyverse", 
                 "sf", 
+                "gt",
                 "terra")
 
 for( file in files ) {
@@ -146,7 +147,7 @@ pkgs_df |>
                                                 "gstudio"), 
                                   "GitHub", 
                                   "CRAN" )) |>
-  knitr::kable()
+  gt::gt()
 ```
 
 
