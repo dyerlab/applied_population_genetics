@@ -6,6 +6,8 @@ book:
   title: "Applied Population Genetics"
   author: "Rodney J. Dyer"
   date: "1/6/2026"
+  cover-image: "media/TitlePage_small.png"
+  repo-url: "https://github.com/dyerlab/applied_population_genetics"
   chapters:
     - index.qmd
     - Introduction.qmd
@@ -37,9 +39,17 @@ format:
     number-depth: 1
     toc-depth: 2 
     respect-user-color-scheme: true
-    freeze: auto
+    css:
+      - styles/captions.css
     theme:
       - cosmo
       - brand
+
+execute:
+  warning: false
+  message: false
+  error: false
+  freeze: auto  # set to false for release 
+  eache: true   # set to false for release
 
 

@@ -1,0 +1,25 @@
+/* Force left alignment for figure and table captions */
+
+figure figcaption,
+.table-caption,
+caption {
+  text-align: left;
+}
+
+/* Quarto-specific figure captions (covers most HTML outputs) */
+.quarto-figure figcaption {
+  text-align: left;
+}
+
+/* Ensure multi-line captions align nicely */
+figure figcaption p,
+.quarto-figure figcaption p {
+  text-align: left;
+  margin-left: 0;
+}
+
+figcaption .quarto-float-caption { 
+text-align: left;
+  margin-left: 0;
+}
+

@@ -6,7 +6,8 @@ http://dyerlab.github.io/applied_population_genetics/index.html
 
 Any comments or suggestions should be mailed to me at [rjdyer@vcu.edu](mailto://rjdyer@vcu.edu).  Additional work from my laboratory can be found at:
 
-http://dyerlab.org
+[http://rodneydyer.com](https://rodneydyer.com)
+
 
 
 

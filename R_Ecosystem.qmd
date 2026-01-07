@@ -1,4 +1,4 @@
-# R Ecosystem {.unnumbered}
+# R Language Ecosystem {.unnumbered}
 
 ::: {.callout-note appearance="minimal"}
 # Purpose

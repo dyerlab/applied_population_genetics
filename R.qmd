@@ -1,5 +1,4 @@
-# R Language
-
+# Getting R 
 
 ![](media/ch_farm.jpg)
 
@@ -79,21 +78,28 @@ To install packages from Github you need to install the `remotes` library from C
 
 ```{r}
 #| eval: false
-remotes::install_github("GITHUB_USER_NAME/GITHUB_REPOSITORY_NAME")
+remotes::install_github("USER_NAME/REPOSITORY")
 ```
-
-
-
 
 ## Libraries Used in Text
 
 This work requires several libraries that you may need to get from either CRAN or GitHub. The following if you run the following code, you should be up-to-date on the necessary packages used throughout this text.
 
 ```{r}
+#| label: tbl-rPackages
+#| tbl-cap: "Packages that are used in the text of this book with their official description.  Those with a source of CRAN can be installed using `install.packages()` whereas those from GitHub must be installed using `remotes::install_github()`."
 files <- list.files(".",pattern=".qmd")
-libraries <- c("gstudio","popgraph","ggplot2")
+libraries <- c( "gstudio",
+                "popgraph",
+                "ggplot2", 
+                "tidyverse", 
+                "sf", 
+                "terra")
+
 for( file in files ) {
-  suppressWarnings(s <- system( paste("grep -E -o 'library\\(\\w+\\)'",file), intern=TRUE))
+  suppressWarnings( s <- system( paste("grep -E -o 'library\\(\\w+\\)'",
+                                       file), 
+                                  intern=TRUE))
   if( length(s) > 0 ) {
     s <- strsplit(s,"(",fixed=TRUE)
     for( item in s ){
@@ -105,37 +111,53 @@ for( file in files ) {
   }
 }
 
+# Sort names
 pkgs <- sort( unique(libraries) )
 idx <- which( pkgs == "package_name" )
 pkgs <- pkgs[-idx]
 
-if( FALSE ) { 
-    pkgs_df <- data.frame(Name = pkgs, Title = NA)
-    pkgs_df <- data.frame(Name = pkgs, Title = NA)
-    for(i in seq_along(pkgs)){
-        f = system.file(package = pkgs[i], "DESCRIPTION")
-        if( nchar(f)> 1) {
-            # Title is always on 3rd line
-            title = readLines(f)
-            title = title[grep("Title: ", title)]
-            pkgs_df$Title[i] = gsub("Title: ", "", title)    
-        }
-    }
-
-    knitr::kable(pkgs_df,caption = "R packages used in the examples shown in this book.")
+# Install personal packages from GitHub
+# popgraph
+if( !require(popgraph) ) { 
+  remotes::install_github("dyerlab/popgraph")
+  idx <- which( pkgs == "popgraph" ) 
+  pkgs[ -idx ]
+}
+# gstudio
+if( !require(gstudio) ) { 
+  remotes::install_github("dyerlab/gstudio")
+  idx <- which( pkgs == "popgraph" ) 
+  pkgs[ -idx ]
 }
 
+pkgs_df <- data.frame(Name = pkgs, Title = NA)
+for(i in seq_along(pkgs)){
+    f = system.file(package = pkgs[i], "DESCRIPTION")
+    if( nchar(f)> 1) {
+        # Title is always on 3rd line
+        title = readLines(f)
+        title = title[grep("Title: ", title)]
+        pkgs_df$Title[i] = gsub("Title: ", "", title)    
+    }
+}
 
-# make sure these libraries are already installed on this machine
-
-# inst_pkgs <- installed.packages()
-# to_install <- setdiff( pkgs, inst_pkgs )
-# if( length(to_install))
-#   install.packages(to_install, repos="https://cran.rstudio.org")
-
-
+pkgs_df |> 
+  dplyr::mutate( Source = ifelse( Name %in% c( "popgraph",
+                                                "gstudio"), 
+                                  "GitHub", 
+                                  "CRAN" )) |>
+  knitr::kable()
 ```
 
 
+If you are rendering this book, the snippet below will install any libraries used (from CRAN) onto your local machine.
+
+```{r}
+inst_pkgs <- installed.packages()
+to_install <- setdiff( pkgs, inst_pkgs )
+if( length(to_install)) {
+  install.packages(to_install, repos="https://cran.rstudio.org")
+}
+```
 
 
