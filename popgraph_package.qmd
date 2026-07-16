@@ -313,8 +313,8 @@ p + xlab("Longitude") + ylab("Latitude")
 At times we have raster data upon we can plot a population graph. Here is an example from Baja California. The underlying raster image is croped from a WorldClim tile and represents elevation.  
 
 ```{r}
-library(raster)
-data(alt, package="popgraph")
+library(terra)
+alt <- rast("./spatial_data/alt.tif")
 plot(alt)
 ```
 

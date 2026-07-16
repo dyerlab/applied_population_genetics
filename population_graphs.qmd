@@ -235,8 +235,8 @@ At times we have raster data upon we can plot a population graph. Here is an exa
 
 ```{r}
 
-library(raster)
-data(alt, package="popgraph")
+library(terra)
+alt <- rast("./spatial_data/alt.tif")
 plot(alt)
 ```
 
@@ -270,18 +270,18 @@ Since we are dealing with the spatial stuff right now, it makes sense to look in
 
 ### Node Specific Data
 
-The node data `nodes` is a `SpatialPoints` object and can be used to pull data from raster sources.  I'll start by creating a `data.frame` with some existing data in it.
+The node data `nodes` is a spatial `sf` object and can be used to pull data from raster sources.  I'll start by creating a `data.frame` with some existing data in it.
 
 ```{r}
 df.nodes <- data.frame(Pop=V(lopho)$name, Latitude=V(lopho)$Latitude, Longitude=V(lopho)$Longitude)
 ```
 
 
-Then we can extract the elevation from the `alt` raster as:
+Then we can extract the elevation from the `alt` SpatRaster as:
 
 ```{r}
-library(raster)
-df.nodes$Elevation <- extract( alt, lopho.nodes )
+library(terra)
+df.nodes$Elevation <- extract( alt, lopho.nodes )[, 2]
 summary(df.nodes)
 ```
 
@@ -289,22 +289,21 @@ Additional data could be extracted from other rasters.  See http://worldclim.org
 
 ### Extracting Data Along Popgraph Edges
 
-It is also possible to extract data along vectors, or other *SpatialLines* objects, which the edges in a popgraph can be tranformed into.  This is a particularly helpful approach if you are trying to quantify the value of characteristics of the environment between your sampling locations.  In the following example, I estimate the popualtion graph from the `arapat` data set 
+It is also possible to extract data along vectors, which the edges in a popgraph can be transformed into as standard `sf` objects. This is a particularly helpful approach if you are trying to quantify the value of characteristics of the environment between your sampling locations. In the following example, I estimate the population graph from the `arapat` data set 
 
 ```{r}
 graph <- popgraph( to_mv( arapat ), arapat$Population )
 coords <- strata_coordinates(arapat)
 graph <- decorate_graph( graph, coords )
-edges <- to_SpatialLines(graph)
-proj4string(edges) <- CRS( proj4string( alt ))
+edges <- to_sf(graph, what="edges")
 plot( alt, legend=FALSE)
-plot(edges,add=TRUE)
+plot(st_geometry(edges), add=TRUE)
 ```
 
 and determine which of the edges has the longest length.  
 
 ```{r}
-edge_lengths <- SpatialLinesLengths( edges )
+edge_lengths <- st_length( edges )
 longest <- sort( edge_lengths,decreasing = TRUE )[1]
 longest
 ```
@@ -314,16 +313,16 @@ This edge is found at:
 ```{r}
 idx <- which( edge_lengths == longest )
 idx
-edge <- edges[ 37 ]
+edge <- edges[ 37, ]
 edge
 plot( alt, legend=FALSE)
-plot(edge,add=TRUE)
+plot(st_geometry(edge), add=TRUE)
 ```
 
 From this edge object (or a collection of edge objects) we can again extract values from a raster.  Here I pull out the elevation profile of this edge.  To plot it, I need to make a sequence of latitude values equal in length to that of the observed elevation values I extracted.  
 
 ```{r}
-elev <- extract( alt, edge )[[1]]
+elev <- extract( alt, edge )[, 2]
 from_lat <- V(graph)$Latitude[V(graph)$name == "SFr"]
 to_lat <- V(graph)$Latitude[ V(graph)$name == "164"]
 lat <- seq( from=from_lat, to=to_lat, length.out = length(elev) )
