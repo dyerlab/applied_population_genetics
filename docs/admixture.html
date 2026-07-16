@@ -2,10 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.9.37">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>23&nbsp; Admixture – Applied Population Genetics</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -69,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-f79c7fb6db380d32be398468f2fb58cf.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6d16390398e4ca57b3acf2d898365235.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-55828473c9053d70d297794ad812a03c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -98,7 +101,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -109,7 +112,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -474,7 +477,7 @@ window.Quarto = {
 </div>
 <p>Admixture is the mixing of two or more populations whose frequency spectra may differ. If they differ considerably, then the admixed population may be easily examined to determine relative contributions of each population. In a previous chapter, we covered a phenomenon called the Wahlund Effect (Chapter @ref(wahlund-effects)). In that situation, we inadvertently mixed two populations, both of which were in Hardy-Weinberg Equilibrium, creating a new synthetic population consisting of individuals from two functionally separate populations. If this synthetic group were to mix, their offspring would contain mixtures of chromosomes from both ancestral populations, as depicted in Figure @ref(fig:admixture).</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/Admixture.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/Admixture.png"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="media/Admixture.png" class="img-fluid figure-img" width="917"></p>
@@ -486,12 +489,12 @@ window.Quarto = {
 <p>An ubiquitous feature of modern population genetic analyses is the presence of a model-based clustering analysis such as those provided by programs such as STRUCTURE and TESS. Here, they assume a particular population genetic model and estimate admixture and its inverse—the number of groups present in your data that are not admixed. If you have a reason to believe that that there are divisions in your data that separate groups of samples into discrete partitions, this is a great way to evaluate underlying statistical support based upon your observed data.</p>
 <p>The general idea here is the current distribution of genotypes (<span class="math inline">\(X\)</span>) within individuals and populations is due to historical mixing of populations (<span class="math inline">\(Z\)</span>), at specified mixing rates (<span class="math inline">\(Q\)</span>), whose allele frequency spectra (<span class="math inline">\(P\)</span>) may differ.</p>
 <p>Problematically, we can write this as:</p>
-<p>[ P(X|Z,P,Q) = <em>{i=1}^N</em>{j=1}^LP_{z_{ij},;p_j,;x_{ij}} ]</p>
+<p>[ P(X|Z,P,Q) = <em>{i=1}<sup>N_{j=1}</sup>LP</em>{z_{ij},;p_j,;x_{ij}} ]</p>
 <p>Estimating the particular values <span class="math inline">\(Z\)</span>, <span class="math inline">\(P\)</span>, and <span class="math inline">\(Q\)</span> (realized for each of the <span class="math inline">\(N\)</span> individuals across <span class="math inline">\(L\)</span> loci), has to be done numerically. There are an infinite number of combinations for these parameters that have an exceedingly low probability of producing a set of genotypes like we see in our data sets. However, it is possible to have a set of parameters that produced data much like what we see. If we tentatively accept these parameters as being representative of the admixture history of our data, we can then quantify the degree of admixture in our own individuals to these hypothetical historical populations. This assignment process can provide some valuable insights to partitioning in the data, presumably due to ongoing or historical processes, particularly if the consequence of these processes result in defined ‘edges’ or partitions in your data. If you data are distributed along a gradient, these approaches are not quite as powerful.</p>
 <p>In this example, I’ll use the more common software STRUCTURE to demonstrate how this technique is used. There is an R interface to this software that you can use to run batch jobs of these analyses which I’ll show at the end. There are other programs available but this is the most simple implementation.</p>
 <p>To use STRUCTURE, you need to reformat your data. Population designations cannot be anything other than numeric values, alleles have to be encoded in a particular way, files need to be formatted in a particular way, etc. Total pain. Fortunately, we can do all this as:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">write_population</span><span class="op">(</span><span class="va">arapat</span>,file<span class="op">=</span><span class="st">"arapat_structure.txt"</span>,mode<span class="op">=</span><span class="st">"structure"</span>, stratum<span class="op">=</span><span class="st">"Population"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">write_population</span><span class="op">(</span><span class="va">arapat</span>,file<span class="op">=</span><span class="st">"arapat_structure.txt"</span>,mode<span class="op">=</span><span class="st">"structure"</span>, stratum<span class="op">=</span><span class="st">"Population"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>which will take your R data.frame with loci and other information in it and save it as a text file in the appropriate directory in the STRUCTURE format.</p>
 <p>You run this program using either the command-line approach or via a GUI that comes with it. Most people will prefer the GUI. After starting it, do the following:</p>
@@ -513,7 +516,7 @@ window.Quarto = {
 <p>If you select it to Sort by <span class="math inline">\(Q\)</span> it should look something like Figure below.</p>
 <p>This figure is based upon 363 columns of admixture information, one column for each individual. The colors are defined by the number of groups, here <span class="math inline">\(K=3\)</span>. You can see some individual columns (=individuals genotypes) who are entirely one color. These are individuals whose genotypes suggest they are the most likely from that colored group. You can also see that there are some individuals who may be admixed between two or even three groups ad indicated by a column with more than one color.</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/structure_by_q.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/structure_by_q.png"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="media/structure_by_q.png" class="img-fluid figure-img" width="836"></p>
@@ -525,7 +528,7 @@ window.Quarto = {
 <p>Inferences on which <span class="math inline">\(K\)</span> is actually correct can only be made by running the program for several iterations for each value of <span class="math inline">\(K\)</span> (to understand the variability in the simulations for that particular value) and running several different values for <span class="math inline">\(K\)</span> itself so we can compare the probability of the data we observed for different numbers of clusters.</p>
 <p>The data below depict some runs of the data for <span class="math inline">\(K\)</span> assuming values ranging from 2 to 6. These are the raw values for the probability of the data for specific values of <span class="math inline">\(K\)</span>. If you are doing this on your data for real, you should do more than three runs, but this provides a base approach for understanding the output.</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="va">K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">5</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">6</span>,<span class="fl">6</span><span class="op">)</span></span>
 <span><span class="va">LData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="op">-</span><span class="fl">4885.4</span>, <span class="op">-</span><span class="fl">4882.3</span>,<span class="op">-</span><span class="fl">4892.8</span>,</span>
 <span>            <span class="op">-</span><span class="fl">4256.6</span>,<span class="op">-</span><span class="fl">4261.3</span>,<span class="op">-</span><span class="fl">4367.9</span>,</span>
@@ -533,7 +536,7 @@ window.Quarto = {
 <span>            <span class="op">-</span><span class="fl">3605.2</span>, <span class="op">-</span><span class="fl">3594.0</span>,<span class="op">-</span><span class="fl">3607.3</span>,</span>
 <span>            <span class="op">-</span><span class="fl">3308.7</span>,<span class="op">-</span><span class="fl">3492.7</span>,<span class="op">-</span><span class="fl">3493.7</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> K<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">K</span><span class="op">)</span>, Prob<span class="op">=</span><span class="va">LData</span> <span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">K</span>,y<span class="op">=</span><span class="va">Prob</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Number of Clusters (K)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Ln Probability of the Data"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">K</span>,y<span class="op">=</span><span class="va">Prob</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Number of Clusters (K)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Ln Probability of the Data"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-structure-prob" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-structure-prob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -548,7 +551,7 @@ Figure&nbsp;23.1: Probability of the observed data for the numbers of clusters (
 <p>The output shows that as we assume more clusters, the <span class="math inline">\(log(P(Data))\)</span> tends towards an asymptote. There are a couple things to look at here for this output, and this is where the interpretive power of you the researcher needs to step in. The overall notion among many is that the way in which the probability of the data changes with an increasing number of clusters should be informative as to the ‘correct’ number of clusters found. This may or may not be true depending upon your data, your sampling, and the actual history of your organism. However, if it were true then the rationale suggests that when the probability of the data levels off, that may be a good place to look at other sources of inference to see if this may be supported as a plausible number of clusters. In the Figure, this looks like <span class="math inline">\(K=4\)</span> may be a good place to start.</p>
 <p>If I go back to STRUCTURE and plot examine the barplot of individuals from the <span class="math inline">\(K=4\)</span> data (setting “Group by PopID”), you see something like Figure @ref(fig:structureByPop).</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/structure_by_pop.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/structure_by_pop.png"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="media/structure_by_pop.png" class="img-fluid figure-img" width="967"></p>
@@ -558,15 +561,15 @@ Figure&nbsp;23.1: Probability of the observed data for the numbers of clusters (
 </div>
 <p>Here they are sorted into populations and colored by group (green, yellow, blue, red). From this display, we can make a few inferences:</p>
 <p>There is a pretty good indication that some of the ‘populations’ that I sampled appear to be filled with individuals of a single definite type.</p>
-<p>If I look at the groupings as it is presented, the 1^<sup>st</sup>^, 2^<sup>nd</sup>^, and 21^<sup>st</sup>^ populations mainly consist of a single type (the green type). If I look at the original data set that we put out, these correspond to populations 101, 102, and 32. These are the three mainland populations that have consistently been found to be different.</p>
+<p>If I look at the groupings as it is presented, the 1<sup></sup>st<sup></sup>, 2<sup></sup>nd<sup></sup>, and 21<sup></sup>st<sup></sup> populations mainly consist of a single type (the green type). If I look at the original data set that we put out, these correspond to populations 101, 102, and 32. These are the three mainland populations that have consistently been found to be different.</p>
 <p>The rest are populations in Peninsular Baja. As we saw in the hierarchical clustering example, these populations may be further subdivided into different groups, Cape vs.&nbsp;the rest and perhaps more nested structure therein. In actuality, if you pull out the mtDNA types for Peninsula only and run STRUCTURE on it, you will find there is most likely a three separate groupings in the data (this is where the Cluster column in the arapat data set comes from).</p>
 <p>Determining the proper <span class="math inline">\(K\)</span> is not a trivial thing. From the output of estimates of <span class="math inline">\(P(X|Z,P,Q)\)</span> given a particular <span class="math inline">\(K\)</span>, we can examine how our data probability changes with different values of <span class="math inline">\(K\)</span>. We can also examine the allocation of individuals into groups and see if it makes sense, biologically.</p>
 <p>One way that is commonly used to get an idea of the magnitude of <span class="math inline">\(K\)</span> is by looking at how <span class="math inline">\(P(X|Z,P,Q)\)</span> changes with increasing values of <span class="math inline">\(K\)</span>. This is often referred to as the <span class="math inline">\(\delta K\)</span> approach. There is an argument to be made that the best assignment of <span class="math inline">\(K\)</span> would be where there is a large change in <span class="math inline">\(\delta K\)</span> followed by a plateau. This is interpretive and not a definite heuristic.</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mean.K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/by.html">by</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">Prob</span>, <span class="va">df</span><span class="op">$</span><span class="va">K</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mean.K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/by.html">by</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">Prob</span>, <span class="va">df</span><span class="op">$</span><span class="va">K</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">delta.K</span> <span class="op">&lt;-</span> <span class="va">mean.K</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="op">-</span> <span class="va">mean.K</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> K<span class="op">=</span><span class="fl">3</span><span class="op">:</span><span class="fl">6</span>, deltaK<span class="op">=</span><span class="va">delta.K</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">K</span>,y<span class="op">=</span><span class="va">deltaK</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Number of Clusters (K)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Change in Ln Probability of the Data"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">K</span>,y<span class="op">=</span><span class="va">deltaK</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Number of Clusters (K)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Change in Ln Probability of the Data"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="admixture_files/figure-html/deltaK-1.png" class="img-fluid figure-img" width="672"></p>
@@ -630,13 +633,14 @@ Figure&nbsp;23.1: Probability of the observed data for the numbers of clusters (
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

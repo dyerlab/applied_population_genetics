@@ -2,10 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.9.37">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>19&nbsp; Rarefaction – Applied Population Genetics</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -69,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-f79c7fb6db380d32be398468f2fb58cf.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6d16390398e4ca57b3acf2d898365235.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-55828473c9053d70d297794ad812a03c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -98,7 +101,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+}</script><link href="site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script><link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script><script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-binding-2.2.3/leaflet.js"></script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -109,7 +116,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -479,10 +486,10 @@ window.Quarto = {
 <p>The primary reason for looking at diversity is to perform some comparison, which provides some insights into the biological and/or demographic processes influencing your data. Without a basis for comparison, diversity estimates are just numbers. However, deriving an estimate of diversity is a statistical sampling process and as such we must be aware of the consequences our sampling regime has on the interpretation of the data. This is where rarefaction comes in, a technique commonly used in ecology when comparing species richness among groups.</p>
 <p>Here is an example of the problem sampling may interject into your analyses. Consider a single locus with four alleles.</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">)</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> Allele<span class="op">=</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, Frequency<span class="op">=</span><span class="fl">0.25</span><span class="op">)</span></span>
-<span><span class="va">f</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">f</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Allele Frequency
 1      A      0.25
@@ -493,9 +500,9 @@ window.Quarto = {
 </div>
 <p>Selected as a random sample from an infinite population. The first sample has 5 individuals.</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pop1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/make_population.html">make_population</a></span><span class="op">(</span> <span class="va">f</span>,N<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pop1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/make_population.html">make_population</a></span><span class="op">(</span> <span class="va">f</span>,N<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">ae1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span> <span class="va">pop1</span>, mode<span class="op">=</span><span class="st">"Ae"</span> <span class="op">)</span></span>
-<span><span class="va">ae1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">ae1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Locus       Ae
 1 Locus 3.846154</code></pre>
@@ -503,24 +510,24 @@ window.Quarto = {
 </div>
 <p>And the second one has 100 individuals.</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pop2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/make_population.html">make_population</a></span><span class="op">(</span> <span class="va">f</span>, N<span class="op">=</span><span class="fl">100</span> <span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pop2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/make_population.html">make_population</a></span><span class="op">(</span> <span class="va">f</span>, N<span class="op">=</span><span class="fl">100</span> <span class="op">)</span></span>
 <span><span class="va">ae2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span> <span class="va">pop2</span> <span class="op">)</span></span>
-<span><span class="va">ae2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">ae2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  Locus     Ae
-1 Locus 3.9992</code></pre>
+<pre><code>  Locus       Ae
+1 Locus 3.846154</code></pre>
 </div>
 </div>
 <p>The difference in estimated diversity among these groups are <code>abs( ae1 - ae2 ) = 0.15</code>. Is this statistically different or are they the same? Is it just because we sampled more individuals in the second set that we get higher values of <span class="math inline">\(A_e\)</span>? Consider the <code>MP20</code> locus in the beetle data set, it has a total of 19 alleles present. If we subsample this data and estimate the number of observed alleles, we see that there is an asymptotic relationship between sampling effort and estimates of allelic diversity. Here is the code for estimating frequency independent diversity, <span class="math inline">\(A\)</span>, using these data.</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">loci</span> <span class="op">&lt;-</span> <span class="va">arapat</span><span class="op">$</span><span class="va">MP20</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">loci</span> <span class="op">&lt;-</span> <span class="va">arapat</span><span class="op">$</span><span class="va">MP20</span></span>
 <span><span class="va">sz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">15</span>,<span class="fl">20</span>,<span class="fl">50</span>,<span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">sample_sizes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span> <span class="va">sz</span>, each<span class="op">=</span><span class="fl">20</span> <span class="op">)</span></span>
 <span><span class="va">Ae</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">sample_sizes</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw">for</span><span class="op">(</span> <span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">Ae</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">loci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span> <span class="va">loci</span>, size<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">loci</span><span class="op">)</span>, replace<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span>  <span class="va">Ae</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span> <span class="va">loci</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">sample_sizes</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, mode<span class="op">=</span><span class="st">"A"</span> <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The ‘curvy’ nature of this relationship shows a few things.</p>
 <p>It takes a moderate sample size to capture the main set of alleles in the data set. If we are looking at allocating sampling using only 5 individuals per locale, then we are not going to get the majority of the alleles present.</p>
@@ -528,8 +535,8 @@ window.Quarto = {
 <p>For most purposes, we will use all the samples we have collected. In many cases though, some locales may not have as many samples as other ones. So, even with these data, if I have one locale with 10 samples and another with 50, how can I determine if the differences observed are due to true differences in the underlying diversity and which are from my sampling? Just as in testing for HWE, we can use our new friend permutation to address the differences.</p>
 <p>Rarefaction is the process of subsampling a larger dataset in smaller chunks such that we can estimate diversity among groups using the same number of individuals. Here is an example in the beetle dataset where I am going to look at differences in diversity among samples (<span class="math inline">\(N = 75\)</span>) collected in the cape regions of Baja California</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ae.cape</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span> <span class="va">arapat</span><span class="op">[</span> <span class="va">arapat</span><span class="op">$</span><span class="va">Species</span><span class="op">==</span><span class="st">"Cape"</span>, <span class="st">"WNT"</span><span class="op">]</span> <span class="op">)</span></span>
-<span><span class="va">ae.cape</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ae.cape</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span> <span class="va">arapat</span><span class="op">[</span> <span class="va">arapat</span><span class="op">$</span><span class="va">Species</span><span class="op">==</span><span class="st">"Cape"</span>, <span class="st">"WNT"</span><span class="op">]</span> <span class="op">)</span></span>
+<span><span class="va">ae.cape</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Locus       Ae
 1 Locus 1.305052</code></pre>
@@ -537,8 +544,8 @@ window.Quarto = {
 </div>
 <p>and compare those to the genetic diversity observed from a smaller collection of individuals sampled from mainland Mexico (<span class="math inline">\(N=36\)</span>).</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ae.mainland</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span> <span class="va">arapat</span><span class="op">[</span> <span class="va">arapat</span><span class="op">$</span><span class="va">Species</span><span class="op">==</span><span class="st">"Mainland"</span>, <span class="st">"WNT"</span><span class="op">]</span> <span class="op">)</span></span>
-<span><span class="va">ae.mainland</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ae.mainland</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span> <span class="va">arapat</span><span class="op">[</span> <span class="va">arapat</span><span class="op">$</span><span class="va">Species</span><span class="op">==</span><span class="st">"Mainland"</span>, <span class="st">"WNT"</span><span class="op">]</span> <span class="op">)</span></span>
+<span><span class="va">ae.mainland</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Locus       Ae
 1 Locus 1.033889</code></pre>
@@ -551,26 +558,26 @@ window.Quarto = {
 <p>Compare your observed value in the smallest population to that distribution created by subsampling the larger population.</p>
 <p>From the data set, this is done by</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cape.pop</span> <span class="op">&lt;-</span> <span class="va">arapat</span><span class="op">[</span> <span class="va">arapat</span><span class="op">$</span><span class="va">Species</span><span class="op">==</span><span class="st">"Cape"</span>,<span class="st">"WNT"</span><span class="op">]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cape.pop</span> <span class="op">&lt;-</span> <span class="va">arapat</span><span class="op">[</span> <span class="va">arapat</span><span class="op">$</span><span class="va">Species</span><span class="op">==</span><span class="st">"Cape"</span>,<span class="st">"WNT"</span><span class="op">]</span></span>
 <span><span class="va">null.ae</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/rarefaction.html">rarefaction</a></span><span class="op">(</span> <span class="va">cape.pop</span>, mode<span class="op">=</span><span class="st">"Ae"</span>,size<span class="op">=</span><span class="fl">36</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">null.ae</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">null.ae</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.305626</code></pre>
+<pre><code>[1] 1.30616</code></pre>
 </div>
 </div>
 <p>So even if the samples sizes are the same, the mean level of diversity remains relatively constant. The range in diversity</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">null.ae</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">null.ae</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.028163 1.820208</code></pre>
+<pre><code>[1] 1.000000 1.769283</code></pre>
 </div>
 </div>
 <p>is quite large. Since this estimate is frequency based, random samples of alleles change the underlying estimate of Ae during each permutation.</p>
 <p>The observed estimate of diversity in the Mainland populations does fall within this range. However, the null hypothesis states that <span class="math inline">\(A_{e,mainland} = A_{e,cape}\)</span> and if this is true, once we standardize sample size, we can take the distribution of permuted Ae values as a statement about what we should see if the null hypothesis were true. As such, we can treat it probabilistically and estimate the probability that <span class="math inline">\(A_e\)</span>, Mainland is drawn from this distribution.</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">null.ae</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="va">null.ae</span>, <span class="va">ae.mainland</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">null.ae</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="va">null.ae</span>, <span class="va">ae.mainland</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">P</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span> <span class="va">ae.mainland</span> <span class="op">&lt;=</span> <span class="va">null.ae</span> <span class="op">)</span> <span class="op">/</span> <span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">null.ae</span><span class="op">)</span> <span class="op">)</span></span>
-<span><span class="va">P</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">P</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.001</code></pre>
 </div>
@@ -580,17 +587,23 @@ window.Quarto = {
 <span class="header-section-number">19.1</span> Mapping Diversity</h2>
 <p>Estimating diversity is great and being able to compare two or more groups for their levels of diversity is even better. But often we are looking for spatial patterns in our data. Both R and gstudio provide easy interfaces for plotting data and later in the text we will see how to integrate raster and vector data into our workflows for more sublime approaches to characterizing population genetic processes. In the mean time, it is amazingly easy to use basic plotting commands to get pretty informative output. In this example, I extract the mean coordinate of each stratum in the arapat dataset and then estimate diversity at the level of these partitions and merge the diversity estimates for the AML locus into the coordinate data.frame.</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">)</span></span>
 <span><span class="va">diversity</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span><span class="va">arapat</span>, stratum<span class="op">=</span><span class="st">"Population"</span>, mode<span class="op">=</span><span class="st">"Ae"</span><span class="op">)</span></span>
 <span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/strata_coordinates.html">strata_coordinates</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">)</span></span>
-<span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span> <span class="va">coords</span>, <span class="va">diversity</span><span class="op">[</span> <span class="va">diversity</span><span class="op">$</span><span class="va">Locus</span> <span class="op">==</span> <span class="st">"AML"</span>, <span class="op">]</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span> <span class="va">coords</span>, <span class="va">diversity</span><span class="op">[</span> <span class="va">diversity</span><span class="op">$</span><span class="va">Locus</span> <span class="op">==</span> <span class="st">"AML"</span>, <span class="op">]</span> <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Then, I grab a map from the Google server and map my populations with diversity depicted as differences in the size of the points. Note that the <code>ggmap()</code> function provides the base map that is retrieved but when we use <code>geom_point()</code> we need to specify the <code>aes()</code> and the <code>data=</code> part as these data are from the <code>data.frame</code> we made, not from the map we grabbed from Google.</p>
+<p>Then, we can plot our populations on an interactive map using <code>leaflet</code> with circle sizes proportional to the allelic diversity (<code>Ae</code>).</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#library(ggmap)</span></span>
-<span><span class="co">#map &lt;- population_map(coords)</span></span>
-<span><span class="co">#ggmap(map) + geom_point( aes(x=Longitude,y=Latitude,size=Ae), data=coords)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/leaflet/">leaflet</a></span><span class="op">)</span></span>
+<span><span class="va">coords</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html">leaflet</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addCircleMarkers</a></span><span class="op">(</span> <span class="op">~</span><span class="va">Longitude</span>, <span class="op">~</span><span class="va">Latitude</span>, popup<span class="op">=</span><span class="op">~</span><span class="va">Stratum</span>, radius<span class="op">=</span><span class="op">~</span><span class="va">Ae</span><span class="op">*</span><span class="fl">5</span>, color<span class="op">=</span><span class="st">"red"</span>, fillOpacity<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-d8b62738ab2a2f22ddad" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-d8b62738ab2a2f22ddad">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[27.90509,26.38014,27.18232,24.13389,24.0438,24.0195,27.52944,27.40498,27.0367,27.2028,24.2115,24.74642,26.24905,25.91409,25.55757,26.20876,28.22308,28.40846,28.72796,28.66056,26.63783,24.21441,25.34819,26.0155,25.60521,24.00789,24.58843,24.87611,28.96651,29.32541,28.03661,29.01457,26.94589,23.0757,23.2855,25.0247,24.45879,23.08984,27.3632],[-110.57436,-109.12633,-112.66552,-110.46236,-109.989,-110.096,-113.31609,-112.52959,-112.986,-112.408,-110.951,-111.5441,-112.40948,-112.08062,-111.21563,-111.37833,-113.18263,-112.86985,-113.48973,-113.99141,-109.327,-110.27252,-111.60056,-111.35475,-111.32638,-109.85071,-110.74599,-110.69175,-113.66787,-114.29353,-113.39991,-113.94486,-112.04613,-109.64869,-110.10429,-111.675,-110.36857,-110.1091,-112.964],[10,5,13.15789473684211,10.30927835051546,9,9.25925925925926,11.57142857142857,18.18181818181818,13.6986301369863,12.04819277108434,9.25925925925926,9.708737864077673,13.33333333333333,23.80952380952381,12.98701298701299,12.65822784810126,12.34567901234568,13.6986301369863,11.95121951219512,15.38461538461539,10.62295081967213,6.097560975609756,9.999999999999998,12.85714285714286,10.86956521739131,13.88888888888889,12.30769230769231,10.75268817204301,9.27536231884058,15.28301886792453,14.28571428571429,9,12.82051282051282,8,14,15.87301587301588,10.66666666666667,10,15.88235294117647],null,null,{"interactive":true,"className":"","stroke":true,"color":"red","weight":5,"opacity":0.5,"fill":true,"fillColor":"red","fillOpacity":0.6},null,null,["101","102","12","153","156","157","159","160","161","162","163","164","165","166","168","169","171","173","175","177","32","48","51","58","64","73","75","77","84","88","89","9","93","98","Aqu","Const","ESan","Mat","SFr"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[23.0757,29.32541],"lng":[-114.29353,-109.12633]}},"evals":[],"jsHooks":[]}</script>
+</div>
 </div>
 
 
@@ -645,13 +658,14 @@ window.Quarto = {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

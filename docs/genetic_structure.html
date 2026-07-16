@@ -2,10 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.9.37">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>21&nbsp; Genetic Structure – Applied Population Genetics</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -69,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-f79c7fb6db380d32be398468f2fb58cf.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6d16390398e4ca57b3acf2d898365235.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-55828473c9053d70d297794ad812a03c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -98,7 +101,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -109,7 +112,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -519,30 +522,30 @@ F_{ST} &amp; = \frac{\sum_{i=1}^\ell \sigma_{q_{S(i)}}^2}{\sum_{i=1}^\ell \left[
 <p>Where <span class="math inline">\(\sum_{i=1}^\ell \sigma_{q_{S(i)}}^2\)</span> is the variance in allele frequencies across subpopulations (the <span class="math inline">\(S(i)\)</span> subscript) using all <span class="math inline">\(\ell\)</span> alleles at the locus, and <span class="math inline">\(q_{T(i)}\)</span> is the average allele frequency across all subpopulations. The parameters <span class="math inline">\(y_{ST}\)</span> and <span class="math inline">\(y_T\)</span> are equivalent to <span class="math inline">\(H_S\)</span> (average expected heterozygosity across subpopulations) and <span class="math inline">\(H_T\)</span> (expected heterozygosity of average allele frequencies) respectively.</p>
 <p>Lets take a simple example and work though this for clarity as the estimators <span class="math inline">\(H_S\)</span> and <span class="math inline">\(H_T\)</span> can be a bit confusing at times. Consider the case where we have three populations assayed for a single bi-allelic locus. Allele frequencies at each of the populations are:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span><span class="op">)</span></span>
-<span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">-</span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span><span class="op">)</span></span>
+<span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">-</span><span class="va">p</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>which give an expected heterozygosity of:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hs</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">*</span><span class="va">p</span><span class="op">*</span><span class="va">q</span></span>
-<span><span class="va">hs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hs</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">*</span><span class="va">p</span><span class="op">*</span><span class="va">q</span></span>
+<span><span class="va">hs</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.32 0.42 0.48</code></pre>
 </div>
 </div>
 <p>Whose average is:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">hs</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">hs</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.4066667</code></pre>
 </div>
 </div>
 <p>For <span class="math inline">\(H_T\)</span>, we estimate the average of the allele frequencies (<span class="math inline">\(\bar{p}\)</span> and <span class="math inline">\(\bar{q}\)</span>) and then the expectation for heterozygosity (<span class="math inline">\(2\bar{p}\bar{q}\)</span>) as:</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
 <span><span class="va">qbar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></span>
 <span><span class="va">ht</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">*</span><span class="va">pbar</span><span class="op">*</span><span class="va">qbar</span></span>
-<span><span class="va">ht</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">ht</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.42</code></pre>
 </div>
@@ -579,14 +582,14 @@ F_{ST}  &amp; = 1 - \frac{H_S}{H_T} \\
 <p><em>Scenario 4:</em> Estimation of the population-level heterozygosity is not done without error. In fact, we are estimating these parameters for each of the populations and every time we need to determine estimates of allele frequencies. As such, if we are going to take this into consideration, we need to correct estimates of heterozygosity accordingly.</p>
 <p>Here is an example of the differences we will see if we do not account for these problems (as well as the issue of samples sizes and sampling locations discussed in @ref(samples-from-several-locales)). In the arapat data set, I’m going to use the two of the mainland populations and estimate <span class="math inline">\(F_{ST}\)</span> from them for a single locus as an example to demonstrate this last issue and show the magnitude of the bias that may be introduced by not considering that each of the stratum have estimated heterozygosity with a bit of error.</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">arapat</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">arapat</span><span class="op">[</span> <span class="va">arapat</span><span class="op">$</span><span class="va">Population</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"101"</span>,<span class="st">"102"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">13</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html">droplevels</a></span><span class="op">(</span> <span class="va">df</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html">droplevels</a></span><span class="op">(</span> <span class="va">df</span> <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Here is what that looks like (the <code><a href="https://rdrr.io/r/base/droplevels.html">droplevels()</a></code> bit is to remove the non-observed populations from the stratum column in the derived <code>data.frame</code>).</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Population  ATPS
 328        101 02:02
@@ -610,51 +613,52 @@ F_{ST}  &amp; = 1 - \frac{H_S}{H_T} \\
 </div>
 <p>If you look at the alleles present by locus, you can see quite that the allele frequencies (above) are not that close to each other—in fact, population 101 has the 04 allele that is not present in population 102. Numerically, they are:</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/frequencies.html">frequencies</a></span><span class="op">(</span><span class="va">df</span>, stratum <span class="op">=</span> <span class="st">"Population"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/frequencies.html">frequencies</a></span><span class="op">(</span><span class="va">df</span>, stratum <span class="op">=</span> <span class="st">"Population"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Stratum Locus Allele Frequency
 1     101  ATPS     02 0.6666667
 2     101  ATPS     04 0.1111111
 3     101  ATPS     09 0.2222222
 4     102  ATPS     02 0.9375000
-5     102  ATPS     09 0.0625000</code></pre>
+5     102  ATPS     04 0.0000000
+6     102  ATPS     09 0.0625000</code></pre>
 </div>
 </div>
 <p>If we estimate heterozygosity directly for each population we see that the individual, population-level, heterozygosity, is estimated as:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">Population</span><span class="op">==</span><span class="st">"101"</span>,<span class="op">]</span>,mode<span class="op">=</span><span class="st">"He"</span><span class="op">)</span><span class="op">$</span><span class="va">He</span>, <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">Population</span><span class="op">==</span><span class="st">"102"</span>,<span class="op">]</span>,mode<span class="op">=</span><span class="st">"He"</span><span class="op">)</span><span class="op">$</span><span class="va">He</span><span class="op">)</span></span>
-<span><span class="va">x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">Population</span><span class="op">==</span><span class="st">"101"</span>,<span class="op">]</span>,mode<span class="op">=</span><span class="st">"He"</span><span class="op">)</span><span class="op">$</span><span class="va">He</span>, <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">Population</span><span class="op">==</span><span class="st">"102"</span>,<span class="op">]</span>,mode<span class="op">=</span><span class="st">"He"</span><span class="op">)</span><span class="op">$</span><span class="va">He</span><span class="op">)</span></span>
+<span><span class="va">x</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.4938272 0.1171875</code></pre>
 </div>
 </div>
 <p>which results in an estimate of [~] of:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="va">hs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="va">hs</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3055073</code></pre>
 </div>
 </div>
 <p>Similarly, the parameter [~] is:</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ht</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span><span class="va">df</span>,mode<span class="op">=</span><span class="st">"He"</span><span class="op">)</span><span class="op">$</span><span class="va">He</span></span>
-<span><span class="va">ht</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ht</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_diversity.html">genetic_diversity</a></span><span class="op">(</span><span class="va">df</span>,mode<span class="op">=</span><span class="st">"He"</span><span class="op">)</span><span class="op">$</span><span class="va">He</span></span>
+<span><span class="va">ht</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3442907</code></pre>
 </div>
 </div>
 <p>We can estimate [~] as:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Fst_biased</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">hs</span><span class="op">/</span><span class="va">ht</span></span>
-<span><span class="va">Fst_biased</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Fst_biased</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">hs</span><span class="op">/</span><span class="va">ht</span></span>
+<span><span class="va">Fst_biased</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1126471</code></pre>
 </div>
 </div>
 <p>If we do take into consideration the error associated with estimating these parameters, we find a much smaller value:</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#Fst(df)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#Fst(df)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Notice here that [~] is estimated from averaging (the first way) 10% lower than done when considering sampling allocations. The bias associated with [~] is much smaller but exists all the same. Overall, the problem here is an overestimation of [~] by a factor of almost 3! These results are exaggerated a bit because of the small size—it would be foolish to estimate [~] from only N=17 individuals from two populations. However, it does show the importance of considering sampling allocations. As you sample more individuals, these estimates of heterozygosity will converge.</p>
 </section><section id="additional-x_st-like-parameters" class="level3" data-number="21.1.2"><h3 data-number="21.1.2" class="anchored" data-anchor-id="additional-x_st-like-parameters">
@@ -673,18 +677,18 @@ F_{ST}  &amp; = 1 - \frac{H_S}{H_T} \\
 <p>Each of these parameters attempts to solve an additional problem that people have posed for [~]. The magnitude of bias associated with each may be differential, depending upon the extent to which your data are violating underlying assumptions. For example, at highly diverse loci, the expectation for [~] is limited in that it cannot reach its theoretical maximum. As such, Hedrick (ref) has derived the [~] parameter that corrects for this. In general, the degree to which [~] and [~] diverge depend upon both the diversity and the evenness of allele frequencies in your populations. This begs the question, “Is there a cutoff when I should not longer use [~] and prefer [~] instead?” I think Hedrick would suggest to always use it the secondary one, just in case, though it may be in your best interest to examine the differences in the parameters in your own data first.</p>
 <p>Here is an example of how these parameters may give alternative estimates. I’ll use the MP20 locus as it is a microsatellite locus of high diversity and compare the [~], [~], and [~] estimates.</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">arapat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">14</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_structure.html">genetic_structure</a></span><span class="op">(</span><span class="va">df</span>,stratum<span class="op">=</span><span class="st">"Population"</span>,mode<span class="op">=</span><span class="st">"Gst"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">arapat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">14</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_structure.html">genetic_structure</a></span><span class="op">(</span><span class="va">df</span>,stratum<span class="op">=</span><span class="st">"Population"</span>,mode<span class="op">=</span><span class="st">"Gst"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Locus      Gst        Hs        Ht        P
 1  MP20 0.308848 0.5663341 0.8194061 0.308848</code></pre>
 </div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_structure.html">genetic_structure</a></span><span class="op">(</span><span class="va">df</span>,stratum<span class="op">=</span><span class="st">"Population"</span>,mode<span class="op">=</span><span class="st">"Gst_prime"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_structure.html">genetic_structure</a></span><span class="op">(</span><span class="va">df</span>,stratum<span class="op">=</span><span class="st">"Population"</span>,mode<span class="op">=</span><span class="st">"Gst_prime"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Locus       Gst        Hs        Ht P
 1  MP20 0.7227937 0.5663341 0.8194061 0</code></pre>
 </div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_structure.html">genetic_structure</a></span><span class="op">(</span><span class="va">df</span>,stratum<span class="op">=</span><span class="st">"Population"</span>,mode<span class="op">=</span><span class="st">"Dest"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_structure.html">genetic_structure</a></span><span class="op">(</span><span class="va">df</span>,stratum<span class="op">=</span><span class="st">"Population"</span>,mode<span class="op">=</span><span class="st">"Dest"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Locus      Dest        Hs        Ht         P
 1  MP20 0.5686012 0.5663341 0.8194061 0.5686012</code></pre>
@@ -706,15 +710,15 @@ F_{ST}  &amp; = 1 - \frac{H_S}{H_T} \\
 <p>You can visualize these parameters in matrix form as depicted below. The pairwise distance matrix has individuals in it sorted in order of appearance within populations. As such, [~] is the sum of all squared distances and is decomposed to the additive components of [~] (summing distances within populations), and [~] (summing values representing among stratum distances). For each of these parameters is standardized by the number of entries in that particular group.</p>
 <p>These sums of squares are easily put into a traditional AMOVA table. From here, it is identical to a normal ANOVA analysis. We have degrees of freedom, mean squares, and variance components. The AMOVA itself, due to the way we sample the individuals and populations is a random-effects model. Our sampling typically consists of us going out and sampling a portion of the potential populations that exist rather than sampling all specified populations. As a statistical consequence, this means that the variance within (the error term) and among (the treatment variance) have to be corrected because we are taking only a sample from all potential populations. For a 1-level analysis, we can perform this in R by first setting up the data as a distance matrix and a vector of population assignments (it appears that the values need to be either numeric or as a factor for populations, though at the time of this writing, I could not get a factor representation to work properly).</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_distance.html">genetic_distance</a></span><span class="op">(</span><span class="va">arapat</span>, stratum<span class="op">=</span><span class="st">"Population"</span>, mode<span class="op">=</span><span class="st">"AMOVA"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genetic_distance.html">genetic_distance</a></span><span class="op">(</span><span class="va">arapat</span>, stratum<span class="op">=</span><span class="st">"Population"</span>, mode<span class="op">=</span><span class="st">"AMOVA"</span><span class="op">)</span></span>
 <span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">as.dist</a></span><span class="op">(</span> <span class="va">D</span> <span class="op">)</span></span>
-<span><span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span> <span class="va">arapat</span><span class="op">$</span><span class="va">Population</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span> <span class="va">arapat</span><span class="op">$</span><span class="va">Population</span> <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>and then using the <code><a href="https://rdrr.io/pkg/pegas/man/amova.html">amova()</a></code> function from the pegas library (there are many different implementations of this kind of analysis, decompose the variance into and fill out the AMOVA table as:</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://emmanuelparadis.github.io/pegas.html">pegas</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://emmanuelparadis.github.io/pegas.html">pegas</a></span><span class="op">)</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pegas/man/amova.html">amova</a></span><span class="op">(</span> <span class="va">D</span> <span class="op">~</span> <span class="va">pop</span>, nperm<span class="op">=</span><span class="fl">1000</span> <span class="op">)</span></span>
-<span><span class="va">fit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">fit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Analysis of Molecular Variance
@@ -745,8 +749,8 @@ The estimated variance components of this model, we can estimate a structure sta
 <p>[~]</p>
 <p>and from the output of the amova() function can be estimated as (don’t know why this isn’t done automagically)</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">PhiST</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">fit</span><span class="op">$</span><span class="va">varcoef</span><span class="op">/</span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">varcoef</span><span class="op">+</span><span class="va">fit</span><span class="op">$</span><span class="va">varcomp</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">PhiST</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">PhiST</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">fit</span><span class="op">$</span><span class="va">varcoef</span><span class="op">/</span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">varcoef</span><span class="op">+</span><span class="va">fit</span><span class="op">$</span><span class="va">varcomp</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">PhiST</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> a 
 NA </code></pre>
@@ -812,13 +816,14 @@ NA </code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

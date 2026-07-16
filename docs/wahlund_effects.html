@@ -2,10 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.9.37">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>13&nbsp; Wahlund Effects – Applied Population Genetics</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -69,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-f79c7fb6db380d32be398468f2fb58cf.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6d16390398e4ca57b3acf2d898365235.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-55828473c9053d70d297794ad812a03c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -98,7 +101,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -109,7 +112,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -475,7 +478,7 @@ window.Quarto = {
 <p>Inbreeding may be indicated in the parameter <span class="math inline">\(F\)</span> due to selfing (the most direct type @ref(selfing)), mating amongst relatives (the most common type, @ref(mixed-mating-systems)), or due to problems that we as the investigator cause due to our ignorance of the underlying demography. Yes, if done incorrectly, the way in which you sample individuals may may lead to incorrect inferences. The Wahlund effect is one such way that problems in your study design may incorrectly result in inferences of inbreeding. Here is how it works.</p>
 <p>Consider two populations, both of which are at Hardy-Weinberg Equilibrium. The first population has allele frequencies at a two allele locus of <span class="math inline">\(p_A= 0.7;\;q_A=0.3\)</span> and the second population has allele frequencies of <span class="math inline">\(p_B=0.4;\;q_B=0.6\)</span>. For simplicity, assume that both populations are completely isolated and have <span class="math inline">\(N=100\)</span> individuals each. As such, we find the following genotypes in each population, each of which is exactly what is expected under HWE.</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/wahlundTwoPop.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/wahlundTwoPop.png"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="media/wahlundTwoPop.png" class="img-fluid figure-img" width="848"></p>
@@ -485,7 +488,7 @@ window.Quarto = {
 </div>
 <p>If you did not know, <em>a priori</em>, these were isolated populations and artificially combined them, you would have a single composite populations created from two individual populations, both of which are in HWE. It would look like this.</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/wahlundOnePop.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/wahlundOnePop.png"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="media/wahlundOnePop.png" class="img-fluid figure-img" width="848"></p>
@@ -549,7 +552,7 @@ F &amp; = 1 - \frac{H_O}{H_E} \\
 <p>unless <span class="math inline">\(p_A = p_B\)</span>.</p>
 <p>In Edwards (2000) text, Foundations in Mathematical Genetics, he uses a ternary plot framework to describe this effect. A ternary plot is a way to visualize data corresponding to three different axes but displayed in two space, under the constraint that the frequencies in the three groups sum to unity. In our case, we can use the genotype frequencies as the axes, one each for <span class="math inline">\(E[AA]\)</span>, <span class="math inline">\(E[Aa]\)</span>, and <span class="math inline">\(E[aa]\)</span>. Populations in Hardy-Weinberg equilibrium will fall on the line representing <span class="math inline">\(p^2\)</span>, <span class="math inline">\(2pq\)</span>, and <span class="math inline">\(q^2\)</span>. Here is how to visualize this in R.</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ggtern</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ggtern</span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,by<span class="op">=</span><span class="fl">0.01</span><span class="op">)</span></span>
 <span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">-</span><span class="va">p</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> AA<span class="op">=</span><span class="va">p</span><span class="op">^</span><span class="fl">2</span>,</span>
@@ -561,7 +564,7 @@ F &amp; = 1 - \frac{H_O}{H_E} \\
 <span>                      pop<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Pop-A"</span>,<span class="st">"Pop-B"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/ggtern/man/ggtern.html">ggtern</a></span><span class="op">(</span><span class="va">df</span>,<span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">aa</span>,y<span class="op">=</span><span class="va">Aa</span>,z<span class="op">=</span><span class="va">AA</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">df.pop</span>,color<span class="op">=</span><span class="st">"red"</span>,size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">aa</span><span class="op">-</span><span class="fl">0.02</span>,y<span class="op">=</span><span class="va">Aa</span><span class="op">+</span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span>,z<span class="op">=</span><span class="va">AA</span>,label<span class="op">=</span><span class="va">pop</span><span class="op">)</span>,data<span class="op">=</span><span class="va">df.pop</span>,size<span class="op">=</span><span class="fl">4</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">aa</span><span class="op">-</span><span class="fl">0.02</span>,y<span class="op">=</span><span class="va">Aa</span><span class="op">+</span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span>,z<span class="op">=</span><span class="va">AA</span>,label<span class="op">=</span><span class="va">pop</span><span class="op">)</span>,data<span class="op">=</span><span class="va">df.pop</span>,size<span class="op">=</span><span class="fl">4</span><span class="op">)</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="wahlund_effects_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
@@ -571,7 +574,7 @@ F &amp; = 1 - \frac{H_O}{H_E} \\
 </div>
 <p>When your sampling design combines both of these populations into a synthetic population, you change the allele frequencies to <span class="math inline">\(\bar{p}\)</span> and <span class="math inline">\(\bar{q}\)</span>. However, since the change in expected genotype frequencies is not a linear change (notice how the expectation line in the figure curves) then the average allele frequencies produce an expectation of <span class="math inline">\(2\bar{p}\bar{q}\)</span> greater than the average of the observed heterozygosities. This is demonstrated in the following image, the observed level of heterozygosity in the synthetic population, being the average of the two (where the dashed line intersects the expectation given for <span class="math inline">\(\bar{q}\)</span>), is always going to be less than then the expected heterozygosity because the product of an average is always going to be less than the average of a product.</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/wahlundTernary.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/wahlundTernary.png"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="media/wahlundTernary.png" class="img-fluid figure-img" width="849"></p>
@@ -634,13 +637,14 @@ F &amp; = 1 - \frac{H_O}{H_E} \\
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

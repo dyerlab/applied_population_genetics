@@ -2,11 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.9.37">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Rodney J. Dyer">
 <title>Applied Population Genetics</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -69,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-f79c7fb6db380d32be398468f2fb58cf.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6d16390398e4ca57b3acf2d898365235.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-55828473c9053d70d297794ad812a03c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -465,7 +468,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="applied-population-genetics" class="level1 white_letters unnumbered"><h1 class="white_letters unnumbered">Applied Population Genetics</h1><p><img src="media/TitlePage_small.png" title="Applied Population Genetics" class="quarto-cover-image nolightbox img-fluid"></p>
 <p><a href="http://dyerlab.org"></a></p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/APG-Title-Wide.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"media/APG-Title-Wide.png"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-title" class="quarto-float quarto-figure quarto-figure-center anchored" width="273">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-title-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -478,13 +481,13 @@ Figure&nbsp;1
 </div>
 </div>
 <p></p>
-<p>Build Date: <strong>Mon Jan 5 15:58:44 2026</strong></p>
+<p>Build Date: <strong>Thu Jul 16 10:27:42 2026</strong></p>
 <p>The content of this text is modified, added to, and changed continually. You are welcome to use the content of this book in its present form and you can provide feedback, comments, or suggestions for additions by contacting me at <a href="mailto://rjdyer@vcu.edu">rjdyer@vcu.edu</a>. This work will continue to be hosted online and continually updated as new approaches and applications become available.</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/get_theme.html">theme_set</a></span><span class="op">(</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span>base_size<span class="op">=</span><span class="fl">14</span><span class="op">)</span> <span class="op">)</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span> warning<span class="op">=</span><span class="cn">FALSE</span>, message<span class="op">=</span><span class="cn">FALSE</span>,error <span class="op">=</span> <span class="cn">FALSE</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span> warning<span class="op">=</span><span class="cn">FALSE</span>, message<span class="op">=</span><span class="cn">FALSE</span>,error <span class="op">=</span> <span class="cn">FALSE</span> <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="logistics" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="logistics">Logistics</h2>
 <p>© 2017 by R.J. Dyer.</p>
@@ -497,15 +500,15 @@ Figure&nbsp;1
 </section><section id="typography" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="typography">Typography</h2>
 <p>This text is designed primarily as an electronic publication (ePub) and has dynamical content included within. If you are reading a static copy (as PDF or printed text), you are not getting the full experience of what this book has been designed to deliver. Much of the text is devoted to quantitative analysis of data in R, and as such I’ve typeset the R components differently from the flowing text. Text intended to be input into R is typeset as a fixed width font and colored using the default color scheme found in RStudio (http://rstudio.org). Here are two input examples.</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">value</span> <span class="op">&lt;-</span> <span class="fl">20</span></span>
-<span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"Perdedor"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">value</span> <span class="op">&lt;-</span> <span class="fl">20</span></span>
+<span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"Perdedor"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This text is amenable to copy-and-paste action so you can perform the same calculations on your computer as are done in the text. When R returns an answer to an analysis or prints the contents of a variable out, the results are also typeset in fixed width font but each line is prefixed by two hash marks.</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  0.2769213  0.2122282  0.4786492  0.7648880 -0.1164361 -0.5372516
- [7]  0.1074814  1.8414440 -1.2771785 -0.7950362</code></pre>
+<pre><code> [1]  1.01534480 -0.93648843  0.22196337  0.79580405 -0.00487312  0.59356704
+ [7]  0.23402139 -0.36715923 -1.03311454  1.36831478</code></pre>
 </div>
 </div>
 <p>The lines with hashes are not something you are going to copy-and-paste into your R session, it is what R is giving you. Inline code (e.g., code inserted into a sentence in a descriptive context such as discussing the <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code> function in the previous example) is typeset similarly though not necessarily intended to be cut-and-pasted into your session.</p>
@@ -612,13 +615,14 @@ help.start(remote = paste0("file://", R.home()))
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

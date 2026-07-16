@@ -2,10 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.9.37">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>7&nbsp; Hardy-Weinberg Equilibrium – Applied Population Genetics</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -69,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-f79c7fb6db380d32be398468f2fb58cf.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6d16390398e4ca57b3acf2d898365235.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-55828473c9053d70d297794ad812a03c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -98,7 +101,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -109,7 +112,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -498,7 +501,7 @@ window.Quarto = {
 <span class="header-section-number">7.1.1</span> Punnet Squares</h3>
 <p>A Punnet square is a simple tool used to teach transition probabilities in basic genetics and biology courses. Here is an interactive example using the 2-allele locus (though the tool can handle other ploidy levels) that you can play with to see the kinds of offspring genotypes produced by individual matings.</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_url.html">include_app</a></span><span class="op">(</span><span class="st">"http://128.172.160.215/punnet_square/"</span>, height<span class="op">=</span><span class="st">"500"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_url.html">include_app</a></span><span class="op">(</span><span class="st">"http://128.172.160.215/punnet_square/"</span>, height<span class="op">=</span><span class="st">"500"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <iframe src="http://128.172.160.215/punnet_square/?showcase=0" width="672" height="500" data-external="1">
 </iframe>
 </div>
@@ -553,63 +556,63 @@ window.Quarto = {
 <p>Intuitively the formulation denoted above for <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> makes sense as the heterozygote genotype (<span class="math inline">\(AB\)</span>) frequency, <span class="math inline">\(Q\)</span>, is split evenly between the homozygote genotype frequencies, <span class="math inline">\(P\)</span> (for <span class="math inline">\(AA\)</span>) and <span class="math inline">\(R\)</span> (for <span class="math inline">\(BB\)</span>). If these are the only two alleles in the population then there is the additional restriction that <span class="math inline">\(p + q = 1\)</span>. It is easy to expand these methods to more than two alleles, but again the original approximation was specifically set for 2-allele systems.</p>
 <p>Here is an interactive widget that shows how the expected frequencies of the genotypes change, even under Hardy Weinberg Equilibrium, due to changes in the allele frequencies.</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_url.html">include_app</a></span><span class="op">(</span><span class="st">"http://popgen.bio.vcu.edu/shiny/apg/hardy_weinberg/"</span>, height<span class="op">=</span><span class="st">"700"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_url.html">include_app</a></span><span class="op">(</span><span class="st">"http://popgen.bio.vcu.edu/shiny/apg/hardy_weinberg/"</span>, height<span class="op">=</span><span class="st">"700"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <iframe src="http://popgen.bio.vcu.edu/shiny/apg/hardy_weinberg/?showcase=0" width="672" height="700" data-external="1">
 </iframe>
 </div>
 <p>In R, we can approximate these formulas using the gstudio library. After loading in the library, we can create data objects representing diploid loci as follows:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gstudio</span><span class="op">)</span></span>
 <span><span class="va">hom.AA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/locus.html">locus</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"A"</span><span class="op">)</span> <span class="op">)</span></span>
 <span><span class="va">hom.BB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/locus.html">locus</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B"</span>,<span class="st">"B"</span><span class="op">)</span> <span class="op">)</span></span>
-<span><span class="va">het.AB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/locus.html">locus</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"B"</span><span class="op">)</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">het.AB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/locus.html">locus</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"B"</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>These objects have have properties associated with them appropriate for representing genetic loci.</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/ploidy.html">ploidy</a></span><span class="op">(</span><span class="va">het.AB</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/ploidy.html">ploidy</a></span><span class="op">(</span><span class="va">het.AB</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/is_heterozygote.html">is_heterozygote</a></span><span class="op">(</span> <span class="va">het.AB</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/is_heterozygote.html">is_heterozygote</a></span><span class="op">(</span> <span class="va">het.AB</span> <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <p>And can be used in a vector or data.frame or other R container just like any other data type facilitating easy integration into existing analytical workflows.</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">genotypes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="va">hom.AA</span>, <span class="va">het.AB</span>, <span class="va">hom.BB</span><span class="op">)</span></span>
-<span><span class="va">genotypes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">genotypes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="va">hom.AA</span>, <span class="va">het.AB</span>, <span class="va">hom.BB</span><span class="op">)</span></span>
+<span><span class="va">genotypes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "A:A" "A:B" "B:B"</code></pre>
 </div>
 </div>
 <p>To examine genotype and allele frequencies for a set of loci, I’ll make a random collection and then use those loci as an example.</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">loci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">genotypes</span>, <span class="fl">20</span>, replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">loci</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">loci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">genotypes</span>, <span class="fl">20</span>, replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">loci</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "A:A" "B:B" "A:B" "A:A" "B:B" "A:A" "A:A" "B:B" "B:B" "B:B" "B:B" "A:B"
-[13] "B:B" "B:B" "A:A" "A:B" "A:B" "A:B" "A:A" "B:B"</code></pre>
+<pre><code> [1] "A:A" "B:B" "A:A" "A:B" "B:B" "A:B" "A:B" "A:A" "B:B" "B:B" "A:A" "B:B"
+[13] "B:B" "A:A" "B:B" "A:B" "B:B" "A:B" "A:B" "A:A"</code></pre>
 </div>
 </div>
 <p>Here the function sample() makes a random draw of the arguments given in the first position (the genotypes), and selects 20 (the second argument), and since there are fewer potential values than observed ones, you need to tell it that you can sample the same genotypes more than once (the <code>replace=TRUE</code> part). In analytical population genetics, the use of randomization and permutation is critical and we will see this repeatedly throughout this text. Technically, this is a Monte Carlo simulation that was done. Fancy, no?</p>
 <p>Next, we can take these data and estimate genotype frequencies. Here the expectation is also given by the code using the methodologies described in the next section.</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genotype_frequencies.html">genotype_frequencies</a></span><span class="op">(</span><span class="va">loci</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genotype_frequencies.html">genotype_frequencies</a></span><span class="op">(</span><span class="va">loci</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Genotype Observed Expected
-1      A:A        6   3.6125
-2      A:B        5   9.7750
-3      B:B        9   6.6125</code></pre>
+1      A:A        6     4.05
+2      A:B        6     9.90
+3      B:B        8     6.05</code></pre>
 </div>
 </div>
 <p>and allele frequencies from these loci are:</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/frequencies.html">frequencies</a></span><span class="op">(</span> <span class="va">loci</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/frequencies.html">frequencies</a></span><span class="op">(</span> <span class="va">loci</span> <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Allele Frequency
-1      A     0.425
-2      B     0.575</code></pre>
+1      A      0.45
+2      B      0.55</code></pre>
 </div>
 </div>
 <p>It should be noted that for these function, and for almost all the functions that return data in gstudio, the return object is a native data.frame. Using these tools, it is easy to take our data and extract from it the components necessary for estimating the degree to which they conform to the expectations of HWE.</p>
@@ -754,13 +757,14 @@ Q_{t+1} &amp;= \frac{P_tQ_t}{2} + 2P_tR_t + \frac{Q^2_t}{2} + Q_tR_t\\
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
