@@ -163,7 +163,7 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Applied Population Genetics</span></a>
+ <span class="menu-text">Logistics</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -577,8 +577,8 @@ window.Quarto = {
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH 3dc93d5 U--- 5 5 -- 
-+ edges from 3dc93d5:
+<pre><code>IGRAPH 122deaa U--- 5 5 -- 
++ edges from 122deaa:
 [1] 1--2 1--3 2--3 3--4 4--5</code></pre>
 </div>
 </div>
@@ -603,7 +603,7 @@ window.Quarto = {
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://r.igraph.org/reference/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 5/5 edges from 3dc93d5 (vertex names):
+<pre><code>+ 5/5 edges from 122deaa (vertex names):
 [1] Olympia   --Bellingham Olympia   --St. Louis  Bellingham--St. Louis 
 [4] St. Louis --Ames       Ames      --Richmond  </code></pre>
 </div>
@@ -967,8 +967,8 @@ vertex.color="green")
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> src<span class="op">=</span><span class="va">edgelist</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, target<span class="op">=</span><span class="va">edgelist</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/networkD3/man/simpleNetwork.html">simpleNetwork</a></span><span class="op">(</span><span class="va">df</span>,fontSize <span class="op">=</span> <span class="fl">14</span>,opacity <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="forceNetwork html-widget html-fill-item" id="htmlwidget-d9efd817417ad1e7a00e" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-d9efd817417ad1e7a00e">{"x":{"links":{"source":[2,2,1,4,0],"target":[1,4,4,0,3],"value":[1,1,1,1,1],"colour":["#666","#666","#666","#666","#666"]},"nodes":{"name":["Ames","Bellingham","Olympia","Richmond","St. Louis"],"group":[1,1,1,1,1],"nodesize":[8,8,8,8,8]},"options":{"NodeID":"name","Group":"group","colourScale":"d3.scaleOrdinal(['#3182bd'])","fontSize":14,"fontFamily":"serif","clickTextSize":35,"linkDistance":50,"linkWidth":"'1.5px'.toString()","charge":-30,"opacity":0.95,"zoom":false,"legend":false,"arrows":false,"nodesize":true,"radiusCalculation":"d.nodesize","bounded":false,"opacityNoHover":1,"clickAction":null}},"evals":[],"jsHooks":[]}</script>
+<div class="forceNetwork html-widget html-fill-item" id="htmlwidget-91008622868b7052a68a" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-91008622868b7052a68a">{"x":{"links":{"source":[2,2,1,4,0],"target":[1,4,4,0,3],"value":[1,1,1,1,1],"colour":["#666","#666","#666","#666","#666"]},"nodes":{"name":["Ames","Bellingham","Olympia","Richmond","St. Louis"],"group":[1,1,1,1,1],"nodesize":[8,8,8,8,8]},"options":{"NodeID":"name","Group":"group","colourScale":"d3.scaleOrdinal(['#3182bd'])","fontSize":14,"fontFamily":"serif","clickTextSize":35,"linkDistance":50,"linkWidth":"'1.5px'.toString()","charge":-30,"opacity":0.95,"zoom":false,"legend":false,"arrows":false,"nodesize":true,"radiusCalculation":"d.nodesize","bounded":false,"opacityNoHover":1,"clickAction":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section id="mapping-networks" class="level2" data-number="27.3"><h2 data-number="27.3" class="anchored" data-anchor-id="mapping-networks">

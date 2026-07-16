@@ -162,7 +162,7 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Applied Population Genetics</span></a>
+ <span class="menu-text">Logistics</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -642,8 +642,8 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">loci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">genotypes</span>, <span class="fl">20</span>, replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">loci</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "A:B" "A:B" "A:A" "A:A" "A:A" "A:B" "A:A" "B:B" "A:B" "A:A" "A:B" "B:B"
-[13] "B:B" "B:B" "A:B" "A:B" "A:B" "A:A" "A:A" "B:B"</code></pre>
+<pre><code> [1] "A:B" "B:B" "A:B" "A:A" "A:A" "A:A" "B:B" "B:B" "A:B" "A:B" "A:A" "A:B"
+[13] "A:A" "A:A" "A:A" "A:A" "A:B" "A:B" "B:B" "A:B"</code></pre>
 </div>
 </div>
 <p>Here the function sample() makes a random draw of the arguments given in the first position (the genotypes), and selects 20 (the second argument), and since there are fewer potential values than observed ones, you need to tell it that you can sample the same genotypes more than once (the <code>replace=TRUE</code> part). In analytical population genetics, the use of randomization and permutation is critical and we will see this repeatedly throughout this text. Technically, this is a Monte Carlo simulation that was done. Fancy, no?</p>
@@ -652,9 +652,9 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/genotype_frequencies.html">genotype_frequencies</a></span><span class="op">(</span><span class="va">loci</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Genotype Observed Expected
-1      A:A        7     6.05
-2      A:B        8     9.90
-3      B:B        5     4.05</code></pre>
+1      A:A        8      7.2
+2      A:B        8      9.6
+3      B:B        4      3.2</code></pre>
 </div>
 </div>
 <p>and allele frequencies from these loci are:</p>
@@ -662,8 +662,8 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/frequencies.html">frequencies</a></span><span class="op">(</span> <span class="va">loci</span> <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Allele Frequency
-1      A      0.55
-2      B      0.45</code></pre>
+1      A       0.6
+2      B       0.4</code></pre>
 </div>
 </div>
 <p>It should be noted that for these function, and for almost all the functions that return data in gstudio, the return object is a native data.frame. Using these tools, it is easy to take our data and extract from it the components necessary for estimating the degree to which they conform to the expectations of HWE.</p>

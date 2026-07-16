@@ -166,7 +166,7 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Applied Population Genetics</span></a>
+ <span class="menu-text">Logistics</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -556,7 +556,7 @@ window.Quarto = {
 <span><span class="va">ae1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Locus       Ae
-1 Locus 2.272727</code></pre>
+1 Locus 3.333333</code></pre>
 </div>
 </div>
 <p>And the second one has 100 individuals.</p>
@@ -566,7 +566,7 @@ window.Quarto = {
 <span><span class="va">ae2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Locus      Ae
-1 Locus 3.94244</code></pre>
+1 Locus 3.81971</code></pre>
 </div>
 </div>
 <p>The difference in estimated diversity among these groups are <code>abs( ae1 - ae2 ) = 0.15</code>. Is this statistically different or are they the same? Is it just because we sampled more individuals in the second set that we get higher values of <span class="math inline">\(A_e\)</span>? Consider the <code>MP20</code> locus in the beetle data set, it has a total of 19 alleles present. If we subsample this data and estimate the number of observed alleles, we see that there is an asymptotic relationship between sampling effort and estimates of allelic diversity. Here is the code for estimating frequency independent diversity, <span class="math inline">\(A\)</span>, using these data.</p>
@@ -613,14 +613,14 @@ window.Quarto = {
 <span><span class="va">null.ae</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gstudio/man/rarefaction.html">rarefaction</a></span><span class="op">(</span> <span class="va">cape.pop</span>, mode<span class="op">=</span><span class="st">"Ae"</span>,size<span class="op">=</span><span class="fl">36</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">null.ae</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.312678</code></pre>
+<pre><code>[1] 1.305126</code></pre>
 </div>
 </div>
 <p>So even if the samples sizes are the same, the mean level of diversity remains relatively constant. The range in diversity</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">null.ae</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.028163 1.789627</code></pre>
+<pre><code>[1] 1.028163 1.882353</code></pre>
 </div>
 </div>
 <p>is quite large. Since this estimate is frequency based, random samples of alleles change the underlying estimate of Ae during each permutation.</p>
@@ -652,8 +652,8 @@ window.Quarto = {
 <span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addCircleMarkers</a></span><span class="op">(</span> <span class="op">~</span><span class="va">Longitude</span>, <span class="op">~</span><span class="va">Latitude</span>, popup<span class="op">=</span><span class="op">~</span><span class="va">Stratum</span>, radius<span class="op">=</span><span class="op">~</span><span class="va">Ae</span><span class="op">*</span><span class="fl">5</span>, color<span class="op">=</span><span class="st">"red"</span>, fillOpacity<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-4f885ab0d5b087cee812" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-4f885ab0d5b087cee812">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[27.90509,26.38014,27.18232,24.13389,24.0438,24.0195,27.52944,27.40498,27.0367,27.2028,24.2115,24.74642,26.24905,25.91409,25.55757,26.20876,28.22308,28.40846,28.72796,28.66056,26.63783,24.21441,25.34819,26.0155,25.60521,24.00789,24.58843,24.87611,28.96651,29.32541,28.03661,29.01457,26.94589,23.0757,23.2855,25.0247,24.45879,23.08984,27.3632],[-110.57436,-109.12633,-112.66552,-110.46236,-109.989,-110.096,-113.31609,-112.52959,-112.986,-112.408,-110.951,-111.5441,-112.40948,-112.08062,-111.21563,-111.37833,-113.18263,-112.86985,-113.48973,-113.99141,-109.327,-110.27252,-111.60056,-111.35475,-111.32638,-109.85071,-110.74599,-110.69175,-113.66787,-114.29353,-113.39991,-113.94486,-112.04613,-109.64869,-110.10429,-111.675,-110.36857,-110.1091,-112.964],[10,5,13.15789473684211,10.30927835051546,9,9.25925925925926,11.57142857142857,18.18181818181818,13.6986301369863,12.04819277108434,9.25925925925926,9.708737864077673,13.33333333333333,23.80952380952381,12.98701298701299,12.65822784810126,12.34567901234568,13.6986301369863,11.95121951219512,15.38461538461539,10.62295081967213,6.097560975609756,9.999999999999998,12.85714285714286,10.86956521739131,13.88888888888889,12.30769230769231,10.75268817204301,9.27536231884058,15.28301886792453,14.28571428571429,9,12.82051282051282,8,14,15.87301587301588,10.66666666666667,10,15.88235294117647],null,null,{"interactive":true,"className":"","stroke":true,"color":"red","weight":5,"opacity":0.5,"fill":true,"fillColor":"red","fillOpacity":0.6},null,null,["101","102","12","153","156","157","159","160","161","162","163","164","165","166","168","169","171","173","175","177","32","48","51","58","64","73","75","77","84","88","89","9","93","98","Aqu","Const","ESan","Mat","SFr"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[23.0757,29.32541],"lng":[-114.29353,-109.12633]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-40b6f07e8807749623ed" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-40b6f07e8807749623ed">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[27.90509,26.38014,27.18232,24.13389,24.0438,24.0195,27.52944,27.40498,27.0367,27.2028,24.2115,24.74642,26.24905,25.91409,25.55757,26.20876,28.22308,28.40846,28.72796,28.66056,26.63783,24.21441,25.34819,26.0155,25.60521,24.00789,24.58843,24.87611,28.96651,29.32541,28.03661,29.01457,26.94589,23.0757,23.2855,25.0247,24.45879,23.08984,27.3632],[-110.57436,-109.12633,-112.66552,-110.46236,-109.989,-110.096,-113.31609,-112.52959,-112.986,-112.408,-110.951,-111.5441,-112.40948,-112.08062,-111.21563,-111.37833,-113.18263,-112.86985,-113.48973,-113.99141,-109.327,-110.27252,-111.60056,-111.35475,-111.32638,-109.85071,-110.74599,-110.69175,-113.66787,-114.29353,-113.39991,-113.94486,-112.04613,-109.64869,-110.10429,-111.675,-110.36857,-110.1091,-112.964],[10,5,13.15789473684211,10.30927835051546,9,9.25925925925926,11.57142857142857,18.18181818181818,13.6986301369863,12.04819277108434,9.25925925925926,9.708737864077673,13.33333333333333,23.80952380952381,12.98701298701299,12.65822784810126,12.34567901234568,13.6986301369863,11.95121951219512,15.38461538461539,10.62295081967213,6.097560975609756,9.999999999999998,12.85714285714286,10.86956521739131,13.88888888888889,12.30769230769231,10.75268817204301,9.27536231884058,15.28301886792453,14.28571428571429,9,12.82051282051282,8,14,15.87301587301588,10.66666666666667,10,15.88235294117647],null,null,{"interactive":true,"className":"","stroke":true,"color":"red","weight":5,"opacity":0.5,"fill":true,"fillColor":"red","fillOpacity":0.6},null,null,["101","102","12","153","156","157","159","160","161","162","163","164","165","166","168","169","171","173","175","177","32","48","51","58","64","73","75","77","84","88","89","9","93","98","Aqu","Const","ESan","Mat","SFr"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[23.0757,29.32541],"lng":[-114.29353,-109.12633]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 
