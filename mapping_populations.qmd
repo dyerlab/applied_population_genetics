@@ -2,44 +2,43 @@
 
 <div class="chapter_image"><img src="chapter_images/ch_lake.jpg"></div>
 
-Almost every data set we will work on has a spatial context.  Until relatively recently, this was largely ignored and at most given as a 2-dimensional projection of sampling locations on a black and white map in our manuscripts.  Here we explore methodologies to provide more intuitive approaches for plotting the spatial location of our sampling sites.
+Almost every data set we will work on has a spatial context. Until relatively recently, this was largely ignored and at most given as a 2-dimensional projection of sampling locations on a black and white map in our manuscripts. Here we explore methodologies to provide more intuitive approaches for plotting the spatial location of our sampling sites.
 
 ## Procedure
 
 First, we need to load in the proper libraries. Each of the libraries are needed for:
 
- - **gstudio** - Contains the *A. attenuatus* data set and there are built-in routines that allow you to plot populations in various formats or export the data in a format for plotting in other systems (e.g., GoogleEarth, ArcGIS, etc).
- - **ggmap** - Allows the plotting of tiles from a googleMap.
- - **leaflet** - Loads in the javascript leaflet library and allows the interactive visualization.
-
-
+ - **gstudio** - Contains the *A. attenuatus* data set and there are built-in routines that allow you to extract coordinates.
+ - **leaflet** - Loads in the JavaScript leaflet library and allows the interactive visualization of spatial data on top of maps.
 
 ## Plotting Population Locations
 
-We will start by loading in the default data set for `gstudio` and using methods in that package for producing spatial plots.
+We will start by loading in the default data set for `gstudio` and extracting the coordinates of our populations.
 
 ```{r}
-
 # load in the libraries and grab the data
 library(gstudio)
 data(arapat)
 
-# pull out the coordinates - Population is the default stratums
+# pull out the coordinates - Population is the default stratum
 coords <- strata_coordinates(arapat)
 coords$Stratum <- as.character( coords$Stratum )
 coords[1:5,]
-
-
 ```
 
+We can easily turn this coordinate dataset into an interactive map using the **`leaflet`** package.
 
-
-We can extend this basic plotting by adding text to the plots indicating the population names (here I offset the coordinates by 0.1 & 0.12 degrees—a cheap trick but it works pretty well here).
-
+```{r}
+library(leaflet)
+coords |>
+  leaflet() |>
+  addTiles() |>
+  addMarkers( ~Longitude, ~Latitude, popup = ~Stratum)
+```
 
 ## Population Allele Frequencies
 
-It is also possible to plot the data in a spatial context.  Here is an example of how to mix `ggplot()` and `ggmap()` data and I'll plot the locations as proportional in size to the allele frequency.
+It is also possible to plot the data in a spatial context where the size of our markers represents some biological property, like allele frequencies or genetic diversity. Here, we'll plot the locations with circle sizes proportional to the allele frequency of the `LTRS` locus or the effective allele size.
 
 ```{r}
 # Break out allele frequencies for LTRS by population 
@@ -52,14 +51,15 @@ f <- f[ f$Allele=="01",]
 f[1:10,]
 ```
 
-and then use those frequencies as image size.
+Now we merge these frequencies into our coordinates:
 
 ```{r}
-# merget the frequencies into the coordinate data.frame
+# merge the frequencies into the coordinate data.frame
 coords <- merge( coords, f[,c(1,4)])
+coords[1:5,]
 ```
 
-or for observed effective allele size
+We can also extract the effective allele size (`Ae`) and merge it:
 
 ```{r}
 # grab effect for LTRS locus
@@ -68,41 +68,22 @@ ae <- ae[ ae$Locus=="LTRS",]
 
 # merge in the data
 coords <- merge( coords, ae[,c(1,3)])
+coords[1:5,]
 ```
 
-There is also the option to make use of some pie charts.  I know, pie charts suck and any statistician will tell you that they should probably not be used because they can be misleading, but here they are.  For exploratory data analysis, they can be very insightful at times.  Here is the frequency of alleles at the *enolase* locus in *Araptus*.  Any spatial structuring catch your eye?
-
-
-```{r}
-#| fig-width: 7
-#| fig-height: 7
-#| eval: false
-# pies_on_map( arapat, stratum="Population", locus="EN")
-```
-
-Which will open a new browser window and produce a graph like the one below.
-
-<iframe width="640" height="480" src="media/pies_on_map.html" frameborder="0" allowfullscreen></iframe>
-
-Note the messages about the approximation.  This is because the google maps API has an integer for zoom factor and at times it is not able to get all the points into the field of view using an integer zoom.  If this happens to you, you can manually specify the *zoom* as an optional argument to either function `pies_on_map()` or `population_map()`.  You also need to be careful with the `pies_on_map()` function because the way it works is that the background tile is plotted and then I plot the pies ontop of it.  If you reshape your plot window outside equal x- and y- coordinates (e.g., make it a non-square figure), the spatial location of the pie charts will move!  This is a very frustrating thing but it has to do with the way viewports are overlain onto graphical objects in R and I have absolutely **no** control over it.  So, the best option is to make the plot square, export it as PNG or TIFF or whaterver, then crop as necessary.
-
-
-## Dynamic maps
-
-We can also produce dynamic maps for viewing in html output (like ebooks or webpages).  Here I produce a leaflet map and then add markers on to the file using coordinates and put the clicked popup as the population name.  This is an *interactive* map, you can zoom in, etc.
+We can now plot our coordinates interactively, with circle sizes scaled by the frequency of allele `01` or the effective allele size (`Ae`).
 
 ```{r}
-library(leaflet)
 coords |>
   leaflet() |>
   addTiles() |>
-  addMarkers( ~Longitude, ~Latitude, popup = ~Stratum)
-
+  addCircleMarkers( ~Longitude, ~Latitude, popup = ~Stratum, radius = ~Frequency * 15, color = "blue", fillOpacity = 0.6)
 ```
 
 
-You can change the underlying base map by passing on other Tiles to the construction.  A list of available tile providers can be found [here](http://leaflet-extras.github.io/leaflet-providers/preview/index.html).
+## Customizing Basemaps
 
+You can change the underlying base map by passing on other Tiles to the construction. A list of available tile providers can be found [here](http://leaflet-extras.github.io/leaflet-providers/preview/index.html).
 
 ```{r}
 coords |>
@@ -111,7 +92,7 @@ coords |>
   addMarkers( ~Longitude, ~Latitude, popup=~Stratum )
 ```
 
-Or you can add custom images for the map relative to some meaningful information.
+Or you can use dark-themed tiles and add custom-sized points scaled to represent effective allele size:
 
 ```{r}
 coords$Size <- log(coords$Ae) * 10 + 1
@@ -122,7 +103,9 @@ coords |>
 ```
 
 
-In the information that pops out of the marker, you can put a bit more information that may be helpful. Here I estimate some diversity measures (H<sub>O</sub>, H<sub>E</sub>, and A<sub>E</sub>).
+## Adding Detailed Metadata Popups
+
+In the information that pops out of the marker, you can embed a HTML table that contains richer detailed data, such as several diversity measures ($H_O$, $H_E$, and $A_E$).
 
 ```{r}
 x <- genetic_diversity(arapat,stratum = "Population",mode="Ho")
@@ -131,12 +114,9 @@ coords <- merge( coords, x[,c(1,3)])
 x <- genetic_diversity(arapat,stratum = "Population",mode="He")
 x <- x[ x$Locus == "LTRS",]
 coords <- merge( coords, x[,c(1,3)])
-x <- genetic_diversity(arapat,stratum = "Population",mode="Ae")
-x <- x[ x$Locus == "LTRS",]
-coords <- merge( coords, x[,c(1,3)])
 ```
 
-Make these data into a table format in html (OK it is a bit ugly but it is reasonable.) 
+Let's make these data into a table format in HTML:
 
 ```{r}
 coords$label <- paste("<h2>",coords$Stratum,"</h2><table><tr><th>Parameter</th><th>Value</th></tr><tr><td>H<sub>O</sub></td><td>", format(coords$Ho,digits = 3),"</td></tr><tr><td>H<sub>E</sub></td><td>",format(coords$He, digits=3), "</td></tr><tr><td>A<sub>E</sub></td><td>",format(coords$Ae,digits=3),"</td></tr></table>",sep="")
@@ -151,9 +131,7 @@ coords |>
 
 ### Sankey Networks
 
-A Sankey Diagram is a kind of flow diagram used to indicate allocation of one set of object into two other sets.  This is a complicated set of interactions to display.  In the following example, I'll use the populations from the *A. attenuata* data set and then map each individual onto its STRUCTURE cluster and mtDNA clade.  This plot needs a `data.frame` for nodes and one for edges created in a particular way.
-
-
+A Sankey Diagram is a kind of flow diagram used to indicate allocation of one set of objects into two other sets. This is a complicated set of interactions to display. In the following example, I'll use the populations from the *A. attenuatus* data set and then map each individual onto its STRUCTURE cluster and mtDNA clade. This plot needs a `data.frame` for nodes and one for edges created in a particular way.
 
 ```{r}
 library(networkD3)
@@ -186,16 +164,13 @@ nameIndex <- function(vals,names){
   return(ret)
 }
 
-
-
 sankey.edges <- rbind( get_sets(arapat$Species,arapat$Population),
                        get_sets(arapat$Population, arapat$Cluster) )
 sankey.edges$targetNum <- nameIndex(sankey.edges$target, sankey.nodes$name)
 sankey.edges$sourceNum <- nameIndex(sankey.edges$source, sankey.nodes$name)
 ```
 
-
-What it does produce is a very cool and dynamic plot.  The colored boxes represeent the groups--Species & STRUCTURE Cluster on the outside, population on the inside.  Connecting lines indicate individuals who are in each of these partially overlapping groups. For example, if you grab the population *Mat*, you will see it has samples in it who are identified as either mtDNA type *Peninsual* or *Cape* as well as belonging to STRUCTURE groups *CBP-C* and *SCBP-A*.  If you have difficult data such as these, this kind of plot may be very helpful.
+What it does produce is a very cool and dynamic plot. The colored boxes represent the groups--Species & STRUCTURE Cluster on the outside, population on the inside. Connecting lines indicate individuals who are in each of these partially overlapping groups. For example, if you grab the population *Mat*, you will see it has samples in it who are identified as either mtDNA type *Peninsula* or *Cape* as well as belonging to STRUCTURE groups *CBP-C* and *SCBP-A*. If you have difficult data such as these, this kind of plot may be very helpful.
 
 ```{r}
 sankeyNetwork( Links=sankey.edges, Nodes=sankey.nodes,
@@ -203,10 +178,3 @@ sankeyNetwork( Links=sankey.edges, Nodes=sankey.nodes,
                Value = "value", NodeID = "name",
                width = 700, fontSize = 12, nodeWidth = 30)
 ```
-
-
-
-
-
-
-

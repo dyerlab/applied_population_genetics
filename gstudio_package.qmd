@@ -323,15 +323,15 @@ Here the `dim()` function returns the dimension of the data.frame in each clade,
 
 ### Plotting Populations
 
-One of the key benefits to using an analysis environment such as R is that you can mash together functionality that you just can't get from a monolithic program.  An example of this is plotting populations.  If your data has spatial coordinates in them then you can use this to plot the location of your sites on a GoogleMap tile.  By default, you *must* have your coordinates in decimal degree format, with west and south as **negative** decimals.  This is the default for the GoogleMaps API.  Moreover, if you name the columns of data "Longitude" and "Latitude" much of the spatial functionality in **gstudio** will be more transparent (if not, you have to specify the Longitude and Latitude names each time you use a function that needs them).
+One of the key benefits to using an analysis environment such as R is that you can mash together functionality that you just can't get from a monolithic program.  An example of this is plotting populations.  If your data has spatial coordinates in them then you can use this to plot the location of your sites on an interactive map using `leaflet`.  By default, you *must* have your coordinates in decimal degree format, with west and south as **negative** decimals.  Moreover, if you name the columns of data "Longitude" and "Latitude" much of the spatial functionality in **gstudio** will be more transparent (if not, you have to specify the Longitude and Latitude names each time you use a function that needs them).
 
 ```{r}
-library(ggplot2)
-library(ggrepel)
-library(ggmap)
+library(leaflet)
 coords <- strata_coordinates( arapat )
-map <- population_map(coords)
-ggmap(map) + geom_point(aes(x=Longitude,y=Latitude), data=coords, size=2) + geom_label_repel(aes(x=Longitude,y=Latitude,label=Stratum),data=coords) + xlab("Longitude") + ylab("Latitude")
+coords |>
+  leaflet() |>
+  addTiles() |>
+  addMarkers(~Longitude, ~Latitude, popup=~Stratum)
 ```
 
 
@@ -461,28 +461,15 @@ I think this leads to some interesting questions about the relationship between 
 
 ### Spatial Frequency Plots
 
-It is also possible to plot the data in a spatial context.  Here is an example of how to mix `ggplot()` and `ggmap()` data and I'll plot the locations as proportional in size to the allele frequency.
+It is also possible to plot the data in a spatial context.  Here is an example of how to use `leaflet` to plot the locations as proportional in size to the allele frequency.
 
 ```{r}
-map <- population_map(baja)
-ggmap( map ) + geom_point( aes(x=Longitude, y=Latitude, size=Frequency), data=df)
+library(leaflet)
+df |>
+  leaflet() |>
+  addTiles() |>
+  addCircleMarkers( ~Longitude, ~Latitude, popup=~Stratum, radius=~Frequency*15, color="red", fillOpacity=0.6)
 ```
-
-There is also the option to make use of some pie charts.  I know, pie charts suck and any statistician will tell you that they should probably not be used because they can be misleading, but here they are.  For exploratory data analysis, they can be very insightful at times.  Here is the frequency of alleles at the *enolase* locus in *Araptus*.  Any spatial structuring catch your eye?
-
-
-```{r}
-#| fig-width: 7
-#| fig-height: 7
-#| eval: false
-pies_on_map( arapat, stratum="Population", locus="EN")
-```
-
-Which will open a new browser window and produce a graph like the one below.
-
-<iframe width="640" height="480" src="media/pies_on_map.html" frameborder="0" allowfullscreen></iframe>
-
-Note the messages about the approximation.  This is because the google maps API has an integer for zoom factor and at times it is not able to get all the points into the field of view using an integer zoom.  If this happens to you, you can manually specify the *zoom* as an optional argument to either function `pies_on_map()` or `population_map()`.  You also need to be careful with the `pies_on_map()` function because the way it works is that the background tile is plotted and then I plot the pies ontop of it.  If you reshape your plot window outside equal x- and y- coordinates (e.g., make it a non-square figure), the spatial location of the pie charts will move!  This is a very frustrating thing but it has to do with the way viewports are overlain onto graphical objects in R and I have absolutely **no** control over it.  So, the best option is to make the plot square, export it as PNG or TIFF or whaterver, then crop as necessary.
 
 
 ## Multivariate Analogs for Loci

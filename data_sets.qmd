@@ -18,17 +18,15 @@ knitr::include_graphics("media/araptus.png")
 ```{r}
 #| label: fig-arapat-map
 #| fig-cap: "Sampling locales for the `arapat` data set."
-#| eval: false
-library(ggplot2)
-library(ggmap)
+library(leaflet)
 library(gstudio)
-library(ggrepel)
 data(arapat)
 coords <- strata_coordinates(arapat)
-map <- population_map(coords)
-ggmap(map) + geom_point(aes(x=Longitude,y=Latitude), data=coords) + xlab("Longitude") + ylab("Latitude") + geom_text_repel(aes(x=Longitude, y=Latitude, label=Stratum), data=coords)
+coords |>
+  leaflet() |>
+  addTiles() |>
+  addMarkers(~Longitude, ~Latitude, popup=~Stratum)
 ```
-
 
 
 ### Nuclear Markers

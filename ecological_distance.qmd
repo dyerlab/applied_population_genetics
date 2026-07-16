@@ -35,16 +35,16 @@ As a demonstration of how we do the actual calculations in `R`, we will start wi
 3. The population `165` is located in a place that the WorldClim rasters do not record land.  The rasters used have a resolution of 30-arc seconds (~1km) and this population is located at a place where that granularity of that grid does not recognize land.
 
 ```{r}
-#| eval: false 
+#| fig-cap: "Sampling locales filtered for ecological distance analyses."
+library(leaflet)
 library(gstudio)
-library(ggrepel)
-library(ggmap)
 data(arapat)
 data <- arapat[ !(arapat$Population %in% c("101","102","32","ESan","165")) , ]
 coords <- strata_coordinates( data )
-map <- population_map(coords, zoom=7)
-ggmap( map ) + geom_point( aes(x=Longitude,y=Latitude),data=coords) + 
-  geom_text_repel( aes(x=Longitude,y=Latitude,label=Stratum), data=coords)
+coords |>
+  leaflet() |>
+  addTiles() |>
+  addMarkers(~Longitude, ~Latitude, popup=~Stratum)
 ```
 
 To start with, I will use the elevation raster and modifications thereof.  The ultimate goal here is to estimate ecological separation using a variety of algorithms and as such we need to minimize the size of the background raster as much as possible.  In the code below, I take the elevation raster and create the convex hull around the population locations with a smallish buffer around the points so that the outermost populations will not be on the very edge of the data. I further constrain this raster by cutting regions within which we have no evidence that the target species exist, in this case we have almost no records of it occurring above 700m.
