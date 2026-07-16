@@ -122,9 +122,9 @@ There are a lot of ways to project a 3-dimensional surface onto a 2-dimensional 
 When working with rasters, we can reproject these onto other projections rather easily.  Here is an example from the worldclim elevation tile we used previously (see \@ref(cropping-rasters)).
 
 ```{r}
-library(raster)
-alt <- raster("./spatial_data/alt.tif")
-e <- extent( c(-115,-109,22,30) )
+library(terra)
+alt <- rast("./spatial_data/alt.tif")
+e <- ext( c(-115,-109,22,30) )
 baja_california <- crop( alt, e )
 baja_california
 ```
@@ -132,17 +132,13 @@ baja_california
 We can now project it to another projection, lets say Lambert Conic Conformal.
 
 ```{r}
-#| eval: false 
-library(rgdal)
-projection(baja_california)
-baja_lcc <- projectRaster( baja_california, crs="+proj=lcc +lat_1=48 +lat_2=33 +lon_0=-100 +ellps=WGS84")
+baja_lcc <- project( baja_california, "+proj=lcc +lat_1=48 +lat_2=33 +lon_0=-100 +ellps=WGS84")
 baja_lcc
 ```
 
 These two projections influence the region as shown below.
 
 ```{r}
-#| eval: false 
 par(mfrow=c(1,2))
 plot(baja_california, legend=FALSE, xlab="Longitude",ylab="Latitude")
 plot(baja_lcc, legend=FALSE )
@@ -189,36 +185,34 @@ Geographic coordinate systems use longitude and latitude.  For historical purpos
 
 It is best to use a system that is designed for your kind of work.  Do not, for example, use a state plane system outside of that state as you have bias associated with the distance away from the origin.  That said, Longitude/Latitude (decimal degrees) and UTM systems are probably the easiest to work with in R.  
 
-In R, we use rgdal to project points.  Here I load in the coordinates of the populations in the *Arapatus attenuatus* data set and make a *SpatialPoints* object out of it.  Setting the `proj4string()` here **does not** project the data, I am just specifying that the data are already in the lat/long WGS84 format.
+In R, we use the **sf** package to project points. Here I load in the coordinates of the populations in the *Arapatus attenuatus* data set and make a spatial simple features (`sf`) object out of it. We specify that the coordinates are currently in decimal degrees (longitude/latitude) using the standard WGS84 CRS (EPSG: `4326`).
 
 ```{r}
-library(sp)
+library(sf)
 library(gstudio)
 data(arapat)
 coords <- strata_coordinates( arapat )
-pts <- SpatialPoints( coords[,2:3] )
-proj4string(pts) <- CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
+pts <- st_as_sf(coords, coords = c("Longitude", "Latitude"), crs = 4326)
 pts
 ```
 
-The `CRS()` function holds the definition of the projection and interfaces between the PROJ.4 and RGDAL libraries.  To project a set of data points into a new coordinate systems, we use `spTransform()` and pass it the definition of the new system to use.
+To project a set of spatial points into a new coordinate reference system, we use `st_transform()` and pass it the definition of the new system or its EPSG code.
 
 ### Changing Datum
 
-We will first begin by looking at differences in the actual datum used to record the loation of plots.  Here I compare the decimal Longitude/Latitude we've used thus far with that from the Universal Transverse Mercator ([UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)).
+We will first begin by looking at differences in the actual datum used to record the location of plots. Here I compare the decimal Longitude/Latitude we've used thus far with that from the Universal Transverse Mercator ([UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)), specifically UTM Zone 12N (which covers Baja California).
 
 ```{r}
-pts.utm <- spTransform(pts, CRS("+proj=utm +zone=12 +datum=WGS84"))
+pts.utm <- st_transform(pts, crs = 32612)
 summary( pts.utm )
 ```
 
-You can see the tranformations in the coordinate system by comparing the plots below.  The relative position of each point is the same.
+You can see the transformations in the coordinate system by comparing the plots below. The relative position of each point is the same, but the axis values and orientations reflect the change from degrees (WGS84) to meters (UTM Zone 12N).
 
 ```{r}
-#| eval: true
 par(mfcol=c(1,2))
-plot( pts, axes=TRUE, xlab="Longitude", ylab="Latitude" )
-plot( pts.utm, axes=TRUE, xlab="Easting",ylab="Northing" )
+plot( st_geometry(pts), axes=TRUE, xlab="Longitude", ylab="Latitude" )
+plot( st_geometry(pts.utm), axes=TRUE, xlab="Easting", ylab="Northing" )
 par(mfcol=c(1,1))
 ```
 

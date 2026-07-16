@@ -29,6 +29,7 @@ There are two ways to create a population graph:
 library(gstudio)
 library(igraph)
 library(ggplot2)
+library(sf)
 ```
 
 
@@ -319,12 +320,12 @@ plot(alt)
 
 Since it is a **raster** object, it knows how to plot itself relatively well.  There are a ton of good references for showing you how to play with raster data (e.g., Bivand *et al.* 2008)
 
-To plot our graph onto this topology, we export the spatial components of the graph into objects that interact with rasters.  The packages provides simple extraction of features into `SpatialLines` and `SpatialPoints` objects.
+To plot our graph onto this topology, we export the spatial components of the graph into objects that interact with rasters.  The packages provides simple extraction of features into `sf` objects.
 
 ```{r}
-lopho.nodes <- to_SpatialPoints(lopho)
+lopho.nodes <- to_sf(lopho, what="nodes")
 lopho.nodes
-lopho.edges <- to_SpatialLines(lopho)
+lopho.edges <- to_sf(lopho, what="edges")
 head(lopho.edges)
 ```
 
@@ -333,9 +334,9 @@ Once we have them extracted into the right format, we can add them to the raster
 ```{r}
 #| fig-width: 8
 plot( alt )
-plot( lopho.edges, add=TRUE, col="#555555" )
-plot( lopho.nodes, add=TRUE, col="black", cex=1.5 )
-plot( lopho.nodes, add=TRUE, col=V(lopho)$color, pch=16, cex=1.5 )
+plot( st_geometry(lopho.edges), add=TRUE, col="#555555" )
+plot( st_geometry(lopho.nodes), add=TRUE, col="black", cex=1.5 )
+plot( st_geometry(lopho.nodes), add=TRUE, col=V(lopho)$color, pch=16, cex=1.5 )
 ```
 
 
@@ -491,8 +492,8 @@ If you have more than one topology and the node sets overlap sufficiently, you c
 ```{r}
 data(upiga)
 upiga <- decorate_graph(upiga,baja,stratum="Population")
-upiga.nodes <- to_SpatialPoints(upiga)
-upiga.edges <- to_SpatialLines(upiga)
+upiga.nodes <- to_sf(upiga, what="nodes")
+upiga.edges <- to_sf(upiga, what="edges")
 ```
 
 These two data sets were 'mostly' collected in the same physical locations.  Here is a comparison of the two topologies.
@@ -515,11 +516,11 @@ We can then take the congruence graph and plot it or work with it in the normal 
 
 ```{r}
 cong <- decorate_graph( cong, baja )
-cong.nodes <- to_SpatialPoints(cong)
-cong.edges <- to_SpatialLines(cong)
+cong.nodes <- to_sf(cong, what="nodes")
+cong.edges <- to_sf(cong, what="edges")
 plot(alt)
-plot(cong.edges,add=T)
-plot(cong.nodes,add=T, pch=16, col="red")
+plot(st_geometry(cong.edges),add=T)
+plot(st_geometry(cong.nodes),add=T, pch=16, col="red")
 ```
 
 
