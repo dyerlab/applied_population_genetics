@@ -11,53 +11,63 @@ book:
 
   chapters:
     - index.qmd
-    - r_ecosystem.qmd
-    - datatypes.qmd
-    - r_containers.qmd
-    - r_programming.qmd
-    - graphics.qmd
-    - reproducable_research.qmd
-    - part_single_population.qmd
-    - hardy_weinberg_equilibrium.qmd
-    - genetic_drift.qmd
-    - effective_population_size.qmd
-    - mutation.qmd
-    - part_nonrandom_mating.qmd
-    - selfing.qmd
-    - mixed_mating.qmd
-    - wahlund_effects.qmd
-    - part_parent_offspring.qmd
-    - pedigrees.qmd
-    - parentage.qmd
-    - part_subdivided_populations.qmd
-    - mapping_populations.qmd
-    - population_models.qmd
-    - genetic_diversity.qmd
-    - rarefaction.qmd
-    - genetic_distance.qmd
-    - genetic_structure.qmd
-    - population_assignment.qmd
-    - admixture.qmd
-    - part_statistical_models.qmd
-    - ordination.qmd
-    - distance_matrices.qmd
-    - linear_models.qmd
-    - distance_networks.qmd
-    - population_graphs.qmd
-    - interactive_visualization.qmd
-    - part_spatial_data.qmd
-    - vector_data.qmd
-    - raster_data.qmd
-    - projections.qmd
-    - ecological_distance.qmd
-    - niche_modeling.qmd
-    - eigenmaps.qmd
-    - part_selection.qmd
-    - selection.qmd
-    - part_backmatter.qmd
-    - references.qmd
-    - data_sets.qmd
-    - about_the_author.qmd
+    - part: part_r_ecosystem.qmd
+      chapters:
+        - r_ecosystem.qmd
+        - datatypes.qmd
+        - r_containers.qmd
+        - r_programming.qmd
+        - graphics.qmd
+        - reproducable_research.qmd
+    - part: part_single_population.qmd
+      chapters:
+        - hardy_weinberg_equilibrium.qmd
+        - genetic_drift.qmd
+        - effective_population_size.qmd
+        - mutation.qmd
+    - part: part_nonrandom_mating.qmd
+      chapters:
+        - selfing.qmd
+        - mixed_mating.qmd
+        - wahlund_effects.qmd
+    - part: part_parent_offspring.qmd
+      chapters:
+        - pedigrees.qmd
+        - parentage.qmd
+    - part: part_subdivided_populations.qmd
+      chapters:
+        - mapping_populations.qmd
+        - population_models.qmd
+        - genetic_diversity.qmd
+        - rarefaction.qmd
+        - genetic_distance.qmd
+        - genetic_structure.qmd
+        - population_assignment.qmd
+        - admixture.qmd
+    - part: part_statistical_models.qmd
+      chapters:
+        - ordination.qmd
+        - distance_matrices.qmd
+        - linear_models.qmd
+        - distance_networks.qmd
+        - population_graphs.qmd
+        - interactive_visualization.qmd
+    - part: part_spatial_data.qmd
+      chapters:
+        - vector_data.qmd
+        - raster_data.qmd
+        - projections.qmd
+        - ecological_distance.qmd
+        - niche_modeling.qmd
+        - eigenmaps.qmd
+    - part: part_selection.qmd
+      chapters:
+        - selection.qmd
+    - part: part_backmatter.qmd
+      chapters:
+        - references.qmd
+        - data_sets.qmd
+        - about_the_author.qmd
 
 bibliography: packages.bib
 

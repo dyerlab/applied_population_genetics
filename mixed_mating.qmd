@@ -1,4 +1,4 @@
-# Mixed Mating Systems  {.imageChapter}
+# Mixed Mating Systems  {#sec-mixed-mating-systems .imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_solanum.jpg"></div>
 

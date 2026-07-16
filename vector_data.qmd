@@ -1,4 +1,4 @@
-# Vector Data  {.imageChapter}
+# Vector Data  {#sec-vector-data .imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_newt2.jpg"></div>
 

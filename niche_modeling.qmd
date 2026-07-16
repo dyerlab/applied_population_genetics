@@ -1,4 +1,7 @@
-# Niche Modeling {.imageChapter}
+# Niche Modeling {#sec-niche-modeling .imageChapter}
+
+<!-- TODO: this chapter fails to render in the current environment -- `library(rJava)` errors with "JVM could not be found". Needs a working Java install (and likely a look at whether rJava/dismo/MaxEnt is still the right toolchain) before this chapter builds cleanly. -->
+
 
 <div class="chapter_image"><img src="chapter_images/ch_bird.jpg"></div>
 
@@ -28,7 +31,7 @@ library(dismo)
 
 Now we can get to work.  In this example, I'll use biolayers found to be informative for the distribution of *Euphorbia lomelii* (Euphrobiaceae), the host plant for *Arapatus attenuatus* that we collected from both observations and all available herbarium specimen records that had sufficient spatial specificity.
 
-I load these in using the `rast()` function from the modern **`terra`** library.  These rasters have already been cropped to the extent enclosing all the arapat populations (as in \@ref(cropping-rasters)).  I have these stored in a subdirectory called 'spatial_data' and load them in as a multi-layer `SpatRaster` object.
+I load these in using the `rast()` function from the modern **`terra`** library.  These rasters have already been cropped to the extent enclosing all the arapat populations (as in @sec-cropping-rasters).  I have these stored in a subdirectory called 'spatial_data' and load them in as a multi-layer `SpatRaster` object.
 
 ```{r}
 library(terra)

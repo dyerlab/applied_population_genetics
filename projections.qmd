@@ -1,4 +1,4 @@
-# Map Projections {.imageChapter}
+# Map Projections {#sec-map-projections .imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_butterfly2.jpg"></div>
 
@@ -119,7 +119,7 @@ There are a lot of ways to project a 3-dimensional surface onto a 2-dimensional 
 
 ### Reprojecting Rasters
 
-When working with rasters, we can reproject these onto other projections rather easily.  Here is an example from the worldclim elevation tile we used previously (see \@ref(cropping-rasters)).
+When working with rasters, we can reproject these onto other projections rather easily.  Here is an example from the worldclim elevation tile we used previously (see @sec-cropping-rasters).
 
 ```{r}
 library(terra)

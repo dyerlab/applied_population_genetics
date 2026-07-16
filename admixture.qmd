@@ -1,11 +1,11 @@
-# Admixture {.imageChapter}
+# Admixture {#sec-admixture .imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_palm.jpg"></div>
 
-Admixture is the mixing of two or more populations whose frequency spectra may differ.  If they differ considerably, then the admixed population may be easily examined to determine relative contributions of each population.  In a previous chapter, we covered a phenomenon called the Wahlund Effect (Chapter \@ref(wahlund-effects)).  In that situation, we inadvertently mixed two populations, both of which were in Hardy-Weinberg Equilibrium, creating a new synthetic population consisting of individuals from two functionally separate populations. If this synthetic group were to mix, their offspring would contain mixtures of chromosomes from both ancestral populations, as depicted in Figure \@ref(fig:admixture).
+Admixture is the mixing of two or more populations whose frequency spectra may differ.  If they differ considerably, then the admixed population may be easily examined to determine relative contributions of each population.  In a previous chapter, we covered a phenomenon called the Wahlund Effect (Chapter @sec-wahlund-effects).  In that situation, we inadvertently mixed two populations, both of which were in Hardy-Weinberg Equilibrium, creating a new synthetic population consisting of individuals from two functionally separate populations. If this synthetic group were to mix, their offspring would contain mixtures of chromosomes from both ancestral populations, as depicted in Figure @fig-admixture.
 
 ```{r}
-#| label: admixture
+#| label: fig-admixture
 #| fig-cap: "Hypothetical pedigree of an individual whose parents come from two separate populations.  Stretches of chromosome are depicted in differing colors to highlight parentage as well as demonstrate admixture in the offspring."
 knitr::include_graphics("media/Admixture.png")
 ```
@@ -99,10 +99,10 @@ ggplot(df, aes(x=K,y=Prob)) + geom_boxplot() + xlab("Number of Clusters (K)") + 
 
 The output shows that as we assume more clusters, the $log(P(Data))$ tends towards an asymptote.  There are a couple things to look at here for this output, and this is where the interpretive power of you the researcher needs to step in. The overall notion among many is that the way in which the probability of the data changes with an increasing number of clusters should be informative as to the 'correct' number of clusters found. This may or may not be true depending upon your data, your sampling, and the actual history of your organism. However, if it were true then the rationale suggests that when the probability of the data levels off, that may be a good place to look at other sources of inference to see if this may be supported as a plausible number of clusters. In the Figure, this looks like $K=4$ may be a good place to start.
 
-If I go back to STRUCTURE and plot examine the barplot of individuals from the $K=4$ data (setting "Group by PopID"), you see something like Figure \@ref(fig:structureByPop).
+If I go back to STRUCTURE and plot examine the barplot of individuals from the $K=4$ data (setting "Group by PopID"), you see something like Figure @fig-structure-by-pop.
 
 ```{r}
-#| label: structureByPop
+#| label: fig-structure-by-pop
 #| fig-cap: "STRUCTURE output for *Araptus attenuatus* for $K=4$ sorted by population."
 knitr::include_graphics("media/structure_by_pop.png")
 ```
@@ -121,7 +121,7 @@ Determining the proper $K$ is not a trivial thing.  From the output of estimates
 One way that is commonly used to get an idea of the magnitude of $K$ is by looking at how $P(X|Z,P,Q)$ changes with increasing values of $K$.  This is often referred to as the $\delta K$ approach.  There is an argument to be made that the best assignment of $K$ would be where there is a large change in $\delta K$ followed by a plateau.  This is interpretive and not a definite heuristic.
 
 ```{r}
-#| label: deltaK
+#| label: fig-delta-k
 #| fig-cap: "Estimates of $\\delta K$ for the STRUCTURE output run on *Araptus attenuatus*."
 mean.K <- as.numeric(by( df$Prob, df$K, mean))
 delta.K <- mean.K[2:5] - mean.K[1:4]
@@ -129,6 +129,6 @@ df <- data.frame( K=3:6, deltaK=delta.K)
 ggplot(df,aes(x=K,y=deltaK)) + geom_line() + geom_point() + xlab("Number of Clusters (K)") + ylab("Change in Ln Probability of the Data")
 ```
 
-What we see is that the largest value of $\delta K$ (Figure \@ref(fig:deltaK)) followed by a steep reduction is when $K=4$.  This may indicate to us that as it stands, the totality of the data contains four groups and we can map them back onto our data set and evaluate the biological support for these groupings.
+What we see is that the largest value of $\delta K$ (Figure @fig-delta-k) followed by a steep reduction is when $K=4$.  This may indicate to us that as it stands, the totality of the data contains four groups and we can map them back onto our data set and evaluate the biological support for these groupings.
 
 The arapat data set itself has a column in it for Cluster, which is derived from an approach such as this.  What we found is that the Cape & Mainland populations were definitely separated from the Peninsular ones.  However, when we examined only the peninsular populations, we found roughly three groups contained (nested) within that main group.  One of those groups was so prominent as to be able to be identified in this analysis causing $K=4$ instead of $K=3$ (Mainland, Cape, Peninsula).  However, the distinctness of the Cape and Mainland groups hid the further sub-structuring in the Peninsula populations.  This is an example of how you should perhaps not just grab the first result you get from any analysis, but make sure the totality of your analyses are considered before jumping to biological conclusions

@@ -1,4 +1,4 @@
-# Raster Data {.imageChapter}
+# Raster Data {#sec-raster-data .imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_jaguar.jpg"></div>
 
@@ -12,7 +12,7 @@ r <- matrix(runif(10000),nrow=100)
 rnd <- rast( r )
 ```
 
-which can be visualized using the normal plot command. The `terra` library has overridden several of the plotting functions and you can plot raster objects and decorate the images in the same way you do for normal plotting materials (\@ref(graphics)).
+which can be visualized using the normal plot command. The `terra` library has overridden several of the plotting functions and you can plot raster objects and decorate the images in the same way you do for normal plotting materials (@sec-graphics).
 
 ```{r}
 plot(rnd)
@@ -28,13 +28,14 @@ These data are available free of charge and have been used in numerous biologica
 
 > Bioclimatic variables are derived from the monthly temperature and rainfall values in order to generate more biologically meaningful variables. These are often used in ecological niche modeling (e.g., BIOCLIM, GARP). The bioclimatic variables represent annual trends (e.g., mean annual temperature, annual precipitation) seasonality (e.g., annual range in temperature and precipitation) and extreme or limiting environmental factors (e.g., temperature of the coldest and warmest month, and precipitation of the wet and dry quarters).
 
-These layers are encoded into 19 Bio-layers as defined in Table \@ref(tab:bioclim). These layers are available for download from their site directly (I recommend using the tiles approach so you do not have to download the entire world map) as well as from the R package [dismo](https://cran.r-project.org/web/packages/dismo/index.html). 
+These layers are encoded into 19 Bio-layers as defined in @tbl-bioclim. These layers are available for download from their site directly (I recommend using the tiles approach so you do not have to download the entire world map) as well as from the R package [dismo](https://cran.r-project.org/web/packages/dismo/index.html).
 
 ```{r}
-#| label: bioclim
+#| label: tbl-bioclim
+#| tbl-cap: "Key to the categories of bioclim variables derived from temperature and precipitation models for current (past and future) conditions. Rasters for these values (in GeoTiff and BIL formats) are available from http://worldclim.org."
 df <- data.frame( Layer=paste( rep("BIO",19), 1:19, sep=""))
 df$Description = c("Annual Mean Temperature", "Mean Diurnal Range (Mean of monthly (max temp - min temp))", "Isothermality (BIO2/BIO7 * 100)", "Temperature Seasonality (standard deviation * 100)", "Max Temperature of Warmest Month","Min Temperature of Coldest Month", "Temperature Annual Range (BIO5-BIO6)","Mean Temperature of Wettest Quarter","Mean Temperature of Driest Quarter","Mean Temperature of Warmest Quarter","Mean Temperature of Coldest Quarter","Annual Precipitation","Precipitation of Wettest Month","Precipitation of Driest Month","Precipitation Seasonality (Coefficient of Variation)","Precipitation of Wettest Quarter","Precipitation of Driest Quarter","Precipitation of Warmest Quarter","Precipitation of Coldest Quarter")
-knitr::kable( df, booktabs=TRUE, caption="Key to the categories of bioclim variables derived from temperature and precipitation models for current (past and future) conditions. Rasters for these values (in GeoTiff and BIL formats) are available from http://worldclim.org.", longtable=TRUE )
+knitr::kable( df, booktabs=TRUE, longtable=TRUE )
 ```
 
 For the purposes of this chapter, I'll use bioclim and altitude layers from tile 22, which encompasses the spatial distribution of sampling locations in Baja California for the *Araptus attenuatus* dataset.
@@ -53,7 +54,7 @@ The `alt` object is summarized here. A couple of things should be pointed out he
 - The resolution of each 'pixel' in this representation is 0.008, which is about 30-arc seconds or ~1km. That means that each location in the study area is represented by the same exact value as the surrounding square kilometer. Obviously, if you are working on processes whose spatial scale is relevant less than 1000 m^^2^^, this kind of data is going to be of little value to you. 
 - The values within the matrix range from -202 upwards to 5469. This is in meters.
 
-In addition, the raster has a spatial extent and a projection associated with it. For more information on projections see \@ref(map-projections).
+In addition, the raster has a spatial extent and a projection associated with it. For more information on projections see @sec-map-projections.
 
 ```{r}
 ext( alt )
@@ -67,7 +68,7 @@ plot( alt, xlab="Longitude", ylab="Latitude" )
 ```
 
 
-## Cropping Rasters
+## Cropping Rasters {#sec-cropping-rasters}
 
 Just because we have a large raster does not mean that it is in your best interest to use the entire object. Much of the spatial analyses routines used in population genetics require measurements of intervening distance, either Euclidean or ecological. Many of the routines for estimation of these distances require the estimation of pairwise distance between *all* pixels. For our purposes, the `arapat` dataset does not occur throughout most of this map, so it is in our best interests to use only the portion of the raster relevant to our data rather than the entire thing. 
 
@@ -88,7 +89,7 @@ baja <- shade( slope, aspect, angle=40, direction=270 )
 plot(baja, xlab="Longitude",ylab="Latitude", legend=FALSE, col=gray(0:100 / 100))
 ```
 
-Onto this map, we can plot our populations. For this, we convert the raw coordinates into a spatial simple features (`sf`) object (see \@ref(vector-data)) and then overlay onto the map using standard plotting methods.
+Onto this map, we can plot our populations. For this, we convert the raw coordinates into a spatial simple features (`sf`) object (see @sec-vector-data) and then overlay onto the map using standard plotting methods.
 
 ```{r}
 library(gstudio)

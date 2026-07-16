@@ -431,7 +431,7 @@ This function **requires** that you already have a plot available (it uses the `
 
 Several graph-theoretic approaches have been suggested in the literature, some of which are based upon statistical models (e.g., popgraphs in the next chapter) and some of which are less structured.
 
-A common approach has been to use a measure of pair-wise genetic distance, measured between individuals or strata.  In the following example, Nei's genetic distance (see Chapter \@ref(genetic-distance)) is used.
+A common approach has been to use a measure of pair-wise genetic distance, measured between individuals or strata.  In the following example, Nei's genetic distance (see Chapter @sec-genetic-distance) is used.
 
 ```{r}
  library(gstudio)

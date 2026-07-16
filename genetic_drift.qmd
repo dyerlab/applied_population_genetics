@@ -78,9 +78,9 @@ The binomial coefficient, $\frac{2N!}{N_A!(2N-N_A)!}$, that determines the numbe
 
 The probability, $p_A^{N_A}(1-p_A)^{2N-N_A}$, of observing any each occurrence of the those samples based upon the frequency of the $A$ allele, $p_A$, in the population.
 
-```{block, factorial-too-big, type='comment_warning'}
+::: {.comment_warning}
 Your ability to use the binomial expansion to solve this kind of problem relies upon the sample size, which becomes rather large rather quickly.  In fact, R cannot estimate the value over 171!
-```
+:::
 
 
 As an example, consider the idealized situation where we have $N=20$ individuals, all of which are heterozygotes.  That means that for a diploid locus, $N_A = N_B = 20$.  The probability of observing exactly 20 $A$ alleles in the next generation can be calculated as:

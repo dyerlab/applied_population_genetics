@@ -1,4 +1,4 @@
-# Genetic Distances {.imageChapter}
+# Genetic Distances {#sec-genetic-distance .imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_northbaja.jpg"></div>
 

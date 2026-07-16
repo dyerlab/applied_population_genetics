@@ -183,7 +183,7 @@ where the next generation level of autozygosity is made up of:
 - $\frac{1}{2N_e}$ is the likelihood that two alleles at a locus are autozygous this generation, and  
 - $\left( 1 - \frac{1}{2N_e} \right)F_t$ is the fraction of homozygous individuals in the previous generation that were autozygous.
 
-From this relationship, we see that $F$ increases most rapidly towards its eventual asymptote with smaller effective population sizes (see Chapter \@ref(effective-population-size)).
+From this relationship, we see that $F$ increases most rapidly towards its eventual asymptote with smaller effective population sizes (see Chapter @sec-effective-population-size).
 
 The presence of mutation in this model breaks up the symmetry by changing the state of alleles delivered to the next generation.  For diploid individuals, mutation can occur as depicted in the following table.
 

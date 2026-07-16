@@ -1,4 +1,4 @@
-# Graphics {.imageChapter}
+# Graphics {#sec-graphics .imageChapter}
 
 <div class="chapter_image"><img src="chapter_images/ch_fallleaves.jpg"></div>
 

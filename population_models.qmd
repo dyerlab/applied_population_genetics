@@ -67,7 +67,7 @@ The next most complex model is one where every population is exchanging migrants
 
 
 ```{r}
-#| label: nislandmodel
+#| label: fig-nislandmodel
 #| fig-cap: "An n-island model with three populations, each with its own allele frequencies, with a constant and symmetric migration rate ($m$)."
 knitr::include_graphics("media/Island_Model.png")
 ```
@@ -75,7 +75,7 @@ knitr::include_graphics("media/Island_Model.png")
 
 The stability of this system is quite high.  All populations are sharing migrants and as a consequence, all populations will thus converge on a unified allele frequency, one defined by the global average allele frequency, $\bar{p}$.  The length of time it takes to get to that equilibrium point is determined by how far away from the global mean the population is and the rate at which migrants are distributed.
 
-There are two ways to model this kind of system, one more simple than the other.  The simplest way is to consider that the migrants are a giant migrant pool and from that they are distributed to the populations.  For example, if $\bar{p}$ is the global average allele frequency, the migrant pool could be considered to also have this allele frequency.  If you believe this is a reasonable approximation, then the allele frequencies at the next generation, say for population $X$ in Figure \@ref(fig:nislandmodel), are:
+There are two ways to model this kind of system, one more simple than the other.  The simplest way is to consider that the migrants are a giant migrant pool and from that they are distributed to the populations.  For example, if $\bar{p}$ is the global average allele frequency, the migrant pool could be considered to also have this allele frequency.  If you believe this is a reasonable approximation, then the allele frequencies at the next generation, say for population $X$ in Figure @fig-nislandmodel, are:
 
 \[
 p_{x,t+1} = (1-m)p_{x,t} + m\bar{p}
