@@ -26,8 +26,9 @@ There are two ways to create a population graph:
 
 
 ```{r}
-library(popgraph)
+library(gstudio)
 library(igraph)
+library(ggplot2)
 ```
 
 
@@ -150,47 +151,40 @@ plot( g, layout=layout)
 
 ### Plotting a graph using **ggplot2** routines
 
-The **ggplot2** package provides a spectacular plotting environment in an intuitive context and there are now some functions to support the Population Graphs in this context.  
+We can plot networks and population graphs in the ggplot2 framework using the **ggraph** package, which provides a clean and modern set of network geoms like `geom_edge_link()` and `geom_node_point()`.
 
-If you haven't used **ggplot2** before, it may at first be a bit odd because it deviates from normal plotting  approaches where you just shove a bunch of arguments into a single plotting function.  In **ggplot**, you build a graphic in the same way you build a regression equation.  A regression equation has an intercept and potentially a bunch of independent terms.  This is exactly how **ggplot** builds plots, by adding togther components.
-
-To specifiy how things look in a plot, you need to specify an aesthetic using the `aes()` funciton.  Here is where you supply the variable names you use for coordinate, coloring, shape, etc.  For both of the `geom_*set` funcitons, these names **must** be attributes of either the node or edge sets in the graph itself.
-
-Here is an example using the *Lopohcereus* graph.  We begin by making a `ggplot()` object and then adding to it a `geom_` object.  The 5**popgraph** package comes with two funcitons, one for edges and one for nodes.  
+Here is an example using the *Lopohcereus* graph. We define a spatial layout using the manual coordinate options.
 
 ```{r}
-library(ggplot2)
-p <- ggplot() 
-p <- p + geom_edgeset( aes(x=Longitude,y=Latitude), lopho ) 
+library(ggraph)
+layout <- create_layout(lopho, layout="manual", x=as.numeric(V(lopho)$Longitude), y=as.numeric(V(lopho)$Latitude))
+p <- ggraph(layout) + geom_edge_link() 
 p
 ```
 
 I broke up the plotting into several lines to improve readability, it is not necessary to to this in practice though.  The addition of additional `geom_` objects to the plot will layer them on top (n.b., I also passed the *size=4* option to the plot as the default point size is a bit too small and this is how you could change that).
 
 ```{r}
-p <- p +  geom_nodeset( aes(x=Longitude, y=Latitude), lopho, size=4)
+p <- p + geom_node_point(size=4)
 p
 ```
 
-And then you can add additional options to the plot, like axis labels and a less exciting background theme (the `theme_empty()` provided by **popgraph** is actually transparent so you can save the image and throw it into a presentation as necessary).
+And then you can add additional options to the plot, like coloring nodes by region and sizing them by their internal degree/size.
 
 
 ```{r}
-p <- ggplot() + geom_edgeset( aes(x=Longitude,y=Latitude), lopho, color="darkgrey" )
-p <- p + geom_nodeset( aes(x=Longitude, y=Latitude, color=Region, size=size), lopho) 
-p <- p + xlab("Longitude") + ylab("Latitude") 
-p + theme_empty()
+p <- ggraph(layout) + geom_edge_link(color="darkgrey")
+p <- p + geom_node_point(aes(color=Region, size=as.numeric(size))) 
+p <- p + xlab("Longitude") + ylab("Latitude") + theme_minimal()
+p 
 ```
 
-You can also use the default layout routines in **igraph** for visualization.  Here is an example using Fruchterman-Reingold algorithm.
+You can also use the default layout routines in **igraph** for visualization.  Here is an example using the Fruchterman-Reingold algorithm, which calculates node layout purely based on network structure without requiring geographic coordinates.
 
 ```{r}
-c <- layout.fruchterman.reingold( lopho )
-V(lopho)$x <- c[,1]
-V(lopho)$y <- c[,2]
-p <- ggplot() + geom_edgeset( aes(x,y), lopho, color="darkgrey" )
-p <- p + geom_nodeset( aes(x, y, color=Region, size=size), lopho) 
-p + theme_empty()
+p <- ggraph(lopho, layout="fr") + geom_edge_link(color="darkgrey")
+p <- p + geom_node_point(aes(color=Region, size=as.numeric(size))) + theme_minimal()
+p 
 ```
 
 
@@ -289,6 +283,7 @@ Using the **ggmap** package, you can request map tiles and use as backgrounds on
 Some fiddling is required with either way you go.  The map you get from `get_map()` is essentially a huge matrix of hex colors as shown above.
 
 ```{r}
+#| eval: false
 library(ggmap)
 location <- c( mean(V(lopho)$Longitude), mean(V(lopho)$Latitude))
 location
@@ -303,6 +298,7 @@ This map object can be passed on to `ggmap()`, which replaces the traditional `g
 - `geom_nodeset()` This plots out the nodes.  You could probably use a regular *data.frame* and `geom_point()` as well. Here is an example:
 
 ```{r}
+#| eval: false
 p <- ggmap( map ) 
 p <- p + geom_edgeset( aes(x=Longitude,y=Latitude), lopho, color="white" ) 
 p <- p + geom_nodeset( aes(x=Longitude, y=Latitude, color=Region, size=size), lopho) 
@@ -317,7 +313,7 @@ At times we have raster data upon we can plot a population graph. Here is an exa
 
 ```{r}
 library(raster)
-data(alt)
+data(alt, package="popgraph")
 plot(alt)
 ```
 
@@ -530,12 +526,15 @@ plot(cong.nodes,add=T, pch=16, col="red")
 There are several ways to examine 'congruence' in graph topologies, of which I show two.  The first method is based upon the correlation of pair-wise distance through the graph for each.  That is to say, are proximate nodes in `lopho` similarily close in `upiga`?   This is called "Distance Congruence" and is based upon a non-parametric correlation of path distances.
 
 ```{r}
-test_congruence(lopho,upiga,method="distance")
+test_congruence(lopho,upiga)
 ```
 
 Another way is to ask about the pattern of connectivity. Based upon the number of nodes and edges in `lopho` and `upiga`, are there more in the congruence graph than could be expected if the two graph were just randomly associated?  This is called "Structural Congruence" and is determined combinatorially.  What is returned by this is the probability having as many edges as observed in the congruence graph given the size of the edge sets in the predictor graphs. You can think of this as the fraction of the area under the line as large or larger than the observed.
 
+Note: The combinatorial congruence test is currently being integrated into `gstudio` from the deprecated `popgraph` package. Until this integration is complete, this analysis is not executed.
+
 ```{r}
+#| eval: false
 test_congruence(lopho,upiga, method="combinatorial")
 ```
 

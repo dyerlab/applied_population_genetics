@@ -107,10 +107,9 @@ and the corresponding one for the Euclidean distance (notice I'm flipping the co
 plot_side <- ggplot( df, aes(x=Euclidean, fill=Status)) + geom_density(alpha=0.5) + coord_flip() + theme(legend.position="none")
 ```
 
-I also need an empty plot to since we are going to make a 2x2 grid of plots but the upper right one will have nothing in it (the popgraph library has a nice invisible theme called `theme_empty()`).
+I also need an empty plot since we are going to make a 2x2 grid of plots but the upper right one will have nothing in it.
 
 ```{r}
-library(popgraph)
 empty <- ggplot() + theme_minimal()
 ```
 

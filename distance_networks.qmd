@@ -415,7 +415,7 @@ Then overlay this onto a map using the `overlay_popgraph()` function.    Here is
 #| label: fig-mapped-graph
 #| fig-cap: "Map of graph stetched onto continential US map."
 library(maps)
-library(popgraph)
+library(gstudio)
 pg <- as.popgraph( g )
 
 map( "state" )
