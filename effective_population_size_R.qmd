@@ -1,0 +1,31 @@
+## Demographic Effective Population Sizes
+
+The relationship between sex ratio and effective population size for a dioecious species, $N_e = \frac{4N_mN_f}{N_m + N_f}$, is easy to explore in R across the full range of possible sex ratios for a population of $N=100$ individuals.
+
+```{r}
+library(ggplot2)
+N <- 100
+Nm <- 1:99
+Nf <- N - Nm
+Ne <- (4*Nm*Nf)/(Nm + Nf)
+df <- data.frame(Nm,Ne)
+ggplot( df, aes(x=Nm,y=Ne)) + geom_line() + geom_point() + theme_bw(base_size=16)
+```
+
+This confirms the expectation from the theory section — $N_e$ is maximized when $N_m = N_f$ and drops off quickly as the sex ratio becomes skewed in either direction.
+
+## Fluctuating Population Size
+
+Here is an example using R to show how a single-generation bottleneck influences effective population size through time.  A population of $N_t=100$ individuals experiences a single generation with only $N_{t+1}=10$ individuals before recovering to $N=100$ for the remainder of the time series.
+
+```{r}
+N <- c(100,100,10,rep(100,50))
+Ne <- 100
+for( i in 2:length(N)) {
+  Ne[i] <- 1 / ( 1/i * sum(1/N[1:i]) )
+}
+df <- data.frame(Time=1:length(Ne), Ne )
+ggplot(df, aes(x=Time,y=Ne)) + geom_line() + geom_point() + theme_bw(base_size=16)
+```
+
+The resulting graph shows the effects of this single-generation bottleneck on $N_e$ persisting for many generations, even though the census size recovers immediately.
